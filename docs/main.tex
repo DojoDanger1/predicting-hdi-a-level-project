@@ -1,0 +1,2358 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{listing}
+\usepackage{minted}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage[super]{nth}
+\usepackage{xstring}
+\usepackage{mfirstuc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{caption}
+\usepackage[edges]{forest}
+\usepackage{neuralnetwork}
+\usepackage{csvsimple}
+\usepackage{lipsum}
+\usepackage{mathtools}
+\usepackage{esdiff}
+\usepackage{siunitx}
+\usepackage{multicol}
+\usepackage[skins]{tcolorbox}
+\usepackage{subcaption}
+
+\usetikzlibrary{arrows.meta, shapes.geometric, angles, quotes, decorations.markings}
+\tdplotsetmaincoords{70}{80}
+\pgfplotsset{compat=1.9}
+
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=cyan
+}
+\graphicspath{ {./images/} }
+
+\captionsetup[table]{skip=10pt}
+\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{\hspace*{-\tabcolsep}}}
+
+\newcommand{\nodetext}[2]{$a^{\left(#1\right)}_#2$}
+\newcommand{\weighttext}[4]{$w^{\left(#1\right)}_{#4,#2}$}
+
+\newcommand{\comma}{,}
+
+\tikzstyle{fStartStop} = [rectangle, rounded corners, minimum width=5cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{fInputOutput} = [trapezium, trapezium stretches=true, trapezium left angle=70, trapezium right angle=110, minimum width=5cm, minimum height=1cm, text centered, text width=5cm, draw=black, fill=blue!30]
+\tikzstyle{fProcess} = [rectangle, minimum width=5cm, minimum height=1cm, text centered, text width=5cm, draw=black, fill=orange!30]
+\tikzstyle{fSubprocess} = [rectangle, minimum width=5cm, minimum height=1cm, text centered, text width=5cm, draw=black, fill=yellow!30]
+\tikzstyle{fDecision} = [diamond, minimum width=5cm, minimum height=1cm, text centered, text width=4cm, aspect=2, draw=black, fill=green!30]
+\tikzstyle{fArrow} = [thick,->,>=stealth]
+
+\counterwithin{listing}{chapter}
+\titleformat{\chapter}{\normalfont\Huge\bfseries}{\thechapter{}.}{.5em}{}
+
+\renewcommand\listingscaption{Code Snippet}
+\renewcommand*{\listlistingname}{List of Code Snippets}
+
+\makeatletter
+\let\my@chapter\@chapter
+\renewcommand*{\@chapter}{%
+  \addtocontents{lol}{\protect\addvspace{10pt}}%
+  \my@chapter}
+\makeatother
+
+\newcommand{\pil}[1]{\mintinline[breaklines, breakafter=_]{python}|#1|}
+
+\title{A-Level Computer Science Programming Project}
+\author{Luke Williams, Candidate 2276 \\ The Cherwell School, Centre 62309 \\ OCR Computer Science A-Level --- H446}
+\date{}
+
+\begin{document}
+
+\maketitle{}
+\cleardoublepage{}
+\phantomsection{}
+\addcontentsline{toc}{chapter}{Contents}
+\tableofcontents{}
+
+\chapter{Analysis}
+\section{Introduction}
+\subsection{The Problem}
+For my project, I have decided to train a neural network to predict the Human Development Index (HDI) of a given area. HDI is a number between 0 and 1, which represents how developed a certain country is. It is officially calculated each year by the United Nations, based on factors such as mean years of schooling or life expectancy, by finding the geometric mean of the Life Expectancy Index, the Education Index and the Income Index, as shown in the formula 
+\begin{equation}\label{eq:hdi}
+\begin{split}
+    \text{HDI}&=\sqrt[3]{\text{LEI}\times\text{EI}\times\text{II}}\\&\approx\sqrt[3]{\frac{L-20}{85-20}\times\frac{\frac{S_M}{15}+\frac{S_E}{18}}{2}\times\frac{\ln{G}-\ln{100}}{\ln{75000}-\ln{100}}}\\&=\sqrt[3]{\frac{\left(L-20\right)\left(18S_M+15S_E\right)\left(\ln{G}-\ln{100}\right)}{35100\ln{750}}}
+\end{split}
+\end{equation}
+where $L$ is the life expectancy at birth, $S_M$ is the mean years of schooling, $S_E$ is the expected years of schooling and $G$ is the gross national income per capita.
+
+However, these factors are very difficult to determine, for many reasons. For example, life expectancy at birth is defined as how long a newborn is expected to live if current death rates do not change. However, the actual death rate for any particular birth cohort cannot be known in advance, and therefore must be estimated on the basis of surveys and historical data, which makes it unreliable. Gross national income per capita also has limitations in its calculation, its accuracy depending on the availability and reliability of income and population data.
+
+Motivated by this, I will instead be investigating how more geographical factors (which can be found by only looking at a map of the area) can affect HDI. The data for which these factors are based on will be pulled from OpenStreetMaps (OSM). OpenStreetMaps is a large data set that contains $\sim 1.9$ terabytes of information about the Earth. For example, it contains the location of every (registered) park bench, cafe, parking space, ATM machine, post office, school and many others. An API can be used to access this data called Overpass Turbo, in which you can specify an area and what you are looking for, and it will return a list of latitude and longitude coordinates correct to 7 decimal places, along with any extra information.
+
+Therefore, the problem I am solving is that of trying to predict the HDI of a given area based only on physical features of that area (which may be natural or man-made). This is useful because once the HDI has been predicted, suggestions can be made to improve it, which will involve building tangible objects (such as schools), instead of vaguely suggesting ``increase the mean years of schooling''.
+
+\subsection{Amenable to Computational Approach}
+This problem is amenable to a computational approach, as it involves inputs (various geographical factors), outputs (a predicted HDI) and calculations (calculating the predicted HDI from the set of geographical factors through a neural network, which involves many matrix multiplications).
+
+This problem can also be solved in a finite, reasonable number of steps. Most algorithms that solve problems in a finite but unreasonable number of steps often involve a brute-force approach of trying all possibilities for a given problem, which I do not intend to implement.
+
+This problem will also involve a vast amount of data, gathered by OpenStreetMaps, in the form of ordered latitude and longitude pairs. The storage requirements for this data however will not be so large, as I will only be dealing with (relatively) small amounts of data at any given time.
+
+\subsection{Computational Methods}
+\subsubsection{Abstraction}
+I intend to use abstraction in my project to remove any unnecessary detail from it, in order to make problem solving easier. For example, I will abstract away specific details for what my neural network is going to do, to focus on writing the infrastructure for a general neural network, which can be tuned to do anything (including what I want it to do).
+
+I will also be using abstraction to make models when solving particular problems, in order to make them simpler. For example, if the problem requires some geometry in the Earth, it helps to abstract the Earth into a perfectly smooth sphere, instead of considering its rough topography, or its slight eccentricity.
+
+The data that will be fetched from OpenStreetMaps will also be abstracted, as all I will be considering is the object's latitude and longitude coordinates, as well as what type of object it is. There is no need to consider any other attribute about the object, such as its size, its material, or its history.
+
+I will also use abstraction to remove unnecessary details from the map the users will be selecting their areas from. Details which are given by satellite imagery are not required for the user to be able to recognise and select the area they want to analyse. Therefore I will only be using a digital map for users to select from.
+
+\subsubsection{Decomposition}
+Decomposition is the process of breaking down a problem into smaller subproblems, each of which are easier to solve. I will use decomposition to break down my project into 3 distinct and independent modules: the collection of data, the neural network, and the user interface. These modules have almost nothing to do with each other, and can be considered completely separately. The only times they interact are when the neural network reads the gathered data, and when the user interface queries the neural network.
+
+Furthermore, the purpose of hidden layers in a neural network (further described later in section \ref{sec:mlpStruct}) is inherently to represent decomposition. Calculating the HDI from a set of seemingly unrelated geographical factors is very difficult, and so the hidden layers attempt to calculate nebulous intermediate values in between the geographical factors and the HDI.
+
+In other words, making use of a neural network with $n$ hidden layers decomposes the problem of calculating HDI from a set of geographical factors into
+\begin{itemize}
+\item Calculating nebulous intermediate value 1 from set of geographical factors
+\item Calculating nebulous intermediate value 2 from nebulous intermediate value 1
+\end{itemize}
+$$\vdots$$
+\begin{itemize}
+\item Calculating nebulous intermediate value $n$ from nebulous intermediate value $n-1$
+\item Calculating HDI from nebulous intermediate value $n$
+\end{itemize}
+with each nebulous intermediate value representing something closer and closer to HDI with each one. What the nebulous intermediate values actually represent are too abstract for us humans to understand.
+
+\subsubsection{Divide \& Conquer}
+Once the HDI has been successfully predicted, I would like to make suggestions on how to improve it. The HDI will then be predicted again based on the improvements, and so to determine the best one, the different improvements must be sorted. An algorithm such as quicksort is suitable, as it makes use of the divide \& conquer method. This is because it considers a problem smaller in scope but of the same format each iteration, which makes for an efficient and intuitive algorithm.
+
+\subsubsection{Data Mining}
+Data mining is a technique used to identify patterns and/or anomalies in large data sets (big data), by means of statistics or machine learning. This most certainly fits the description of my project, as the large data set I will be using is OpenStreetMaps ($\sim 1.9$ TB), and I hope to recognise patterns within the locations of geographical objects, and how that may correlate with HDI. I plan to do this by making use of a neural network, which falls under machine learning.
+
+\subsubsection{Heuristics}
+It is impossible to \textit{actually} calculate HDI from a set of geographical factors, as how you \textit{actually} calculate it is with more social factors (as shown in equation \ref{eq:hdi}). Therefore a heuristic ``good enough'' approach with neural networks must be used. I don't strictly plan on using heuristics, however in order to train a neural network, you must have a heuristic sense of how much each particular neuron will affect the output of the system (further described later in section \ref{sec:backpropogation}).
+
+\subsubsection{Visualisation}
+For the user, I will make use of visualisation to show them various statistics. For example, I may implement a bar graph showing which suggestions will increase the HDI the most, or a map to show where new buildings should be placed in order to have the biggest effect.
+
+For me, I will make use of visualisation in order to make solving problems easier. I plan on using diagrams to depict the various processes going on inside a neural network, and to further my understanding. Diagrams will also help in deriving different geometric equations, which will be useful throughout this project.
+
+\section{Stakeholders}
+My stakeholders described themselves as:
+\begin{enumerate}
+    \item \textcolor{Sepia}{\textbf{Umanga Shrestha} -- An A-Level Student interested in moving out of the UK}
+    \item \textcolor{Blue}{\textbf{Joel Tew} -- An A-Level Student interested in Simulating Countries}
+    \item \textcolor{olive}{\textbf{Victor Faustino} -- A Local Council Member}
+    \item \textcolor{OliveGreen}{\textbf{Kiefer Keyworth} -- An A-Level student who has not studied Geography since Year 9}
+\end{enumerate}
+When asked how they would make use of my proposed solution, and why it is appropriate for them, they responded with:
+\begin{center}
+\begin{longtable}{ | m{1cm} | m{7cm}| m{7cm} | } 
+    \hline
+    \textbf{No.} & \textbf{How they would make use of my Proposed Solution} & \textbf{Why it is appropriate to their needs} \\ 
+    \hline
+    1 & \textcolor{Sepia}{He will use it to understand the HDI within different areas. He will then use this information to decide where to move.} & \textcolor{Sepia}{It is appropriate because he is very interested in HDI in different areas of the world and would love to provide help to increase it.} \\ 
+    \hline
+    2 & \textcolor{Blue}{He will use it to estimate the HDI of a hypothetical country, Flabbistan (which the UN does not recognise). He believes that this will be the most developed ``country'' in the world.} & \textcolor{Blue}{It is appropriate because it will make his simulations involving Flabbistan more realistic, by providing an insight into how it may develop in the future.}\\ 
+    \hline
+    3 & \textcolor{olive}{As a local council member, he would love to use it to suggest changes to his local area that would raise the HDI.} & \textcolor{olive}{It is appropriate because it would suggest changes to increase HDI while analysing the importance of each of the factors. This would help him to choose between different changes based on cost.} \\
+    \hline
+    4 & \textcolor{OliveGreen}{He will use the solution to gain a better understanding of what HDI is. He will be able to see the relevance of many factors (in particular, the number of park benches) to the development of a country.} & \textcolor{OliveGreen}{It is appropriate because he is interested in geography but did not take it at GCSE or A-Level and is therefore in need of a program related to it. This solution will be very useful in showing how various factors correlates with development.} \\
+    \hline
+\caption{Stakeholders}\label{table:stakeholders}
+\end{longtable}
+\end{center}
+
+Each stakeholder's more specific needs and ideas will be discussed in the Stakeholder Interview (Section \ref{sec:stakeholderinterview}).
+
+\section{Research}
+\subsection{Existing Solutions}
+\subsubsection{sandeepponduru's human-development-index \cite{existingSol1}}
+This solution makes use of a Jupyter Notebook (\pil{.ipynb}) to predict the HDI (Figure \ref{fig:es1a}), which allows for small python code snippets to be run independently, along with shell commands. They have used this to train the model as they go, and then use it for predictions and data visualisations in the same workflow.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \node[above right, inner sep=0] (image) at (0,0) {\includegraphics[width=9cm]{existingSol1Jupyter.png}};
+    \draw[-{Stealth[length=5mm]}, red] (-1,5) -- (2,5);
+    \node[left, red, text width=2cm] at (-1,5) {Input code snippet};
+    \draw[-{Stealth[length=5mm]}, red] (-1,1) -- (2,1);
+    \node[left, red, text width=2.5cm] at (-1,1) {Some Output};
+\end{tikzpicture}
+\caption{Jupyter Notebook Format (Not Suitable)}\label{fig:es1a}
+\end{figure}
+However, for my project, my model needs to be pre-trained and then accessed via a GUI, so a Jupyter Notebook is not suitable.
+
+This solution also has a scatter plot showing the HDI of various countries (Figure \ref{fig:es1b}). It includes a select few countries, which have an HDI $\geq 0.90$, which are each represented by a coloured dot. (The specific colour seems to carry no meaning)
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \node[above right, inner sep=0] (image) at (0,0) {\includegraphics[width=9cm]{existingSol1Scatter.png}};
+    \draw[-{Stealth[length=5mm]}, red] (7,7) -- (5,6);
+    \node[right, red, text width=3cm] at (7,7) {Coloured Dots representing HDI};
+    \draw[-{Stealth[length=5mm]}, red] (-1,2.75) -- (1,2.75);
+    \node[left, red, text width=3cm] at (-1,2.75) {Set of High HDI Countries};
+\end{tikzpicture}
+\caption{HDI Scatter Plot By Country}\label{fig:es1b}
+\end{figure}
+I believe that a bar graph would be more appropriate, as the $x$-axis is a discrete variable (which country) and the $y$-axis is continuous (HDI). This would be good to implement in my project as the HDI in the user's area could be compared to the HDI of other countries or areas on a similar graph to this, so that if they don't fully understand the HDI scale, they can easily compare with what they know.
+
+This solution also includes the use of a heatmap, describing the relationship between each factor they consider (Figure \ref{fig:es1c}). Brighter cells represent strong positive correlation between the factors, and darker cells represent strong negative correlation.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \node[above right, inner sep=0] (image) at (0,0) {\includegraphics[width=9cm]{existingSol1Heatmap.png}};
+    \draw[-{Stealth[length=5mm]}, red] (11,7.5) -- (9,6.5);
+    \node[right, red, text width=3cm] at (11,7.5) {Heatmap Key};
+    \draw[-{Stealth[length=5mm]}, red] (0,2.75) -- (2,3.5);
+    \node[left, red, text width=2.75cm] at (0,2.75) {Some Factors Affecting HDI};
+    \draw[-{Stealth[length=5mm]}, red] (9,2.75) -- (7,4);
+    \node[right, red, text width=2.75cm] at (9,2.75) {Coloured Cells to Describe Relationship};
+\end{tikzpicture}
+\caption{HDI Factor Heatmap}\label{fig:es1c}
+\end{figure}
+I think it would be useful to implement this into my solution, as it would inform which changes the user needs to make to their area, in order to not only increase the general HDI, but also perhaps will improve some other things, which will even further boost the HDI.
+
+Both of the suggested features here (Comparison of predicted HDI to other countries \& Analysis of how much each factor affects the others) will be discussed in the Stakeholder Interview (Section \ref{sec:stakeholderinterview}).
+
+\subsubsection{julieanneco's predictingHDI \cite{existingSol2}}
+This solution also has a similar heatmap feature, but here each cell has a pie chart showing the correlation coefficient (Figure \ref{fig:es2a}). The proportion of the pie that is filled carries the same meaning as the colour of the pie, with more filled in pies indicating stronger correlation. This chart also omits half of the possible combinations, as they have already been accounted for (for example, correlation between birth rate and life expectancy will be equal to the correlation between life expectancy and birth rate).
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \node[above right, inner sep=0] (image) at (0,0) {\includegraphics[width=9cm]{existingSol2Pies.png}};
+    \draw[-{Stealth[length=5mm]}, red] (11,6.5) -- (9,6.5);
+    \node[right, red, text width=3cm] at (11,6.5) {Heatmap Key};
+    \draw[-{Stealth[length=5mm]}, red] (0.5,4) -- (2.75,4);
+    \node[left, red, text width=2.75cm] at (0.5,4) {Some Factors Affecting HDI};
+    \draw[-{Stealth[length=5mm]}, red] (10,4) -- (7,2.75);
+    \node[right, red, text width=2.75cm] at (10,4) {Coloured Pies to Describe Relationship};
+\end{tikzpicture}
+\caption{HDI Factor Pie Chart Heatmap}\label{fig:es2a}
+\end{figure}
+While omitting half of the combinations of factors is efficient, I believe the use of pie charts in each cell only makes this chart unnecessarily more complex and harder for someone to understand. If I were to add a feature similar to this, I would only include half of it (as shown in this solution), and fill the cells with solid colour (as shown in the previous solution).
+
+The factors that this solution take into account are more social, economic and environmental factors (Figure \ref{fig:es2b}). They have also taken into account multiple time periods (years).
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \node[above right, inner sep=0] (image) at (0,0) {\includegraphics[width=9cm]{existingSol2Factors.png}};
+    \draw[-{Stealth[length=5mm]}, red] (-2.5,4) -- (0,4);
+    \node[left, red, text width=3.5cm] at (-2.5,4) {Social, Economic \& Environmental Factors};
+    \draw[-{Stealth[length=5mm]}, red] (9,3.5) -- (7,5);
+    \node[right, red, text width=2.75cm] at (9,3.5) {Multiple Years};
+\end{tikzpicture}
+\caption{Social, Economic \& Environmental Factors Across Years (Not Suitable)}\label{fig:es2b}
+\end{figure}
+While these are important factors in calculating HDI, this is not suitable for my project, as all of my factors are going to come from OpenStreetMaps, which only has geographical data. However, some of this geographical data will somewhat represent these factors (for example, school density will be loosely proportional to the education index (\pil{edu.index})). The use of multiple years in this solution is also not suitable for my project, as I will only be accessing the most recent version of OpenStreetMaps. Any previous versions will just be more inaccurate, as new data is constantly being added.
+
+This solution makes use of a Random Forest Classification Algorithm to determine the HDI Class of each country at a particular time, which can either be Low, Mid or High (Figure \ref{fig:es2c}).
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \node[above right, inner sep=0] (image) at (0,0) {\includegraphics[width=9cm]{existingSol2Classification.png}};
+    \draw[-{Stealth[length=5mm]}, red] (-2,2) -- (0.5,2);
+    \node[left, red, text width=3cm] at (-2,2) {Discrete Output};
+    \draw[-{Stealth[length=5mm]}, red] (9,3.5) -- (6,2);
+    \node[right, red, text width=2.75cm] at (9,3.5) {Good Results};
+\end{tikzpicture}
+\caption{Random Forest Classification (Not Suitable)}\label{fig:es2c}
+\end{figure}
+While this does seem to produce good results (the HDI Class has been correctly predicted most of the time), this is not suitable for my solution, as I would like the output of my model to be continuous (the actual HDI), so I will instead be using a Multilayer Perceptron model (described later, in Section \ref{sec:mlp}).
+
+\subsubsection{Human Development Reports' Country Insights \cite{existingSol3}}
+This solution does not predict HDI, it only visualises it in different graphs. One of those is this ranking chart, which shows the HDI Rank of a particular country compared with the rest (Figure \ref{fig:es3a}).
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \node[above right, inner sep=0] (image) at (0,0) {\includegraphics[width=9cm]{existingSol3Rank.png}};
+    \draw[-{Stealth[length=5mm]}, red] (-2,0.75) -- (0,0.75);
+    \node[left, red, text width=2.5cm] at (-2,0.75) {Bar for each Country};
+    \draw[-{Stealth[length=5mm]}, red] (9,3.5) -- (7,1.5);
+    \node[right, red, text width=3.25cm] at (9,3.5) {Rank for Selected Country};
+\end{tikzpicture}
+\caption{HDI Ranking Chart}\label{fig:es3a}
+\end{figure}
+You can also hover over this chart to reveal additional information for each of the other countries (Figure \ref{fig:es3b}).
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \node[above right, inner sep=0] (image) at (0,0) {\includegraphics[width=9cm]{existingSol3Hover.png}};
+    \draw[-{Stealth[length=5mm]}, red] (2,0.75) -- (4,0.75);
+    \node[left, red, text width=3.25cm] at (2,0.75) {More Information};
+    \draw[-{Stealth[length=5mm]}, red] (10,0.75) -- (7.5,0.75);
+    \node[right, red, text width=3.25cm] at (10,0.75) {Hovered Over Country};
+\end{tikzpicture}
+\caption{Hovering Over HDI Ranking Chart}\label{fig:es3b}
+\end{figure}
+I could implement a similar chart to this, except instead of a selected country, it would be whatever region the user is predicting the HDI of, so that they can compare it to the HDI of different countries.
+
+This solution also contains other charts, such as this waterfall chart showing HDI of a particular country over time (Figure \ref{fig:es3c}), however I believe none of these are suitable for my project, as I will only be dealing with present-day data.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \node[above right, inner sep=0] (image) at (0,0) {\includegraphics[width=9cm]{existingSol3Waterfall.png}};
+    \draw[-{Stealth[length=5mm]}, red] (8,0.75) -- (5,2);
+    \node[right, red, text width=3.25cm] at (8,0.75) {Change in HDI Over Time};
+\end{tikzpicture}
+\caption{HDI Over Time Waterfall Chart (Not Suitable)}\label{fig:es3c}
+\end{figure}
+
+\subsection{Stakeholder Interview \& Feedback}\label{sec:stakeholderinterview}
+For this interview, coloured quotes will represent each stakeholder, as shown in the Stakeholders Table (Table \ref{table:stakeholders})
+
+\subsubsection{Question 1}
+1. \textit{``Are you familiar with the HDI scale for development?''}
+\begin{flushright}
+\textit{\textcolor{Sepia}{``Yes''}} \\
+\textit{\textcolor{Blue}{``Yes''}} \\
+\textit{\textcolor{olive}{``Yes''}} \\
+\textit{\textcolor{OliveGreen}{``Yes''}}
+\end{flushright}
+For each of the following questions, each stakeholder was given the options in a random order, and was made aware that they don't need to rank all of them.
+
+\subsubsection{Question 2}
+2. \textit{``Rank the following end-features by how important you believe they are.''}
+\begin{center}
+\begin{tabular}{c}
+    Analysis of how much each factor affects the others \\
+    Comparison of predicted HDI to other countries \\
+    Ranking of suggested changes to increase development
+\end{tabular}
+\end{center}
+\begin{flushright}
+\textit{\textcolor{Sepia}{``1. Ranking of suggested changes to increase development \\ 2. Analysis of how much each factor affects the others \\ 3. Comparison of predicted HDI to other countries''}} \\
+\textit{\textcolor{Blue}{``1. Analysis of how much each factor affects the others \\ 2. Comparison of predicted HDI to other countries \\ 3. Ranking of suggested changes to increase development''}} \\
+\textit{\textcolor{olive}{``1. Ranking of suggested changes to increase development \\ 2. Analysis of how much each factor affects the others \\ 3. Comparison of predicted HDI to other countries''}} \\
+\textit{\textcolor{OliveGreen}{``1. Ranking of suggested changes to increase development \\ 2. Analysis of how much each factor affects the others \\ 3. Comparison of predicted HDI to other countries''}}
+\end{flushright}
+To decide which feature is the most wanted from this data, each option will be awarded $\left(4-p\right)$ points for each ranking, where $p$ is the place that it was ranked (for example, if it was ranked in first place, it would gain 3 points).
+\pgfplotstableread{
+Label umanga joel victor kiefer topper
+{Ranking Suggested Changes} 3 1 3 3 0.001
+{Analysis of Factors affecting each other} 2 3 2 2 0.001
+{Comparison to Other Countries} 1 2 1 1 0.001
+}\endfeaturedata
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar stacked,
+    ymin=0,
+    ymax=12,
+    ylabel=Points,
+    xtick=data,
+    xticklabels from table={\endfeaturedata}{Label},
+    xticklabel style={text width=2cm,align=center},
+]
+\addplot [fill=red!60] table [y=umanga, meta=Label, x expr=\coordindex] {\endfeaturedata};
+\addplot [fill=blue!60] table [y=joel, meta=Label, x expr=\coordindex] {\endfeaturedata};
+\addplot [fill=yellow!80] table [y=victor, meta=Label, x expr=\coordindex] {\endfeaturedata};
+\addplot [fill=green!80] table [y=kiefer, meta=Label, x expr=\coordindex] {\endfeaturedata};
+\addplot [nodes near coords,point meta=y,nodes near coords style={anchor=south}] table [y=topper, meta=Label, x expr=\coordindex] {\endfeaturedata};
+\end{axis}
+\end{tikzpicture}
+\caption{Score for each end-feature}
+\end{figure}
+Both the Ranking of suggested changes to increase development and the Analysis of how much each factor affects the others seem to be popular.
+
+\subsubsection{Notation Explanation}
+The following 2 questions are about various geographical factors which may have an impact on HDI.
+
+As many of the following factors have a similar format, I will use the notation $D\left(x\right)$ to represent ``$x$ Density'', for some object $x$ (the number of $x$ per unit area), and $A\left(x,y\right)$ to represent ``Average Distance from $x$ to nearest $y$'', for some objects $x$, $y$. The functions $A$ and $D$ will be implemented later, in Section \ref{sec:dataCollection}.
+
+There are many factors to consider which are directly linked to HDI, such as $D\left(\text{School}\right)$ or $D\left(\text{Hospital}\right)$, which I believe are essential factors to be considered. Therefore, I have decided to only ask about more ridiculous factors, such as $D\left(\text{Bench}\right)$ or $D\left(\text{Post Box}\right)$ which will have less of an effect on HDI. I have also included $D\left(\text{School}\right)$ as a test to ensure that the stakeholders fully understand the meaning of HDI (it should always rank highly).
+
+\subsubsection{Question 3}
+3. \textit{``Rank the following density factors affecting development in a particular area by how much you would like them to be implemented.''}
+\begin{center}
+\begin{tabular}{c c c c}
+    $D\left(\text{Bench}\right)$ & $D\left(\text{Fast-Food Place}\right)$ & $D\left(\text{Lake}\right)$ & $D\left(\text{Place of Worship}\right)$ \\ 
+    $D\left(\text{Pond}\right)$ & $D\left(\text{Post Box}\right)$ & $D\left(\text{Restaurant}\right)$ & $D\left(\text{Rock}\right)$ \\
+    $D\left(\text{School}\right)$ & $D\left(\text{Toilet}\right)$ & $D\left(\text{Tree}\right)$ & $D\left(\text{Vending Machine}\right)$ \\
+\end{tabular}
+\end{center}
+\begin{flushright}
+\textit{\textcolor{Sepia}{``1. $D\left(\text{Toilet}\right)$, 2. $D\left(\text{School}\right)$, 3. $D\left(\text{Place of Worship}\right)$, 4. $D\left(\text{Restaurant}\right)$.''}} \\
+\textit{\textcolor{Blue}{``1. $D\left(\text{School}\right)$, 2. $D\left(\text{Toilet}\right)$, 3. $D\left(\text{Restaurant}\right)$, 4. $D\left(\text{Vending Machine}\right)$, 5. $D\left(\text{Bench}\right)$, 6. $D\left(\text{Post Box}\right)$, 7. $D\left(\text{Place of Worship}\right)$, 8. $D\left(\text{Fast-Food Place}\right)$, 9. $D\left(\text{Pond}\right)$, 10. $D\left(\text{Lake}\right)$, 11. $D\left(\text{Rock}\right)$, 12. $D\left(\text{Tree}\right)$.''}} \\
+\textit{\textcolor{olive}{``1. $D\left(\text{School}\right)$, 2. $D\left(\text{Restaurant}\right)$, 3. $D\left(\text{Post Box}\right)$, 4. $D\left(\text{Tree}\right)$, 5. $D\left(\text{Place of Worship}\right)$, 6. $D\left(\text{Vending Machine}\right)$, 7. $D\left(\text{Toilet}\right)$, 8. $D\left(\text{Fast-Food Place}\right)$.''}} \\
+\textit{\textcolor{OliveGreen}{``1. $D\left(\text{School}\right)$, 2. $D\left(\text{Bench}\right)$, 3. $D\left(\text{Post Box}\right)$, 4. $D\left(\text{Toilet}\right)$, 5. $D\left(\text{Vending Machine}\right)$, 6. $D\left(\text{Fast-Food Place}\right)$, 8. $D\left(\text{Restaurant}\right)$, 9. $D\left(\text{Place of Worship}\right)$, 10. $D\left(\text{Tree}\right)$''}}
+\textcolor{gray}{(the abscense of an option at number 7 is not a mistake, he did not seem to put anything there.)}
+\end{flushright}
+These rankings will be scored similarly, with each option being awarded $\left(13-p\right)$ points, where $p$ is the place that it was ranked, as there are now 12 options instead of 3. If the option was not ranked, then it won't be awarded any points. The points here are not comparable with the points from the previous question, as a different system is being used.
+\pgfplotstableread{
+Label umanga joel victor kiefer topper
+{$D\left(\text{School}\right)$} 11 12 12 12 0.001
+{$D\left(\text{Toilet}\right)$} 12 11 6 9 0.001
+{$D\left(\text{Restaurant}\right)$} 9 10 11 5 0.001
+{$D\left(\text{Place of Worship}\right)$} 10 6 8 4 0.001
+{$D\left(\text{Post Box}\right)$} 0 7 10 10 0.001
+{$D\left(\text{Vending Machine}\right)$} 0 9 7 8 0.001
+{$D\left(\text{Bench}\right)$} 0 8 0 11 0.001
+{$D\left(\text{Fast-Food Place}\right)$} 0 5 5 7 0.001
+{$D\left(\text{Tree}\right)$} 0 1 9 3 0.001
+{$D\left(\text{Pond}\right)$} 0 4 0 0 0.001
+{$D\left(\text{Lake}\right)$} 0 3 0 0 0.001
+{$D\left(\text{Rock}\right)$} 0 2 0 0 0.001
+}\dfactordata
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.75\textwidth,
+    height=0.4\textwidth,
+    ybar stacked,
+    ymin=0,
+    ymax=55,
+    ylabel=Points,
+    xtick=data,
+    xticklabels from table={\dfactordata}{Label},
+    xticklabel style={rotate=90, text width=4cm, align=right},
+]
+\addplot [fill=red!60] table [y=umanga, meta=Label, x expr=\coordindex] {\dfactordata};
+\addplot [fill=blue!60] table [y=joel, meta=Label, x expr=\coordindex] {\dfactordata};
+\addplot [fill=yellow!80] table [y=victor, meta=Label, x expr=\coordindex] {\dfactordata};
+\addplot [fill=green!80] table [y=kiefer, meta=Label, x expr=\coordindex] {\dfactordata};
+\addplot [nodes near coords,point meta=y,nodes near coords style={anchor=south}] table [y=topper, meta=Label, x expr=\coordindex] {\dfactordata};
+\end{axis}
+\end{tikzpicture}
+\caption{Score for each density factor}
+\end{figure}
+As Expected, the most popular answer was $D\left(\text{School}\right)$. Among the other answers, $D\left(\text{Toilet}\right)$, $D\left(\text{Restaurant}\right)$, $D\left(\text{Place of Worship}\right)$, $D\left(\text{Post Box}\right)$ and $D\left(\text{Vending Machine}\right)$ all proved to be very popular, with a score $\geq 20$.
+
+\subsubsection{Question 4}
+4. \textit{``Rank the following distance factors affecting development in a particular area by how much you would like them to be implemented.''}
+\begin{center}
+\begin{tabular}{c c c}
+    $A\left(\text{Bank},\text{Slot Machine}\right)$ & $A\left(\text{Bench},\text{Tree}\right)$ & $A\left(\text{Fast-Food Place},\text{Toilet}\right)$ \\
+    $A\left(\text{House},\text{Fast-Food Place}\right)$ & $A\left(\text{House},\text{Place of Worship}\right)$ & $A\left(\text{House},\text{School}\right)$ \\
+    \multicolumn{3}{c}{$A\left(\text{House},\text{Tree}\right)$}
+\end{tabular}
+\end{center}
+\begin{flushright}
+\textit{\textcolor{Sepia}{``1. $A\left(\text{House},\text{School}\right)$, 2. $A\left(\text{House},\text{Place of Worship}\right)$, 3. $A\left(\text{Fast-Food Place},\text{Toilet}\right)$.''}} \\
+\textit{\textcolor{Blue}{``1. $A\left(\text{House},\text{School}\right)$, 2. $A\left(\text{Bank},\text{Slot Machine}\right)$, 3. $A\left(\text{Fast-Food Place},\text{Toilet}\right)$, 4. $A\left(\text{House},\text{Place of Worship}\right)$, 5. $A\left(\text{House},\text{Fast-Food Place}\right)$, 6. $A\left(\text{Bench},\text{Tree}\right)$, 7. $A\left(\text{House},\text{Tree}\right)$''}} \\
+\textit{\textcolor{olive}{``1. $A\left(\text{Bank},\text{Slot Machine}\right)$, 2. $A\left(\text{House},\text{School}\right)$, 3. $A\left(\text{Bench},\text{Tree}\right)$, 4. $A\left(\text{House},\text{Tree}\right)$, 5. $A\left(\text{House},\text{Place of Worship}\right)$, 6. $A\left(\text{House},\text{Fast-Food Place}\right)$, 7. $A\left(\text{Fast-Food Place},\text{Toilet}\right)$''}} \\
+\textit{\textcolor{OliveGreen}{``1. $A\left(\text{House},\text{School}\right)$, 2. $A\left(\text{House},\text{Tree}\right)$, 3. $A\left(\text{House},\text{Fast-Food Place}\right)$, 4. $A\left(\text{Bench},\text{Tree}\right)$, 5. $A\left(\text{House},\text{Place of Worship}\right)$, 6. $A\left(\text{Fast-Food Place},\text{Toilet}\right)$, 7. $A\left(\text{Bank},\text{Slot Machine}\right)$''}}
+\end{flushright}
+The scoring again will work the same as the previous 2 questions, except each option will be awarded $\left(8-p\right)$ points, where $p$ is the place that it was ranked, as there are now 7 options instead of 3 or 12.
+\pgfplotstableread{
+Label umanga joel victor kiefer topper
+{$A\left(\text{House},\text{School}\right)$} 7 7 6 7 0.001
+{$A\left(\text{House},\text{Place of Worship}\right)$} 6 4 3 3 0.001
+{$A\left(\text{Bank},\text{Slot Machine}\right)$} 0 6 7 1 0.001
+{$A\left(\text{Fast-Food Place},\text{Toilet}\right)$} 5 5 1 2 0.001
+{$A\left(\text{Bench},\text{Tree}\right)$} 0 2 5 4 0.001
+{$A\left(\text{House},\text{Tree}\right)$} 0 1 4 6 0.001
+{$A\left(\text{House},\text{Fast-Food Place}\right)$} 0 3 2 5 0.001
+}\afactordata
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.6\textwidth,
+    height=0.4\textwidth,
+    ybar stacked,
+    ymin=0,
+    ymax=32,
+    ylabel=Points,
+    xtick=data,
+    xticklabels from table={\afactordata}{Label},
+    xticklabel style={rotate=90, text width=5.1cm, align=right},
+]
+\addplot [fill=red!60] table [y=umanga, meta=Label, x expr=\coordindex] {\afactordata};
+\addplot [fill=blue!60] table [y=joel, meta=Label, x expr=\coordindex] {\afactordata};
+\addplot [fill=yellow!80] table [y=victor, meta=Label, x expr=\coordindex] {\afactordata};
+\addplot [fill=green!80] table [y=kiefer, meta=Label, x expr=\coordindex] {\afactordata};
+\addplot [nodes near coords,point meta=y,nodes near coords style={anchor=south}] table [y=topper, meta=Label, x expr=\coordindex] {\afactordata};
+\end{axis}
+\end{tikzpicture}
+\caption{Score for each distance factor}
+\end{figure}
+Again, the serious factor $A\left(\text{House},\text{School}\right)$ was the most popular by far, and will be included among others such as $A\left(\text{House},\text{Shop}\right)$ or $A\left(\text{House},\text{Pharmacy}\right)$. Among the other answers, $A\left(\text{House},\text{Place of Worship}\right)$, $A\left(\text{Bank},\text{Slot Machine}\right)$ and $A\left(\text{Fast-Food Place},\text{Toilet}\right)$ proved to be very popular, with a score $\geq 12$
+
+I may ask further questions to my stakeholders as required, when I am developing my coded solution.
+
+\section{Essential Features}
+\begin{center}
+\begin{longtable}{ | m{4cm} | m{11cm}| } 
+    \hline
+    \textbf{Feature} & \textbf{Explanation} \\ 
+    \hline
+    Area Selection & The user must be able to select the area to predict the HDI of. They should be able to do this by either drawing on a map, or entering the data manually. \\
+    \hline
+    Multilayer Perceptron & The HDI must be predicted based on a range of scalar factors, which the user has just inputted. \\
+    \hline
+    Ranking of Suggested Changes to increase Development & This will allow for users to make informed decisions on what needs to be done to increase the development of their area. This feature proved popular in the Stakeholder Interview. \\
+    \hline
+    Analysis of how much each factor affects the others & Users can determine which factors may affect others, which will further increase the development. This feature was in many of the existing solutions and was also proved popular in the Stakeholder Interview. \\
+    \hline
+\caption{Essential Features}
+\end{longtable}
+\end{center}
+All of the above (except for the Multilayer Perceptron) will be implemented and accessed using a GUI.
+
+\section{Limitations}
+\begin{itemize}
+    \item \textbf{Only 1 Time Period} -- As I am using OpenStreetMaps, I will only be able to access the data as it is now, so I won't be able to train the model on previous year's HDI. Older versions of OpenStreetMaps are only more inaccurate, so the training data will just be dirty and the final product will have a smaller chance of working.
+    \item \textbf{Only Geographical Factors} -- Factors such as life expectancy will not be accounted for, as I would like all the data to come from the same place (OpenStreetMaps), such that the user can circle an area on a map and the HDI will be estimated from that.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=9cm]{limitationShelter.png}
+        \caption{Map of all shelters from OpenStreetMaps}\label{fig:skewMap}
+    \end{figure}
+    \item \textbf{Skew Towards More Developed Countries} -- OpenStreetMaps is not perfect. There will be a skew towards more developed countries because in those places, there are more people with computers who know about OpenStreetMaps, and are contributing to it. The map in Figure \ref{fig:skewMap} shows this, as it suggests that there are many more shelters in Europe than in Africa, however in reality it is likely to be the other way around.
+    \item \textbf{Potential Lack of Training Data} -- HDI is only officially calculated for countries or sub-national regions (for example, in the United States, the sub-national regions are the 50 states). Therefore, I only have $\sim 2000$ pieces of data to train on (which is equal to the total number of sub-national regions), which may not be enough to get accurate results.
+\end{itemize}
+
+\section{Requirements}
+\subsection{Hardware Requirements}
+\begin{itemize}
+    \item \textbf{Standard Input Devices (Keyboard \& Mouse)} -- I need to be able to write code and the user needs to be able to enter their details.
+    \item \textbf{Monitor} -- The user and I need to be able to see the output of the program.
+    \item \textbf{Main Memory} -- The program will be loaded into here when booted up.
+    \item \textbf{Secondary Storage} -- The pre-trained model must be stored in secondary storage so that it can be called upon at any time.
+    \item (For me only) \textbf{Graphical Processing Unit} -- While no complex graphics need to be processed, a GPU would decrease the time taken for the model to be trained, as it would involve lots of the same type of calculation (matrix multiplication) to be carried out simultaneously.
+\end{itemize}
+I will be using a Mac Pro, 2.66GHz Quad-Core Intel Xeon Processor to develop this app.
+
+\subsection{Software Requirements}
+\begin{itemize}
+    \item (For me only) \textbf{IDE (Visual Studio Code)} -- I will write the code for this project (and the documentation) in this IDE, as it provides many useful features such as syntax highlighting, automatic bracket completion and version control (git integration).
+    \item (For me only) \textbf{Python 3.10} -- The programming language I intend to write in.
+    \item (For me only) \textbf{Python Libraries} Including but not limited to:
+    \begin{itemize}
+        \item \textbf{Gradio} -- A GUI Library, that will initialise a GUI on a local server, so that the app can be accessed from a web browser.
+        \item \textbf{Numpy} -- A Maths Library, which contains many useful mathematical functions and data structures, such as matrices or multidimensional arrays, as well as the operations that come with them.
+        \item \textbf{Folium} -- A Mapping Library, which will allow me to create various maps within the Gradio interface, for both input and output.
+    \end{itemize}
+    \item \textbf{Web Browser} -- The Gradio GUI must be accessed through a web browser. I need to be able to test the code, and the user needs to be able to use it. The user will only require a web browser as I plan to deploy this app once I have finished development.
+\end{itemize}
+I will be using macOS Big Sur 11.7.9 to develop this app.
+
+\section{Success Criteria}
+\begin{center}
+\csvloop{
+    file=data/successcriteria.csv,
+    no head,
+    column count=5,
+    column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
+    %filter ifthen={\equal{\scID}{the thing you want}\OR\equal{\scID}{No.}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{5cm}|m{8cm}|H|H|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Success Criteria}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\chapter{Design of the \nth{1} Prototype}
+\section{Structure Diagram}
+\begin{figure}[H]
+\centering
+\begin{forest}
+forked edges,
+for tree={draw,align=center,edge={-latex}},where level=0{}{folder,grow'=0}
+[Predicting HDI App,fill=red!60
+    [Data Collection \&\\Processing (Section \ref{sec:dataCollection}),fill=orange!60
+        [Overpass Turbo\\Querier (Section \ref{sec:dataCollectionFullAlgo}),fill=yellow!60]
+        [$D\left(x\right)$ (Section \ref{sec:dx}),fill=yellow!60
+            [Calculate Area\\of a given Region,fill=green!60]
+        ]
+        [$A\left(x\comma{}y\right)$ (Section \ref{sec:axy}),fill=yellow!60
+            [Calculate distance\\between 2 given\\coordinates,fill=green!60]
+        ]
+    ]
+    [Multilayer Perceptron\\(Section \ref{sec:mlp}),fill=orange!60
+        [Prediction,fill=yellow!60
+            [Feedforward Algorithm\\(Section \ref{sec:feedforward}),fill=green!60]
+        ]
+        [Training,fill=yellow!60
+            [Backpropogation\\Algorithm (Section \ref{sec:backpropogation}),fill=green!60]
+            [Stochastic Gradient\\Descent (Section \ref{sec:sgd}),fill=green!60]
+        ]
+    ]
+    [User Interface (Section \ref{sec:ui}),fill=orange!60
+        [Input Map\\for Selection,fill=yellow!60]
+        [Predicted HDI Output\\(Section \ref{sec:predictHDIFullAlgo}),fill=yellow!60]
+        [Ranking Suggested Changes\\to Improve HDI,fill=yellow!60
+            [Find Optimal Place for\\New Building (Section \ref{sec:optimalPlace}),fill=green!60]
+            [Quicksort Results,fill=green!60]
+        ]
+        [Heatmap of how much each\\factor affects the others,fill=yellow!60]
+        [Comparison to\\other countries,fill=yellow!60]
+    ]
+]
+\end{forest}
+\begin{tikzpicture}
+    \draw[draw=white] (-4,1) -- (4,1);
+	\draw[draw=black, fill=red!60] (-4,0.5) rectangle (-2,0);
+	\draw[draw=black, fill=orange!60] (-2,0.5) rectangle (0,0);
+	\draw[draw=black, fill=yellow!60] (0,0.5) rectangle (2,0);
+	\draw[draw=black, fill=green!60] (2,0.5) rectangle (4,0);
+	\draw[draw=black, latex-latex] (-4,-0.25) -- (4,-0.25);
+	\node[black, anchor=north west] at (-4,-0.4) {Bigger Problem};
+	\node[black, anchor=north east] at (4,-0.4) {Smaller Problem};
+\end{tikzpicture}
+\caption{Structure Diagram}\label{fig:structDiagram}
+\end{figure}
+
+Figure \ref{fig:structDiagram} shows this project's structure, breaking down the larger problem of the entire app, into a series of smaller problems which are easier to consider. I will go into more detail for each of the smaller problems above (further decomposing them), in the approximate order I would be implementing them.
+
+In this first prototype, I will be going through the algorithms involved in Data Collection \& Processing (Section \ref{sec:dataCollection}) and the Multilayer Perceptron (Section \ref{sec:mlp}), with only the most essential features in the GUI. Various data visualisations such as the Factor Heatmap or Comparisons to Other Countries will be implemented in later prototypes.
+
+\section{Data Collection \& Processing}\label{sec:dataCollection}
+\subsection{Full List of Factors to Include}\label{sec:listOfFactors}
+After considering the responses from the stakeholder interview (Section \ref{sec:stakeholderinterview}), as well as research on what contributes to a higher HDI, the full list of factors I would like to consider are (in no particular order):
+\begin{multicols}{2}
+\begin{enumerate}
+    \item $A\left(\text{House},\text{School}\right)$
+    \item $A\left(\text{House},\text{Hospital}\right)$
+    \item $A\left(\text{House},\text{Pharmacy}\right)$
+    \item $A\left(\text{House},\text{Restaurant}\right)$
+    \item $A\left(\text{School},\text{Hospital}\right)$
+    \item $A\left(\text{Police},\text{Hospital}\right)$
+    \item $A\left(\text{House},\text{Place of Worship}\right)$
+    \item $A\left(\text{Bank},\text{Slot Machine}\right)$
+    \item $A\left(\text{Fast-Food Place},\text{Toilet}\right)$
+    \item $A\left(\text{House},\text{Police}\right)$
+    \item $A\left(\text{University},\text{Library}\right)$
+    \item $A\left(\text{House},\text{Police}\right)$
+    \item $D\left(\text{School}\right)$
+    \item $D\left(\text{Hospital}\right)$
+    \item $D\left(\text{Pharmacy}\right)$
+    \item $D\left(\text{Police}\right)$
+    \item $D\left(\text{Library}\right)$
+    \item $D\left(\text{Toilet}\right)$
+    \item $D\left(\text{Restaurant}\right)$
+    \item $D\left(\text{Place of Worship}\right)$
+    \item $D\left(\text{Post Box}\right)$
+    \item $D\left(\text{Vending Machine}\right)$
+    \item $D\left(\text{Bench}\right)$
+    \item $D\left(\text{Tree}\right)$
+\end{enumerate}
+\end{multicols}
+
+Now we must figure out how to calculate $A\left(x,y\right)$, for some objects $x,y$, and $D\left(x\right)$, for some object $x$.
+
+\subsection{Finding the Average Distance between 2 objects $x,y$, $A\left(x\comma{}y\right)$}\label{sec:axy}
+\subsubsection{Finding the distance between 2 given points}
+This is a difficult problem to solve, so instead decompose it and consider a simple one, finding the distance between any 2 given points on the Earth's surface (latitude longitude pairs).
+
+First, abstract the earth into a perfectly smooth sphere (which is fairly accurate anyway as $\frac{\text{height difference between Mt. Everest and the Mariana Trench}}{\text{Earth's average radius}}=0.0031$), with centre $O$ and radius $r$, and rotated such that the plane of the equator lies on the $xy$-plane and that the point with 0 latitude and 0 longitude lies on the positive $x$-axis. I am not considering the altitude at each point on the Earth's surface, nor the slight eccentricity in the shape of the Earth.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,0) circle (1);
+    % axis
+    \draw[dashed] (-1.25,0,0) -- (1.25,0,0) node[anchor=north west] {$x$};
+    \draw[dashed] (0,-1.25,0) -- (0,1.25,0) node[anchor=west] {$y$};
+    \draw[dashed] (0,0,-1.25) -- (0,0,1.25) node[anchor=south] {$z$};
+    % equator
+    \draw[dashed] (0,0,0) node[anchor=north east] {$O$} circle (1);
+    % points
+    \draw (0,0,0) -- (0.7071,0.7071,0) node[midway,below] {$r$};
+\end{tikzpicture}
+\caption{Abstracted Model of the Earth}\label{fig:abstractedEarth}
+\end{figure}
+
+The 2 points on its surface we are trying to find the distance between are $P_1$ and $P_2$, each with a latitude and longitude ($La_1$, $La_2$, $Lo_1$, $Lo_2$), given in radians.
+
+Construct points $A$ and $B$, such that they lie directly below $P_1$ and $P_2$ respectively, and sit on the plane of the equator. By definition of latitude, $\angle P_{1}OA=La_1$ and $\angle P_{2}OB=La_2$. From right-angled trigonometry, $OA=r\cos\left(La_1\right)$ and $OB=r\cos\left(La_2\right)$
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,0) circle (1);
+    % equator
+    \draw[dashed] (0,0,0) coordinate (O) node[anchor=south] {$O$} circle (1);
+    % points
+    \draw (O) -- (0.77,0.43,0.48) coordinate (P1) node[anchor=south west] {$P_1$} node[midway,above] {$r$};
+    \draw (O) -- (0.32,-0.51,0.79) coordinate (P2) node[anchor=south east] {$P_2$} node[midway,right] {$r$};
+    %constructions
+    \draw (O) -- (0.77,0.43,0) coordinate (A) node[anchor=north west] {$A$} -- (P1);
+    \path pic["$La_1$",draw,angle radius=1.25cm] {angle=A--O--P1};
+    \path pic[draw,angle radius=0.25cm] {right angle=O--A--P1};
+    \draw (O) -- (0.32,-0.51,0) coordinate (B) node[anchor=north east] {$B$} -- (P2);
+    \path pic["$La_2$",draw,angle radius=1cm] {angle=P2--O--B};
+    \path pic[draw,angle radius=0.25cm] {right angle=O--B--P2};
+    %labels
+    \draw[dashed] (O) -- (-0.79,1.41,0);
+    \draw[dashed] (A) -- (-0.02,1.84,0);
+    \draw[<->] (-0.73,1.31,0) -- (0.04,1.74,0) node[midway,above right] {$r\cos\left(La_1\right)$};
+    \draw[dashed] (O) -- (-1.37,-0.85,0);
+    \draw[dashed] (B) -- (-1.05,-1.37,0);
+    \draw[<->] (-1.27,-0.80,0) -- (-0.95,-1.31,0) node[midway,above left] {$r\cos\left(La_2\right)$};
+\end{tikzpicture}
+\caption{$P_1$ and $P_2$}
+\end{figure}
+
+Construct the line $AB$, which lies on the plane of the equator. By definition of longitude, $\angle AOB=\lvert Lo_{1}-Lo_{2}\rvert $ (the difference in longitudes). Define $a$ to be the length of the line segment $AB$, which can be found using the cosine rule.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,0) circle (1);
+    % equator
+    \draw[dashed] (0,0,0) coordinate (O) node[anchor=south] {$O$} circle (1);
+    % points
+    \draw (O) -- (0.77,0.43,0.48) coordinate (P1) node[anchor=south west] {$P_1$} node[midway,above] {$r$};
+    \draw (O) -- (0.32,-0.51,0.79) coordinate (P2) node[anchor=south east] {$P_2$} node[midway,right] {$r$};
+    %constructions
+    \draw (O) -- (0.77,0.43,0) coordinate (A) node[anchor=north west] {$A$} -- (P1);
+    \path pic[draw,angle radius=0.25cm] {right angle=O--A--P1};
+    \draw (O) -- (0.32,-0.51,0) coordinate (B) node[anchor=north east] {$B$} -- (P2);
+    \path pic[draw,angle radius=0.25cm] {right angle=O--B--P2};
+    \draw (A) -- (B) node[midway,below] {$a$};
+    \path pic["$\lvert Lo_{1}-Lo_{2}\rvert$",draw,angle radius=0.5cm,angle eccentricity=1.2] {angle=B--O--A};
+    %labels
+    \draw[dashed] (O) -- (-0.79,1.41,0);
+    \draw[dashed] (A) -- (-0.02,1.84,0);
+    \draw[<->] (-0.73,1.31,0) -- (0.04,1.74,0) node[midway,above right] {$r\cos\left(La_1\right)$};
+    \draw[dashed] (O) -- (-1.37,-0.85,0);
+    \draw[dashed] (B) -- (-1.05,-1.37,0);
+    \draw[<->] (-1.27,-0.80,0) -- (-0.95,-1.31,0) node[midway,above left] {$r\cos\left(La_2\right)$};
+\end{tikzpicture}
+\caption{Line segment $AB$}
+\end{figure}
+\begin{equation}\label{eq:dist2pointsa}
+\begin{split}
+    a=AB&=\sqrt{{OA}^2+{OB}^2-2\times OA\times OB\times \cos\left(\angle AOB\right)}\\
+    &=\sqrt{{\left(r\cos\left(La_1\right)\right)}^2+{\left(r\cos\left(La_2\right)\right)}^2+2\times r\cos\left(La_1\right)\times r\cos\left(La_2\right)\times\cos\left(\lvert Lo_{1}-Lo_{2}\rvert\right)}\\
+    &=\sqrt{r^{2}\cos^{2}\left(La_{1}\right)+r^{2}\cos^{2}\left(La_{2}\right)-2r^{2}\cos \left(La_{1}\right)\cos \left(La_{2}\right)\cos \left(Lo_{1}-Lo_{2}\right)}
+\end{split}
+\end{equation}
+
+From right-angled trigonometry, $P_{1}A=r\sin\left(La_1\right)$ and $P_{2}B=r\sin\left(La_2\right)$. Construct the line $P_{1}P_{2}$, which will lie in the same vertical plane as $AB$ (as $P_1$ is directly above $A$ and $P_2$ is directly above $B$). If $P_1$ and $P_2$ are in the same hemisphere (north or south), then the shape $P_{1}ABP_{2}$ will be a right-angled trapezium. Define $b$ to be the length of the line segment $P_{1}P_{2}$.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,0) circle (1);
+    % equator
+    \draw[dashed] (0,0,0) coordinate (O) node[anchor=south] {$O$} circle (1);
+    % points
+    \draw (O) -- (0.77,0.43,0.48) coordinate (P1) node[anchor=south west] {$P_1$} node[midway,above] {$r$};
+    \draw (O) -- (0.32,-0.51,0.79) coordinate (P2) node[anchor=south east] {$P_2$} node[midway,right] {$r$};
+    %constructions
+    \draw (O) -- (0.77,0.43,0) coordinate (A) node[anchor=north west] {$A$} -- (P1) node[midway,right] {$r\sin\left(La_1\right)$};
+    \path pic["$La_1$",draw,angle radius=1.25cm] {angle=A--O--P1};
+    \path pic[draw,angle radius=0.25cm] {right angle=O--A--P1};
+    \draw (O) -- (0.32,-0.51,0) coordinate (B) node[anchor=north east] {$B$} -- (P2) node[midway,left] {$r\sin\left(La_2\right)$};
+    \path pic["$La_2$",draw,angle radius=1cm] {angle=P2--O--B};
+    \path pic[draw,angle radius=0.25cm] {right angle=O--B--P2};
+    \draw (A) -- (B) node[midway,below] {$a$};
+    \draw (P1) -- (P2) node[midway,above] {$b$};
+\end{tikzpicture}
+\caption{Line segment $P_{1}P_{2}$}
+\end{figure}
+
+$b$ can be found using Pythagoras, by considering moving $AB$ up until it meets either $P_1$ or $P_2$. We don't know which one it will meet first, so the difference in heights is $\lvert P_{1}A-P_{2}B\rvert$. This will still be true even if $P_{1}ABP_{2}$ is not a trapezium (as a result of $P_1$ and $P_2$ being in opposite hemispheres), as the one in the Southern Hemisphere will have a negative height.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \draw (0,0) coordinate (B) node[anchor=north east] {$B$} -- (4,0) coordinate (A) node[anchor=north west] {$A$} node[midway,below] {$a$} -- (4,3) coordinate (P1) node[anchor=south west] {$P_1$} node[midway,right] {$r\sin\left(La_1\right)$} -- (0,5) coordinate (P2) node[anchor=south east] {$P_2$} node[midway,above] {$b$} -- cycle node[midway,left] {$r\sin\left(La_2\right)$};
+    \path pic[draw,angle radius=0.25cm] {right angle=P2--B--A};
+    \path pic[draw,angle radius=0.25cm] {right angle=P1--A--B};
+    \draw[dashed] (P1) -- (0,3) coordinate (C) node[midway,below] {$a$};
+    \path pic[draw,dashed,angle radius=0.25cm] {right angle=P2--C--P1};
+    \draw[dashed] (P2) -- (-1.5,5);
+    \draw[dashed] (C) -- (-1.5,3);
+    \draw[<->] (-1.25,5) -- (-1.25,3) node[midway,left] {$\lvert r\sin\left(La_1\right)-r\sin\left(La_2\right)\rvert$};
+\end{tikzpicture}
+\caption{Finding $b$}
+\end{figure}
+\begin{equation}\label{eq:dist2pointsb}
+\begin{split}
+    b=P_{1}P_{2}&=\sqrt{{\lvert P_{1}A-P_{2}B\rvert}^2+{AB}^2}\\
+    &=\sqrt{{\left(\lvert r\sin\left(La_1\right)-r\sin\left(La_2\right)\rvert\right)}^2+{a}^2}\\
+    &=\sqrt{{\left(r\sin\left(La_1\right)-r\sin\left(La_2\right)\right)}^2+{a}^2}
+\end{split}
+\end{equation}
+
+This is not quite what we are after, as this is the straight line distance from $P_1$ to $P_2$, but we want the distance along the surface of the Earth, which will be curved. To find this, we must find the angle $\theta$ between $P_1$ and $P_2$, which we can do by using the cosine rule in reverse.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,0) circle (1);
+    % equator
+    \draw[dashed] (0,0,0) coordinate (O) node[anchor=north] {$O$} circle (1);
+    % points
+    \draw (O) -- (0.77,0.43,0.48) coordinate (P1) node[anchor=south west] {$P_1$} node[midway,below] {$r$};
+    \draw (O) -- (0.32,-0.51,0.79) coordinate (P2) node[anchor=south east] {$P_2$} node[midway,below left] {$r$};
+    %constructions
+    \draw[dashed] (O) -- (0.77,0.43,0) coordinate (A) node[anchor=north west] {$A$} -- (P1);
+    \path pic[draw,dashed,angle radius=0.25cm] {right angle=O--A--P1};
+    \draw[dashed] (O) -- (0.32,-0.51,0) coordinate (B) node[anchor=north east] {$B$} -- (P2);
+    \path pic[draw,dashed,angle radius=0.25cm] {right angle=O--B--P2};
+    \draw[dashed] (A) -- (B);
+    \draw (P1) -- (P2) node[midway,above] {$b$};
+    \path pic["$\theta$",draw,angle radius=0.6cm] {angle=P1--O--P2};
+\end{tikzpicture}
+\caption{Angle $\theta$ between $P_1$ and $P_2$}
+\end{figure}
+\begin{equation}\label{eq:dist2pointstheta}
+\begin{split}
+    \theta=\angle P_{1}OP_{2}&=\arccos\left(\frac{{\left(OP_1\right)}^2+{\left(OP_2\right)}^2-{\left(P_{1}P_{2}\right)}^2}{2\times OP_1\times OP_2}\right)\\
+    &=\arccos\left(\frac{{r}^2+{r}^2-{b}^2}{2\times r\times r}\right)\\
+    &=\arccos\left(\frac{2{r}^2-{b}^2}{2{r}^2}\right)\\
+    &=\arccos\left(1-\frac{{b}^2}{2{r}^2}\right)
+\end{split}
+\end{equation}
+
+The arclength between 2 points on a circle (in this case, the great circle on the surface of the Earth containing $P_1$ and $P_2$) separated by an angle of $\theta$ is given by $\text{arclength}=r\theta$.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,0) circle (1);
+    % equator
+    \draw[dashed] (0,0,0) coordinate (O) node[anchor=north] {$O$} circle (1);
+    % points
+    \draw (O) -- (0.77,0.43,0.48) coordinate (P1) node[anchor=south west] {$P_1$} node[midway,below] {$r$};
+    \draw (O) -- (0.32,-0.51,0.79) coordinate (P2) node[anchor=south east] {$P_2$} node[midway,below left] {$r$};
+    %constructions
+    \draw[dashed] (O) -- (0.77,0.43,0) coordinate (A) node[anchor=north west] {$A$} -- (P1);
+    \path pic[draw,dashed,angle radius=0.25cm] {right angle=O--A--P1};
+    \draw[dashed] (O) -- (0.32,-0.51,0) coordinate (B) node[anchor=north east] {$B$} -- (P2);
+    \path pic[draw,dashed,angle radius=0.25cm] {right angle=O--B--P2};
+    \draw[dashed] (A) -- (B);
+    \draw[dashed] (P1) -- (P2) node[midway,below] {$b$};
+    \path pic["$\theta$",draw,angle radius=0.6cm] {angle=P1--O--P2};
+    \tdplotdefinepoints(0,0,0)(0.77,0.43,0.48)(0.32,-0.51,0.79)
+    \tdplotdrawpolytopearc[]{1}{}{}
+\end{tikzpicture}
+\caption{Arc between $P_1$ and $P_2$}
+\end{figure}
+Substituting $\theta$ for equation \ref{eq:dist2pointstheta} gives
+\begin{equation}
+    \text{arclength}=r\arccos \left(1-\frac{b^{2}}{2r^{2}}\right)
+\end{equation}
+
+Substituting $b$ for equation \ref{eq:dist2pointsb} gives
+\begin{equation}
+\begin{split}
+    \text{arclength}&=r\arccos \left(1-\frac{{\left(r\sin\left(La_{1}\right)-r\sin\left(La_{2}\right)\right)}^{2}+a^{2}}{2r^{2}}\right)\\
+    &=r\arccos \left(1-\frac{r^{2}\sin^{2}\left(La_{1}\right)-2r^{2}\sin\left(La_{1}\right)\sin\left(La_{2}\right)+r^{2}\sin^{2}\left(La_{2}\right)+a^{2}}{2r^{2}}\right)
+\end{split}
+\end{equation}
+
+Substituting $a$ for equation \ref{eq:dist2pointsa} gives
+
+\begin{equation}
+\begin{split}
+    \text{arclength}&=r\arccos \left(1-\frac{r^{2}\left(\splitdfrac{\sin^{2}\left(La_{1}\right)-2\sin\left(La_{1}\right)\sin\left(La_{2}\right)+\sin^{2}\left(La_{2}\right)+\cos^{2}\left(La_{1}\right)}{+\cos^{2}\left(La_{2}\right)-2\cos \left(La_{1}\right)\cos \left(La_{2}\right)\cos \left(Lo_{1}-Lo_{2}\right)}\right)}{2r^{2}}\right)\\
+    &=r\arccos \left(1-\frac{\splitdfrac{\sin^{2}\left(La_{1}\right)+\cos^{2}\left(La_{1}\right)+\sin^{2}\left(La_{2}\right)+\cos^{2}\left(La_{2}\right)}{-2\sin\left(La_{1}\right)\sin\left(La_{2}\right)-2\cos \left(La_{1}\right)\cos \left(La_{2}\right)\cos \left(Lo_{1}-Lo_{2}\right)}}{2}\right)\\
+    &=r\arccos \left(1-\frac{2-2\sin\left(La_{1}\right)\sin\left(La_{2}\right)-2\cos \left(La_{1}\right)\cos \left(La_{2}\right)\cos \left(Lo_{1}-Lo_{2}\right)}{2}\right)\\
+    &=r\arccos \left(1-\left(1-\sin\left(La_{1}\right)\sin\left(La_{2}\right)-\cos \left(La_{1}\right)\cos \left(La_{2}\right)\cos \left(Lo_{1}-Lo_{2}\right)\right)\right)\\
+    &=r\arccos \left(\sin\left(La_{1}\right)\sin\left(La_{2}\right)+\cos \left(La_{1}\right)\cos \left(La_{2}\right)\cos \left(Lo_{1}-Lo_{2}\right)\right)
+\end{split}
+\end{equation}
+
+Therefore, the distance in \unit{km} between 2 latitude and longitude coordinates along the surface of the Earth is given by:
+\begin{equation}\label{eq:dist2points}
+    \text{distance}=r\arccos \left(\sin\left(La_{1}\right)\sin\left(La_{2}\right)+\cos \left(La_{1}\right)\cos \left(La_{2}\right)\cos \left(Lo_{1}-Lo_{2}\right)\right)
+\end{equation}
+where $r$ is the radius of the Earth in \unit{km} and $La_1$, $La_2$, $Lo_1$ and $Lo_2$ are the 2 points' latitudes and longitudes in radians.
+
+However, the latitude and longitude coordinates returned by OpenStreetMaps are not measured in radians, but instead measured in degrees, so we must use the conversion factor $\left(\text{angle in radians}\right)=\frac{\pi}{180}\times\left(\text{angle in degrees}\right)$ on each one before they are passed into the formula.
+
+\subsubsection{Finding the Average Distance between 2 objects $x,y$, $A\left(x\comma{}y\right)$}
+Now that we have the means to find the distance between any 2 points along the Earth's surface, we can consider the average distance between 2 particular types of object. Recall that $A\left(x,y\right)$ is specifically defined as ``Average Distance from $x$ to nearest $y$'' (for example, $x$ might be House, and $y$ might be School), so the input for this function will be 2 sets of lists of latitude and longitude coordinates, corresponding to all the $x$-objects and $y$-objects in a particular area.
+
+As there are likely to be hundreds of thousands of each object (depending on how large of an area the user selects), it will take too long to calculate the average distance over all of these data points. This is important to consider, as this function will be run thousands of times, both in preparing the data (for me only) and when users are using the app.
+
+Therefore, instead of considering every single data point, randomly sample an arbitrary 500 of the $x$-objects (and if there are less than 500, consider all of them), and then find out which of the $y$-objects is closest to each of them. We must consider every $y$-object for each considered $x$-object as we don't know which one will be closest to that $x$. Considering all the $y$-objects should be fine, as for all the factors in the form $A\left(x,y\right)$, there will be many more $x$-objects than $y$-objects (for example, there are many more houses than schools).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (incoords) [fInputOutput, below of=start] {Input a set of $x$-objects and $y$-objects (with latitude and longitude)};
+    \node (decision1) [fDecision, below of=incoords, yshift=-1cm] {Are there more than 500 $x$-objects?};
+    \node (randomsample) [fProcess, right of=decision1, xshift=5cm] {Randomly Sample 500 $x$-objects};
+    \node (xequals1) [fProcess, below of=decision1, yshift=-1cm] {$x=1$};
+    \node (getdistances) [fProcess, below of=xequals1, text width=8cm] {Iterate over each $y$-object and find the distance from it to the current $x$-object using equation \ref{eq:dist2points}};
+    \node (findmin) [fProcess, below of=getdistances] {Find the minimum distance from the previous process};
+    \node (decision2) [fDecision, below of=findmin, yshift=-1cm] {Does $x=500$, or the number of $x$-objects?};
+    \node (incrementx) [fProcess, right of=decision2, xshift=5cm] {$x=x+1$};
+    \node (output) [fInputOutput, below of=decision2, yshift=-1cm] {Output the average of the minimum distances};
+    \node (stop) [fStartStop, below of=output] {Stop};
+    
+    \draw [fArrow] (start) -- (incoords);
+    \draw [fArrow] (incoords) -- (decision1);
+    \draw [fArrow] (decision1) -- node[anchor=south] {yes} (randomsample);
+    \draw [fArrow] (randomsample) |- (xequals1);
+    \draw [fArrow] (decision1) -- node[anchor=east] {no} (xequals1);
+    \draw [fArrow] (xequals1) -- (getdistances);
+    \draw [fArrow] (getdistances) -- (findmin);
+    \draw [fArrow] (findmin) -- (decision2);
+    \draw [fArrow] (decision2) -- node[anchor=east] {yes} (output);
+    \draw [fArrow] (decision2) -- node[anchor=south] {no} (incrementx);
+    \draw [fArrow] (incrementx) |- (getdistances);
+    \draw [fArrow] (output) -- (stop);
+\end{tikzpicture}
+\caption{$A\left(x,y\right)$ Flowchart}\label{fig:aofxy}
+\end{figure}
+For validation, if the entered list of $x$-objects is empty (in other words, there does not exist any $x$-objects in the region), the average distance returned should be infinity.
+
+\subsection{Finding the Density of some object $x$, $D\left(x\right)$}\label{sec:dx}
+\subsubsection{Definition of $D\left(x\right)$}
+The density of some object is defined as ``The number of that object per unit area''. Therefore, $D\left(x\right)$ is
+\begin{equation}
+    \frac{\text{Total number of }x\text{-objects in a given region}}{\text{Area of that region}}
+\end{equation}
+Finding the total number of $x$-objects in a region is easy. As they will come in a list, we just need to find the length of that list. However, finding the area of that region is much harder, as the only information we have about it is a list (of unknown size) of its bounding latitude and longitude coordinates.
+
+To do this, I will be using the same abstraction for the Earth, as shown in Figure \ref{fig:abstractedEarth}.
+
+\subsubsection{Area of a Polygon on the Surface of a Sphere}
+First, assume that any polygon on the surface of a sphere (any region that the user may draw) can be cut into a series of internal spherical triangles (in fact, a spherical polygon with $n$ sides can always be broken up into $n-2$ spherical triangles).
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,0) circle (1);
+    % equator
+    \draw[dashed] (0,0,0) node {$O$} circle (1);
+    % arcs
+    \tdplotdefinepoints(0,0,0)(0.62,-0.62,0.49)(0.56,-0.27,0.78)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.56,-0.27,0.78)(0.76,0.48,0.44)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.76,0.48,0.44)(0.96,-0.1,0.27)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.96,-0.1,0.27)(0.89,0.37,-0.28)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.89,0.37,-0.28)(0.87,0.03,-0.5)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.87,0.03,-0.5)(0.92,-0.36,-0.16)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.92,-0.36,-0.16)(0.61,-0.76,-0.23)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.61,-0.76,-0.23)(0.62,-0.62,0.49)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    % cuts
+    \tdplotdefinepoints(0,0,0)(0.62,-0.62,0.49)(0.76,0.48,0.44)
+    \tdplotdrawpolytopearc[dashed,red]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.62,-0.62,0.49)(0.96,-0.1,0.27)
+    \tdplotdrawpolytopearc[dashed,red]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.96,-0.1,0.27)(0.87,0.03,-0.5)
+    \tdplotdrawpolytopearc[dashed,red]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.96,-0.1,0.27)(0.92,-0.36,-0.16)
+    \tdplotdrawpolytopearc[dashed,red]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.62,-0.62,0.49)(0.92,-0.36,-0.16)
+    \tdplotdrawpolytopearc[dashed,red]{1}{}{}
+\end{tikzpicture}
+\caption{Cutting into Triangles}
+\end{figure}
+
+To find the area of the polygon, we can individually find the area of each triangle and then add them up.
+
+To find the area of a triangle on the surface of the sphere, consider extending the sides of the triangle to make great circles around the sphere.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,0) circle (1);
+    % A = (0.72,-0.66,-0.19), B=(0.9,0.38,-0.19), C=(0.72,-0.09,0.68)
+    % arcs
+    \tdplotdefinepoints(0,0,0)(0.72,-0.66,-0.19)(0.9,0.38,-0.19) %AB
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.9,0.38,-0.19)(0.72,-0.09,0.68) %BC
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.72,-0.09,0.68)(0.72,-0.66,-0.19) %CA
+    \tdplotdrawpolytopearc[]{1}{}{}
+    % extensions
+    %AB
+    \tdplotdefinepoints(0,0,0)(0.72,-0.66,-0.19)(-0.17,-0.99,0)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.9,0.38,-0.19)(0.01,1,0.04)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(-0.17,-0.99,0)(0.01,1,0.04)
+    \tdplotdrawpolytopearc[dashed]{1}{}{}
+    %BC
+    \tdplotdefinepoints(0,0,0)(0.9,0.38,-0.19)(0.5,0.49,-0.71)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.72,-0.09,0.68)(-0.42,-0.49,0.76)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.5,0.49,-0.71)(-0.42,-0.49,0.76)
+    \tdplotdrawpolytopearc[dashed]{-1}{}{}
+    %CA
+    \tdplotdefinepoints(0,0,0)(0.72,-0.09,0.68)(-0.23,0.65,0.73)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.72,-0.66,-0.19)(0.17,-0.62,-0.76)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(-0.23,0.65,0.73)(0.17,-0.62,-0.76)
+    \tdplotdrawpolytopearc[dashed]{1}{}{}
+    % angles
+    \coordinate (A) at (0.72,-0.66,-0.19);
+    \coordinate (B) at (0.9,0.38,-0.19);
+    \coordinate (C) at (0.72,-0.09,0.68);
+    \path pic["$\alpha$",draw,angle radius=0.6cm] {angle=B--A--C};
+    \path pic["$\beta$",draw,angle radius=0.6cm] {angle=C--B--A};
+    \path pic["$\gamma$",draw,angle radius=0.6cm] {angle=A--C--B};
+\end{tikzpicture}
+\caption{Triangle Edges Extended}\label{fig:areaSphere}
+\end{figure}
+
+As you can see from Figure \ref{fig:areaSphere}, the total surface area of the sphere can be given by the sum of these 6 ``spherical lune'' shapes, with an excess of 4 of the triangles we want (at either end of the sphere, the triangle is formed by the intersection of 3 spherical lunes, and so therefore we must subtract 2 for each side to get the full area of the sphere with no excess, which is why we must subtract 4 triangles overall).
+\begin{equation}\label{eq:totalAreaSphere}
+    A_{\text{Sphere}}=\displaystyle\sum A_{\text{Lune}}-4A_{\text{Triangle}}
+\end{equation}
+
+The surface area of a sphere is $4\pi r^2$, and the area of a spherical lune of an angle $\theta$ can be given as a fraction of the full area of the sphere.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,0) circle (1);
+    % A = (0.72,-0.66,-0.19), B=(0.9,0.38,-0.19), C=(0.72,-0.09,0.68)
+    % arcs
+    \tdplotdefinepoints(0,0,0)(0.9,0.38,-0.19)(0.72,-0.09,0.68) %BC
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.72,-0.09,0.68)(0.72,-0.66,-0.19) %CA
+    \tdplotdrawpolytopearc[]{1}{}{}
+    % extensions
+    %BC
+    \tdplotdefinepoints(0,0,0)(0.9,0.38,-0.19)(0.5,0.49,-0.71)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.5,0.49,-0.71)(-0.72,0.09,-0.68)
+    \tdplotdrawpolytopearc[dashed]{1}{}{}
+    %CA
+    \tdplotdefinepoints(0,0,0)(0.72,-0.66,-0.19)(0.17,-0.62,-0.76)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.17,-0.62,-0.76)(-0.72,0.09,-0.68)
+    \tdplotdrawpolytopearc[dashed]{1}{}{}
+    % angles
+    \coordinate (A) at (0.72,-0.66,-0.19);
+    \coordinate (B) at (0.9,0.38,-0.19);
+    \coordinate (C) at (0.72,-0.09,0.68);
+    \path pic["$\theta$",draw,angle radius=0.6cm] {angle=A--C--B};
+\end{tikzpicture}
+\caption{Area of a Spherical Lune}
+\end{figure}
+\begin{equation}
+\begin{split}
+    A_{\text{Lune}}&=\frac{\theta}{2\pi}\times 4\pi r^2\\
+    &=2\theta r^2
+\end{split}
+\end{equation}
+
+The 6 lunes shown in Figure \ref{fig:areaSphere} can be broken down into 3 sets of 2 identical lunes, with angles $\alpha$, $\beta$ and $\gamma$. Therefore, from equation \ref{eq:totalAreaSphere}
+\begin{equation}
+\begin{split}
+    A_{\text{Triangle}}&=\frac{\displaystyle\sum A_{\text{Lune}}-A_{\text{Sphere}}}{4}\\
+    &=\frac{2\times\left(2\alpha r^2+2\beta r^2+2\gamma r^2\right)-4\pi r^2}{4}\\
+    &=\frac{4r^2\left(\alpha+\beta+\gamma-\pi\right)}{4}\\
+    &=r^2\left(\displaystyle\sum\theta-\pi\right)
+\end{split}
+\end{equation}
+where $\displaystyle\sum\theta$ represents the sum of the angles in the spherical triangle.
+
+As our original region (an $n$-sided spherical polygon) was split up into $n-2$ spherical triangles, we can see that the area of the region $R$ is given by
+\begin{equation}
+\begin{split}
+    R&=\displaystyle\sum_{i=1}^{n-2} {\left(A_{\text{Triangle}}\right)}_i\\
+    &=\displaystyle\sum_{i=1}^{n-2} r^2\left({\left(\displaystyle\sum\theta\right)}_i-\pi\right)\\
+    &=r^2\left(\displaystyle\sum_{i=1}^{n-2}{\left(\displaystyle\sum\theta\right)}_i-\left(n-2\right)\pi\right)
+\end{split}
+\end{equation}
+where ${\left(\displaystyle\sum\theta\right)}_i$ represents the sum of the angles in spherical triangle $i$.
+
+As the sum of the angles in a polygon equals the sum of all the sums of angles in the triangles it was broken up into, this simplifies to
+\begin{equation}\label{eq:areaRegion}
+    R=r^2\left(\displaystyle\sum\theta-\left(n-2\right)\pi\right)
+\end{equation}
+where $\displaystyle\sum\theta$ represents the sum of the interior angles in the spherical polygon, and $n$ is the number of sides of the spherical polygon.
+
+\subsubsection{Finding the Interior Angles}
+To find the interior angles of our polygon, we could use the cosine rule in reverse, as before. However, as $\cos\theta\equiv\cos\left(360-\theta\right)$, this will essentially result in both the interior angle and exterior angle for all the vertices, with no indication of which ones which. Therefore, we must introduce some directionality, by considering vectors.
+
+The vectors we want to consider are those in the plane tangent to the point in which we want to find the interior angle of.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,0) circle (1);
+    % equator
+    \draw[dashed] (0,0,0) node {$O$} circle (1);
+    % arcs
+    \tdplotdefinepoints(0,0,0)(0.29,-0.51,0.81)(0.66,0.21,0.72)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,0)(0.66,0.21,0.72)(0.9,0.38,0.2)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    % plane
+    \filldraw[draw=red,fill=red!50,fill opacity=0.5] (0.44,-0.72,1.2) -- (-0.07,0.83,1.21) -- (0.89,1.15,0.23) -- (1.39,-0.4,0.23) -- cycle;
+    % vectors
+    \draw[->] (0.51,-0.44,1.05) -- (0.66,0.21,0.72);
+    \draw[dashed] (0.51,-0.44,1.05) -- (0.29,-0.51,0.81);
+    \draw[->] (0.66,0.21,0.72) -- (1.02,0.42,0.33);
+    \draw[dashed] (1.02,0.42,0.33) -- (0.9,0.38,0.2);
+\end{tikzpicture}
+\caption{Considering Vectors}
+\end{figure}
+
+To find these vectors, we first must convert each of the coordinates from their latitude-longitude forms into their 3D position vector forms ($xyz$ coordinates).
+\begin{equation}\label{eq:convert2vectors}
+    \begin{pmatrix}x\\y\\z\end{pmatrix}=\begin{pmatrix}r\cos\left(La\right)\cos\left(Lo\right)\\r\cos\left(La\right)\sin\left(Lo\right)\\r\sin\left(La\right)\end{pmatrix}
+\end{equation}
+where $La$ is the latitude of the point, $Lo$ is the longitude of the point, and $r$ is the radius of the Earth. As we are only using this to find angles, the radius of the Earth is actually irrelevant, and so to simplify things, we can let $r=1$.
+
+Finding these vectors on a plane which is rotated strangely is difficult, so we can instead rotate the whole system such that this plane lies on the $xy$-plane. This can be done by rotating it about the $z$-axis anticlockwise by an angle of $-Lo$, by using the matrix
+\begin{equation}\label{eq:transformCoordsStart}
+    \begin{pmatrix}\cos\left(-Lo\right)&-\sin\left(-Lo\right)&0\\\sin\left(-Lo\right)&\cos\left(-Lo\right)&0\\0&0&1\end{pmatrix}
+\end{equation}
+followed by rotating it about the $y$-axis anticlockwise by an angle of $La-90^{\circ}$, by using the matrix
+\begin{equation}
+    \begin{pmatrix}\cos\left(La-90^{\circ}\right)&0&\sin\left(La-90^{\circ}\right)\\0&1&0\\-\sin\left(La-90^{\circ}\right)&0&\cos\left(La-90^{\circ}\right)\end{pmatrix}
+\end{equation}
+finally followed by translating it down by 1 unit (as, for now, $r=1$), by adding the vector
+\begin{equation}\label{eq:transformCoordsEnd}
+    \begin{pmatrix}0\\0\\-1\end{pmatrix}
+\end{equation}
+
+This will have the effect of moving the point we want to find the angle at, to $\left(0,0,0\right)$, while transforming the other points in the same way.
+
+As the plane with the vectors we want to find is now the $xy$-plane, all we need to do to project the other points onto that plane is set their $z$-coordinates to 0.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=4,tdplot_main_coords]
+    % spherical background
+    \tdplotsetrotatedcoords{-10}{90}{0}
+    \draw[ball color=cyan,very thin,tdplot_rotated_coords] (0,0,2.7183) circle (1);
+    \node[anchor=north east] (0,0,0) {$O$};
+    % axis
+    \draw[dashed] (-1.25,0,0) -- (1.25,0,0) node[anchor=north west] {$x$};
+    \draw[dashed] (0,-1.25,0) -- (0,1.25,0) node[anchor=west] {$y$};
+    \draw[dashed] (0,0,-2.25) -- (0,0,0.75) node[anchor=south] {$z$};
+    % equator
+    \draw[dashed] (0,0,-1) circle (1);
+    % plane
+    \filldraw[draw=red,fill=red!50,fill opacity=0.5] (1,1,0) -- (-1,1,0) -- (-1,-1,0) -- (1,-1,0) -- cycle;
+    % arcs
+    \tdplotdefinepoints(0,0,-1)(0.35,-0.9,-0.73)(0,0,0)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    \tdplotdefinepoints(0,0,-1)(0,0,0)(0.51,0.62,-0.41)
+    \tdplotdrawpolytopearc[]{1}{}{}
+    % vectors
+    \draw[->] (0.35,-0.9,0) node[left] {$A$} -- (0,0,0) node[midway,above] {$\overrightarrow{AO}$};
+    \draw[dashed] (0.35,-0.9,-0.73) -- (0.35,-0.9,0);
+    \draw[->] (0,0,0) -- (0.51,0.62,0) node[right] {$B$} node[midway,above] {$\overrightarrow{OB}$};
+    \draw[dashed] (0.51,0.62,-0.41) -- (0.51,0.62,0);
+\end{tikzpicture}
+\caption{Projecting the Other Points onto the $xy$-plane}
+\end{figure}
+
+As the points will be given in a list, in the other the user has drawn them in the polygon, $\overrightarrow{AO}$ (the vector from the projection of the previous point to the current point) will be given by the coordinates of $A$ times $-1$, and $\overrightarrow{OB}$ (the vector from the current point to the projection of the next point) will be given by the coordinates of $B$.
+
+Imagine travelling along the line segment $AO$. When you get to $O$, you must turn some angle $\theta$ anticlockwise (between $180^{\circ}$ and $-180^{\circ}$) to be facing in the right direction to travel along $OB$. Note that this angle is not the angle between $AO$ and $OB$, but the angle between $\overrightarrow{AO}$ and $\overrightarrow{OB}$. The \textit{anticlockwise} angle $\theta$ between $\overrightarrow{AO}$ and $\overrightarrow{OB}$ is given by
+\begin{equation}\label{eq:calcClockwiseAngle}
+    \theta=\arctan 2\left(\left(a_{2}b_{3}-a_{3}b_{2}\right)-\left(a_{3}b_{1}-a_{1}b_{3}\right)+\left(a_{1}b_{2}-a_{2}b_{1}\right),a_{1}b_{1}+a_{2}b_{2}+a_{3}b_{3}\right)
+\end{equation}
+where
+\begin{equation}
+    \overrightarrow{AO}=\begin{pmatrix}a_1\\a_2\\a_3\end{pmatrix},\overrightarrow{OB}=\begin{pmatrix}b_1\\b_2\\b_3\end{pmatrix}
+\end{equation}
+
+Therefore, if the user has drawn the region in an anticlockwise-winding order, then the interior angle of this particular point will be given by $180^{\circ}-\theta$.
+
+However, the user may decide to draw their region in a clockwise-winding order, which would currently result in the wrong area being calculated. To detect if the user has drawn their shape in a clockwise or anticlockwise winding order, we can find the sum of the ``anticlockwise'' angles. If it is positive, they have drawn it anticlockwise, and if it is negative, they must have drawn it clockwise. If it is 0, that means that the shape must self-intersect at some point, which should not be allowed.
+
+If the shape was drawn clockwise, then instead of calculating the anticlockwise angles, this process will have calculated the clockwise angles between the vectors (as the vectors are pointing the other way), which is why I put ``anticlockwise'' in quotation marks. In order to turn them into the correct anticlockwise angles, we must multiply each of them by $-1$, before calculating the interior angles.
+
+\subsubsection{Final Algorithm}
+Now that we have all the interior angles, all we need to do is plug them into the formula for the area of the region (equation \ref{eq:areaRegion}), and then divide by the number for $x$-objects to find the density.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (instuff) [fInputOutput, below of=start] {Input a set of $x$-objects, and the bounding coordinates of the region};
+    \node (convert2vectors) [fProcess, below of=instuff, text width=8cm] {Convert each of the bounding coordinates to position vectors using equation \ref{eq:convert2vectors}};
+    \node (vertex1) [fProcess, below of=convert2vectors, yshift=0.5cm] {$\text{currentVertex}=1$};
+    \node (transform) [fProcess, below of=vertex1, text width=8cm] {Transform the currentVertex, and the 2 vertices either side using equations \ref{eq:transformCoordsStart} to \ref{eq:transformCoordsEnd} and calculate the anticlockwise angle using equation \ref{eq:calcClockwiseAngle}};
+    \node (decision) [fDecision, below of=transform, yshift=-1cm] {Does $\text{currentVertex}=\text{number of vertices}$?};
+    \node (incrementVertex) [fProcess, right of=decision, xshift=4.5cm, text width=3cm] {$\text{currentVertex}=\text{currentVertex}+1$};
+    \node (totalClockwise) [fDecision, below of=decision, yshift=-2cm] {Sum of all the anticlockwise angles\ldots};
+    \node (outInvalid) [fInputOutput, left of=totalClockwise, xshift=-4.5cm, text width=3cm] {Throw Error, Invalid Shape};
+    \node (negative) [fProcess, right of=totalClockwise, xshift=4.5cm, text width=3cm] {Multiply each of the angles by $-1$};
+    \node (calcArea) [fProcess, below of=totalClockwise, yshift=-1cm, text width=8cm] {Subtract each angle from $180^{\circ}$ to find the interior angles of the region, and use equation \ref{eq:areaRegion} to find the area};
+    \node (out) [fInputOutput, below of=calcArea] {Output the number of $x$-objects divided by the area};
+    \node (stop) [fStartStop, below of=out] {Stop};
+    
+    \draw [fArrow] (start) -- (instuff);
+    \draw [fArrow] (instuff) -- (convert2vectors);
+    \draw [fArrow] (convert2vectors) -- (vertex1);
+    \draw [fArrow] (vertex1) -- (transform);
+    \draw [fArrow] (transform) -- (decision);
+    \draw [fArrow] (decision) -- node[anchor=east] {yes} (totalClockwise);
+    \draw [fArrow] (decision) -- node[anchor=south] {no} (incrementVertex);
+    \draw [fArrow] (incrementVertex) |- (transform);
+    \draw [fArrow] (totalClockwise) -- node[anchor=south] {0?} (outInvalid);
+    \draw [fArrow] (totalClockwise) -- node[anchor=south] {-?} (negative);
+    \draw [fArrow] (totalClockwise) -- node[anchor=east] {+?} (calcArea);
+    \draw [fArrow] (negative) |- (calcArea);
+    \draw [fArrow] (calcArea) -- (out);
+    \draw [fArrow] (out) -- (stop);
+    \draw [fArrow] (outInvalid) |- (stop);
+\end{tikzpicture}
+\caption{$D\left(x\right)$ Flowchart}\label{fig:dofx}
+\end{figure}
+
+\subsection{Overall Algorithm for Data Collection \& Processing}\label{sec:dataCollectionFullAlgo}
+In order to train a neural network, I need both input and output data. The input data will be 24 factors listed above, in section \ref{sec:listOfFactors}, and the output data will be the true HDI of the region.
+
+For this, I will be using the subnational region data from the Global Data Lab \cite{hdiData}, in order to maximise the number of training examples. In order to calculate the 24 factors for each of these regions, I will need the bounding coordinates of all the regions. I will get this data from GADM \cite{regionBorders}, which contains \pil{.geojson} data on all of the subnational regions.
+
+Therefore, all we need to do is for each subnational region, calculate each factor and store it in an external file (e.g a \pil{.csv} file) along with the correct HDI, ready for the neural network to train on.
+
+In order to calculate each factor however, we must first query Overpass Turbo, in order to get the data about the locations objects.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (inRegions) [fInputOutput, below of=start, yshift=0.25cm] {Input a list of all subnational regions, with their bounding coordinates};
+    \node (region0) [fProcess, below of=inRegions, yshift=0.25cm] {$\text{currentRegion}=1$};
+    \node (overpassTurbo) [fProcess, below of=region0, yshift=0.25cm] {Query Overpass Turbo to get all of the data on the Objects};
+    \node (calcFactors) [fSubprocess, below of=overpassTurbo] {Calculate each of the factors (Figures \ref{fig:aofxy} \& \ref{fig:dofx})};
+    \node (out) [fInputOutput, below of=calcFactors] {Save the results to an external file, along with the correct HDI};
+    \node (decision) [fDecision, below of=out, yshift=-1cm] {Does $\text{currentRegion}=\text{number of regions}$?};
+    \node (incrementRegion) [fProcess, right of=decision, xshift=5cm] {$\text{currentRegion}=\text{currentRegion}+1$};
+    \node (stop) [fStartStop, below of=decision, yshift=-1cm] {Stop};
+    
+    \draw [fArrow] (start) -- (inRegions);
+    \draw [fArrow] (inRegions) -- (region0);
+    \draw [fArrow] (region0) -- (overpassTurbo);
+    \draw [fArrow] (overpassTurbo) -- (calcFactors);
+    \draw [fArrow] (calcFactors) -- (out);
+    \draw [fArrow] (out) -- (decision);
+    \draw [fArrow] (decision) -- node[anchor=east] {yes} (stop);
+    \draw [fArrow] (decision) -- node[anchor=south] {no} (incrementRegion);
+    \draw [fArrow] (incrementRegion) |- (overpassTurbo);
+\end{tikzpicture}
+\caption{Overall Data Collection \& Processing Algorithm Flowchart}
+\end{figure}
+
+\subsection{List of Key Variables}
+\subsubsection{Variables in $A\left(x,y\right)$}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{x_objects} & \pil{list[tuple[float]]} & Parameter of the function, holds a list of the coordinates of all the $x$-objects. & Each coordinate is a tuple as the latitudes and longitudes will never change. \\ 
+    \hline
+    \pil{y_objects} & \pil{list[tuple[float]]} & Parameter of the function, holds a list of the coordinates of all the $y$-objects. & Each coordinate is a tuple as the latitudes and longitudes will never change. \\ 
+    \hline
+    \pil{max_x_objects} & \pil{int} & Parameter of the function, holds the maximum number of $x$-object to consider. Was 500 in the explanation above. & Considering every $x$-object would take a long time, and so some random sampling must be done. \\ 
+    \hline
+    \pil{x_object} & \pil{tuple[float]} & Iterator variable for when looping through \pil{x_objects}. & Is the singular of \pil{x_objects}. \\ 
+    \hline
+    \pil{y_object} & \pil{tuple[float]} & Iterator variable for when looping through \pil{y_objects}. & Is the singular of \pil{y_objects}. \\ 
+    \hline
+    \pil{dists_to_ys} & \pil{list[float]} & Holds the distances to each $y$-object for a particular $x$-object. & We must use this to find the minimum distance out of the distances stored. \\ 
+    \hline
+    \pil{min_dists} & \pil{list[float]} & Holds the minimum distances from each $x$-object to the nearest $y$-object. & $A\left(x,y\right)$ is given by the average of this list. \\ 
+    \hline
+\caption{List of Key Variables in $A\left(x,y\right)$}
+\end{longtable}
+\end{center}
+
+\subsubsection{Variables in $D\left(x\right)$}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{x_objects} & \pil{list[tuple[float]]} & Parameter of the function, holds a list of the coordinates of all the $x$-objects. & Each coordinate is a tuple as the latitudes and longitudes will never change. \\ 
+    \hline
+    \pil{bounding_coords} & \pil{list[tuple[float]]} & Parameter of the function, holds a list of the bounding coordinates of the region. & Each coordinate is a tuple as the latitudes and longitudes will never change. \\ 
+    \hline
+    \pil{bounding_vectors} & \pil{list[column_vector]} & Holds the \pil{bounding_coords} once converted into column vectors. & This is so that we can use matrix multiplication to rotate them. \\ 
+    \hline
+    \pil{current_vertex} & \pil{int} & Iterator variable to keep track of which vertex I am dealing with. & Use it to get the vertex from the \pil{bounding_vectors} as well as the previous and next one. \\ 
+    \hline
+    \pil{transformed_vertices} & \pil{list[column_vector]} & Holds the transformed \pil{current_vertex} as well as the prevous and next one. & We must compute the vectors and anticlockwise angles from this. \\ 
+    \hline
+    \pil{anticlockwise_angles} & \pil{list[float]} & Holds all of the anticlockwise angles at each vertex. & We need to sum this to determine if they are actually anticlockwise angles or not. \\ 
+    \hline
+    \pil{interior_angles} & \pil{list[float]} & Holds the interior angles of the region the user has drawn. & This is one of the terms in the formula to calculate the area of the region. \\ 
+    \hline
+    \pil{area} & \pil{float} & Holds the area of the region the user has drawn. & $D\left(x\right)$ is given by the length of \pil{x_objects} divided by this. \\ 
+    \hline
+\caption{List of Key Variables in $D\left(x\right)$}
+\end{longtable}
+\end{center}
+
+The data structure \pil{column_vector} does not come with python, but can be implemented with the \pil{numpy} module.
+
+\subsubsection{Other Variables}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{current_region} & \pil{int} & Iterator variable for iterating through the regions. & We must calculate all of the factors for each region. \\ 
+    \hline
+    \pil{dataset_path} & \pil{str} & Stores the file path to the external file for which the neural network will read the data from. & The neural network may need to be trained more than once, due to mistakes, so storing this in an external file would be beneficial. \\ 
+    \hline
+\caption{List of Other Key Variables in Data Collection \& Processing}
+\end{longtable}
+\end{center}
+
+As the user never interacts with this part of the program, there is no validation that needs to be done (e.g. as stuff is automatically in the right type).
+
+\section{Multilayer Perceptron}\label{sec:mlp}
+All the information in this section, I learned from 3blue1brown's videos \cite{3blue1brown} and Micheal Nielsen's e-book \cite{backpropogation} on the topic.
+\subsection{Structure}\label{sec:mlpStruct}
+\subsubsection{Layers \& Neurons}
+The structure of a multilayer perceptron is similar to that of a graph, in the sense that it has a series of nodes (neurons) and edges (weights). The neurons are arranged in layers, the first of which being the input layer, the last being the output layer, and any in between being hidden layers.
+\begin{figure}[H]
+\centering
+\begin{neuralnetwork}[nodespacing=15mm,layerspacing=30mm]
+\inputlayer[count=5, title=Input Layer, text=\nodetext, bias=false]
+\hiddenlayer[count=4, title=Hidden Layer 1, text=\nodetext, bias=false] \linklayers
+\hiddenlayer[count=4, title=Hidden Layer 2, text=\nodetext, bias=false] \linklayers
+\outputlayer[count=1, title=Output Layer, text=\nodetext, bias=false] \linklayers
+\end{neuralnetwork}
+\caption{Neural Network Structure}\label{fig:nnStructure}
+\end{figure}
+
+Figure \ref{fig:nnStructure} shows an example neural network, with 5 neurons in the input layer (shown in green), 1 neuron in the output layer (shown in red), and 2 hidden layers each with 4 neurons (shown in blue). ``Multilayer Perceptron'' is just the fancy official name for this type of machine learning model.
+
+Each neuron will hold a number, which will represent something. In the input layer, the neurons represent the various inputs to the system. In my case, they will be the various factors that may affect the HDI, so my neural network will have 24 neurons in the input layer. In the output layer, the neuron(s) will represent whatever output the system should have. For example, I only want 1 output, the HDI, so there is 1 neuron in the output layer which will hold the predicted HDI.
+
+In the hidden layers, the hope is that the neurons will represent something intermediate in between the input and the output. For example, if the input neurons represent geographical factors, and the output neuron represents the HDI, the neurons in hidden layer 1 might represent the \textit{gist} of how good the schooling is, or how good the healthcare is, and the neurons in hidden layer 2 might represent the \textit{gist} of how these things work together to result in a higher HDI. This means that the original problem of calculating HDI from a set of factors has been decomposed into a series of smaller tasks.
+
+As shown in Figure \ref{fig:nnStructure}, I will use the notation $a^{\left(l\right)}_i$ to denote a particular neuron, where $l$ is the index of the layer that it is in, and $i$ is its index within the layer. In general, a network will have $L$ layers, not including the input layer (as the layers are 0-indexed).
+\subsubsection{Weights}
+The value of each neuron (that isn't in the input layer) should be based on all the neurons of the previous layer, as shown by the arrows in Figure \ref{fig:nnStructure}.
+\begin{figure}[H]
+\centering
+\begin{neuralnetwork}[nodespacing=15mm,layerspacing=30mm]
+\inputlayer[count=5, title=Input Layer, text=\nodetext, bias=false]
+\hiddenlayer[count=4, title=Hidden Layer 1, text=\nodetext, bias=false] \linklayers
+\hiddenlayer[count=4, title=Hidden Layer 2, text=\nodetext, bias=false] \linklayers
+\outputlayer[count=1, title=Output Layer, text=\nodetext, bias=false] \linklayers
+\link[style={black}, labelpos=near start, from layer=0, to layer=1, from node=1, to node=2, label=\weighttext]
+\link[style={black}, labelpos=near start, from layer=0, to layer=1, from node=2, to node=2, label=\weighttext]
+\link[style={black}, labelpos=near start, from layer=0, to layer=1, from node=3, to node=2, label=\weighttext]
+\link[style={black}, labelpos=near start, from layer=0, to layer=1, from node=4, to node=2, label=\weighttext]
+\link[style={black}, labelpos=near start, from layer=0, to layer=1, from node=5, to node=2, label=\weighttext]
+\link[style={black}, labelpos=near end, from layer=1, to layer=2, from node=2, to node=1, label=\weighttext]
+\link[style={black}, labelpos=near end, from layer=1, to layer=2, from node=2, to node=2, label=\weighttext]
+\link[style={black}, labelpos=near end, from layer=1, to layer=2, from node=2, to node=3, label=\weighttext]
+\link[style={black}, labelpos=near end, from layer=1, to layer=2, from node=2, to node=4, label=\weighttext]
+\end{neuralnetwork}
+\caption{Neural Network Weights}\label{fig:nnWeights}
+\end{figure}
+
+I will use the notation $w^{\left(l\right)}_{i,j}$ to denote a particular weight, where $l$ is the index of the layer it is pointing from, $i$ is the neuron's index within its layer that the weight is pointing to, and $j$ is the neuron's index within its layer that the weight is pointing from, as shown in Figure \ref{fig:nnWeights}.
+
+Each weight will also hold a value (any real number), which will not be calculated during prediction (like neurons' values are), and so the weights are parameters of the system. Initially, they will be set to random values, which will change during training.
+
+\subsection{Feedforward Algorithm \& Prediction}\label{sec:feedforward}
+\subsubsection{Weighted Sum}
+Again, the value of each neuron (that isn't in the input layer) should be based on all the neurons of the previous layer. This can be done using a weighted sum. For example, the equation to calculate the value of $a^{\left(1\right)}_1$ in this example neural network would be:
+\begin{equation}
+    a^{\left(1\right)}_1=w^{\left(0\right)}_{1,1}a^{\left(0\right)}_1+w^{\left(0\right)}_{1,2}a^{\left(0\right)}_2+w^{\left(0\right)}_{1,3}a^{\left(0\right)}_3+w^{\left(0\right)}_{1,4}a^{\left(0\right)}_4+w^{\left(0\right)}_{1,5}a^{\left(0\right)}_5
+\end{equation}
+\begin{figure}[H]
+\centering
+\begin{neuralnetwork}[nodespacing=15mm,layerspacing=30mm]
+\inputlayer[count=5, title=Input Layer, text=\nodetext, bias=false]
+\hiddenlayer[count=4, title=Hidden Layer 1, text=\nodetext, bias=false] \linklayers
+\hiddenlayer[count=4, title=Hidden Layer 2, text=\nodetext, bias=false] \linklayers
+\outputlayer[count=1, title=Output Layer, text=\nodetext, bias=false] \linklayers
+\link[style={black}, labelpos=near start, from layer=0, to layer=1, from node=1, to node=1, label=\weighttext]
+\link[style={black}, labelpos=near start, from layer=0, to layer=1, from node=2, to node=1, label=\weighttext]
+\link[style={black}, labelpos=near start, from layer=0, to layer=1, from node=3, to node=1, label=\weighttext]
+\link[style={black}, labelpos=near start, from layer=0, to layer=1, from node=4, to node=1, label=\weighttext]
+\link[style={black}, labelpos=near start, from layer=0, to layer=1, from node=5, to node=1, label=\weighttext]
+\end{neuralnetwork}
+\caption{Calculating $a^{\left(1\right)}_1$ Example}
+\end{figure}
+
+In general, the equation to calculate the value of some neuron $a^{\left(l\right)}_y$ in any given network would be:
+\begin{equation}
+    a^{\left(l\right)}_i=w^{\left(l-1\right)}_{i,1}a^{\left(l-1\right)}_1+w^{\left(l-1\right)}_{i,2}a^{\left(l-1\right)}_2+w^{\left(l-1\right)}_{i,3}a^{\left(l-1\right)}_3+\cdots +w^{\left(l-1\right)}_{i,n}a^{\left(l-1\right)}_n
+\end{equation}
+where $n$ is the number of neurons in layer $l-1$ (the previous layer).
+
+\subsubsection{Activation Function}
+The value of each neuron should also represent how ``activated'' that neuron is, ideally on a continuous scale from 0 to 1. This is to match what happens in biological neural networks (brains), as this is effectively a model for that. The 0 to 1 range is also suitable in this particular instance, as HDI is also measured on a continuous scale from 0 to 1.
+
+However, the result of this weighted sum could be any real number (as the weights can be any real number), so in order to squish it into the 0 to 1 range, it must be passed through some function, the activation function.
+
+There are many activation functions that could be used, but the one I will use is $\sigma \left(x\right)$ (``sigmoid of $x$''), which is defined as:
+\begin{equation}
+    \sigma \left(x\right)=\frac{1}{1+e^{-x}}
+\end{equation}
+
+Why this is suitable is best shown in the graph of $y=\sigma \left(x\right)$:
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    axis line style={-stealth,shorten >=-3mm},
+    ymax=1,
+    xlabel = $x$,
+    ylabel = $y$,
+    width=\columnwidth,
+    height=2in,
+    scale only axis
+]
+\addplot[
+    domain=-8:8,
+    samples=100,
+    red
+]{1/(1+e^(-x))};
+\end{axis}
+\end{tikzpicture}
+\caption{Graph of $y=\sigma \left(x\right)$}\label{fig:sigmoidX}
+\end{figure}
+
+As shown in Figure \ref{fig:sigmoidX}, the domain of $\sigma \left(x\right)$ is $\mathbb{R}$ (all real numbers), which is what the evaluation of the weighted sum could be, and the range is $0<\sigma \left(x\right)<1$, which is what we want it to be. Therefore, if the weighted sum is negative, then the activation of the neuron (its value) will be between 0 and 0.5, and if the weighted sum is positive, its activation will be between 0.5 and 1.
+
+As the graph has asymptotes at $y=0$ and $y=1$ (which means that the function approaches it but never reaches it), very negative weighted sums will result in activations $\approx 0$, and very positive weighted sums will result in activations $\approx 1$. The smooth curve in the middle will also mean that the change from 0 to 1 is gradual, and there are no sudden jumps. (The function is also differentiable on its entire domain, which will be helpful in the Backpropogation Algorithm).
+
+Therefore, the equation to calculate the activation of some neuron $a^{\left(l\right)}_i$ in any given network would now be:
+\begin{equation}
+    a^{\left(l\right)}_i=\sigma \left(w^{\left(l-1\right)}_{i,1}a^{\left(l-1\right)}_1+w^{\left(l-1\right)}_{i,2}a^{\left(l-1\right)}_2+w^{\left(l-1\right)}_{i,3}a^{\left(l-1\right)}_3+\cdots +w^{\left(l-1\right)}_{i,n}a^{\left(l-1\right)}_n\right)
+\end{equation}
+where $n$ is the number of neurons in layer $l-1$.
+
+\subsubsection{Bias}
+A neuron may be considered ``activated'' if its value is $\geq 0.5$. For now, this is where the weighted sum is $\geq 0$, as $\sigma \left(0\right)=0.5$. But what if a particular neuron should be activated when the weighted sum is (for examle) $\geq 5$, or $\geq -87.2$?
+
+To achieve this, each neuron (that isn't in the input layer) has a bias, which is another real number which is added onto the weighted sum before the activation function. I will use the notation $b^{\left(l\right)}_i$ to denote the bias of neuron $a^{\left(l\right)}_i$. The biases (like the weights) are also parameters of the system.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    axis line style={-stealth,shorten >=-3mm},
+    ymax=1,
+    xlabel = $x$,
+    ylabel = $y$,
+    width=\columnwidth,
+    height=2in,
+    scale only axis
+]
+\addplot[
+    domain=-10:6,
+    samples=100,
+    red
+]{1/(1+e^(-(x+2)))};
+\end{axis}
+\end{tikzpicture}
+\caption{Graph of $y=\sigma \left(x+2\right)$}\label{fig:sigmoidXplus2}
+\end{figure}
+
+Figure \ref{fig:sigmoidXplus2} shows the graph of $y=\sigma \left(x+2\right)$, which shows how a particular neuron would be activated if its weighted sum is $\geq -2$.
+
+Therefore, if a particular neuron $a^{\left(l\right)}_i$ should be activated if its weighted sum is $\geq p$, then $b^{\left(l\right)}_i=-p$. However, we have no way of knowing what this value of $p$ should be for any of the neurons in the network, as what the neurons represent are too abstract for us to understand. Like the weights, they will be initially set to random values, and will change during training.
+
+The final equation to calculate the activation of some neuron $a^{\left(l\right)}_i$ in any given network is:
+\begin{equation}\label{eq:activationofaneuron}
+    a^{\left(l\right)}_i=\sigma \left(w^{\left(l-1\right)}_{i,1}a^{\left(l-1\right)}_1+w^{\left(l-1\right)}_{i,2}a^{\left(l-1\right)}_2+w^{\left(l-1\right)}_{i,3}a^{\left(l-1\right)}_3+\cdots +w^{\left(l-1\right)}_{i,n}a^{\left(l-1\right)}_n+b^{\left(l\right)}_i\right)
+\end{equation}
+where $n$ is the number of neurons in layer $l-1$.
+
+\subsubsection{Rearranging into Matrices \& Column Vectors}
+Instead of calculating the activation of each neuron 1 by 1, consider calculating an entire layer of neurons at once. 
+\begin{figure}[H]
+\centering
+\begin{neuralnetwork}[nodespacing=15mm,layerspacing=30mm]
+\inputlayer[count=5, title=Input Layer, text=\nodetext, bias=false]
+\hiddenlayer[count=4, title=Hidden Layer 1, text=\nodetext, bias=false] \linklayers[style={black}]
+\hiddenlayer[count=4, title=Hidden Layer 2, text=\nodetext, bias=false] \linklayers
+\outputlayer[count=1, title=Output Layer, text=\nodetext, bias=false] \linklayers
+\end{neuralnetwork}
+\caption{Calculating an entire layer of neurons}
+\end{figure}
+
+To do this, we can arrange each layer of neurons and their biases into column vectors (transposed arrays), $\mathbf{a}^{\left(l\right)}$ and $\mathbf{b}^{\left(l\right)}$ respectively, where $l$ is the index of their layer:
+\begin{equation}
+    \mathbf{a}^{\left(l\right)}=\begin{pmatrix}a^{\left(l\right)}_1\\[0.3em]a^{\left(l\right)}_2\\\vdots \\a^{\left(l\right)}_n\end{pmatrix},\mathbf{b}^{\left(l\right)}=\begin{pmatrix}b^{\left(l\right)}_1\\[0.3em]b^{\left(l\right)}_2\\\vdots \\b^{\left(l\right)}_n\end{pmatrix}
+\end{equation}
+where $n$ is the number of neurons in layer $l$.
+
+Arrange the weights in between each layer into a matrix (2D array), $\mathbf{W}^{\left(l\right)}$, where $l$ is the layer the weights are pointing from:
+\begin{equation}
+    \mathbf{W}^{\left(l\right)}=\begin{pmatrix}w^{\left(l\right)}_{1,1}&w^{\left(l\right)}_{1,2}&\cdots&w^{\left(l\right)}_{1,n}\\[0.3em]w^{\left(l\right)}_{2,1}&w^{\left(l\right)}_{2,2}&\cdots&w^{\left(l\right)}_{2,n}\\\vdots&\vdots&\ddots&\vdots\\w^{\left(l\right)}_{m,1}&w^{\left(l\right)}_{m,2}&\cdots&w^{\left(l\right)}_{m,n}\end{pmatrix}
+\end{equation}
+where $n$ is the number of neurons in layer $l$ and $m$ is the number of neurons in layer $l+1$.
+
+Consider the matrix multiplication, $\mathbf{W}^{\left(l\right)}\mathbf{a}^{\left(l\right)}$:
+\begin{equation}
+    \begin{pmatrix}w^{\left(l\right)}_{1,1}&w^{\left(l\right)}_{1,2}&\cdots&w^{\left(l\right)}_{1,n}\\[0.3em]w^{\left(l\right)}_{2,1}&w^{\left(l\right)}_{2,2}&\cdots&w^{\left(l\right)}_{2,n}\\\vdots&\vdots&\ddots&\vdots\\w^{\left(l\right)}_{m,1}&w^{\left(l\right)}_{m,2}&\cdots&w^{\left(l\right)}_{m,n}\end{pmatrix}\begin{pmatrix}a^{\left(l\right)}_1\\[0.3em]a^{\left(l\right)}_2\\\vdots \\a^{\left(l\right)}_n\end{pmatrix}=\begin{pmatrix}w^{\left(l\right)}_{1,1}a^{\left(l\right)}_1+w^{\left(l\right)}_{1,2}a^{\left(l\right)}_2+\cdots +w^{\left(l\right)}_{1,n}a^{\left(l\right)}_n\\[0.3em]w^{\left(l\right)}_{2,1}a^{\left(l\right)}_1+w^{\left(l\right)}_{2,2}a^{\left(l\right)}_2+\cdots +w^{\left(l\right)}_{2,n}a^{\left(l\right)}_n\\\vdots\\w^{\left(l\right)}_{m,1}a^{\left(l\right)}_1+w^{\left(l\right)}_{m,2}a^{\left(l\right)}_2+\cdots +w^{\left(l\right)}_{m,n}a^{\left(l\right)}_n\end{pmatrix}
+\end{equation}
+The result is a column vector, where each item is a weighted sum of all the neurons in that layer, which is almost the correct column vector for the activations of the neurons in the next layer! To make it correct, we just need to add the bias column vector for the next layer, and pass it through the activation function.
+
+Therefore, the equation to calculate the activations of all the neurons in the next layer, $l+1$ is:
+\begin{equation}
+    \begin{pmatrix}a^{\left(l+1\right)}_1\\[0.3em]a^{\left(l+1\right)}_2\\\vdots \\a^{\left(l+1\right)}_m\end{pmatrix}=\sigma \left(\begin{pmatrix}w^{\left(l\right)}_{1,1}&w^{\left(l\right)}_{1,2}&\cdots&w^{\left(l\right)}_{1,n}\\[0.3em]w^{\left(l\right)}_{2,1}&w^{\left(l\right)}_{2,2}&\cdots&w^{\left(l\right)}_{2,n}\\\vdots&\vdots&\ddots&\vdots\\w^{\left(l\right)}_{m,1}&w^{\left(l\right)}_{m,2}&\cdots&w^{\left(l\right)}_{m,n}\end{pmatrix}\begin{pmatrix}a^{\left(l\right)}_1\\[0.3em]a^{\left(l\right)}_2\\\vdots \\a^{\left(l\right)}_n\end{pmatrix}+\begin{pmatrix}b^{\left(l+1\right)}_1\\[0.3em]b^{\left(l+1\right)}_2\\\vdots \\b^{\left(l+1\right)}_m\end{pmatrix}\right)
+\end{equation}
+where $n$ is the number of neurons in layer $l$, $m$ is the number of neurons in layer $l+1$ and $\sigma$ of a column vector $=\sigma$ of all the items in the column vector.
+
+This can be simply written as:
+\begin{equation}
+    \mathbf{a}^{\left(l+1\right)}=\sigma \left(\mathbf{W}^{\left(l\right)}\mathbf{a}^{\left(l\right)}+\mathbf{b}^{\left(l+1\right)}\right)
+\end{equation}
+where $\sigma$ of a column vector $=\sigma$ of all the items in the column vector, which is the formula that I will be using in my program.
+
+\subsubsection{Final Algorithm}
+In order to fully make a prediction, we just need to iterate this process over all the layers:
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (ina0) [fInputOutput, below of=start] {Input $\mathbf{a}^{\left(0\right)}$, the input layer};
+    \node (lequals0) [fProcess, below of=ina0] {$l=0$};
+    \node (feedforward) [fProcess, below of=lequals0] {$\mathbf{a}^{\left(l+1\right)}=\sigma \left(\mathbf{W}^{\left(l\right)}\mathbf{a}^{\left(l\right)}+\mathbf{b}^{\left(l+1\right)}\right)$};
+    \node (decision) [fDecision, below of=feedforward, yshift=-1cm] {Does $l=L-1$?};
+    \node (incrementl) [fProcess, right of=decision, xshift=5cm] {$l=l+1$};
+    \node (out) [fInputOutput, below of=decision, yshift=-1cm] {Output $\mathbf{a}^{\left(L\right)}$, the output layer};
+    \node (stop) [fStartStop, below of=out] {Stop};
+    
+    \draw [fArrow] (start) -- (ina0);
+    \draw [fArrow] (ina0) -- (lequals0);
+    \draw [fArrow] (lequals0) -- (feedforward);
+    \draw [fArrow] (feedforward) -- (decision);
+    \draw [fArrow] (decision) -- node[anchor=east] {yes} (out);
+    \draw [fArrow] (decision) -- node[anchor=south] {no} (incrementl);
+    \draw [fArrow] (incrementl) |- (feedforward);
+    \draw [fArrow] (out) -- (stop);
+\end{tikzpicture}
+\caption{Feedforward Algorithm Flowchart}\label{fig:feedforward}
+\end{figure}
+
+\subsection{Backpropogation Algorithm \& Training}\label{sec:backpropogation}
+\subsubsection{The Cost Function \& Gradient Descent}
+This feedforward algorithm to make predictions works, but if you were to test it right now it would return absolute nonsense. This is because all the weights and biases of the network are initially set to random values, so in reality the network isn't doing anything in particular. In order for it to recognise patterns within factors which may contribute to HDI, it must be trained on a set of examples. The network should also know after a prediction how far off it was from the correct answer.
+
+Therefore, define the ``cost'' of a single example, $c$ to be: 
+\begin{equation}\label{eq:cdefinition}
+    c=\displaystyle\sum_{i=1}^{n}\frac{1}{2}{\left(a^{\left(L\right)}_i-y_i\right)}^2
+\end{equation}
+where $a^{\left(L\right)}_i$ is the activation of the $i^{\text{th}}$ neuron in the output layer, $y_i$ is the ``correct'' activation, as given by the training example, and $n$ is the number of neurons in layer $L$. As I will only have 1 neuron in the output layer, this simplifies to:
+\begin{equation}
+    c=\frac{1}{2}{\left(a^{\left(L\right)}_1-y\right)}^2
+\end{equation}
+where $a^{\left(L\right)}_1$ is the predicted HDI and $y$ is the true HDI. The difference between the true value and the predicted value is squared to always make it positive, as some predictions may be less than the true value and others may be greater than the true value.
+
+Similarly to the activation function, there are many ways of defining the cost, $c$. I have chosen this one as it is simple to understand how it works, it is very quick to compute (as all you have to do is subtract 2 values, square and half) and it is differentiable on its entire domain, which will be helpful later.
+
+Now define the cost function, $C$, to be the average cost over many pieces of training data, in terms of all the weights and biases:
+\begin{equation}
+    C\left(w^{\left(0\right)}_{1,1},\ldots ,w^{\left(L-1\right)}_{i,j},b^{\left(1\right)}_1,\ldots ,b^{\left(L\right)}_i\right)=\text{??? (depends on what the network does)}
+\end{equation}
+The goal is to find a minimum to this function, as when this function returns a small value, that means that all the predictions that the network gave were close to the true values.
+
+We can do this by using gradient descent. This is where you find the gradient of the function, and then take a small step in the direction such that the gradient will decrease the most. This will work as the gradient at minimums of functions $=0$. In other words, we must find out how much each of the weights and biases affects the cost, and then using this information, change the weights and biases such that the cost will decrease.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    at={(0cm,0cm)},
+    axis lines=middle,
+    axis line style={-stealth,shorten >=-3mm},
+    ymax=35,
+    ymin=0,
+    xlabel = $w$,
+    ylabel = $C$,
+    width=6cm,
+    height=2in,
+    scale only axis
+]
+\addplot[
+    domain=-9:9,
+    samples=100,
+    red
+]{((x+7)*(x+4)*(x+1)*(x-3)*(x-4)*(x-7))/1000+16};
+\addplot[
+    domain=-9:9,
+    samples=100,
+    blue
+]{(1848/125)*x-(10936/125)};
+\end{axis}
+\draw[-stealth] (7,3) -- (9,3);
+\begin{axis}[
+    at={(10cm,0cm)},
+    axis lines=middle,
+    axis line style={-stealth,shorten >=-3mm},
+    ymax=35,
+    ymin=0,
+    xlabel = $w$,
+    ylabel = $C$,
+    width=6cm,
+    height=2in,
+    scale only axis
+]
+\addplot[
+    domain=-9:9,
+    samples=100,
+    red
+]{((x+7)*(x+4)*(x+1)*(x-3)*(x-4)*(x-7))/1000+16};
+\addplot[
+    domain=-9:9,
+    samples=100,
+    blue
+]{(15057/3200)*x-(246217/12800)};
+\end{axis}
+\end{tikzpicture}
+\caption{Gradient Descent Example}\label{fig:gradientdescent}
+\end{figure}
+Figure \ref{fig:gradientdescent} shows how $C$ may vary with some weight $w$, and how gradient descent will be used to find a minimum of $C$ with respect $w$. Note that it may not converge on the absolute minimum, but it will converge onto some local minimum. 
+
+\subsubsection{Error of a Neuron, ${\delta}^{\left(l\right)}_i$}
+To do this, it will help to find out how much each neuron affects the output of the network, or the cost. This will be called the error of a neuron.
+
+First, define $z^{\left(l\right)}_i$ to be neuron $a^{\left(l\right)}_i$'s activation before it was passed into the activation function:
+\begin{equation}\label{eq:zdefinition}
+    z^{\left(l\right)}_i=w^{\left(l-1\right)}_{i,1}a^{\left(l-1\right)}_1+w^{\left(l-1\right)}_{i,2}a^{\left(l-1\right)}_2+w^{\left(l-1\right)}_{i,3}a^{\left(l-1\right)}_3+\cdots +w^{\left(l-1\right)}_{i,n}a^{\left(l-1\right)}_n+b^{\left(l\right)}_i
+\end{equation}
+Now we can define the error of a neuron $a^{\left(l\right)}_i$, ${\delta}^{\left(l\right)}_i$ to be:
+\begin{equation}
+    {\delta}^{\left(l\right)}_i=\diff{C}{z^{\left(l\right)}_i}
+\end{equation}
+which represents the quantity answered by the question: \textit{``If I make a tiny change to $z^{\left(l\right)}_i$, $\Delta z^{\left(l\right)}_i$ what is the resulting change in $C$?''}.
+
+If ${\delta}^{\left(l\right)}_i$, is close to 0, there isn't much we can do to $z^{\left(l\right)}_i$ to have a big effect on $C$. On the other hand, if ${\delta}^{\left(l\right)}_i$ is large, then we only have to change $z^{\left(l\right)}_i$ a little bit to have a big effect on $C$. Therefore, there is a heuristic sense of how ${\delta}^{\left(l\right)}_i$ measures the sensitivity, or error, of a neuron.
+
+The plan is to find the error of the output layer, then backpropogate that to find the error of previous layers, and finally find the change in the cost function $C$ with respect to the weights and biases in terms of these errors.
+
+\subsubsection{Error of the Output Layer, $\bm{\delta}^{\left(L\right)}$}
+The error of the neurons in the output layer will therefore be given by:
+\begin{equation}
+    {\delta}^{\left(L\right)}_i=\diff{C}{z^{\left(L\right)}_i}
+\end{equation}
+as $L$ is the number of layers in the network (not including the input layer), and therefore represents the output layer. However, this is not easily computable, and should be rearranged into something that is.
+
+We can break up this expression using the chain rule for differentiation:
+\begin{equation}\label{eq:chainrule}
+    {\delta}^{\left(L\right)}_i=\diff{C}{a^{\left(L\right)}_i}\diff{a^{\left(L\right)}_i}{z^{\left(L\right)}_i}
+\end{equation}
+
+As $a^{\left(l\right)}_i=\sigma \left(z^{\left(l\right)}_i\right)$ by definition (from equations \ref{eq:activationofaneuron} and \ref{eq:zdefinition}),
+\begin{equation}\label{eq:dabydz}
+    \diff{a^{\left(L\right)}_i}{z^{\left(L\right)}_i}={\sigma}^{\prime} \left(z^{\left(L\right)}_i\right)
+\end{equation}
+where ${\sigma}^{\prime} \left(x\right)$ is the derivative of the sigmoid function.
+
+As the output of $C$ is given by $\displaystyle\sum_{i=1}^{n}\frac{1}{2}{\left(a^{\left(L\right)}_i-y_i\right)}^2$ by definition (from equation \ref{eq:cdefinition}),
+\begin{equation}\label{eq:dcbyda}
+    \diff{C}{a^{\left(L\right)}_i}=a^{\left(L\right)}_i-y_i
+\end{equation}
+
+Therefore, from equations \ref{eq:chainrule}, \ref{eq:dabydz} and \ref{eq:dcbyda},
+\begin{equation}
+    {\delta}^{\left(L\right)}_i=\left(a^{\left(L\right)}_i-y_i\right)\left({\sigma}^{\prime} \left(z^{\left(L\right)}_i\right)\right)
+\end{equation}
+which is all easily computable.
+
+As done before with $\mathbf{a}^{\left(l\right)}$ and $\mathbf{b}^{\left(l\right)}$, arrange each of the $z$-values and errors into column vectors, $\mathbf{z}^{\left(l\right)}$ and $\bm{\delta}^{\left(l\right)}$, where $l$ is the index of their layer:
+\begin{equation}
+    \mathbf{z}^{\left(l\right)}=\begin{pmatrix}z^{\left(l\right)}_1\\[0.3em]z^{\left(l\right)}_2\\\vdots \\z^{\left(l\right)}_n\end{pmatrix},\bm{\delta}^{\left(l\right)}=\begin{pmatrix}{\delta}^{\left(l\right)}_1\\[0.3em]{\delta}^{\left(l\right)}_2\\\vdots \\{\delta}^{\left(l\right)}_n\end{pmatrix}
+\end{equation}
+where $n$ is the number of neurons in layer $l$.
+
+$\bm{\delta}^{\left(L\right)}$ must therefore be given by:
+\begin{equation}
+    \bm{\delta}^{\left(L\right)}=\left(\mathbf{a}^{\left(L\right)}-\mathbf{y}\right)\odot \left({\sigma}^{\prime} \left(\mathbf{z}^{\left(L\right)}\right)\right)
+\end{equation}
+where $\mathbf{y}$ is the column vector of the expected outputs and $\odot$ represents the operation to compute the element-wise product of 2 column vectors with the same dimension. For example,
+\begin{equation}
+    \begin{pmatrix}2\\6\\3\end{pmatrix}\odot \begin{pmatrix}3\\4\\5\end{pmatrix}=\begin{pmatrix}6\\24\\15\end{pmatrix}
+\end{equation}
+
+\subsubsection{Error of the Previous Layer in terms of the current one}
+Now that we have the error of the output layer, $\bm{\delta}^{\left(L\right)}$, we can attempt to backpropogate by finding the error of each layer before it. In other words, we want $\bm{\delta}^{\left(l-1\right)}$ in terms of $\bm{\delta}^{\left(l\right)}$ and other easily computable terms. Consider ${\delta}^{\left(l-1\right)}_i$:
+\begin{equation}
+    {\delta}^{\left(l-1\right)}_i=\diff{C}{z^{\left(l-1\right)}_i}
+\end{equation}
+We can again break this up using the chain rule:
+\begin{equation}\label{eq:sumoverj}
+    {\delta}^{\left(l-1\right)}_i=\displaystyle\sum_{j=1}^{n}\diff{C}{z^{\left(l\right)}_j}\diff{z^{\left(l\right)}_j}{z^{\left(l-1\right)}_i}
+\end{equation}
+except this time we must sum over each $j$ from 1 to $n$, where $n$ is the number of neurons in layer $l$. This is because the activation of all the neurons in layer $l$ is based on $z^{\left(l-1\right)}_i$, so we must add up all the small changes to $C$ from layer $l$ to calculate the overall effect from $z^{\left(l-1\right)}_i$.
+
+\begin{figure}[H]
+\centering
+\begin{neuralnetwork}[nodespacing=15mm,layerspacing=30mm]
+\inputlayer[count=5, title=Input Layer, text=\nodetext, bias=false]
+\hiddenlayer[count=4, title=Hidden Layer 1, text=\nodetext, bias=false] \linklayers
+\hiddenlayer[count=4, title=Hidden Layer 2, text=\nodetext, bias=false] \linklayers
+\outputlayer[count=1, title=Output Layer, text=\nodetext, bias=false] \linklayers[style={black}]
+\link[style={black}, labelpos=near end, from layer=1, to layer=2, from node=3, to node=1]
+\link[style={black}, labelpos=near end, from layer=1, to layer=2, from node=3, to node=2]
+\link[style={black}, labelpos=near end, from layer=1, to layer=2, from node=3, to node=3]
+\link[style={black}, labelpos=near end, from layer=1, to layer=2, from node=3, to node=4]
+\end{neuralnetwork}
+\caption{$z^{\left(l-1\right)}_i$ Affects all neurons in layer $l$, which all affect $C$}
+\end{figure}
+
+By definition, $\diff{C}{z^{\left(l\right)}_j}={\delta}^{\left(l\right)}_j$, so equation \ref{eq:sumoverj} simplifies to:
+\begin{equation}\label{eq:errorprevlayerpartiallysimplified}
+    {\delta}^{\left(l-1\right)}_i=\displaystyle\sum_{j=1}^{n}\diff{z^{\left(l\right)}_j}{z^{\left(l-1\right)}_i}{\delta}^{\left(l\right)}_j
+\end{equation}
+
+Using equation \ref{eq:zdefinition}, we can write $z^{\left(l\right)}_j$ as:
+\begin{equation}
+    z^{\left(l\right)}_j=w^{\left(l-1\right)}_{j,1}a^{\left(l-1\right)}_1+w^{\left(l-1\right)}_{j,2}a^{\left(l-1\right)}_2+\cdots+w^{\left(l-1\right)}_{j,i}a^{\left(l-1\right)}_i+\cdots +w^{\left(l-1\right)}_{j,n}a^{\left(l-1\right)}_n+b^{\left(l\right)}_j
+\end{equation}
+where $n$ is the number of neurons in layer $l-1$ and $i$ is some index of a particular neuron in the previous layer which we care about.
+
+As $a^{\left(l-1\right)}_i=\sigma \left(z^{\left(l-1\right)}_i\right)$ by definition (from equations \ref{eq:activationofaneuron} and \ref{eq:zdefinition}),
+\begin{equation}
+    z^{\left(l\right)}_j=w^{\left(l-1\right)}_{j,1}a^{\left(l-1\right)}_1+w^{\left(l-1\right)}_{j,2}a^{\left(l-1\right)}_2+\cdots+w^{\left(l-1\right)}_{j,i}\sigma \left(z^{\left(l-1\right)}_i\right)+\cdots +w^{\left(l-1\right)}_{j,n}a^{\left(l-1\right)}_n+b^{\left(l\right)}_j
+\end{equation}
+Therefore,
+\begin{equation}
+    \diff{z^{\left(l\right)}_j}{z^{\left(l-1\right)}_i}=w^{\left(l-1\right)}_{j,i}{\sigma}^{\prime} \left(z^{\left(l-1\right)}_i\right)
+\end{equation}
+
+Substituting that into equation \ref{eq:errorprevlayerpartiallysimplified} gives:
+\begin{equation}\label{eq:deltalminus1componentform}
+    {\delta}^{\left(l-1\right)}_i=\displaystyle\sum_{j=1}^{n}w^{\left(l-1\right)}_{j,i}{\sigma}^{\prime} \left(z^{\left(l-1\right)}_i\right){\delta}^{\left(l\right)}_j
+\end{equation}
+
+Consider the matrix multiplication, ${\left(\mathbf{W}^{\left(l-1\right)}\right)}^{T}\bm{\delta}^{\left(l\right)}$, where $\mathbf{M}^T$ represents the transposed matrix of matrix $\mathbf{M}$:
+\begin{equation}
+    \begin{pmatrix}w^{\left(l-1\right)}_{1,1}&w^{\left(l-1\right)}_{2,1}&\cdots&w^{\left(l-1\right)}_{n,1}\\[0.3em]w^{\left(l-1\right)}_{1,2}&w^{\left(l-1\right)}_{2,2}&\cdots&w^{\left(l-1\right)}_{n,2}\\\vdots&\vdots&\ddots&\vdots\\w^{\left(l-1\right)}_{1,m}&w^{\left(l-1\right)}_{2,m}&\cdots&w^{\left(l-1\right)}_{n,m}\end{pmatrix}\begin{pmatrix}{\delta}^{\left(l\right)}_1\\[0.3em]{\delta}^{\left(l\right)}_2\\\vdots \\{\delta}^{\left(l\right)}_n\end{pmatrix}=\begin{pmatrix}w^{\left(l-1\right)}_{1,1}{\delta}^{\left(l\right)}_1+w^{\left(l-1\right)}_{2,1}{\delta}^{\left(l\right)}_2+\cdots +w^{\left(l-1\right)}_{n,1}{\delta}^{\left(l\right)}_n\\[0.3em]w^{\left(l-1\right)}_{1,2}{\delta}^{\left(l\right)}_1+w^{\left(l-1\right)}_{2,2}{\delta}^{\left(l\right)}_2+\cdots +w^{\left(l-1\right)}_{n,2}{\delta}^{\left(l\right)}_n\\\vdots\\w^{\left(l-1\right)}_{1,m}{\delta}^{\left(l\right)}_1+w^{\left(l-1\right)}_{2,m}{\delta}^{\left(l\right)}_2+\cdots +w^{\left(l-1\right)}_{n,m}{\delta}^{\left(l\right)}_n\end{pmatrix}
+\end{equation}
+Again, this is almost the result that we want as we just need to multiply each term by ${\sigma}^{\prime} \left(z^{\left(l-1\right)}_i\right)$ to get a column vector of elements in the form of equation \ref{eq:deltalminus1componentform}. Therefore, the equation to backpropogate the error from one layer to the previous is given by:
+\begin{equation}
+    \bm{\delta}^{\left(l-1\right)}=\left({\left(\mathbf{W}^{\left(l-1\right)}\right)}^{T}\bm{\delta}^{\left(l\right)}\right)\odot\left({\sigma}^{\prime} \left(\mathbf{z}^{\left(l-1\right)}\right)\right)
+\end{equation}
+which again, is all easily computable.
+
+\subsubsection{Gradient of the Cost Function}
+Now that we have ${\delta}^{\left(l\right)}_i$ for any given $l$ and $i$ in the network in terms of easily computable terms, we can try and find the change in the cost function $C$ with the respect to all the weights and biases, which is the gradient of the cost function, which is what we need to train the model. In other words, we are trying to find $\diff{C}{w^{\left(l\right)}_{i,j}}$ and $\diff{C}{b^{\left(l\right)}_i}$ for any $l$, $i$, $j$ in the network, in terms of errors, in order to take a small step in the opposite direction (as to decrease the gradient and find a minimum).
+
+We can again break up these expressions using the chain rule into:
+\begin{equation}
+    \diff{C}{z^{\left(l+1\right)}_i}\diff{z^{\left(l+1\right)}_i}{w^{\left(l\right)}_{i,j}} \text{ and } \diff{C}{z^{\left(l\right)}_i}\diff{z^{\left(l\right)}_i}{b^{\left(l\right)}_i} \text{ respectively}
+\end{equation}
+
+By definition, $\diff{C}{z^{\left(l\right)}_i}={\delta}^{\left(l\right)}_i$ so this simplifies to:
+\begin{equation}\label{eq:dcbydwanddcbydb}
+    \diff{z^{\left(l+1\right)}_i}{w^{\left(l\right)}_{i,j}}{\delta}^{\left(l+1\right)}_i \text{ and } \diff{z^{\left(l\right)}_i}{b^{\left(l\right)}_i}{\delta}^{\left(l\right)}_i \text{ respectively}
+\end{equation}
+
+From equation \ref{eq:zdefinition},
+\begin{equation}\label{eq:dzbydwanddzbydb}
+    \diff{z^{\left(l+1\right)}_i}{w^{\left(l\right)}_{i,j}}=a^{\left(l\right)}_j \text{ and } \diff{z^{\left(l\right)}_i}{b^{\left(l\right)}_i}=1
+\end{equation}
+
+Therefore, from equations \ref{eq:dcbydwanddcbydb} and \ref{eq:dzbydwanddzbydb},
+\begin{equation}
+    \diff{C}{w^{\left(l\right)}_{i,j}}=a^{\left(l\right)}_{j}{\delta}^{\left(l+1\right)}_i \text{ and } \diff{C}{b^{\left(l\right)}_i}={\delta}^{\left(l\right)}_i
+\end{equation}
+which is what we need.
+
+Therefore, for a given training example index $x$, we must change $\mathbf{b}^{\left(l\right)}$ by an amount $-\eta \bm{\delta}^{\left(l\right)}_x$ where $\bm{\delta}^{\left(l\right)}_x$ the error for the neurons in layer $l$ for the specific training example $x$ (this notation also follows for $\mathbf{a}$ and $\mathbf{z}$) and $\eta$ is some constant, the learning rate. The negative sign is involved as to carry out gradient descent we need to take a step in the direction opposite to the gradient.
+
+Similarly, we must change $\mathbf{W}^{\left(l\right)}$ by an amount $-\eta \bm{\delta}^{\left(l+1\right)}_x{\left(\mathbf{a}^{\left(l\right)}_x\right)}^T$. The activations column vector has been transposed so that when the error column vector is multiplied by it the result is a matrix with the same dimensions of the weight matrix.
+
+\subsubsection{Final Algorithm}
+Now all we need to do is iterate this process over multiple training examples and then change the gradient by an average over all the pieces of training data.
+
+Therefore, we must change $\mathbf{W}^{\left(l\right)}$ by an amount $-\frac{\eta}{m}\displaystyle\sum_{x=1}^{m}\bm{\delta}^{\left(l+1\right)}_x{\left(\mathbf{a}^{\left(l\right)}_x\right)}^T$ and we must change $\mathbf{b}^{\left(l\right)}$ by an amount $-\frac{\eta}{m}\displaystyle\sum_{x=1}^{m}\bm{\delta}^{\left(l\right)}_x$, where $m$ is the number of training examples.
+
+Each training example will be given in the format $\left(\mathbf{x},\mathbf{y}\right)$, where $\mathbf{x}$ is a column vector of activations for the input layer and $\mathbf{y}$ is a column vector for the expected outputs for the output layer.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (intrainingexamples) [fInputOutput, below of=start] {Input a set of $m$ training examples in the format $\left(\mathbf{x},\mathbf{y}\right)$};
+    \node (xequals1) [fProcess, below of=intrainingexamples] {$x=1$};
+    \node (a0equalsx) [fProcess, below of=xequals1, yshift=0.5cm] {$\mathbf{a}^{\left(0\right)}_x=\mathbf{x}_x$};
+    \node (feedforward) [fSubprocess, below of=a0equalsx] {$\mathbf{a}^{\left(L\right)}_x=\text{Feedforward}\left(\mathbf{a}^{\left(0\right)}_x\right)$ (From Figure \ref{fig:feedforward})};
+    \node (erroroutputlayer) [fProcess, below of=feedforward, text width=8cm] {$\bm{\delta}^{\left(L\right)}_x=\left(\mathbf{a}^{\left(L\right)}_x-\mathbf{y}_x\right)\odot \left({\sigma}^{\prime} \left(\mathbf{z}^{\left(L\right)}_x\right)\right)$};
+    \node (backpropogate) [fProcess, below of=erroroutputlayer, text width=8cm] {For each $l$ in $L,L-1,\ldots,2$: $\bm{\delta}^{\left(l-1\right)}_x=\left({\left(\mathbf{W}^{\left(l-1\right)}\right)}^{T}\bm{\delta}^{\left(l\right)}_x\right)\odot\left({\sigma}^{\prime} \left(\mathbf{z}^{\left(l-1\right)}_x\right)\right)$};
+    \node (decisionx) [fDecision, below of=backpropogate, yshift=-0.5cm] {Does $x=m$?};
+    \node (incrementx) [fProcess, right of=decisionx, xshift=5cm] {$x=x+1$};
+    \node (gradientdescent) [fProcess, below of=decisionx, yshift=-2cm, text width=8cm] {For each $l$ in $L,L-1,\ldots,1$: $\mathbf{W}^{\left(l-1\right)}=\mathbf{W}^{\left(l-1\right)}-\frac{\eta}{m}\displaystyle\sum_{x=1}^{m}\bm{\delta}^{\left(l\right)}_x{\left(\mathbf{a}^{\left(l-1\right)}_x\right)}^T$ and $\mathbf{b}^{\left(l\right)}=\mathbf{b}^{\left(l\right)}-\frac{\eta}{m}\displaystyle\sum_{x=1}^{m}\bm{\delta}^{\left(l\right)}_x$};
+    \node (stop) [fStartStop, below of=gradientdescent, yshift=-1cm] {Stop};
+    
+    \draw [fArrow] (start) -- (intrainingexamples);
+    \draw [fArrow] (intrainingexamples) -- (xequals1);
+    \draw [fArrow] (xequals1) -- (a0equalsx);
+    \draw [fArrow] (a0equalsx) -- (feedforward);
+    \draw [fArrow] (feedforward) -- (erroroutputlayer);
+    \draw [fArrow] (erroroutputlayer) -- (backpropogate);
+    \draw [fArrow] (backpropogate) -- (decisionx);
+    \draw [fArrow] (decisionx) -- node[anchor=east] {yes} (gradientdescent);
+    \draw [fArrow] (decisionx) -- node[anchor=south] {no} (incrementx);
+    \draw [fArrow] (incrementx) |- (a0equalsx);
+    \draw [fArrow] (gradientdescent) -- (stop);
+\end{tikzpicture}
+\caption{Backpropogation Algorithm Flowchart}\label{fig:backpropogation}
+\end{figure}
+
+\subsection{Stochastic Gradient Descent}\label{sec:sgd}
+In practice, averaging over all the training examples is not very efficient, as you have to create a copy of the column vectors $\mathbf{a}$, $\mathbf{z}$ and $\bm{\delta}$ for each layer and training example, which can get very large very fast.
+
+To combat this, instead break up the training data into mini batches which are easier to handle, while still having enough to represent a range of things that the network may want to look for. The training examples are also randomly shuffled before being sorted into mini batches to ensure that the contents of each one are different every time.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \draw (0,0) rectangle (1,1) node[pos=.5] {0.352};
+    \draw (1.5,0) rectangle (2.5,1) node[pos=.5] {0.703};
+    \draw (3,0) rectangle (4,1) node[pos=.5] {0.003};
+    \draw (0,1.5) rectangle (1,2.5) node[pos=.5] {0.521};
+    \draw (1.5,1.5) rectangle (2.5,2.5) node[pos=.5] {0.578};
+    \draw (3,1.5) rectangle (4,2.5) node[pos=.5] {0.149};
+    \draw (0,3) rectangle (1,4) node[pos=.5] {0.762};
+    \draw (1.5,3) rectangle (2.5,4) node[pos=.5] {0.861};
+    \draw (3,3) rectangle (4,4) node[pos=.5] {0.551};
+    \draw (0,4.5) rectangle (1,5.5) node[pos=.5] {0.276};
+    \draw (1.5,4.5) rectangle (2.5,5.5) node[pos=.5] {0.389};
+    \draw (3,4.5) rectangle (4,5.5) node[pos=.5] {0.386};
+    \draw (0,6) rectangle (1,7) node[pos=.5] {0.364};
+    \draw (1.5,6) rectangle (2.5,7) node[pos=.5] {0.047};
+    \draw (3,6) rectangle (4,7) node[pos=.5] {0.038};
+    \draw (0,7.5) rectangle (1,8.5) node[pos=.5] {0.560};
+    \draw (1.5,7.5) rectangle (2.5,8.5) node[pos=.5] {0.604};
+    \draw (3,7.5) rectangle (4,8.5) node[pos=.5] {0.770};
+    \draw (0,9) rectangle (1,10) node[pos=.5] {0.010};
+    \draw (1.5,9) rectangle (2.5,10) node[pos=.5] {0.874};
+    \draw (3,9) rectangle (4,10) node[pos=.5] {0.366};
+    \draw (0,10.5) rectangle (1,11.5) node[pos=.5] {0.177};
+    \draw (1.5,10.5) rectangle (2.5,11.5) node[pos=.5] {0.455};
+    \draw (3,10.5) rectangle (4,11.5) node[pos=.5] {0.006};
+    \draw[-stealth] (4.5,5.75) -- (6,5.75);
+    \draw (6.5,0.75) rectangle (7.5,1.75) node[pos=0.5] {0.604};
+    \draw (8,0.75) rectangle (9,1.75) node[pos=0.5] {0.003};
+    \draw (9.5,0.75) rectangle (10.5,1.75) node[pos=0.5] {0.762};
+    \draw (11,0.75) rectangle (12,1.75) node[pos=0.5] {0.352};
+    \draw (12.5,0.75) rectangle (13.5,1.75) node[pos=0.5] {0.364};
+    \draw (14,0.75) rectangle (15,1.75) node[pos=0.5] {0.703};
+    \draw (6.5,3.75) rectangle (7.5,4.75) node[pos=0.5] {0.578};
+    \draw (8,3.75) rectangle (9,4.75) node[pos=0.5] {0.874};
+    \draw (9.5,3.75) rectangle (10.5,4.75) node[pos=0.5] {0.276};
+    \draw (11,3.75) rectangle (12,4.75) node[pos=0.5] {0.386};
+    \draw (12.5,3.75) rectangle (13.5,4.75) node[pos=0.5] {0.038};
+    \draw (14,3.75) rectangle (15,4.75) node[pos=0.5] {0.006};
+    \draw (6.5,6.75) rectangle (7.5,7.75) node[pos=0.5] {0.389};
+    \draw (8,6.75) rectangle (9,7.75) node[pos=0.5] {0.177};
+    \draw (9.5,6.75) rectangle (10.5,7.75) node[pos=0.5] {0.521};
+    \draw (11,6.75) rectangle (12,7.75) node[pos=0.5] {0.770};
+    \draw (12.5,6.75) rectangle (13.5,7.75) node[pos=0.5] {0.047};
+    \draw (14,6.75) rectangle (15,7.75) node[pos=0.5] {0.455};
+    \draw (6.5,9.75) rectangle (7.5,10.75) node[pos=0.5] {0.149};
+    \draw (8,9.75) rectangle (9,10.75) node[pos=0.5] {0.551};
+    \draw (9.5,9.75) rectangle (10.5,10.75) node[pos=0.5] {0.560};
+    \draw (11,9.75) rectangle (12,10.75) node[pos=0.5] {0.861};
+    \draw (12.5,9.75) rectangle (13.5,10.75) node[pos=0.5] {0.010};
+    \draw (14,9.75) rectangle (15,10.75) node[pos=0.5] {0.366};
+\end{tikzpicture}
+\caption{Shuffling into Mini Batches}
+\end{figure}
+
+When carrying out the gradient descent, this will have the effect of taking a step in some direction close to that which decreases the gradient by the most, instead of going directly in that direction. This is called Stochastic Gradient Descent.
+
+Finally, this entire process should be repeated multiple times, over a number of ``epochs'', in order to ensure that it has enough time to learn.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (inexamples) [fInputOutput, below of=start] {Input a set of $n$ training examples in the format $\left(\mathbf{x},\mathbf{y}\right)$};
+    \node (inconsts) [fInputOutput, below of=inexamples] {Input the size of each mini batch, $m$ and the number of epochs};
+    \node (epoch1) [fProcess, below of=inconsts] {$\text{currentEpoch}=1$};
+    \node (minibatches) [fProcess, below of=epoch1] {Randomly split the $n$ training examples into mini batches of size $m$};
+    \node (backpropogate) [fSubprocess, below of=minibatches, text width=6cm] {For each mini batch:\\Backpropogate(mini batch)\\(From Figure \ref{fig:backpropogation})};
+    \node (decision) [fDecision, below of=backpropogate, yshift=-1cm] {Does $\text{currentEpoch}=\text{number of epochs}$?};
+    \node (incrementepoch) [fProcess, right of=decision, xshift=5cm] {$\text{currentEpoch}=\text{currentEpoch}+1$};
+    \node (stop) [fStartStop, below of=decision, yshift=-1cm] {Stop};
+    
+    \draw [fArrow] (start) -- (inexamples);
+    \draw [fArrow] (inexamples) -- (inconsts);
+    \draw [fArrow] (inconsts) -- (epoch1);
+    \draw [fArrow] (epoch1) -- (minibatches);
+    \draw [fArrow] (minibatches) -- (backpropogate);
+    \draw [fArrow] (backpropogate) -- (decision);
+    \draw [fArrow] (decision) -- node[anchor=east] {yes} (stop);
+    \draw [fArrow] (decision) -- node[anchor=south] {no} (incrementepoch);
+    \draw [fArrow] (incrementepoch) |- (minibatches);
+\end{tikzpicture}
+\caption{Full Training Algorithm Flowchart}
+\end{figure}
+
+\subsection{Class Diagram}
+\begin{figure}[H]
+\centering
+\begin{tabular}{| m{15cm} |} 
+    \hline
+    \pil{class MultilayerPerceptron(object)} \\
+    \hline
+    \pil{layer_sizes: list[int]} \\
+    \pil{L: int} \\
+    \pil{activations: list[column_vector]} \\
+    \pil{weights: list[matrix]} \\
+    \pil{biases: list[column_vector]} \\
+    \pil{z: list[column_vector]} \\
+    \pil{errors: list[column_vector]} \\
+    \pil{training_activations: list[list[column_vector]]} \\
+    \pil{training_z: list[list[column_vector]]} \\
+    \pil{training_errors: list[list[column_vector]]} \\
+    \hline
+    \pil{def __init__(self, layer_sizes)} \\
+    \pil{def predict(self, input_data)} \\
+    \pil{def train(self, examples, mini_batch_size, num_epochs, learning_rate)} \\
+    \pil{def feedforward(self, a0)} \\
+    \pil{def backpropogate(self, examples)} \\
+    \pil{def sigmoid(self, x)} \\
+    \pil{def sigmoid_prime(self, x)} \\
+    \pil{def save_model(self, filename)} \\
+    \pil{def load_model(self, file_path)} \\
+    \hline
+\end{tabular}
+\caption{Multilayer Perceptron Class Diagram}
+\end{figure}
+
+The attribute \pil{layer_sizes} is a list of integers, which represent the number of neurons in each layer. The attributes \pil{L} and \pil{z} represent the respective variables in the mathematical explanation above, \pil{activations} represents the $\mathbf{a}$ vectors, \pil{weights} represents the $\mathbf{W}$ matrices, \pil{biases} represents the $\mathbf{b}$ vectors, and \pil{errors} represents the $\bm{\delta}$ vectors. The data structures \pil{column_vector} and \pil{matrix} are not built into python, but come with the library \pil{numpy}. The attributes \pil{training_activations}, \pil{training_z} and \pil{training_errors} will hold the values for each of the training examples in a mini batch, as all of them need to be computed for each example before the gradient is calculated (which is why they are in an extra \pil{list}).
+
+The constructor method (\pil{def __init__}) only takes in the layer sizes, as everything else will either be defined during training or prediction, or be initially set to random values. The other methods are as you would expect, with functions for prediction and training that are explained above. There are also the methods \pil{def save_model} and \pil{def load_model}, as the model will be trained beforehand and then the GUI will query that model. Therefore, we need a way of saving the weights and biases to an external file and then loading them from it at a later time.
+
+All the methods will be public functions, as python does not allow for anything else. However, in theory, they would all be procedures except for \pil{def predict}, \pil{def sigmoid} and \pil{def sigmoid_prime}, which will all return \pil{float}s, while the rest will return \pil{None}.
+
+There is not a ``List of key variables'' for this section, as all the results of calculations will be stored in the attributes in the \pil{class MultilayerPerceptron}, and have therefore been described above.
+
+\section{User Interface}\label{sec:ui}
+There are many features I would like to add eventually, which I have included in the Structure Diagram (Figure \ref{fig:structDiagram}). I will not be including these in this section, and will be saving them for the next prototype. I will only be planning for the user entering their region on a map, the HDI being predicted, and the suggestions for improvements being made, as I believe these are the most essential feautures.
+\subsection{Interface Sketch}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % border
+    \draw (0,0) rectangle (15,12);
+    % map
+    \path[fill stretch image=map] (0.5,11.5) rectangle (9,6);
+    \draw (0.5,11.5) rectangle (9,6);
+    \draw[fill=white] (0.5,11.5) rectangle (1,11);
+    \draw (0.65,11.1) -- (0.588196601125,11.290211303259) -- (0.75,11.4077683537175) -- (0.911803398875,11.290211303259) -- (0.85,11.1) -- cycle;
+    \draw[fill=white] (0.5,10.75) rectangle (1,10.25);
+    \draw (0.6,10.5) -- (0.9,10.5);
+    \draw (0.75,10.65) -- (0.75,10.35);
+    \draw[fill=white] (0.5,10.25) rectangle (1,9.75);
+    \draw (0.6,10) -- (0.9,10);
+    \draw[fill=white] (0.5,9.5) rectangle (1,9);
+    \draw (0.6,9.4) -- (0.9,9.1);
+    \draw (0.6,9.1) -- (0.9,9.4);
+    \draw[blue,fill=blue!80,fill opacity=0.4] (1.65,9.25) rectangle (3,8.5);
+    \filldraw[red] (2.3,8.9) circle (0.05); 
+    %predict button section
+    \draw[fill=orange] (9.5,11.5) rectangle (14.5,10.5) node[pos=0.5] {Predict};
+    \draw (9.5,10) node[anchor=north west] {{\scriptsize I believe the HDI of this area is...}};
+    \draw (9.5,10) rectangle (14.5,8.5) node[pos=0.5] {0.927};
+    \draw (9.5,8) node[anchor=north west] {{\scriptsize That's a similar HDI to...}};
+    \draw (9.5,8) rectangle (14.5,6) node[pos=0.5] {The USA};
+    %suggestions
+    \draw (0.5,4.5) node[anchor=south west] {{\scriptsize New Building}};
+    \draw (3,4.5) node[anchor=south west] {{\scriptsize Coordinates}};
+    \draw (9,4.5) node[anchor=south west] {{\scriptsize New HDI}};
+    \draw (11.5,4.5) node[anchor=south west] {{\scriptsize Change in HDI}};
+    \draw (0.5,4.5) rectangle (3,4) node[pos=0.5] {School};
+    \draw (3,4.5) rectangle (9,4) node[pos=0.5] {$36.922883^{\circ}\text{N},-101.709461^{\circ}\text{E}$};
+    \draw (9,4.5) rectangle (11.5,4) node[pos=0.5] {0.928};
+    \draw (11.5,4.5) rectangle (14.5,4) node[pos=0.5] {$+0.001$};
+    \draw[fill=cyan!20] (0.5,4) rectangle (3,3.5) node[pos=0.5] {Hospital};
+    \draw[fill=cyan!20] (3,4) rectangle (9,3.5) node[pos=0.5] {$43.919052^{\circ}\text{N},-106.264212^{\circ}\text{E}$};
+    \draw[fill=cyan!20] (9,4) rectangle (11.5,3.5) node[pos=0.5] {0.929};
+    \draw[fill=cyan!20] (11.5,4) rectangle (14.5,3.5) node[pos=0.5] {$+0.002$};
+    \draw (0.5,3.5) rectangle (3,3) node[pos=0.5] {Library};
+    \draw (3,3.5) rectangle (9,3) node[pos=0.5] {$36.954162^{\circ}\text{N},-87.008695^{\circ}\text{E}$};
+    \draw (9,3.5) rectangle (11.5,3) node[pos=0.5] {0.928};
+    \draw (11.5,3.5) rectangle (14.5,3) node[pos=0.5] {$+0.001$};
+    \draw (7.5,2.5) node {$\vdots$};
+    % note
+    \draw (0,0) node[anchor=south west] {{\scriptsize (The data presented in this sketch is completely made up but somewhat realistic)}};
+    % annotations
+    \draw[red,->] (7.5,12.5) node[red,above] {1.} -- (7.5,11.5);
+    \draw[red,->] (0.75,12.5) node[red,above] {2.} -- (0.75,11.5);
+    \draw[red,->] (-0.5,10.25) node[red,left] {3.} -- (0.5,10.25);
+    \draw[red,->] (-0.5,9.25) node[red,left] {4.} -- (0.5,9.25);
+    \draw[red,->] (-0.5,8.875) node[red,left] {5.} -- (1.65,8.875);
+    \draw[red,->] (15.5,11) node[red,right] {6.} -- (14.5,11);
+    \draw[red,->] (15.5,9.25) node[red,right] {7.} -- (14.5,9.25);
+    \draw[red,->] (15.5,7) node[red,right] {8.} -- (14.5,7);
+    \draw[red,->] (-0.5,5) node[red,left] {9.} -- (0.25,4.75);
+    \draw[red,->] (-0.5,3.75) node[red,left] {10.} -- (0.5,3.75);
+    \draw[red,->] (3,8.2) node[red,below right] {11.} -- (2.4,8.8);
+\end{tikzpicture}
+\caption{Technical Interface Sketch}\label{fig:interfaceSketch1}
+\end{figure}
+
+The labelled items shown in Figure \ref{fig:interfaceSketch1} are:
+\begin{enumerate}
+    \item Map for the user to draw on
+    \item Button to toggle between using the mouse for polygon drawing and moving
+    \item Zoom in and out buttons
+    \item Cancel Button
+    \item Example area the user may draw
+    \item Predict Button
+    \item Predicted HDI
+    \item A comparison to a country with a similar HDI
+    \item A list of suggestions to improve the HDI
+    \item A selected suggestion to view in more detail (that the user has selected)
+    \item The location on the map for the selected suggestion
+\end{enumerate}
+
+Figure \ref{fig:interfaceSketch1} shows the general structure of the user interface, while the style will be provided by the \pil{gradio} python module. Exampled of the style can be seen in Figure \ref{fig:interfaceStyle}. It will automatically adapt to light mode or dark mode based on the device's or browser's settings.
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{lightModeInterface.png}
+    \caption{Light Mode}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{darkModeInterface.png}
+    \caption{Dark Mode}
+\end{subfigure}
+\caption{Interface Style Examples}\label{fig:interfaceStyle}
+\end{figure}
+
+Additional features that will be added in later prototypes (such as an analysis of how much each factor affects the others or entering factors manually) will be accessed from different tabs at the top of the interface.
+
+\subsection{Input Validation}
+As the only input the user is providing is that of drawing on the map to select their region (for now), only that needs to be validated. I will ensure that the user can only draw polygons on the map, the polygons must be completed, and the polygons cannot self intersect. The mapping module I will be using, \pil{folium} already accounts for this, except for the self intersection. However, this can be detected by using part of the $D\left(x\right)$ algorithm, as shown in Figure \ref{fig:dofx}.
+
+The user should also only be able to interact with the map and any data visualisations. The GUI module I will be using, \pil{gradio} also already accounts for this.
+
+\subsection{Usability Features}
+\subsubsection{Map \& Map Buttons}
+The map should be the biggest thing on the screen, as it is the main source of input the user will be providing. It should also be as big as possible to accomodate those with smaller screens, so that they can still accurately pinpoint locations.
+
+The button to draw a polygon on the map will be displayed as a regular pentagon. This is because there are often distinct tools to draw rectangles or triangles, which would be represented by regular 4-sided or 3-sided polygons respectively. Therefore, if a regular 5-sided polygon is used (a pentagon) there is less likely to be confusion about what the button does, while still having a small number of sides (a large number of sides will look too similar to a circle). It also suggests that the user will not be able to draw freely (as this is often represented by a pencil), which they will not be able to do.
+
+The buttons to zoom in and out will be represented by a plus and minus sign. This is also the standard design for this type of button. The zoom in button and zoom out buttons will be right next to each other, to minimise the consequence in accidentally zooming in/out one too many times.
+
+The button to cancel will be represented by an X, as this is also a common symbol used for this type of button. It will be in the same approximate location as the other 3 buttons, as they all have similar functions.
+
+The region the user draws will be shown in blue, and filled with a slightly transparent blue. This is so that they can see the region that they are drawing in real time, while also still being able to see the map beneath it.
+
+\subsubsection{Prediction of HDI}
+The button to make the prediction (and submit the region they have drawn) will be the largest button on the screen, and in the primary colour. By default, the primary colour of \pil{gradio} interfaces is orange, as it compliments the (default, dark mode) dark blue background. This will make it very easy for the user to see what they need to do.
+
+The 2 pieces of information below the predict button (the predicted HDI and the country comparison) will have the largest text size out of all the elements in the interface. This is because this is most likely the main information the user is trying to find, and so should be easy to find. Placing these elements next to the predict button is for the same reason.
+
+\subsubsection{Suggestions to Improve HDI}
+The suggestions to improve the HDI will be given in a table, as they will all follow a similar format: \textit{``Build a new (building) at (these coordinates) to improve the HDI by (this much), which increases it to (this value).''}. This information can be efficiently organised into a table, in order to retrieve the most important information quickly.
+
+Each row of the table (each suggestion) may be selected to show the location of that new building on the map. This is because reading coordinates such as $36.922883^{\circ}\text{N},-101.709461^{\circ}\text{E}$ does not give an intiutive sense of location, especially within a small area.
+
+\subsection{Finding an Optimal Place for a New Building}\label{sec:optimalPlace}
+When suggestions are being made to the user to improve the HDI, they will be in the format: ``Build a new \textit{some building} at \textit{some coordinates}''. Which building will be determined from a predefined list of possible suggestions, which will match the factors I am considering. The coordinates at which to place it are harder to determine.
+
+In theory, increasing the Density factor involving this building, and decreasing the Average Distance factors involving this building will increase the HDI. No matter where we place the new building in the region, the Density factor will increase by the same amount, as the number of that building will always increase by 1, and the area of the region will never change.
+
+Therefore, we only need to consider how the position of a new building will affect the Average Distance factors. Any place we choose will decrease it by some amount, but we need to find a place that will decrease it by a significant amount. Finding the \textit{exact} optimal place is very difficult, so instead I will be using a heuristic, ``good enough'' approach.
+
+One way that I would consider is ``good enough'', is finding the midpoint of all the positions of the other objects, to find where to place this new building. For example, if we wish to decrease $A\left(\text{House},\text{Hospital}\right)$, we could place a hospital in the midpoint of all the positions of the houses. This will involve taking a mean of all the latitude and longitude coordinates of all the houses.
+
+However, there may be some other factors involving hospitals, such as $A\left(\text{School},\text{Hospital}\right)$ for which we would need to follow the same procedure. This will result in a different optimal place to what was calculated from the houses.
+
+To make a compromise between all the factors that involve the building we are trying to place, we can average the previously calculated optimal places for each different factor to get an overall optimal place to build the building.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (in) [fInputOutput, below of=start] {Input all $x$ for which there exists a factor $A\left(x,\text{New Building}\right)$};
+    \node (object1) [fProcess, below of=in] {$\text{currentObject}=1$};
+    \node (meanPos) [fProcess, below of=object1] {Calculate the mean position of $x_{\text{currentObject}}$};
+    \node (decision) [fDecision, below of=meanPos, yshift=-1cm] {Does $\text{currentObject}=\text{number of objects}$?};
+    \node (incrementobject) [fProcess, right of=decision, xshift=5cm] {$\text{currentObject}=\text{currentObject}+1$};
+    \node (out) [fInputOutput, below of=decision, yshift=-1cm] {Output the mean of the mean positions};
+    \node (stop) [fStartStop, below of=out] {Stop};
+    
+    \draw [fArrow] (start) -- (in);
+    \draw [fArrow] (in) -- (object1);
+    \draw [fArrow] (object1) -- (meanPos);
+    \draw [fArrow] (meanPos) -- (decision);
+    \draw [fArrow] (decision) -- node[anchor=east] {yes} (out);
+    \draw [fArrow] (decision) -- node[anchor=south] {no} (incrementobject);
+    \draw [fArrow] (incrementobject) |- (meanPos);
+    \draw [fArrow] (out) -- (stop);
+\end{tikzpicture}
+\caption{Finding an Optimal Place for New Building Flowchart}\label{fig:newBuilding}
+\end{figure}
+For validation, this function should only be called when there exists at least 1 factor in the form $A\left(x,\text{New Building}\right)$.
+
+I intend to implement a better algorithm to find an optimal place for a new building in future prototypes, however this will do for now.
+
+\subsection{Overall Algorithm for User Predicting HDI}\label{sec:predictHDIFullAlgo}
+The user will draw their region on the map, from that the relevant data will be retrieved from OSM using Overpass Turbo, and then the Density and Average Distance factors will be calculated. This will be fed into the pre-trained neural network, which will predict the HDI.
+
+On top of this, a series of suggestions will be made to improve the HDI. The full list of suggestions I would like to make are (in no partucular order):
+\begin{multicols}{2}
+\begin{enumerate}
+    \item Building a new School
+    \item Building a new Hospital
+    \item Building a new Place of Worship
+    \item Building a new Police Station
+    \item Building a new Restaurant
+    \item Building a new Slot Machine
+    \item Building a new Library
+    \item Building a new Pharmacy
+\end{enumerate}
+\end{multicols}
+For each of the suggested buildings, the position at which to build it must be calculated, and then the factors must be calculated again before being fed into the pre-trained neural network.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (drawMap) [fInputOutput, below of=start] {User draws their region on the map};
+    \node (findFactors) [fSubprocess, below of=drawMap, text width=8cm, yshift=-0.5cm] {Query Overpass Turbo to get data about relevant objects and Calculate Factors (Figures \ref{fig:aofxy} \& \ref{fig:dofx})};
+    \node (predictHDI) [fSubprocess, below of=findFactors, yshift=-0.5cm] {Predict the HDI from these Factors (Figure \ref{fig:feedforward})};
+    \node (outHDI) [fInputOutput, below of=predictHDI] {Output the Predicted HDI};
+    \node (calcPos) [fSubprocess, below of=outHDI, text width=8cm, yshift=-0.5cm] {For each of the suggestions, Calculate an optimal place for the new building to go (Figure \ref{fig:newBuilding})};
+    \node (repredict) [fSubprocess, below of=calcPos, text width=8cm, yshift=-0.5cm] {For each of the suggestions, recalculate the Factors (Figures \ref{fig:aofxy} \& \ref{fig:dofx}) and predict HDI (Figure \ref{fig:feedforward})};
+    \node (out) [fInputOutput, below of=repredict, yshift=-0.5cm] {Output the suggestions, sorted by how much they increase the HDI};
+    \node (stop) [fStartStop, below of=out] {Stop};
+    
+    \draw [fArrow] (start) -- (drawMap);
+    \draw [fArrow] (drawMap) -- (findFactors);
+    \draw [fArrow] (findFactors) -- (predictHDI);
+    \draw [fArrow] (predictHDI) -- (outHDI);
+    \draw [fArrow] (outHDI) -- (calcPos);
+    \draw [fArrow] (calcPos) -- (repredict);
+    \draw [fArrow] (repredict) -- (out);
+    \draw [fArrow] (out) -- (stop);
+\end{tikzpicture}
+\caption{Overall User Predicting HDI Algorithm Flowchart}
+\end{figure}
+
+\subsection{List of Key Variables}
+\subsubsection{Variables in Finding Optimal Place for New Building}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{new_building_type} & \pil{str} & Holds the type of new building to be places. & This is used to determine if there are any other factors which contain this type of building. \\ 
+    \hline
+    \pil{other_objects} & \pil{list[str]} & Holds each of the otehr types of object to consider. & We must iterate over this to find an optimal place for a new building. \\ 
+    \hline
+    \pil{current_object} & \pil{str} & Iterator variable for \pil{other_objects} & This will be used to keep track of which object we are currently considering \\ 
+    \hline
+    \pil{mean_positions} & \pil{list[tuple[float]]} & Holds the mean positions of all the other objects we are considering & This is a list of latitude and longitude coordinates, so a tuple is used as before. \\ 
+    \hline
+\caption{List of Key Variables in Finding Optimal Place for New Building}
+\end{longtable}
+\end{center}
+
+\subsubsection{Other Variables}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{app} & \pil{object} & Contains the \pil{gradio} app, which will be ran on the local web server. & The app (highest level ``interface block'') must be stored in a variable to pass to the web server. \\ 
+    \hline
+    \pil{neural_network} & \pil{object} & Stores the pre-trained model for predicting HDI. & This must be called upon when the user draws their region on the map. \\ 
+    \hline
+    \pil{suggestions_types} & \pil{list[str]} & List containing the different types of suggestion to be made. & Each \pil{str} will be the name of the new building type to place. \\ 
+    \hline
+    \pil{suggestions} & \pil{dict[float]} & A dictionary, containing each predicted HDI, each with a key. & The key will be a string containing the type of new building. \\ 
+    \hline
+\caption{List of Other Key Variables in User Interface}
+\end{longtable}
+\end{center}
+
+\section{Data}
+\subsection{Data Structures}
+\subsubsection{Coordinates}
+Any time I am dealing with coordinates on the surface of the Earth, I will be using a \pil{tuple[float]}. The latitude and longitude are stored as \pil{float}s, as they are real numbers that may not be integers. They are stored in a \pil{tuple}, as the length of the data structure will never change (as that would correspond to adding a new perpendicular dimension), and the value of the coordinate never needs to be changed, and so \pil{tuple}s being immutable and static is suitable.
+
+Coordinates in 3D space can also be stored as \pil{tuple[float]}, with 3 elements instead of 2 (corresponding to the $xyz$ coordinate space).
+
+\subsubsection{Column Vectors \& Matrices}
+A matrix is essentially a 2D array of numbers, which have some special operations. I will be using the \pil{numpy} (as \pil{np}) module's \pil{np.matrix} for this, as it takes in a python 2D \pil{list}, and turns it into a matrix, validating the fact that all of its entries are numbers (\pil{int} or \pil{float}, type check), and that all sublists are the same length (length check). This, along with the \pil{np.matmul()} function (for multiplying matrices) will give all the required functionality of matrices.
+
+A column vector is just a matrix with 1 column, and so \pil{np.matrix} can still be used, except I will need to pass in a python \pil{list} of \pil{list}s of length 1, containing each element of the column vector.
+
+Column vectors and matrices are used in the neural network and for calculating the area of a region.
+
+\subsubsection{Layers of Neurons \& Weights}
+The neural network is mainly where column vectors \& matrices will be used, as each layer of activations, biases, errors and $\mathbf{z}$-values will be stored in their own column vectors, with weights being stores in matrices (as each of the neurons in 1 layer is connected to all of the neurons in the next, we need some form of 2D data structure).
+
+\subsubsection{Lists of Things}
+Any time I need to store multiple of a similar thing, I will be using a \pil{list}. This is because lists are both dynamic and mutable, so I can add, remove or change elements as I like.
+
+For example, the column vectors corresponding to the layers of neurons will be stored in their own lists, so that they can be easily retrieved from the index of their layer. I will also be using a \pil{list} to store a series of coordinates (\pil{tuple[float]}) which define a particular region, or just contain the positons of objects we are interested in.
+
+\subsubsection{Neural Network \& File Structure}
+Once the neural network has been fully trained to predict HDI, I would like to be able to store it in an external file, so that predictions can be made without having to go through the training process again.
+
+Only the weights and biases need to be saved, as the particular activations and errors are dependant on what the input layer's activations are, while the weights and biases define how the network can make predictions.
+
+Therefore, I will first store the network's \pil{weights} and \pil{biases} attributes in a python \pil{dict}, such as \mintinline{python}|{"weights": ..., "biases": ...}|, in order to store them in 1 place. I will then use the \pil{pickle} module in order to save this variable (containing a single \pil{dict}) to a \pil{.pkl} file, which is a binary file that can store variables. When the model needs to be loaded (e.g. in the GUI), this file can be read to get the \pil{dict} back, and then the weights and biases can be retrieved using the keys \pil{"weights"} and \pil{"biases"}.
+
+\subsection{Testing Data for Development}
+I plan to have done all the tests under each milestone by the time I reach it. Once all the tests have gone successfuly, across all the milestones (for this prototype), I will ask for my stakeholders' opinions, to see what needs improving.
+
+I will still be testing code in small increments as I am developing, to ensure that I do not make any silly mistakes.
+\subsubsection{Milestone 1 -- Data Collection \& Processing}
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$T_{1}$}\OR\equal{\testID}{$T_{2}$}\OR\equal{\testID}{$T_{3}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Data for Milestone 1}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\subsubsection{Milestone 2 -- Multilayer Perceptron}
+Testing to see if the neural network is actually working is incredibly difficult. Due to the many limitatons as a result of a (relatively) small data set, wrong predictions may be made, while the neural network is working perfectly. Therefore, in order to truly test if it is working, it must be trained on a different data set, which certainly has enough data. This data set will have nothing to do with HDI (as if it did, I would be using it for training anyway), but instead a data set on handwritten digits.
+
+Testing each individual algorithm in the neural network is also very difficult, as there are so many small calculations that go into it, doing it by hand to check would take days. Therefore, I will only be testing the neural network once I have fully implemented it. However, I will still be doing the small, incremental tests to ensure no silly mistakes.
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$T_{4}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Data for Milestone 2}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\subsubsection{Milestone 3 -- Initial User Interface}
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$T_{5}$}\OR\equal{\testID}{$T_{6}$}\OR\equal{\testID}{$T_{7}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Data for Milestone 3}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\subsection{Testing Data for Post-Development}
+\dots
+
+\chapter{Developing the Coded Solution of the \nth{1} Prototype}
+\section{Milestone 1 -- Data Collection \& Processing}
+\dots
+
+\section{Milestone 2 -- Multilayer Perceptron}
+\dots
+
+\section{Milestone 3 -- Initial User Interface}
+\dots
+
+\section{Feedback from Stakeholders}
+\dots
+
+\chapter{Design of the \nth{2} Prototype}
+\dots
+
+\chapter{Developing the Coded Solution of the \nth{2} Prototype}
+\section{Milestone 4 -- Authentication System}
+\dots
+
+\section{Milestone 5 -- Final User Interface}
+\dots
+
+\section{Feedback from Stakeholders}
+\dots
+
+\chapter{Evaluation}
+\dots
+
+\cleardoublepage{}
+\phantomsection{}
+\addcontentsline{toc}{chapter}{Index}
+\addcontentsline{toc}{section}{\listfigurename}
+\listoffigures{}
+
+\cleardoublepage{}
+\phantomsection{}
+\addcontentsline{toc}{section}{\listlistingname}
+\listoflistings{}
+
+\cleardoublepage{}
+\phantomsection{}
+\addcontentsline{toc}{section}{\listtablename}
+\listoftables{}
+
+\cleardoublepage{}
+\phantomsection{}
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{unsrt}
+\bibliography{main}
+
+\end{document}

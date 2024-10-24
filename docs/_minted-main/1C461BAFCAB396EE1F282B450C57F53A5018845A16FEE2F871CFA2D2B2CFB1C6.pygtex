@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{rect}\PYG{o}{.}\PYG{n}{midbottom} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pos}
+\end{Verbatim}

@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}game loop}
+\PYG{n}{running} \PYG{o}{=} \PYG{k+kc}{True}
+\PYG{k}{while} \PYG{n}{running}\PYG{p}{:}
+    \PYG{c+c1}{\PYGZsh{}keep loop running at the right speed}
+    \PYG{n}{clock}\PYG{o}{.}\PYG{n}{tick}\PYG{p}{(}\PYG{n}{FPS}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{}process inputs/events}
+    \PYG{k}{for} \PYG{n}{event} \PYG{o+ow}{in} \PYG{n}{pygame}\PYG{o}{.}\PYG{n}{event}\PYG{o}{.}\PYG{n}{get}\PYG{p}{():}
+        \PYG{c+c1}{\PYGZsh{}check for closing the window}
+        \PYG{k}{if} \PYG{n}{event}\PYG{o}{.}\PYG{n}{type} \PYG{o}{==} \PYG{n}{pygame}\PYG{o}{.}\PYG{n}{QUIT}\PYG{p}{:}
+            \PYG{n}{running} \PYG{o}{=} \PYG{k+kc}{False}
+
+    \PYG{c+c1}{\PYGZsh{}update}
+    \PYG{n}{all\PYGZus{}sprites}\PYG{o}{.}\PYG{n}{update}\PYG{p}{()}
+
+    \PYG{c+c1}{\PYGZsh{}draw/render}
+    \PYG{n}{screen}\PYG{o}{.}\PYG{n}{fill}\PYG{p}{(}\PYG{n}{BLACK}\PYG{p}{)}
+    \PYG{n}{all\PYGZus{}sprites}\PYG{o}{.}\PYG{n}{draw}\PYG{p}{(}\PYG{n}{screen}\PYG{p}{)}
+    \PYG{n}{pygame}\PYG{o}{.}\PYG{n}{display}\PYG{o}{.}\PYG{n}{flip}\PYG{p}{()}
+
+\PYG{n}{pygame}\PYG{o}{.}\PYG{n}{quit}\PYG{p}{()}
+\end{Verbatim}

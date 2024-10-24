@@ -1,0 +1,106 @@
+\contentsline {chapter}{Contents}{1}{section*.1}%
+\contentsline {chapter}{\numberline {1}Analysis}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Introduction}{3}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}The Problem}{3}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Amenable to Computational Approach}{4}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Computational Methods}{4}{subsection.1.1.3}%
+\contentsline {subsubsection}{Abstraction}{4}{subsubsection*.3}%
+\contentsline {subsubsection}{Decomposition}{4}{subsubsection*.4}%
+\contentsline {subsubsection}{Divide \& Conquer}{5}{subsubsection*.5}%
+\contentsline {subsubsection}{Data Mining}{5}{subsubsection*.6}%
+\contentsline {subsubsection}{Heuristics}{5}{subsubsection*.7}%
+\contentsline {subsubsection}{Visualisation}{6}{subsubsection*.8}%
+\contentsline {section}{\numberline {1.2}Stakeholders}{6}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Research}{7}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Existing Solutions}{7}{subsection.1.3.1}%
+\contentsline {subsubsection}{sandeepponduru's human-development-index \cite {existingSol1}}{7}{subsubsection*.9}%
+\contentsline {subsubsection}{julieanneco's predictingHDI \cite {existingSol2}}{9}{subsubsection*.13}%
+\contentsline {subsubsection}{Human Development Reports' Country Insights \cite {existingSol3}}{11}{subsubsection*.17}%
+\contentsline {subsection}{\numberline {1.3.2}Stakeholder Interview \& Feedback}{12}{subsection.1.3.2}%
+\contentsline {subsubsection}{Question 1}{12}{subsubsection*.21}%
+\contentsline {subsubsection}{Question 2}{13}{subsubsection*.22}%
+\contentsline {subsubsection}{Notation Explanation}{14}{subsubsection*.24}%
+\contentsline {subsubsection}{Question 3}{14}{subsubsection*.25}%
+\contentsline {subsubsection}{Question 4}{15}{subsubsection*.27}%
+\contentsline {section}{\numberline {1.4}Essential Features}{16}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Limitations}{17}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Requirements}{18}{section.1.6}%
+\contentsline {subsection}{\numberline {1.6.1}Hardware Requirements}{18}{subsection.1.6.1}%
+\contentsline {subsection}{\numberline {1.6.2}Software Requirements}{18}{subsection.1.6.2}%
+\contentsline {section}{\numberline {1.7}Success Criteria}{19}{section.1.7}%
+\contentsline {chapter}{\numberline {2}Design of the 1\relax \textsuperscript {st} Prototype}{21}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Structure Diagram}{21}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Data Collection \& Processing}{22}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Full List of Factors to Include}{22}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Finding the Average Distance between 2 objects $x,y$, $A\left (x,{}y\right )$}{23}{subsection.2.2.2}%
+\contentsline {subsubsection}{Finding the distance between 2 given points}{23}{subsubsection*.31}%
+\contentsline {subsubsection}{Finding the Average Distance between 2 objects $x,y$, $A\left (x,{}y\right )$}{28}{subsubsection*.39}%
+\contentsline {subsection}{\numberline {2.2.3}Finding the Density of some object $x$, $D\left (x\right )$}{30}{subsection.2.2.3}%
+\contentsline {subsubsection}{Definition of $D\left (x\right )$}{30}{subsubsection*.41}%
+\contentsline {subsubsection}{Area of a Polygon on the Surface of a Sphere}{30}{subsubsection*.42}%
+\contentsline {subsubsection}{Finding the Interior Angles}{32}{subsubsection*.46}%
+\contentsline {subsubsection}{Final Algorithm}{35}{subsubsection*.49}%
+\contentsline {subsection}{\numberline {2.2.4}Overall Algorithm for Data Collection \& Processing}{37}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}List of Key Variables}{38}{subsection.2.2.5}%
+\contentsline {subsubsection}{Variables in $A\left (x,y\right )$}{38}{subsubsection*.52}%
+\contentsline {subsubsection}{Variables in $D\left (x\right )$}{39}{subsubsection*.53}%
+\contentsline {subsubsection}{Other Variables}{40}{subsubsection*.54}%
+\contentsline {section}{\numberline {2.3}Multilayer Perceptron}{41}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Structure}{41}{subsection.2.3.1}%
+\contentsline {subsubsection}{Layers \& Neurons}{41}{subsubsection*.55}%
+\contentsline {subsubsection}{Weights}{42}{subsubsection*.57}%
+\contentsline {subsection}{\numberline {2.3.2}Feedforward Algorithm \& Prediction}{43}{subsection.2.3.2}%
+\contentsline {subsubsection}{Weighted Sum}{43}{subsubsection*.59}%
+\contentsline {subsubsection}{Activation Function}{44}{subsubsection*.61}%
+\contentsline {subsubsection}{Bias}{45}{subsubsection*.63}%
+\contentsline {subsubsection}{Rearranging into Matrices \& Column Vectors}{46}{subsubsection*.65}%
+\contentsline {subsubsection}{Final Algorithm}{48}{subsubsection*.67}%
+\contentsline {subsection}{\numberline {2.3.3}Backpropogation Algorithm \& Training}{49}{subsection.2.3.3}%
+\contentsline {subsubsection}{The Cost Function \& Gradient Descent}{49}{subsubsection*.69}%
+\contentsline {subsubsection}{Error of a Neuron, ${\delta }^{\left (l\right )}_i$}{51}{subsubsection*.71}%
+\contentsline {subsubsection}{Error of the Output Layer, $\bm {\delta }^{\left (L\right )}$}{51}{subsubsection*.72}%
+\contentsline {subsubsection}{Error of the Previous Layer in terms of the current one}{52}{subsubsection*.73}%
+\contentsline {subsubsection}{Gradient of the Cost Function}{54}{subsubsection*.75}%
+\contentsline {subsubsection}{Final Algorithm}{55}{subsubsection*.76}%
+\contentsline {subsection}{\numberline {2.3.4}Stochastic Gradient Descent}{57}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}Class Diagram}{59}{subsection.2.3.5}%
+\contentsline {section}{\numberline {2.4}User Interface}{60}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Interface Sketch}{60}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Input Validation}{62}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Usability Features}{63}{subsection.2.4.3}%
+\contentsline {subsubsection}{Map \& Map Buttons}{63}{subsubsection*.83}%
+\contentsline {subsubsection}{Prediction of HDI}{63}{subsubsection*.84}%
+\contentsline {subsubsection}{Suggestions to Improve HDI}{63}{subsubsection*.85}%
+\contentsline {subsection}{\numberline {2.4.4}Finding an Optimal Place for a New Building}{64}{subsection.2.4.4}%
+\contentsline {subsection}{\numberline {2.4.5}Overall Algorithm for User Predicting HDI}{65}{subsection.2.4.5}%
+\contentsline {subsection}{\numberline {2.4.6}List of Key Variables}{67}{subsection.2.4.6}%
+\contentsline {subsubsection}{Variables in Finding Optimal Place for New Building}{67}{subsubsection*.88}%
+\contentsline {subsubsection}{Other Variables}{68}{subsubsection*.89}%
+\contentsline {section}{\numberline {2.5}Data}{69}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Data Structures}{69}{subsection.2.5.1}%
+\contentsline {subsubsection}{Coordinates}{69}{subsubsection*.90}%
+\contentsline {subsubsection}{Column Vectors \& Matrices}{69}{subsubsection*.91}%
+\contentsline {subsubsection}{Layers of Neurons \& Weights}{69}{subsubsection*.92}%
+\contentsline {subsubsection}{Lists of Things}{69}{subsubsection*.93}%
+\contentsline {subsubsection}{Neural Network \& File Structure}{70}{subsubsection*.94}%
+\contentsline {subsection}{\numberline {2.5.2}Testing Data for Development}{70}{subsection.2.5.2}%
+\contentsline {subsubsection}{Milestone 1 -- Data Collection \& Processing}{70}{subsubsection*.95}%
+\contentsline {subsubsection}{Milestone 2 -- Multilayer Perceptron}{71}{subsubsection*.96}%
+\contentsline {subsubsection}{Milestone 3 -- Initial User Interface}{71}{subsubsection*.97}%
+\contentsline {subsection}{\numberline {2.5.3}Testing Data for Post-Development}{72}{subsection.2.5.3}%
+\contentsline {chapter}{\numberline {3}Developing the Coded Solution of the 1\relax \textsuperscript {st} Prototype}{73}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Milestone 1 -- Data Collection \& Processing}{73}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Milestone 2 -- Multilayer Perceptron}{73}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Milestone 3 -- Initial User Interface}{73}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Feedback from Stakeholders}{73}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Design of the 2\relax \textsuperscript {nd} Prototype}{74}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Developing the Coded Solution of the 2\relax \textsuperscript {nd} Prototype}{75}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Milestone 4 -- Authentication System}{75}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Milestone 5 -- Final User Interface}{75}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Feedback from Stakeholders}{75}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Evaluation}{76}{chapter.6}%
+\contentsline {chapter}{Index}{77}{section*.98}%
+\contentsline {section}{List of Figures}{77}{section*.99}%
+\contentsline {section}{List of Code Snippets}{79}{section*.101}%
+\contentsline {section}{List of Tables}{80}{section*.103}%
+\contentsline {chapter}{Bibliography}{81}{section*.105}%

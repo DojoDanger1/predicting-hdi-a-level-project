@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}player properties}
+\PYG{n}{PLAYER\PYGZus{}ACC} \PYG{o}{=} \PYG{l+m+mf}{0.5}
+\PYG{n}{PLAYER\PYGZus{}FRICTION} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.12}
+\PYG{n}{PLAYER\PYGZus{}GRAV} \PYG{o}{=} \PYG{l+m+mf}{0.8}
+\end{Verbatim}
