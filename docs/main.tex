@@ -2331,6 +2331,7 @@ Therefore, I must write an algorithm to generate a suitable \pil{.csv} file, con
 \begin{minted}[linenos,breaklines,frame=single,firstnumber=1]{python}
 import csv
 
+#retrieve data
 with open('src/data/subnationalHDI.csv', 'r') as file:
     reader = csv.DictReader(file)
 \end{minted}
@@ -2340,7 +2341,7 @@ The \pil{csv} module contains many useful methods for handling \pil{csv} files. 
 
 \begin{listing}[H]
 \pil{data_processing / hdi.py}
-\begin{minted}[linenos,breaklines,frame=single,firstnumber=5]{python}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=6]{python}
     newcsv = []
     for record in reader:
         if record['year'] == '2022' and record['region'] != 'Total': # the most recent year + dont include full countries
@@ -2365,7 +2366,8 @@ Figure \ref{fig:ss1.2} shows each \pil{newRecord}, which are correct. Therefore,
 
 \begin{listing}[H]
 \pil{data_processing / hdi.py}
-\begin{minted}[linenos,breaklines,frame=single,firstnumber=15]{python}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=16]{python}
+#write to new csv
 with open('src/data/hdi.csv', 'w') as file:
     field_names = ['country', 'region', 'hdi']
     writer = csv.DictWriter(file, fieldnames=field_names)
@@ -2390,6 +2392,7 @@ Figure \ref{fig:ss1.3} shows the \pil{csv} file with only the useful information
 \begin{minted}[linenos,breaklines,frame=single,firstnumber=1]{python}
 import csv
 
+#retrieve data
 with open('src/data/subnationalHDI.csv', 'r') as file:
     reader = csv.DictReader(file)
     newcsv = []
@@ -2402,6 +2405,7 @@ with open('src/data/subnationalHDI.csv', 'r') as file:
             } # only the most useful information
             newcsv.append(newRecord)
 
+#write to new csv
 with open('src/data/hdi.csv', 'w') as file:
     field_names = ['country', 'region', 'hdi']
     writer = csv.DictWriter(file, fieldnames=field_names)

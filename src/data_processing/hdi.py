@@ -1,5 +1,6 @@
 import csv
 
+#retrieve data
 with open('src/data/subnationalHDI.csv', 'r') as file:
     reader = csv.DictReader(file)
     newcsv = []
@@ -12,6 +13,7 @@ with open('src/data/subnationalHDI.csv', 'r') as file:
             } # only the most useful information
             newcsv.append(newRecord)
 
+#write to new csv
 with open('src/data/hdi.csv', 'w') as file:
     field_names = ['country', 'region', 'hdi']
     writer = csv.DictWriter(file, fieldnames=field_names)
