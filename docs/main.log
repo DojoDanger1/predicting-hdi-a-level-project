@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.10)  22 OCT 2024 16:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.10)  24 OCT 2024 17:27
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1156,19 +1156,19 @@ Underfull \hbox (badness 1354) in paragraph at lines 172--173
 \openout4 = `main.pyg'.
 
  (./_minted-main/default.pygstyle) (./_minted-main/19891BF7ABBB15E137B4961D71AC5B9D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
-<./images//existingSol1Jupyter.png, id=355, 1181.41376pt x 869.2475pt>
+<./images//existingSol1Jupyter.png, id=390, 1181.41376pt x 869.2475pt>
 File: ./images//existingSol1Jupyter.png Graphic file (type png)
 <use ./images//existingSol1Jupyter.png>
 Package pdftex.def Info: ./images//existingSol1Jupyter.png  used on input line 191.
 (pdftex.def)             Requested size: 256.0748pt x 188.40988pt.
  [7]
-<./images//existingSol1Scatter.png, id=366, 393.47pt x 373.395pt>
+<./images//existingSol1Scatter.png, id=401, 393.47pt x 373.395pt>
 File: ./images//existingSol1Scatter.png Graphic file (type png)
 <use ./images//existingSol1Scatter.png>
 Package pdftex.def Info: ./images//existingSol1Scatter.png  used on input line 205.
 (pdftex.def)             Requested size: 256.0748pt x 243.00584pt.
  [8 <./images//existingSol1Jupyter.png> <./images//existingSol1Scatter.png>]
-<./images//existingSol1Heatmap.png, id=375, 550.055pt x 437.635pt>
+<./images//existingSol1Heatmap.png, id=410, 550.055pt x 437.635pt>
 File: ./images//existingSol1Heatmap.png Graphic file (type png)
 <use ./images//existingSol1Heatmap.png>
 Package pdftex.def Info: ./images//existingSol1Heatmap.png  used on input line 219.
@@ -1178,7 +1178,7 @@ Overfull \hbox (22.89325pt too wide) in paragraph at lines 226--227
  [][] 
  []
 
-<./images//existingSol2Pies.png, id=379, 796.9775pt x 775.89874pt>
+<./images//existingSol2Pies.png, id=414, 796.9775pt x 775.89874pt>
 File: ./images//existingSol2Pies.png Graphic file (type png)
 <use ./images//existingSol2Pies.png>
 Package pdftex.def Info: ./images//existingSol2Pies.png  used on input line 238.
@@ -1189,7 +1189,7 @@ Overfull \hbox (8.66689pt too wide) in paragraph at lines 245--246
  []
 
 [9 <./images//existingSol1Heatmap.png>]
-<./images//existingSol2Factors.png, id=390, 653.44125pt x 460.72125pt>
+<./images//existingSol2Factors.png, id=425, 653.44125pt x 460.72125pt>
 File: ./images//existingSol2Factors.png Graphic file (type png)
 <use ./images//existingSol2Factors.png>
 Package pdftex.def Info: ./images//existingSol2Factors.png  used on input line 254.
@@ -1202,7 +1202,7 @@ Overfull \hbox (51.346pt too wide) in paragraph at lines 259--260
 \openout4 = `main.pyg'.
 
 (./_minted-main/B9B2A182913BEED7BE4719DC07B3C7655018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [10 <./images//existingSol2Pies.png> <./images//existingSol2Factors.png>]
-<./images//existingSol2Classification.png, id=399, 160.6pt x 108.405pt>
+<./images//existingSol2Classification.png, id=434, 160.6pt x 108.405pt>
 File: ./images//existingSol2Classification.png Graphic file (type png)
 <use ./images//existingSol2Classification.png>
 Package pdftex.def Info: ./images//existingSol2Classification.png  used on input line 268.
@@ -1212,7 +1212,7 @@ Overfull \hbox (22.89325pt too wide) in paragraph at lines 273--274
  [][] 
  []
 
-<./images//existingSol3Rank.png, id=403, 1097.09875pt x 252.945pt>
+<./images//existingSol3Rank.png, id=438, 1097.09875pt x 252.945pt>
 File: ./images//existingSol3Rank.png Graphic file (type png)
 <use ./images//existingSol3Rank.png>
 Package pdftex.def Info: ./images//existingSol3Rank.png  used on input line 283.
@@ -1222,13 +1222,13 @@ Overfull \hbox (22.89325pt too wide) in paragraph at lines 288--289
  [][] 
  []
 
-<./images//existingSol3Hover.png, id=405, 1093.08376pt x 249.93375pt>
+<./images//existingSol3Hover.png, id=440, 1093.08376pt x 249.93375pt>
 File: ./images//existingSol3Hover.png Graphic file (type png)
 <use ./images//existingSol3Hover.png>
 Package pdftex.def Info: ./images//existingSol3Hover.png  used on input line 295.
 (pdftex.def)             Requested size: 256.0748pt x 58.55138pt.
 [11 <./images//existingSol2Classification.png> <./images//existingSol3Rank.png>]
-<./images//existingSol3Waterfall.png, id=417, 1098.1025pt x 507.8975pt>
+<./images//existingSol3Waterfall.png, id=452, 1098.1025pt x 507.8975pt>
 File: ./images//existingSol3Waterfall.png Graphic file (type png)
 <use ./images//existingSol3Waterfall.png>
 Package pdftex.def Info: ./images//existingSol3Waterfall.png  used on input line 309.
@@ -1294,7 +1294,7 @@ Underfull \hbox (badness 2762) in paragraph at lines 501--501
  []
 
 [16]
-<./images//limitationShelter.png, id=454, 271.0125pt x 135.50626pt>
+<./images//limitationShelter.png, id=490, 271.0125pt x 135.50626pt>
 File: ./images//limitationShelter.png Graphic file (type png)
 <use ./images//limitationShelter.png>
 Package pdftex.def Info: ./images//limitationShelter.png  used on input line 516.
@@ -3238,7 +3238,7 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
 \openout4 = `main.pyg'.
 
  (./_minted-main/2C3338F9D148B311245EBC29B62474C75018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [59]
-<./images//map.jpg, id=847, 1666.225pt x 1120.185pt>
+<./images//map.jpg, id=882, 1666.225pt x 1120.185pt>
 File: ./images//map.jpg Graphic file (type jpg)
 <use ./images//map.jpg>
 Package pdftex.def Info: ./images//map.jpg  used on input line 1971.
@@ -3252,12 +3252,12 @@ Overfull \hbox (25.70618pt too wide) in paragraph at lines 2023--2024
 \openout4 = `main.pyg'.
 
  (./_minted-main/381CCADFB8D4848ADD470E33033B198F5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
-<./images//lightModeInterface.png, id=857, 1405.25pt x 720.6925pt>
+<./images//lightModeInterface.png, id=892, 1405.25pt x 720.6925pt>
 File: ./images//lightModeInterface.png Graphic file (type png)
 <use ./images//lightModeInterface.png>
 Package pdftex.def Info: ./images//lightModeInterface.png  used on input line 2047.
 (pdftex.def)             Requested size: 338.2226pt x 173.4536pt.
-<./images//darkModeInterface.png, id=858, 1929.2075pt x 1373.13pt>
+<./images//darkModeInterface.png, id=893, 1929.2075pt x 1373.13pt>
 File: ./images//darkModeInterface.png Graphic file (type png)
 <use ./images//darkModeInterface.png>
 Package pdftex.def Info: ./images//darkModeInterface.png  used on input line 2052.
@@ -3549,82 +3549,202 @@ Underfull \hbox (badness 3769) in paragraph at lines 2301--2301
 []|\OT1/cmr/m/n/12 Suggestions fed
  []
 
-[71] [72]
+[71]
+\c@parts=\count443
+ [72]
 Chapter 3.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2307.
+(hyperref)                removing `\mathsurround' on input line 2309.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2307.
+(hyperref)                removing `\z@' on input line 2309.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 2307.
+(hyperref)                removing `superscript' on input line 2309.
 
+<./images//ss1.1.png, id=996, 1686.3pt x 1053.9375pt>
+File: ./images//ss1.1.png Graphic file (type png)
+<use ./images//ss1.1.png>
+Package pdftex.def Info: ./images//ss1.1.png  used on input line 2323.
+(pdftex.def)             Requested size: 341.43306pt x 213.389pt.
 [73
 
 ]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/843824C4FA0EEFDA2FABDB9113D8A4DC5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/78E2320FEA567905D95C49AAE52F53F55018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/B06891B28FBE2508CE7E3C547A3990B25018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+Package hyperref Info: bookmark level for unknown listing defaults to 0 on input line 2337.
+\openout4 = `main.pyg'.
+
+ (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/6334B066DC2C008DD07295F63F0CF7F35018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/BBE02F946D5455D74616FC9777557C225018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/81AB62A717E411CE854FB278C77769895018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/E3E00B200A73A68643567A2765FA54CB5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/236041BD46FD597AEEB549A5C3CE89B05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/78E2320FEA567905D95C49AAE52F53F55018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/3469746D98C44F707A6578C386B8EC2B5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [74 <./images//ss1.1.png>]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB6595018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/F5F22DB0C23B3F1EFCE9D21BF8E15F625018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/F5F22DB0C23B3F1EFCE9D21BF8E15F625018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+<./images//ss1.2.png, id=1008, 1086.0575pt x 530.98375pt>
+File: ./images//ss1.2.png Graphic file (type png)
+<use ./images//ss1.2.png>
+Package pdftex.def Info: ./images//ss1.2.png  used on input line 2361.
+(pdftex.def)             Requested size: 341.43306pt x 166.92857pt.
+\openout4 = `main.pyg'.
+
+ (./_minted-main/A3F9D4AD32BE238292C4A04D0EED94955018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/78E2320FEA567905D95C49AAE52F53F55018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/CAB33F30523FBBDE5ABA8B475E911C545018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [75 <./images//ss1.2.png>]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/254123613DDAEF592E7BE9D5D011B1E35018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/341CF4CD2EBE9CB6A70E51867438D61D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/E3E00B200A73A68643567A2765FA54CB5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/F5F22DB0C23B3F1EFCE9D21BF8E15F625018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB6595018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+<./images//ss1.3.png, id=1019, 1686.3pt x 1053.9375pt>
+File: ./images//ss1.3.png Graphic file (type png)
+<use ./images//ss1.3.png>
+Package pdftex.def Info: ./images//ss1.3.png  used on input line 2382.
+(pdftex.def)             Requested size: 341.43306pt x 213.389pt.
+\openout4 = `main.pyg'.
+
+ (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/78F114A30C73AFCE85BDEBD41ED8C75D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/78E2320FEA567905D95C49AAE52F53F55018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/B32A2175AD09F7FD3930EC3F232519615018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [76 <./images//ss1.3.png>] [77] [78]
 Chapter 4.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2320.
+(hyperref)                removing `\mathsurround' on input line 2438.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2320.
+(hyperref)                removing `\z@' on input line 2438.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 2320.
+(hyperref)                removing `superscript' on input line 2438.
 
-[74
+[79
 
 ]
 Chapter 5.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2323.
+(hyperref)                removing `\mathsurround' on input line 2441.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2323.
+(hyperref)                removing `\z@' on input line 2441.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 2323.
+(hyperref)                removing `superscript' on input line 2441.
 
-[75
+[80
 
 ]
 Chapter 6.
-[76
+[81
 
 ]
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 2339.
+(hyperref)                be the same. Added a new anchor on input line 2457.
 
-(./main.lof [77
+(./main.lof [82
 
 
 ])
 \tf@lof=\write10
 \openout10 = `main.lof'.
 
- [78] (./main.lol)
+ [83] (./main.lol
+\openout4 = `main.pyg'.
+
+ (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex))
 \tf@lol=\write11
 \openout11 = `main.lol'.
 
- [79
+ [84
 
 
 ] (./main.lot)
 \tf@lot=\write12
 \openout12 = `main.lot'.
 
- [80
+ [85
 
 
 ] (./main.bbl
@@ -3632,28 +3752,28 @@ Underfull \hbox (badness 1675) in paragraph at lines 37--40
 []\OT1/cmr/m/n/12 Micheal Nielsen.  Neu-ral net-works and deep learn-ing -- chap-ter 2.  [][]$\OT1/cmtt/m/n/12 http : / /
  []
 
-) [81
+) [86
 
 
 ] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 3EA3D7CE143A82FB45BD1775B0AAECF0;10505.
+(rerunfilecheck)             Checksum: 029078BC703343223696554CC9DD98E7;11720.
 runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 66101 strings out of 478268
- 1633836 string characters out of 5846346
- 2082743 words of memory out of 5000000
- 82730 multiletter control sequences out of 15000+600000
- 493014 words of font info for 115 fonts, out of 8000000 for 9000
+ 66298 strings out of 478268
+ 1645710 string characters out of 5846346
+ 2085358 words of memory out of 5000000
+ 82819 multiletter control sequences out of 15000+600000
+ 493350 words of font info for 117 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  130i,23n,129p,1686b,2904s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on main.pdf (82 pages, 2894748 bytes).
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on main.pdf (87 pages, 3434732 bytes).
 PDF statistics:
- 1235 PDF objects out of 1440 (max. 8388607)
- 1075 compressed objects within 11 object streams
- 360 named destinations out of 1000 (max. 500000)
- 540 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1331 PDF objects out of 1440 (max. 8388607)
+ 1155 compressed objects within 12 object streams
+ 380 named destinations out of 1000 (max. 500000)
+ 611 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -2304,14 +2304,132 @@ Testing each individual algorithm in the neural network is also very difficult, 
 \subsection{Testing Data for Post-Development}
 \dots
 
+\newcounter{parts}
+\setcounter{parts}{0}
 \chapter{Developing the Coded Solution of the \nth{1} Prototype}
 \section{Milestone 1 -- Data Collection \& Processing}
+By the end of this milestone, I hope to have all the training data for the neural network to train on.
+\subsection{Success Criteria}
+\dots
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- Collecting HDI Data}
+The first thing I need is a list of all subnational regions, with their corresponding true HDI. As stated before, I will download this from the Global Data Lab \cite{hdiData}.
+
+The full dataset contains lots of unnecessary data for my project, as this gives the HDI (and many other indicators) over time, whereas I just want the most recent HDI for each subnational region.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss1.1.png}
+\caption{Full dataset containing unnecessary data}
+\end{figure}
+
+Therefore, I must write an algorithm to generate a suitable \pil{.csv} file, containing only useful information.
+
+\begin{listing}[H]
+\pil{data_processing / hdi.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=1]{python}
+import csv
+
+with open('src/data/subnationalHDI.csv', 'r') as file:
+    reader = csv.DictReader(file)
+\end{minted}
+\caption{Initialising \pil{csv} reader}
+\end{listing}
+The \pil{csv} module contains many useful methods for handling \pil{csv} files. I am opening \pil{'src/data/subnationalHDI.csv'} in read mode, and saving it to the variable \pil{file}. The \pil{with} statement automatically closes the file once I am done with it. The \pil{csv.DictReader} is a class that can read the csv file, and convert each record into a pyton \pil{dict}.
+
+\begin{listing}[H]
+\pil{data_processing / hdi.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=5]{python}
+    newcsv = []
+    for record in reader:
+        if record['year'] == '2022' and record['region'] != 'Total': # the most recent year + dont include full countries
+            newRecord = {
+                "country": record["country"],
+                "region": record["region"],
+                "hdi": record["shdi"]
+            } # only the most useful information
+            newcsv.append(newRecord)
+            print(newRecord) # (temporary)
+\end{minted}
+\caption{Refining the HDI Data}
+\end{listing}
+Here, I define a \pil{list}, \pil{newcsv} to hold all the new (nescessary) records. For each of the records in the full dataset, we must determine if it is from the most recent year (2022), and that it is in fact a subnational region. If it is, we make a new record of only the most important information, and append this to \pil{newcsv}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss1.2.png}
+\caption{The new records}\label{fig:ss1.2}
+\end{figure}
+Figure \ref{fig:ss1.2} shows each \pil{newRecord}, which are correct. Therefore, I can now add these to a new \pil{csv} file.
+
+\begin{listing}[H]
+\pil{data_processing / hdi.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=15]{python}
+with open('src/data/hdi.csv', 'w') as file:
+    field_names = ['country', 'region', 'hdi']
+    writer = csv.DictWriter(file, fieldnames=field_names)
+    writer.writeheader()
+    for record in newcsv:
+        writer.writerow(record)
+\end{minted}
+\caption{Wrting back to \pil{csv}}
+\end{listing}
+Here, I must open \pil{'src/data/hdi.csv'} in write mode, to ensure I can make changes to the empty file. The \pil{csv.DictWriter} does the same thing as the \pil{csv.DictReader} but in reverse, so we must specify the field names. After this, we iterate over the \pil{newcsv} \pil{list} and write all of the new records.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss1.3.png}
+\caption{Dataset of only useful HDI information}\label{fig:ss1.3}
+\end{figure}
+Figure \ref{fig:ss1.3} shows the \pil{csv} file with only the useful information required. Therefore, I can now delete the original \pil{subnatonalHDI.csv} file.
+
+\subsubsection{Final Code}
+\begin{listing}[H]
+\pil{data_processing / hdi.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=1]{python}
+import csv
+
+with open('src/data/subnationalHDI.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    newcsv = []
+    for record in reader:
+        if record['year'] == '2022' and record['region'] != 'Total': # the most recent year + dont include full countries
+            newRecord = {
+                "country": record["country"],
+                "region": record["region"],
+                "hdi": record["shdi"]
+            } # only the most useful information
+            newcsv.append(newRecord)
+
+with open('src/data/hdi.csv', 'w') as file:
+    field_names = ['country', 'region', 'hdi']
+    writer = csv.DictWriter(file, fieldnames=field_names)
+    writer.writeheader()
+    for record in newcsv:
+        writer.writerow(record)
+\end{minted}
+\caption{Final HDI Data Processing Code}
+\end{listing}
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- The Next Bit}
 \dots
 
 \section{Milestone 2 -- Multilayer Perceptron}
+\subsection{Success Criteria}
+\dots
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- The Next Bit}
 \dots
 
 \section{Milestone 3 -- Initial User Interface}
+\subsection{Success Criteria}
+\dots
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- The Next Bit}
 \dots
 
 \section{Feedback from Stakeholders}
