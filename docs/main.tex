@@ -4775,17 +4775,356 @@ If the training didn't work, then the success rate should be around $10\%$, as i
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Training the Neural Network}
-\dots
+
+Now it is time to trian the neural network to predict the HDI of a given area.
+
+\begin{listing}[H]
+\pil{network_training / load_hdi_data.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=1]{python}
+import csv
+import numpy as np
+
+# read csv file
+with open('data/training_data.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    hdiData = []
+    for record in reader:
+        # convert it to the right format
+        hdiData.append({
+            "input": np.matrix([[1000 if factor == '' else float(factor)] for factor in list(record.values())[4:]]),
+            "output": np.matrix([[float(record['hdi'])]])
+        })
+\end{minted}
+\caption{Loading the HDI Data}\label{cs:loadHDIdata}
+\end{listing}
+
+First, we must convert the HDI data into the right format. We can read the \pil{.csv} file using the same methods as before, except when we go to append each record, we must slightly change the format.
+
+Currently, each record is a dictionary of all the factors, along with some extra information (such as the name of the region). The input data should be a list of factors (as a column vector), which currently start at index \pil{4}. Each of these factors is currently of type \pil{str}, so we must convert it to a \pil{float}. Some of the factors are also currently an empty string, which correspond to average distance factors in regions that have 0 of that building. I have set these to 1000, as that is larger than every other average distance factor.
+
+The output should just be the HDI, which is located at key \pil{'hdi'}.
+
+\begin{listing}[H]
+\pil{network_training / load_hdi_data.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=3]{python}
+import random
+import pickle
+\end{minted}
+\pil{network_training / load_hdi_data.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=17]{python}
+# split the data set into training and testing
+def test_train_split(data_set, proportion_train):
+    random.shuffle(data_set)
+    return {
+        "training": data_set[:int((len(data_set)*proportion_train)//1)],
+        "testing": data_set[int((len(data_set)*proportion_train)//1):]
+    }
+
+hdiData = test_train_split(hdiData, 0.9)
+# save data to a file
+with open(f'data/hdi.pkl', 'wb') as file:
+    pickle.dump(hdiData, file)
+\end{minted}
+\caption{Splitting into Testing and Training Data}\label{cs:testTrainSplit}
+\end{listing}
+
+We then must randomly split the data set into training and testing data. For this, I have written a function, \pil{def test_train_split}, which will take in a data set and a proportion which should be training data.
+
+If we multiply the length of the data set by the proportion, we get the index of the final piece of data which should be for training. Therefore, everything before that should be training and everything after it should be testing.
+
+After we have split the data set, we can again save it to file as we have done before.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{40}$}\OR\equal{\mtestID}{$t_{41}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:loadHDIdata} \& \ref{cs:testTrainSplit}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{network_training / train_hdi.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=1]{python}
+import pickle
+
+# load the training data from the file
+with open('data/hdi.pkl', 'rb') as file:
+    data = pickle.load(file)
+training_data = data['training']
+
+# import the class MultilayerPerceptron from the neural_network.py file
+import os
+import sys
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+from neural_network import MultilayerPerceptron
+
+# train the network
+network = MultilayerPerceptron([24, 10, 10, 1])
+network.train(training_data, 10, 30, 3)
+network.save_model('hdi-temp')
+\end{minted}
+\caption{Training the Neural Network on HDI}\label{cs:trainHDI}
+\end{listing}
+
+We can then train the neural network on the HDI training data in exactly the same way as we did for the MNIST handwritten digits.
+
+Except, this time we must have 24 neurons in the input layer (for each of the 24 factors), and 1 neuron in the output layer. I initially decided to have 2 hidden layers, each with 10 neurons, and to keep the remaining training parameters the same. (mini batch size $=10$, number of epochs $=30$, learning rate $=3$)
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{42}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:trainHDI}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{network_training / test_hdi.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=1]{python}
+import pickle
+
+# load the test data from the file
+with open('data/hdi.pkl', 'rb') as file:
+    data = pickle.load(file)
+testing_data = data['testing']
+
+# import the class MultilayerPerceptron from the neural_network.py file
+import os
+import sys
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+from neural_network import MultilayerPerceptron
+
+# iterate over each of the testing examples and see how many it gets right
+network = MultilayerPerceptron([24, 10, 10, 1])
+network.load_model('models/hdi-temp.pkl')
+\end{minted}
+\caption{Preparing to Test on the HDI}\label{cs:preTestHDI}
+\end{listing}
+
+When we test the network, we should again load it in exactly the same way as with the MNIST Data Set, with the same changes to the hidden layers.
+
+\begin{listing}[H]
+\pil{network_training / test_hdi.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=19]{python}
+differences = []
+for num, example in enumerate(testing_data):
+    correctAnswer = example["output"].item(0,0)
+    prediction = round(network.predict(example['input']).item(0,0), 3)
+    difference = round(abs(correctAnswer-prediction), 3)
+    print(f'({num}) correct output: {correctAnswer}, prediction: {prediction}, difference: {difference}')
+    differences.append(difference)
+
+import numpy as np
+print(f'average difference: {np.mean(differences)}')
+\end{minted}
+\caption{Testing the Neural Network on HDI}\label{cs:testHDI}
+\end{listing}
+
+As the output for this network is slightly different, we should test it in a different way. The correct HDI is given by the \pil{'output'} of the testing example, and we can compare that with the prediction.
+
+At each stage, we round our values to 3 decimal places, as this is what HDI is most commonly quoted to. At the end, we can take the mean to find an average differene.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{43}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:preTestHDI} \& \ref{cs:testHDI}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss10.1.png}
+\caption{Some HDI Predictions}\label{fig:ss10.1}
+\end{figure}
+
+Figure \ref{fig:ss10.1} shows some of the network's predictons. As you can see, most of them are the same, with a prediction of 0.789, which is obviously not ideal.
+
+The first thing I thought of to ammend this is to change the scale of the factors.
+
+\begin{listing}[H]
+\pil{network_training / load_hdi_data.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=11]{python}
+        # convert it to the right format
+        hdiData.append({
+            "input": np.matrix([[100 if factor == '' else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(list(record.values())[4:])]),
+            "output": np.matrix([[float(record['hdi'])]])
+        })
+\end{minted}
+\caption{Dividing some factors by 10}\label{cs:divFactorsBy10}
+\end{listing}
+
+Each of the average distance factors often take values in between 1 and 10, but this particular type of neural network often works best with numbers between 0 and 1. Therefore, I have divided each of the average distance factors (at indexes \pil{0} to \pil{11}) by 10, to get most of them in this range.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{44}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:divFactorsBy10}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+The network was still not predicting very well, so I had to adjust the training parameters.
+
+\begin{listing}[H]
+\pil{network_training / train_hdi.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=16]{python}
+# train the network
+network = MultilayerPerceptron([24, 18, 12, 6, 3, 1])
+network.train(training_data, 5, 50, 0.2)
+network.save_model('hdi-temp')
+\end{minted}
+\pil{network_training / test_hdi.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=16]{python}
+# iterate over each of the testing examples and see how many it gets right
+network = MultilayerPerceptron([24, 18, 12, 6, 3, 1])
+network.load_model('models/hdi-temp.pkl')
+\end{minted}
+\caption{Adjusting the Training Parameters}\label{cs:adjustParameters}
+\end{listing}
+
+After many attempts, I ended up with a neural network with 4 hidden layers, each with 18, 12, 6 and 3 neurons respectively, which was trained with a mini batch size of 5, over 50 epochs and a learning rate of 0.2.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{42}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:adjustParameters}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss10.2.png}
+\caption{Improved HDI Predictions}\label{fig:ss10.2}
+\end{figure}
+
+The variance in these predictions was very high, and the average difference is very low, which is what we need.
 
 \subsection{Review}
-\dots
+
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$T_{5}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{8cm}|H|m{2cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Passed Testing Data for Milestone 2}
+        \end{longtable}
+    }
+}
+\end{center}
+
+The fact that we successfully predicted $93.53\%$ of MNIST handwritten digits suggests that $T_{5}$ has been passed, which implies the Success Criteria $S_{5}$ and $S_{6}$ have been met
+
+\begin{center}
+\csvloop{
+    file=data/successcriteria.csv,
+    no head,
+    column count=5,
+    column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
+    filter ifthen={\equal{\scID}{$S_{5}$}\OR\equal{\scID}{$S_{6}$}\OR\equal{\scID}{$S_{7}$}\OR\equal{\scID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{5cm}|m{6cm}|m{2cm}|H}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Achieved Success Criteria for Milestone 2}
+        \end{longtable}
+    }
+}
+\end{center}
+
+I believe $S_{7}$ has also been met, as we have been able to train a neural network which can (vaguely) predict the HDI of a given area.
 
 \section{Milestone 3 -- Initial User Interface}
 \subsection{Success Criteria}
 \dots
 
 \stepcounter{parts}
-\subsection{Part \theparts{} -- The Next Bit}
+\subsection{Part \theparts{} -- Drawing on the Map}
+\dots
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- Predicting the HDI}
+\dots
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- Suggesting Improvements}
 \dots
 
 \subsection{Review}
@@ -4795,6 +5134,55 @@ If the training didn't work, then the success rate should be around $10\%$, as i
 \dots
 
 \chapter{Design of the \nth{2} Prototype}
+\section{Structure Diagram}
+\dots
+
+\section{Authentication System}
+\subsection{Storing Data \& Encryption}
+\dots
+
+\subsection{Creating an Account \& Logging In}
+\dots
+
+\subsection{Saving Regions}
+\dots
+
+\subsection{List of Key Variables}
+\dots
+
+\section{User Interface}
+\subsection{Interface Sketch}
+\dots
+
+\subsection{Input Validation}
+\dots
+
+\subsection{Usabilty Features}
+\dots
+
+\subsection{Analysis of how much Each Factor affects the Others}
+\dots
+
+\subsection{Manually Entering Factors}
+\dots
+
+\subsection{Comparison to Similar Regions}
+\dots
+
+\subsection{Improved Algorithm for Finding an Optimal Place for a New Building}
+\dots
+
+\subsection{List of Key Variables}
+\dots
+
+\section{Data}
+\subsection{Data Structures}
+\dots
+
+\subsection{Testing Data for Development}
+\dots
+
+\subsection{Testing Data for Post-Development}
 \dots
 
 \chapter{Developing the Coded Solution of the \nth{2} Prototype}

@@ -103,26 +103,47 @@
 \contentsline {subsection}{\numberline {3.2.4}Part 8{} -- Implementing the Backpropogation Algorithm \& Training}{125}{subsection.3.2.4}%
 \contentsline {subsection}{\numberline {3.2.5}Part 9{} -- Testing the Neural Network}{130}{subsection.3.2.5}%
 \contentsline {subsection}{\numberline {3.2.6}Part 10{} -- Training the Neural Network}{139}{subsection.3.2.6}%
-\contentsline {subsection}{\numberline {3.2.7}Review}{139}{subsection.3.2.7}%
-\contentsline {section}{\numberline {3.3}Milestone 3 -- Initial User Interface}{139}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Success Criteria}{139}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Part 11{} -- The Next Bit}{139}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Review}{139}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Feedback from Stakeholders}{139}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Design of the 2\relax \textsuperscript {nd} Prototype}{140}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Developing the Coded Solution of the 2\relax \textsuperscript {nd} Prototype}{141}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Milestone 4 -- Authentication System}{141}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Success Criteria}{141}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Part 12{} -- The Next Bit}{141}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Review}{141}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Milestone 5 -- Final User Interface}{141}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Success Criteria}{141}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Part 13{} -- The Next Bit}{141}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Review}{141}{subsection.5.2.3}%
-\contentsline {section}{\numberline {5.3}Feedback from Stakeholders}{141}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Evaluation}{142}{chapter.6}%
-\contentsline {chapter}{Index}{143}{section*.126}%
-\contentsline {section}{List of Figures}{143}{section*.127}%
-\contentsline {section}{List of Code Snippets}{145}{section*.129}%
-\contentsline {section}{List of Tables}{147}{section*.131}%
-\contentsline {chapter}{Bibliography}{149}{section*.133}%
+\contentsline {subsection}{\numberline {3.2.7}Review}{146}{subsection.3.2.7}%
+\contentsline {section}{\numberline {3.3}Milestone 3 -- Initial User Interface}{147}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Success Criteria}{147}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Part 11{} -- Drawing on the Map}{147}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Part 12{} -- Predicting the HDI}{147}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Part 13{} -- Suggesting Improvements}{147}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Review}{147}{subsection.3.3.5}%
+\contentsline {section}{\numberline {3.4}Feedback from Stakeholders}{147}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Design of the 2\relax \textsuperscript {nd} Prototype}{148}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Structure Diagram}{148}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Authentication System}{148}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Storing Data \& Encryption}{148}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Creating an Account \& Logging In}{148}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Saving Regions}{148}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}List of Key Variables}{148}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}User Interface}{148}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Interface Sketch}{148}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Input Validation}{148}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Usabilty Features}{149}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Analysis of how much Each Factor affects the Others}{149}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Manually Entering Factors}{149}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Comparison to Similar Regions}{149}{subsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.3.7}Improved Algorithm for Finding an Optimal Place for a New Building}{149}{subsection.4.3.7}%
+\contentsline {subsection}{\numberline {4.3.8}List of Key Variables}{149}{subsection.4.3.8}%
+\contentsline {section}{\numberline {4.4}Data}{149}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Data Structures}{149}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Testing Data for Development}{149}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Testing Data for Post-Development}{149}{subsection.4.4.3}%
+\contentsline {chapter}{\numberline {5}Developing the Coded Solution of the 2\relax \textsuperscript {nd} Prototype}{150}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Milestone 4 -- Authentication System}{150}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Success Criteria}{150}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Part 14{} -- The Next Bit}{150}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Review}{150}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Milestone 5 -- Final User Interface}{150}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Success Criteria}{150}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Part 15{} -- The Next Bit}{150}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Review}{150}{subsection.5.2.3}%
+\contentsline {section}{\numberline {5.3}Feedback from Stakeholders}{150}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Evaluation}{151}{chapter.6}%
+\contentsline {chapter}{Index}{152}{section*.128}%
+\contentsline {section}{List of Figures}{152}{section*.129}%
+\contentsline {section}{List of Code Snippets}{154}{section*.131}%
+\contentsline {section}{List of Tables}{156}{section*.133}%
+\contentsline {chapter}{Bibliography}{158}{section*.135}%

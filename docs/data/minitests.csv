@@ -60,3 +60,8 @@ $t_{37}$,Training the neural network on MNIST,--,--,No errors when carrying out 
 $t_{38}$,Loading the MNIST testing data,--,--,Loads the MNIST testing data and imports the Multilayer Perceptron class,As Expected
 $t_{39}$,Testing the neural network on MNIST,--,--,Cumulative $\%$ Success printed after each test,As Expected
 $T_{5}$,Neural Network works,MNIST Handwritten Digits,--,A Success rate much larger than $10\%$,As Expected
+$t_{40}$,Converting HDI Data to the correct format,\pil{.csv},--,Numpy Matrices,As Expected
+$t_{41}$,Test Train Split,Full Data Set,--,First \pil{proportion_train}$\%$ are training\comma{} rest is testing,As Expected
+$t_{42}$,Training the neural network on HDI,--,--,No errors when carrying out the full training algorithm,As Expected
+$t_{43}$,Testing the neural network on HDI,--,--,Difference for each prediction calculated\comma{} as well as average difference,As Expected
+$t_{44}$,Scaling Average Distance Factors,Average Distance Factor,--,Divided by 10,As Expected

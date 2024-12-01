@@ -58,6 +58,13 @@
 \contentsline {listing}{\numberline {3.55}{\ignorespaces Loading the MNIST Testing Data\relax }}{136}{listing.3.55}%
 \contentsline {listing}{\numberline {3.56}{\ignorespaces Testing the Neural Network on the MNIST Data Set\relax }}{137}{listing.3.56}%
 \contentsline {listing}{\numberline {3.57}{\ignorespaces Improving the Training Paremeters\relax }}{138}{listing.3.57}%
+\contentsline {listing}{\numberline {3.58}{\ignorespaces Loading the HDI Data\relax }}{139}{listing.3.58}%
+\contentsline {listing}{\numberline {3.59}{\ignorespaces Splitting into Testing and Training Data\relax }}{140}{listing.3.59}%
+\contentsline {listing}{\numberline {3.60}{\ignorespaces Training the Neural Network on HDI\relax }}{141}{listing.3.60}%
+\contentsline {listing}{\numberline {3.61}{\ignorespaces Preparing to Test on the HDI\relax }}{142}{listing.3.61}%
+\contentsline {listing}{\numberline {3.62}{\ignorespaces Testing the Neural Network on HDI\relax }}{143}{listing.3.62}%
+\contentsline {listing}{\numberline {3.63}{\ignorespaces Dividing some factors by 10\relax }}{144}{listing.3.63}%
+\contentsline {listing}{\numberline {3.64}{\ignorespaces Adjusting the Training Parameters\relax }}{145}{listing.3.64}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

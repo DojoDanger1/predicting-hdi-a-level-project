@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{network\PYGZus{}training} \PYG{o}{/} \PYG{n}{test\PYGZus{}hdi}\PYG{o}{.}\PYG{n}{py}
+\end{Verbatim}

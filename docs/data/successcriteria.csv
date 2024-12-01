@@ -3,9 +3,9 @@ $S_{1}$,Find suitable HDI training data for the Neural Network,The neural networ
 $S_{2}$,Retrieve OSM data for a given area using Overpass Turbo,This will allow me to calculate useful geographical factors to predict the HDI from instead of more human ones (which are harder to determine).,\checkmark,idk
 $S_{3}$,Calculate average distance factors from a given area,The average distance from \textit{some object} to \textit{some other object} is also a good measure to consider. For example $A\left(\text{House}\comma{}\text{School}\right)$ is a useful factor as school children shouldn't have to travel long distances for education.,\checkmark,idk
 $S_{4}$,Calculate density factors from a given area,The number of \textit{some object} per unit area is a good way of measuring how many of that object are in a particular area while removing the bias of larger areas.,\checkmark,idk
-$S_{5}$,Successfully Implement the Feedforward Algorithm,This algorithm will allow us to make predictions on the HDI given a set of factors.,maybe,idk
-$S_{6}$,Successfully Implement the Backpropogation Algorithm,This algorithm will allow us to train the neural network base on a set of training examples.,maybe,idk
-$S_{7}$,Successfully train the Neural Network,In order to accurately predict the HDI of a given area\comma{} the neural network must train on existing examples to see what makes a high HDI.,maybe,idk
+$S_{5}$,Successfully Implement the Feedforward Algorithm,This algorithm will allow us to make predictions on the HDI given a set of factors.,\checkmark,idk
+$S_{6}$,Successfully Implement the Backpropogation Algorithm,This algorithm will allow us to train the neural network base on a set of training examples.,\checkmark,idk
+$S_{7}$,Successfully train the Neural Network,In order to accurately predict the HDI of a given area\comma{} the neural network must train on existing examples to see what makes a high HDI.,\checkmark,idk
 $S_{8}$,User can select an area on the map for which they want to analyse,This will allow the user to choose which area they want to predict the HDI of by drawing on the map.,maybe,idk
 $S_{9}$,Neural Network accurately predicts HDI from those factors,Once the user has selected their area\comma{} the HDI must be predicted based on factors calculated from that area.,maybe,idk
 $S_{10}$,Changes are suggested to increase the HDI,This will allow the user to make an informed decision on what to do in order to improve their area.,maybe,idk
