@@ -1,0 +1,18 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}import required libraries}
+\PYG{k+kn}{import} \PYG{n+nn}{pygame}
+\PYG{k+kn}{import} \PYG{n+nn}{random}
+
+\PYG{n}{WIDTH} \PYG{o}{=} \PYG{l+m+mi}{360}
+\PYG{n}{HEIGHT} \PYG{o}{=} \PYG{l+m+mi}{480}
+\PYG{n}{FPS} \PYG{o}{=} \PYG{l+m+mi}{30}
+
+\PYG{c+c1}{\PYGZsh{}initialising pygame and creating window}
+\PYG{n}{pygame}\PYG{o}{.}\PYG{n}{init}\PYG{p}{()}
+\PYG{n}{pygame}\PYG{o}{.}\PYG{n}{mixer}\PYG{o}{.}\PYG{n}{init}\PYG{p}{()}
+\PYG{n}{screen} \PYG{o}{=} \PYG{n}{pygame}\PYG{o}{.}\PYG{n}{display}\PYG{o}{.}\PYG{n}{set\PYGZus{}mode}\PYG{p}{((}\PYG{n}{WIDTH}\PYG{p}{,} \PYG{n}{HEIGHT}\PYG{p}{))}
+\PYG{n}{pygame}\PYG{o}{.}\PYG{n}{display}\PYG{o}{.}\PYG{n}{set\PYGZus{}caption}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}My Game\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{clock} \PYG{o}{=} \PYG{n}{pygame}\PYG{o}{.}\PYG{n}{time}\PYG{o}{.}\PYG{n}{Clock}\PYG{p}{()}
+
+\PYG{n}{allSprites} \PYG{o}{=} \PYG{n}{pygame}\PYG{o}{.}\PYG{n}{sprite}\PYG{o}{.}\PYG{n}{Group}\PYG{p}{()}
+\end{Verbatim}

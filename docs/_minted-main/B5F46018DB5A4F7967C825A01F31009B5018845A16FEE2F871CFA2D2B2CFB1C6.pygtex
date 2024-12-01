@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{c+c1}{\PYGZsh{} rotate and translate the plane tangent to the vertex such that it is the xy\PYGZhy{}plane}
+        \PYG{n}{prev\PYGZus{}vertex} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}y}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}z}\PYG{p}{,} \PYG{n}{prev\PYGZus{}vertex}\PYG{p}{))} \PYG{o}{+} \PYG{n}{translation\PYGZus{}vector}
+        \PYG{n}{vertex} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}y}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}z}\PYG{p}{,} \PYG{n}{vertex}\PYG{p}{))} \PYG{o}{+} \PYG{n}{translation\PYGZus{}vector}
+        \PYG{n}{next\PYGZus{}vertex} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}y}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}z}\PYG{p}{,} \PYG{n}{next\PYGZus{}vertex}\PYG{p}{))} \PYG{o}{+} \PYG{n}{translation\PYGZus{}vector}
+        \PYG{c+c1}{\PYGZsh{} project onto the xy\PYGZhy{}plane}
+        \PYG{n}{prev\PYGZus{}vertex}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{n}{next\PYGZus{}vertex}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}
+\end{Verbatim}

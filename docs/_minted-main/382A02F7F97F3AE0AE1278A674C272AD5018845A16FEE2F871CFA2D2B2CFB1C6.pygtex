@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} return a dictionary of all the factors}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}calculating area...\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+    \PYG{n}{area} \PYG{o}{=} \PYG{n}{calcArea}\PYG{p}{(}\PYG{n}{region}\PYG{p}{)}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}calculating factors...\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+    \PYG{k}{return} \PYG{p}{\PYGZob{}}
+        \PYG{l+s+s2}{\PYGZdq{}A(House School)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}house\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}school\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(House Hospital)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}house\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}hospital\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(House Pharmacy)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}house\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}pharmacy\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(House Restaurant)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}house\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}restaurant\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(School Hospital)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}school\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}hospital\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(Police Hospital)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}police\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}hospital\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(House Place of Worship)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}house\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}place\PYGZus{}of\PYGZus{}worship\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(Bank Slot Machine)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}bank\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}slot\PYGZus{}machines\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(Fast\PYGZhy{}Food Place Toilet)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}fast\PYGZus{}food\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}toilets\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(House Police)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}house\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}police\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(University Library)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}university\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}library\PYGZsq{}}\PYG{p}{]),}
+        \PYG{l+s+s2}{\PYGZdq{}A(House Library)\PYGZdq{}}\PYG{p}{:} \PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}house\PYGZsq{}}\PYG{p}{],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}library\PYGZsq{}}\PYG{p}{]),}
+\end{Verbatim}

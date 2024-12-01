@@ -1,0 +1,62 @@
+\textbf{No.},\textbf{Test},\textbf{Input},\textbf{Type},\textbf{Expectation},\textbf{Output}
+$t_{1}$,Refined HDI Data,--,--,Only region and HDI of the most recent year,As Expected
+$t_{2}$,Written HDI Data to \pil{csv},--,--,\pil{csv} (with correct fields) written correctly,As Expected
+$T_{1.1}$,Overpass Turbo Query,Closed Polygon\comma{}Valid object type,Valid,Returns the appropriate data,As Expected
+$T_{1.2}$,Overpass Turbo Query,Open Polygon\comma{}Valid object type,Edge Case,Returns the appropriate data\comma{} as if there was a line joining the first and last vertices,As Expected
+$T_{1.3}$,Overpass Turbo Query,Invalid object type,Invalid,Returns nothing,As Expected
+$t_{3}$,Refined OSM Data,--,--,Only Latiude/Longitude pairs,As Expected
+$t_{4}$,Conversion from degrees to radians,angle in degrees,--,$\frac{\pi}{180}\times\left(\text{angle}\right)$,As Expected
+$T_{2.1}$,Distance between 2 points,2 Points in the same hemisphere: $\left(30^{\circ}\comma{}0^{\circ}\right)$\comma{} $\left(60^{\circ}\comma{}0^{\circ}\right)$,Valid,3335.8 \unit{km},As Expected
+$T_{2.2}$,Distance between 2 points,2 Points in opposite hemispheres: $\left(15^{\circ}\comma{}0^{\circ}\right)$\comma{} $\left(-15^{\circ}\comma{}0^{\circ}\right)$,Edge Case,3335.8 \unit{km},As Expected
+$T_{2.3}$,Distance between 2 points,2 Points either side of the international dateline: $\left(0^{\circ}\comma{}165^{\circ}\right)$\comma{} $\left(0^{\circ}\comma{}-165^{\circ}\right)$,Edge Case,3335.8 \unit{km},As Expected
+$T_{2.4}$,Distance between 2 points,2 Points whose shortest distace crosses the North Pole: $\left(75^{\circ}\comma{}90^{\circ}\right)$\comma{} $\left(75^{\circ}\comma{}-90^{\circ}\right)$,Edge Case,3335.8 \unit{km},As Expected
+$T_{3.1}$,$A\left(x\comma{}y\right)$,Less than 500 $x$-objects,Valid,Uses all of the $x$-objects,As Expected
+$T_{3.2}$,$A\left(x\comma{}y\right)$,500 $x$-objects,Boundary,Uses all 500 of the $x$-objects,As Expected
+$T_{3.3}$,$A\left(x\comma{}y\right)$,More than 500 $x$-objects,Invalid,Uses a random 500 of the $x$-objects,As Expected
+$T_{3.4}$,$A\left(x\comma{}y\right)$,0 $x$-objects,Invalid,Returns \pil{None},As Expected
+$t_{5}$,$A\left(x\comma{}y\right)$,List of houses and schools in my local area,--,$\sim 0.36$ \unit{km},As Expected
+$t_{6}$,Converting lat/lon to column vectors,A lat/lon coordinate\comma{} for example\comma{} $\left(45^{\circ}\comma{}45^{\circ}\right)$,--,In this example\comma{} $\left(\frac{1}{2}\comma{}\frac{1}{2}\comma{}\frac{1}{\sqrt{2}}\right)$,In this example\comma{} (0.276\comma{} 0.445\comma{} 0.851)\comma{} to 3 significant figures
+$t_{6}$,Converting lat/lon to column vectors,A lat/lon coordinate\comma{} for example\comma{} $\left(45^{\circ}\comma{}45^{\circ}\right)$,--,In this example\comma{} $\left(\frac{1}{2}\comma{}\frac{1}{2}\comma{}\frac{1}{\sqrt{2}}\right)$,In this example\comma{} (0.5\comma{} 0.5\comma{} 0.707)\comma{} to 3 significant figures\comma{} As Expected
+$t_{7}$,Getting the previous and next vertices,--,--,Works in the edge cases concerning the first and last vertices,As Expected
+$t_{8}$,Transformation of vertices,--,--,Current vertex should be transformed to $\left(0\comma{}0\comma{}0\right)$,As Expected
+$t_{9}$,Projection of other vertices,--,--,$z$-coordinate set to 0,As Expected
+$t_{10}$,Calculating the anticlockwise angle,--,--,Angle that you need to turn anticlockwise to be facing in the new direction,As Expected
+$T_{4.1}$,$D\left(x\right)$,Region drawn Clockwise,Valid,Correct area calculated,As Expected
+$T_{4.2}$,$D\left(x\right)$,Region drawn Anticlockwise,Valid,Correct area calculated\comma{} as if it were drawn clockwise,As Expected
+$T_{4.3}$,$D\left(x\right)$,Region drawn in multiple loops of the Earth,Valid,Correct area calculated\comma{} as if all coordinates were in the regular range,As Expected
+$T_{4.4}$,$D\left(x\right)$,Region that self-intersects,Invalid,\pil{None},Some large area
+$T_{4.4}$,$D\left(x\right)$,Region that self-intersects,Invalid,\pil{None},As Expected
+$t_{11}$,$D\left(x\right)$,List of schools in Oxford\comma{} Area of Oxford,--,$\sim 1$ School per \unit{km^2},As Expected
+$t_{12}$,Collecting all objects,--,--,Each list saved in a \pil{dict},As Expected
+$t_{13}$,Each factor is calculated,--,--,We have a \pil{dict} of all the factors of a given region,As Expected
+$t_{14}$,Process Shapefile,--,--,Readable \pil{.json} file,As Expected
+$t_{15}$,Read \pil{csv} and \pil{json} file,--,--,Data stored to variables,As Expected
+$t_{16}$,Skipping the first $n$ regions,$n$ (3\comma{} 5\comma{} 0 etc),--,Starts on region $n+1$,As Expected
+$t_{17}$,Finding the main shape,First 5 regions,--,Shape with most vertices is selected,As Expected
+$t_{18}$,Reversing Coordinates,--,--,Latitude is first,As Expected
+$t_{19}$,Writing Full Record,The AFGr101 region,--,HDI and all factors written to \pil{.csv},HTTP \pil{414: URI Too Long} error
+$t_{19}$,Writing Full Record,The AFGr101 region,--,HDI and all factors written to \pil{.csv},As Expected
+$t_{19}$,Writing Full Record,The AFGr108 region,--,HDI and all factors written to \pil{.csv},As Expected
+$t_{16}$,Skipping the first $n$ regions,Most recent region,--,Starts on the next region,As Expected
+$t_{20}$,Finding the right longitude,Longitude not inbetween $-180^{\circ}$ and $180^{\circ}$,--,Equivalent logitude inbetween $-180^{\circ}$ and $180^{\circ}$,As Expected
+$t_{21}$,Truncating Detailed Regions,Region with more than 100\comma{}000 vertices,--,Less detailed region of the same area,As Expected
+$t_{22}$,Setting the activations \pil{list},(for example) Layer sizes = 2\comma{} 3\comma{} 4,--,A column vector of size 2\comma{} a column vector of size 3 and a column vector of size 4\comma{} filled with 0s,As Expected
+$t_{23}$,Setting the weights \pil{list},(for example) Layer sizes = 2\comma{} 3\comma{} 4,--,A matrix of size $3\times 2$ and a matrix of size $4\times 3$\comma{} filled with random numbers from the normal distribution,As Expected
+$t_{24}$,Setting the biases \pil{list},(for example) Layer sizes = 2\comma{} 3\comma{} 4,--,A column vector of size 2\comma{} a column vector of size 3 and a column vector of size 4\comma{} filled with random numbers from the normal distribution,As Expected
+$t_{25}$,Setting the training \pil{list}s,--,--,Empty \pil{list}s,As Expected
+$t_{26}$,Sigmoid Function,Real numbers (for example\comma{} 0\comma{} 5\comma{} $-2.73$),--,For those examples: 0.5\comma{} 0.9931\comma{} 0.0612,As Expected
+$t_{27}$,Sigmoid Prime Function,Real numbers (for example\comma{} 0\comma{} $-1$\comma{} 1.78,--,For those examples: 0.25\comma{} 0.1966\comma{} 0.1235,As Expected
+$t_{28}$,Saving a Model,--,--,Weights and biases saved to an external binary file,As Expected
+$t_{29}$,Loading a Model,--,Valid,Attributes set to the same weights and biases,As Expected
+$t_{30}$,Loading a Model with different layer sizes,--,Invalid,Error is thrown,As Expected
+$t_{31}$,Feedforward Algorithm,--,--,All activations and $z$-values are updated,As Expected
+$t_{32}$,Making a Prediction,--,--,Returns the output layer of neurons,As Expected
+$t_{33}$,Backpropogation algorithm doesn't throw an error,--,--,No errors when carrying out the backpropogation algorithm,An Error
+$t_{33}$,Backpropogation algorithm doesn't throw an error,--,--,No errors when carrying out the backpropogation algorithm,As Expected
+$t_{34}$,Stochastic Gradient Descent doesn't throw an error,--,--,No errors when carrying out the full training algorithm,As Expected
+$t_{35}$,Convert MNIST training and testing data to right format,Strange format,--,Correct dimensions of matrix\comma{} in a dictionary with input and output keys,As Expected
+$t_{36}$,Loading the MNIST training data,--,--,Loads the MNIST training data and imports the Multilayer Perceptron class,As Expected
+$t_{37}$,Training the neural network on MNIST,--,--,No errors when carrying out the full training algorithm,As Expected
+$t_{38}$,Loading the MNIST testing data,--,--,Loads the MNIST testing data and imports the Multilayer Perceptron class,As Expected
+$t_{39}$,Testing the neural network on MNIST,--,--,Cumulative $\%$ Success printed after each test,As Expected
+$T_{5}$,Neural Network works,MNIST Handwritten Digits,--,A Success rate much larger than $10\%$,As Expected

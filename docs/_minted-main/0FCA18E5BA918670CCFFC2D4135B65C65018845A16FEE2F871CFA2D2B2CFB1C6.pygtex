@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+                    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{playing} \PYG{o}{=} \PYG{k+kc}{False}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{running} \PYG{o}{=} \PYG{k+kc}{False}
+
+    \PYG{k}{def} \PYG{n+nf}{update}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{}game loop \PYGZhy{} update}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{all\PYGZus{}sprites}\PYG{o}{.}\PYG{n}{update}\PYG{p}{()}
+
+    \PYG{k}{def} \PYG{n+nf}{draw}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{}game loop \PYGZhy{} draw}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{screen}\PYG{o}{.}\PYG{n}{fill}\PYG{p}{(}\PYG{n}{BLACK}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{all\PYGZus{}sprites}\PYG{o}{.}\PYG{n}{draw}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{screen}\PYG{p}{)}
+        \PYG{n}{pygame}\PYG{o}{.}\PYG{n}{display}\PYG{o}{.}\PYG{n}{flip}\PYG{p}{()}
+
+    \PYG{k}{def} \PYG{n+nf}{show\PYGZus{}start\PYGZus{}screen}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{}game splash/start screen}
+        \PYG{k}{pass}
+
+    \PYG{k}{def} \PYG{n+nf}{show\PYGZus{}go\PYGZus{}screen}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{}game over screen}
+        \PYG{k}{pass}
+\end{Verbatim}

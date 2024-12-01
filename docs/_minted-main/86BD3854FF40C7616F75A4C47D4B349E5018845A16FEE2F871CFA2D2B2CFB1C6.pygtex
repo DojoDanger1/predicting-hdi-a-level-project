@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} calculates the area (in km\PYGZca{}2) of a given region bound by a set of latitude/longitude coordinates}
+\PYG{k}{def} \PYG{n+nf}{calcArea}\PYG{p}{(}\PYG{n}{bounding\PYGZus{}coords}\PYG{p}{):}
+    \PYG{k}{if} \PYG{n}{bounding\PYGZus{}coords}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{==} \PYG{n}{bounding\PYGZus{}coords}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]:} \PYG{c+c1}{\PYGZsh{} if the first and last coordinates are the same, then delete the last one}
+        \PYG{n}{bounding\PYGZus{}coords}\PYG{o}{.}\PYG{n}{pop}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} convert lat/lon pairs to 3d position vectors}
+    \PYG{n}{bounding\PYGZus{}vectors} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{coord} \PYG{o+ow}{in} \PYG{n}{bounding\PYGZus{}coords}\PYG{p}{:}
+        \PYG{n}{La} \PYG{o}{=} \PYG{n}{coord}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+        \PYG{n}{Lo} \PYG{o}{=} \PYG{n}{coord}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+        \PYG{n}{bounding\PYGZus{}vectors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{([}
+            \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{La}\PYG{p}{)}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{Lo}\PYG{p}{)],}
+            \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{La}\PYG{p}{)}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{Lo}\PYG{p}{)],}
+            \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{La}\PYG{p}{)]}
+        \PYG{p}{]))}
+\end{Verbatim}

@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{pickle}
+\PYG{k+kn}{import} \PYG{n+nn}{gzip}
+
+\PYG{c+c1}{\PYGZsh{} loads the MNIST data set}
+\PYG{k}{def} \PYG{n+nf}{load\PYGZus{}data}\PYG{p}{():}
+    \PYG{k}{with} \PYG{n}{gzip}\PYG{o}{.}\PYG{n}{open}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data/mnist.pkl.gz\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}rb\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{file}\PYG{p}{:}
+        \PYG{n}{unpickled} \PYG{o}{=} \PYG{n}{pickle}\PYG{o}{.}\PYG{n}{\PYGZus{}Unpickler}\PYG{p}{(}\PYG{n}{file}\PYG{p}{)}
+        \PYG{n}{unpickled}\PYG{o}{.}\PYG{n}{encoding} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}latin1\PYGZsq{}}
+        \PYG{n}{training\PYGZus{}data}\PYG{p}{,} \PYG{n}{validation\PYGZus{}data}\PYG{p}{,} \PYG{n}{test\PYGZus{}data} \PYG{o}{=} \PYG{n}{unpickled}\PYG{o}{.}\PYG{n}{load}\PYG{p}{()}
+    \PYG{k}{return} \PYG{p}{(}\PYG{n}{training\PYGZus{}data}\PYG{p}{,} \PYG{n}{validation\PYGZus{}data}\PYG{p}{,} \PYG{n}{test\PYGZus{}data}\PYG{p}{)}
+\end{Verbatim}

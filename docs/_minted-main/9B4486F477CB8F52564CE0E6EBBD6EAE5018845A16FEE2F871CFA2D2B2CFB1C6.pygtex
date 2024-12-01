@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{g} \PYG{o}{=} \PYG{n}{Game}\PYG{p}{()}
+\PYG{n}{g}\PYG{o}{.}\PYG{n}{show\PYGZus{}start\PYGZus{}screen}\PYG{p}{()}
+\PYG{k}{while} \PYG{n}{g}\PYG{o}{.}\PYG{n}{running}\PYG{p}{:}
+    \PYG{n}{g}\PYG{o}{.}\PYG{n}{new}\PYG{p}{()}
+    \PYG{n}{g}\PYG{o}{.}\PYG{n}{run}\PYG{p}{()}
+    \PYG{n}{g}\PYG{o}{.}\PYG{n}{show\PYGZus{}go\PYGZus{}screen}\PYG{p}{()}
+
+\PYG{n}{pygame}\PYG{o}{.}\PYG{n}{quit}\PYG{p}{()}
+\end{Verbatim}

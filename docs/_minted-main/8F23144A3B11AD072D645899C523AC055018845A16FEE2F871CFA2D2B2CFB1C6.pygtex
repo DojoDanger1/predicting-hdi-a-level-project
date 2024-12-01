@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}define colours}
+\PYG{n}{WHITE} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{255}\PYG{p}{,}\PYG{l+m+mi}{255}\PYG{p}{,}\PYG{l+m+mi}{255}\PYG{p}{)}
+\PYG{n}{BLACK} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}
+\PYG{n}{RED} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{255}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}
+\PYG{n}{GREEN} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{255}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}
+\PYG{n}{BLUE} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{255}\PYG{p}{)}
+\end{Verbatim}

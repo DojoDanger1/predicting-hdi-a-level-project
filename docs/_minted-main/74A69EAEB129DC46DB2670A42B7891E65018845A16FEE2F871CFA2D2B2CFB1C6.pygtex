@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{sprites}\PYG{o}{.}\PYG{n}{py} \PYG{o}{/} \PYG{k}{class} \PYG{n+nc}{Player} \PYG{o}{/} \PYG{k}{def} \PYG{n+nf}{update}\PYG{p}{()}
+\end{Verbatim}

@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{def} \PYG{n+nf}{update}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{acc} \PYG{o}{=} \PYG{n}{vector}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}
+        \PYG{c+c1}{\PYGZsh{}check for key presses}
+        \PYG{n}{keys} \PYG{o}{=} \PYG{n}{pygame}\PYG{o}{.}\PYG{n}{key}\PYG{o}{.}\PYG{n}{get\PYGZus{}pressed}\PYG{p}{()}
+        \PYG{k}{if} \PYG{n}{keys}\PYG{p}{[}\PYG{n}{pygame}\PYG{o}{.}\PYG{n}{K\PYGZus{}LEFT}\PYG{p}{]:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{acc}\PYG{o}{.}\PYG{n}{x} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.5}
+        \PYG{k}{if} \PYG{n}{keys}\PYG{p}{[}\PYG{n}{pygame}\PYG{o}{.}\PYG{n}{K\PYGZus{}RIGHT}\PYG{p}{]:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{acc}\PYG{o}{.}\PYG{n}{x} \PYG{o}{=} \PYG{l+m+mf}{0.5}
+
+        \PYG{c+c1}{\PYGZsh{}apply physics}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{vel} \PYG{o}{+=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{acc}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pos} \PYG{o}{+=} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{vel} \PYG{o}{\PYGZhy{}} \PYG{l+m+mf}{0.5} \PYG{o}{*} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{acc}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{rect}\PYG{o}{.}\PYG{n}{center} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pos}
+\end{Verbatim}

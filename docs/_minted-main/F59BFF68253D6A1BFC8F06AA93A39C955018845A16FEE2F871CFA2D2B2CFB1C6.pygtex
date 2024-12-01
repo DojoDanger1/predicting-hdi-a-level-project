@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{calc\PYGZus{}factors} \PYG{k+kn}{import} \PYG{n}{getAllFactors}
+\end{Verbatim}

@@ -1,0 +1,16 @@
+\textbf{No.},\textbf{Success Criterion},\textbf{Justification},\textbf{Success},\textbf{Evaluation}
+$S_{1}$,Find suitable HDI training data for the Neural Network,The neural network must train on pre-calculated HDI values for certain areas\comma{} along with their respective density and average distance factors.,\checkmark,idk
+$S_{2}$,Retrieve OSM data for a given area using Overpass Turbo,This will allow me to calculate useful geographical factors to predict the HDI from instead of more human ones (which are harder to determine).,\checkmark,idk
+$S_{3}$,Calculate average distance factors from a given area,The average distance from \textit{some object} to \textit{some other object} is also a good measure to consider. For example $A\left(\text{House}\comma{}\text{School}\right)$ is a useful factor as school children shouldn't have to travel long distances for education.,\checkmark,idk
+$S_{4}$,Calculate density factors from a given area,The number of \textit{some object} per unit area is a good way of measuring how many of that object are in a particular area while removing the bias of larger areas.,\checkmark,idk
+$S_{5}$,Successfully Implement the Feedforward Algorithm,This algorithm will allow us to make predictions on the HDI given a set of factors.,maybe,idk
+$S_{6}$,Successfully Implement the Backpropogation Algorithm,This algorithm will allow us to train the neural network base on a set of training examples.,maybe,idk
+$S_{7}$,Successfully train the Neural Network,In order to accurately predict the HDI of a given area\comma{} the neural network must train on existing examples to see what makes a high HDI.,maybe,idk
+$S_{8}$,User can select an area on the map for which they want to analyse,This will allow the user to choose which area they want to predict the HDI of by drawing on the map.,maybe,idk
+$S_{9}$,Neural Network accurately predicts HDI from those factors,Once the user has selected their area\comma{} the HDI must be predicted based on factors calculated from that area.,maybe,idk
+$S_{10}$,Changes are suggested to increase the HDI,This will allow the user to make an informed decision on what to do in order to improve their area.,maybe,idk
+$S_{11}$,Accurately calculate where a new building would need to be in order to increase the HDI the most,The specific placement of new buildings (as suggestions to increase HDI) is important to consider\comma{} so a suitable place must be chosen in order to decrease the average distance to it as much as possible.,maybe,idk
+$S_{12}$,User can see how each factor can affect the others,This will allow the user to consider the secondary effects of their descisions\comma{} as the suggested changes may not only increase the HDI\comma{} but also some of the other factors.,maybe,idk
+$S_{13}$,Predicted HDI is ranked among other countries with a similar HDI,This will allow users who are not that familiar with HDI to get an idea of the HDI scale by comparing it to the gist of what they know.,maybe,idk
+$S_{14}$,App has a clean\comma{} simple and presentable GUI,This will make it easier for the user to use.,maybe,idk
+$S_{15}$,App has been deployed on Hugging Face,This will allow anyone with a web browswer to use this app\comma{} without having to install anything.,maybe,idk

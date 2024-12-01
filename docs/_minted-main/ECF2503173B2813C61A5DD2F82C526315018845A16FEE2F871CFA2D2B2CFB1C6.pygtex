@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} activation function}
+\PYG{k}{def} \PYG{n+nf}{sigmoid}\PYG{p}{(}\PYG{n}{x}\PYG{p}{):}
+    \PYG{k}{return} \PYG{l+m+mi}{1}\PYG{o}{/}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{+}\PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{x}\PYG{p}{))}
+\end{Verbatim}

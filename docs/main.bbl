@@ -1,0 +1,62 @@
+\begin{thebibliography}{10}
+
+\bibitem{existingSol1}
+sandeeoppondru.
+\newblock human-development-index.
+\newblock \url{https://github.com/sandeepponduru/human-development-index},
+  2023.
+
+\bibitem{existingSol2}
+julieanneco.
+\newblock predictinghdi.
+\newblock \url{https://github.com/julieanneco/predictingHDI}, 2020.
+
+\bibitem{existingSol3}
+Human~Development Reports.
+\newblock country-insights.
+\newblock \url{https://hdr.undp.org/data-center/country-insights#/ranks}, 2022.
+
+\bibitem{hdiData}
+Global~Data Lab.
+\newblock Subnational hdi version archive.
+\newblock \url{https://globaldatalab.org/shdi/archive/}, 2024.
+
+\bibitem{regionBorders}
+Global~Data Lab.
+\newblock Gdlcode shapefiles.
+\newblock \url{https://globaldatalab.org/mygdl/downloads/shapefiles/}, 2024.
+
+\bibitem{3blue1brown}
+Grant Sanderson.
+\newblock Neural networks -- chapters 1-4.
+\newblock
+  \url{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi},
+  2017.
+
+\bibitem{backpropogation}
+Micheal Nielsen.
+\newblock Neural networks and deep learning -- chapter 2.
+\newblock \url{http://neuralnetworksanddeeplearning.com/chap2.html}, 2019.
+
+\bibitem{stackOverflowConvertShapefile}
+alexisdevarennes.
+\newblock Shapefile into geojson conversion python 3.
+\newblock
+  \url{https://stackoverflow.com/questions/43119040/shapefile-into-geojson-conversion-python-3},
+  2020.
+
+\bibitem{mnielsenGithub}
+Micheal Nielsen.
+\newblock neural-networks-and-deep-learning.
+\newblock
+  \url{https://github.com/unexploredtest/neural-networks-and-deep-learning},
+  2022.
+
+\bibitem{geeksforGeeksParentDir}
+GeeksforGeeks.
+\newblock Python - import from parent directory.
+\newblock
+  \url{https://www.geeksforgeeks.org/python-import-from-parent-directory/},
+  2024.
+
+\end{thebibliography}

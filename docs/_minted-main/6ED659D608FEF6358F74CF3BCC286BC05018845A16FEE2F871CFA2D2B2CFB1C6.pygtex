@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{def} \PYG{n+nf}{new}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{}start a new game}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{all\PYGZus{}sprites} \PYG{o}{=} \PYG{n}{pygame}\PYG{o}{.}\PYG{n}{sprite}\PYG{o}{.}\PYG{n}{Group}\PYG{p}{()}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{player} \PYG{o}{=} \PYG{n}{Player}\PYG{p}{()} \PYG{c+c1}{\PYGZsh{}from sprites.py}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{all\PYGZus{}sprites}\PYG{o}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{player}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{run}\PYG{p}{()}
+\end{Verbatim}
