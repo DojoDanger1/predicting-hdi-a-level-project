@@ -2804,7 +2804,7 @@ def calcArea(bounding_coords):
 \caption{Converting list of bounding coordinates into Column Vectors}\label{cs:dofxVectors}
 \end{listing}
 
-Here, I am defining the \pil{def calcArea} function, it takes in the \pil{bounding_coords} as a parameter. The first thing we need to check is if the first and last elemenents of that list are the same. If they are, then remove the last one, as we don't want to be double-counting a particular vertex.
+Here, I am defining the \pil{def calcArea} function, it takes in the \pil{bounding_coords} as a parameter. The first thing we need to check is if the first and last elements of that list are the same. If they are, then remove the last one, as we don't want to be double-counting a particular vertex.
 
 Next, we must find the absolute position of each coordinate in 3D space, by using equation \ref{eq:convert2vectors} (remembering that $r$ can be set to 1, as the radius of the Earth is irrelevant). As stated before, I am using the \pil{np.matrix} data structure to represent column vectors and matrices.
 
@@ -5113,11 +5113,290 @@ I believe $S_{7}$ has also been met, as we have been able to train a neural netw
 
 \section{Milestone 3 -- Initial User Interface}
 \subsection{Success Criteria}
-\dots
+By the end of this milestone, I hope to have a fully functioning user interface, in which the user can select their region on a map, predict the HDI of it, and have suggestions made to improve it.
+\begin{center}
+\csvloop{
+    file=data/successcriteria.csv,
+    no head,
+    column count=5,
+    column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
+    filter ifthen={\equal{\scID}{$S_{8}$}\OR\equal{\scID}{$S_{9}$}\OR\equal{\scID}{$S_{10}$}\OR\equal{\scID}{$S_{11}$}\OR\equal{\scID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{5cm}|m{8cm}|H H}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Success Criteria for Milestone 3}
+        \end{longtable}
+    }
+}
+\end{center}
+
+To determine if I have met this success criteria, I will be using the following tests:
+
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$T_{6}$}\OR\equal{\testID}{$T_{7}$}\OR\equal{\testID}{$T_{8}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Data for Milestone 3}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Drawing on the Map}
-\dots
+
+I believe that having a map to draw on is the most important thing in the GUI, so I will be implemented that first.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=1]{python}
+import gradio as gr
+
+# structure of the UI
+with gr.Blocks() as app:
+    pass
+
+# launch the UI
+app.launch()
+\end{minted}
+\caption{Initial Gradio Framework}\label{cs:gradioFramework}
+\end{listing}
+
+Here, I am using the \pil{gradio} library to begin to define the interface. Gradio uses context managers (\pil{with} statement) to make the structure of the GUI very readable and easy to understand (this will become more apparent when we add more and more elements).
+
+Gradio offers many types of interface, but the one I will be using is the \pil{Blocks} interface, which allows for the most customisation. For now, we have no structure to add, so we can just \pil{pass}.
+
+Once we have defined the GUI, we can call the \pil{launch} method on the app.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss11.1.png}
+\caption{Launching the Gradio App}\label{fig:ss11.1}
+\end{figure}
+
+Running this code produces the output shown in Figure \ref{fig:ss11.1}. When we called the \pil{launch} method, it initialised the gradio interface on port \pil{7860}, of the localhost IP address (\pil{127.0.0.1}). It also tells us that we could create a public link, which I will be doing later to share with my stakeholders.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss11.2.png}
+\caption{Empty Gradio UI}\label{fig:ss11.2}
+\end{figure}
+
+Following the link \pil{http://127.0.0.1:7860} takes us to this empty gradio interface. Once we add components, they will show up here.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{45}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:gradioFramework}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=2]{python}
+import folium
+from folium.plugins import Draw
+
+# initialise the map for drawing on
+foliumMap = folium.Map()
+draw = Draw(
+    export=False,
+    position='topleft',
+    draw_options={
+        'polyline': False,
+        'circlemarker': False,
+        'polygon': {'allowIntersection': False},
+        'marker': False,
+        'circle': False,
+        'rectangle': False,
+    },
+    edit_options={'poly': {'allowIntersection': False}}
+)
+draw.add_to(foliumMap)
+\end{minted}
+\caption{Initialising the Map}\label{cs:initialiseDrawingMap}
+\end{listing}
+
+Next, we must also import the \pil{folium} library, which lets us create interactive maps.
+
+First, we can make an instance of the \pil{class Map}, and save that to a variable. To be able to draw on it, we must also make an instance of the \pil{class Draw}, and then add that to the map at the end.
+
+The \pil{class Draw} has many attributes which must be set. Namely, specifying \pil{position} to be \pil{'topleft'} will make the drawing tools appear on the top left. Setting most of the \pil{draw_options} to \pil{False} except for \pil{'polygon'} (which in turn has \pil{'allowIntersection'} set to \pil{False}) ensures that the user can only draw polygons, and the polygons should not be able to self intersect.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=2]{python}
+from gradio_folium import Folium
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=23]{python}
+# structure of the UI
+with gr.Blocks() as demo:
+    map = Folium(value=foliumMap)
+\end{minted}
+\caption{Adding the Map to the GUI}\label{cs:adjustParameters}
+\end{listing}
+
+To add this to the gradio interface, we must first import the \pil{Folium} element from the \pil{gradio_folium} library, and then add this to our \pil{Blocks} interface. If we save this to a variable, \pil{map}, we will be able to access and update it. We also have zoom in and out buttons in the top left as well.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss11.3.png}
+\caption{Map Added to GUI}\label{fig:ss11.3}
+\end{figure}
+
+Figure \ref{fig:ss11.3} shows the current output for the program, with the drawing tools shown in the top left of the map.
+
+Users can also use the scroll wheel to zoom in and out of the map if they wish. By default, the mouse will drag around the map, but if the user clicks the pentagon icon, using the mouse will then begin to draw a polygon.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss11.4.png}
+\caption{Drawing a Region}\label{fig:ss11.4}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{46}$}\OR\equal{\mtestID}{$t_{47}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:initialiseDrawingMap} \& \ref{cs:adjustParameters}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Instead of the map starting very zoomed out, I would like for the map to start at a random city.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=5]{python}
+import random
+
+# define some starting locations
+locations = [[51.5360, -0.1196], [40.8093, -73.9678], [34.0069, -118.2304], [25.7617, -80.1918], [48.8488, 2.3470], [41.8840, 12.4790], [52.5078, 13.4003], [37.9964, 23.7293], [59.3265, 18.0680], [40.4172, -3.6867], [41.3940, 2.1606], [38.7253, -9.1403], [55.7476, 37.6209], [31.2230, 121.4860], [39.8958, 116.4000], [37.5467, 126.9901], [35.6777, 139.7685], [1.3294, 103.8081], [-33.8782, 151.1754], [30.0465, 31.2246], [6.5047, 3.3732], [-1.2873, 36.8198], [-33.9425, 18.5065],  [19.3916, -99.1279], [-23.5727, -46.6207], [36.1458, -115.1832], [38.8939, -77.0372], [49.2501, -123.1164], [43.6888, -79.4190]]
+
+# initialise the map for drawing on
+foliumMap = folium.Map(location=random.choice(locations))
+\end{minted}
+\caption{Setting the Initial Location to a Random City}\label{cs:randomCity}
+\end{listing}
+
+Here, the \pil{list} \pil{locations} specifies the latitude/longitude coordinates of many famous cities across the world. To pick a random one, we must first import the \pil{random} library and get a random choice from the \pil{locations}. If we set the attribute \pil{location} of the \pil{Map} class to this, then the map will initialise at that location.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss11.5.png}
+\caption{Map Starting at a Random City}\label{fig:ss11.5}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{48}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:randomCity}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now I need to retrieve the region the user draws on the map, in order to process it and make predictions. I did not know how to do this, so I began to research the problem.
+
+After looking through many forums and StackOverflow pages and even asking ChatGPT, it seems that accessing the region drawn in the folium map dynamically is impossible.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=13]{python}
+    export=True,
+    filename='region.geojson',
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=28]{python}
+# structure of the UI
+with gr.Blocks() as demo:
+    map = Folium(value=foliumMap)
+    upload = gr.UploadButton(label='Upload the geojson file')
+\end{minted}
+\caption{Reading the Map for the Region}\label{cs:readingMapForRegion}
+\end{listing}
+
+Instead, I have decided to set the \pil{export} attribute (in \pil{Draw}) to \pil{True}, meaning that there will now be an export button on the top right of the map. This will download a \pil{.geojson} file to the user's computer containing the region.
+
+The user can then upload their \pil{.geojson} file to be read and processed.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss11.6.png}
+\caption{Upload Button Added}\label{fig:ss11.6}
+\end{figure}
+
+Figure \ref{fig:ss11.6} shows the output with these new changes. This is not an ideal solution, as the way the user uses the main function of the app has become a bit cumbersome. However, I cannot see a way around this, for now at least.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{49}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:readingMapForRegion}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Predicting the HDI}

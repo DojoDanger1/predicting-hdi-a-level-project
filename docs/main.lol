@@ -65,6 +65,11 @@
 \contentsline {listing}{\numberline {3.62}{\ignorespaces Testing the Neural Network on HDI\relax }}{143}{listing.3.62}%
 \contentsline {listing}{\numberline {3.63}{\ignorespaces Dividing some factors by 10\relax }}{144}{listing.3.63}%
 \contentsline {listing}{\numberline {3.64}{\ignorespaces Adjusting the Training Parameters\relax }}{145}{listing.3.64}%
+\contentsline {listing}{\numberline {3.65}{\ignorespaces Initial Gradio Framework\relax }}{148}{listing.3.65}%
+\contentsline {listing}{\numberline {3.66}{\ignorespaces Initialising the Map\relax }}{150}{listing.3.66}%
+\contentsline {listing}{\numberline {3.67}{\ignorespaces Adding the Map to the GUI\relax }}{150}{listing.3.67}%
+\contentsline {listing}{\numberline {3.68}{\ignorespaces Setting the Initial Location to a Random City\relax }}{153}{listing.3.68}%
+\contentsline {listing}{\numberline {3.69}{\ignorespaces Reading the Map for the Region\relax }}{154}{listing.3.69}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

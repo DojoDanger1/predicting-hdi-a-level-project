@@ -65,3 +65,8 @@ $t_{41}$,Test Train Split,Full Data Set,--,First \pil{proportion_train}$\%$ are 
 $t_{42}$,Training the neural network on HDI,--,--,No errors when carrying out the full training algorithm,As Expected
 $t_{43}$,Testing the neural network on HDI,--,--,Difference for each prediction calculated\comma{} as well as average difference,As Expected
 $t_{44}$,Scaling Average Distance Factors,Average Distance Factor,--,Divided by 10,As Expected
+$t_{45}$,Initialise Gradio Interface,--,--,Empty Gradio Interface,As Expected
+$t_{46}$,Map added to Interface,--,--,Gradio Interface with Map + Controlls,As Expected
+$t_{47}$,Drawing on Map,--,--,Can only draw polygons,As Expected
+$t_{48}$,Starting at a Random Location,--,--,Map Initialises at a Random City,As Expected
+$t_{49}$,Export and Upload Geojson,--,--,User can export geojson from map and upload it,As Expected
