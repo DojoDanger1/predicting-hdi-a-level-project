@@ -70,6 +70,19 @@
 \contentsline {listing}{\numberline {3.67}{\ignorespaces Adding the Map to the GUI\relax }}{150}{listing.3.67}%
 \contentsline {listing}{\numberline {3.68}{\ignorespaces Setting the Initial Location to a Random City\relax }}{153}{listing.3.68}%
 \contentsline {listing}{\numberline {3.69}{\ignorespaces Reading the Map for the Region\relax }}{154}{listing.3.69}%
+\contentsline {listing}{\numberline {3.70}{\ignorespaces Adding a Log Textbox\relax }}{155}{listing.3.70}%
+\contentsline {listing}{\numberline {3.71}{\ignorespaces Adding Functionality to the Upload Button\relax }}{157}{listing.3.71}%
+\contentsline {listing}{\numberline {3.72}{\ignorespaces Placing the Predict Button\relax }}{159}{listing.3.72}%
+\contentsline {listing}{\numberline {3.73}{\ignorespaces Processing the Prediction\relax }}{160}{listing.3.73}%
+\contentsline {listing}{\numberline {3.74}{\ignorespaces Retrieving All Relevant OSM Data\relax }}{161}{listing.3.74}%
+\contentsline {listing}{\numberline {3.75}{\ignorespaces Calculating $A\left (x,y\right )$ Factors\relax }}{162}{listing.3.75}%
+\contentsline {listing}{\numberline {3.76}{\ignorespaces Calculating $D\left (x\right )$ Factors\relax }}{163}{listing.3.76}%
+\contentsline {listing}{\numberline {3.77}{\ignorespaces Predicting the HDI\relax }}{164}{listing.3.77}%
+\contentsline {listing}{\numberline {3.78}{\ignorespaces Adding Functionality to the Prediction Button\relax }}{164}{listing.3.78}%
+\contentsline {listing}{\numberline {3.79}{\ignorespaces Implementing a Maximum for $y$-objects\relax }}{166}{listing.3.79}%
+\contentsline {listing}{\numberline {3.80}{\ignorespaces Passing in the \mintinline [breaklines, breakafter=_]{python}|max_y_objects|\relax }}{167}{listing.3.80}%
+\contentsline {listing}{\numberline {3.81}{\ignorespaces Adding Sliders\relax }}{168}{listing.3.81}%
+\contentsline {listing}{\numberline {3.82}{\ignorespaces Updating Functionality for Predicting HDI Button\relax }}{169}{listing.3.82}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

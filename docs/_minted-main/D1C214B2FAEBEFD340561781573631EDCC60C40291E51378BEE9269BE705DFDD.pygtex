@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{x}{    \PYGZsh{} predict HDI}
+\PYG{x}{    progress(0.96, desc=\PYGZsq{}Predicting HDI...\PYGZsq{})}
+\PYG{x}{    inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index \PYGZlt{}= 11 else float(factor)] for index, factor in enumerate(allFactors)])}
+\PYG{x}{    prediction = round(network.predict(inputLayer).item(0,0), 3)}
+\PYG{x}{    return prediction}
+\end{Verbatim}

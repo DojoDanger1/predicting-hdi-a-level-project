@@ -4774,7 +4774,7 @@ If the training didn't work, then the success rate should be around $10\%$, as i
 \end{center}
 
 \stepcounter{parts}
-\subsection{Part \theparts{} -- Training the Neural Network}
+\subsection{Part \theparts{} -- Training the Neural Network}\label{sec:trainNetwork}
 
 Now it is time to trian the neural network to predict the HDI of a given area.
 
@@ -5258,7 +5258,7 @@ from gradio_folium import Folium
 \pil{app.py}
 \begin{minted}[linenos,breaklines,frame=single,firstnumber=23]{python}
 # structure of the UI
-with gr.Blocks() as demo:
+with gr.Blocks() as app:
     map = Folium(value=foliumMap)
 \end{minted}
 \caption{Adding the Map to the GUI}\label{cs:adjustParameters}
@@ -5359,9 +5359,9 @@ After looking through many forums and StackOverflow pages and even asking ChatGP
 \pil{app.py}
 \begin{minted}[linenos,breaklines,frame=single,firstnumber=28]{python}
 # structure of the UI
-with gr.Blocks() as demo:
+with gr.Blocks() as app:
     map = Folium(value=foliumMap)
-    upload = gr.UploadButton(label='Upload the geojson file')
+    uploadButton = gr.UploadButton(label='Upload the GeoJSON file', file_count='single')
 \end{minted}
 \caption{Reading the Map for the Region}\label{cs:readingMapForRegion}
 \end{listing}
@@ -5398,9 +5398,492 @@ Figure \ref{fig:ss11.6} shows the output with these new changes. This is not an 
 }
 \end{center}
 
+The button to export the \pil{.geojson} file does not work and will be implemented in the next part.
+
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Predicting the HDI}
-\dots
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=32]{python}
+    log = gr.Textbox(label='Log Messages', value='', interactive=False)
+\end{minted}
+\caption{Adding a Log Textbox}\label{cs:logTextbox}
+\end{listing}
+
+I first wanted to add a Log Textbox to the GUI, which will show messages when executing operations successfully. For this, we can use the gradio \pil{Textbox}, with the \pil{interactice} argument set to \pil{False}. This will make it so that the user cannot write in the text box.
+
+This was added below the other elements, and should appear below them on the screen.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss12.1.png}
+\caption{Log Textbox Added}\label{fig:ss12.1}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{50}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:logTextbox}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now we must add functionality to the upload button.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=6]{python}
+import json
+
+# define global vars
+currentRegion = []
+
+# code to process the user uploading their geojson file
+def uploadGeoJSON(filename):
+    global currentRegion
+    with open(filename, 'r') as file:
+        data = json.load(file)
+        currentRegion = [coordinate[::-1] for coordinate in data['features'][0]['geometry']['coordinates'][0]]
+    return f'Successfully Uploaded {filename[filename.rindex("/")+1:]}'
+
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=46]{python}
+    # functionality
+    uploadButton.upload(uploadGeoJSON, inputs=[uploadButton], outputs=[log])
+\end{minted}
+\caption{Adding Functionality to the Upload Button}\label{cs:uploadButtonFunctionality}
+\end{listing}
+
+All of the functionalities in the gradio interface will be of the format: \pil{component.action( function, inputs=[...], outputs=[...])}, where the inputs and outputs are lists of components, and still contained within the \pil{with gr.Blocks()} statement. Therefore, the code to make the upload button interactive is that shown on line 47, where \pil{uploadGeoJSON} is the identifier of some function.
+
+To store the current region, we can use a \pil{global} variable, \pil{currentRegion}. Recalling how \pil{.geojson} files are structured, to get the coordinates into the right format, we must reverse each coordinate before storing it.
+
+Once we have read the contents of the uploaded file, we can return a string to be displayed in the log textbox. The filename given by the parameter will be its full path, so we only want to take a substring of that starting with the character after the last \pil{'/'}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss12.2.png}
+\caption{Uploading GeoJSON Files}\label{fig:ss12.2}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{51}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:uploadButtonFunctionality}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=40]{python}
+# structure of the UI
+with gr.Blocks() as app:
+    with gr.Row():
+        with gr.Column(scale=3):
+            map = Folium(value=foliumMap)
+            uploadButton = gr.UploadButton(label='Upload the GeoJSON file', file_count='single')
+        with gr.Column(scale=1):
+            predictHDIbutton = gr.Button(value='Predict HDI', variant='primary')
+            HDIprediction = gr.Textbox(label='I believe that the HDI of this region is...', value='', interactive=False)
+    log = gr.Textbox(label='Log Messages', value='', interactive=False)
+\end{minted}
+\caption{Placing the Predict Button}\label{cs:placePredict}
+\end{listing}
+
+In order to place the prediction button as shown by the Interface Sketch (Figure \ref{fig:interfaceSketch1}), we must make use of gradio \pil{Row}s and \pil{Column}s.
+
+As we want out map and upload button to be arranged vertically, we can place them in a \pil{Column}. The same goes fro the button to predict HDI and the output textbox for the HDI prediction. As we want these two columns to be arranged side by side, we can put them in a \pil{Row}. As the log textbox should be below everything, it should be placed outside of the \pil{Row}. In my opinion, this use of context managers (\pil{with gr.Row()} and \pil{with gr.Column()}) makes the code extremely readable, and easy to understand where elements will end up.
+
+If we want the width of the first column (containing the map) to be larger than the width of the second, we can use the \pil{scale} attribute, to specify the ratio of the widths. Here, I have specified that the width of the map column should be 3 times the width of the prediciton column.
+
+For the actual button, setting the \pil{variant} attribute to \pil{'primary'} makes the button appear in the primary colour of the app, which is orange.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss12.3.png}
+\caption{New Structure of the GUI}\label{fig:ss12.3}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{52}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:placePredict}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now it is time to implement the functionality of the predict HDI button.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=19]{python}
+# predict the HDI of the given region
+def processPrediction(progress=gr.Progress()):
+    global currentRegion
+    if currentRegion == []:
+        return 'You have not uploaded a region!'
+    progress(0, desc='Starting...')
+\end{minted}
+\caption{Processing the Prediction}\label{cs:processPrediction}
+\end{listing}
+
+Again, we must define a funciton, to pass into the gradio interface, which will carry out the required processes.
+
+We must first determine if the user had in fact uploaded a region. If they haven't, it will still be an empty \pil{list}, and so we should return an error message before any calculations are carried out.
+
+I imagine this function will take a lot of time to run, and so I would like for it to show a progress bar to the user. We can do this by using a \pil{gr.Progress()} bar. This allows us to set the progress bar to different percentages at different times within the function (as shown on line 24).
+
+The rest of this function will be very similar to stuff we have written before, mainly \pil{def getAllFactors}, with some small changes.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=7]{python}
+from data_processing.get_osm_data import get_osm_data
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=11]{python}
+all_objects = {}
+\end{minted}
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=23]{python}
+    global all_objects
+\end{minted}
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=27]{python}
+    # retrieve all relevant osm data
+    object_types = ['house', 'school', 'hospital', 'pharmacy', 'restaurant', 'place_of_worship', 'bank', 'slot_machines', 'fast_food', 'toilets', 'police', 'university', 'library', 'post_box', 'vending_machine', 'bench', 'tree']
+    all_objects = {}
+    for num, object_type in enumerate(object_types):
+        progress(0.3*(num/len(object_types)), desc=f'Downloading {object_type} data...')
+        print(f'getting {object_type} data...') # log message
+        all_objects[object_type] = get_osm_data(object_type, currentRegion)
+\end{minted}
+\caption{Retrieving All Relevant OSM Data}\label{cs:retrieveOSMdata}
+\end{listing}
+
+The first thing we must do is download all of the different objects from OpenStreetMaps, by calling the \pil{def get_osm_data} function written in Section \ref{sec:get_osm_data}. We must also initialise a global dictionary to contain all of these objects, as we will need to use them later, to improve the HDI.
+
+Again, we can use the \pil{progress} function to set the length of the progress bar according to how far through the list of object types to download we are.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{12}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:processPrediction} \& \ref{cs:retrieveOSMdata}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=8]{python}
+from calc_factors import averageDistance
+\end{minted}
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=35]{python}
+    # calculate average distances
+    allFactors = []
+    averageDistanceFactors = [['house', 'school'], ['house', 'hospital'], ['house', 'pharmacy'], ['house', 'restaurant'], ['school', 'hospital'], ['police', 'hospital'], ['house', 'place_of_worship'], ['bank', 'slot_machines'], ['fast_food', 'toilets'], ['house', 'police'], ['university', 'library'], ['house', 'library']]
+    for num, averageDistanceFactor in enumerate(averageDistanceFactors):
+        progress(0.3+0.6*(num/len(averageDistanceFactors)), desc=f'Calculating Average Distance between {averageDistanceFactor[0]} and {averageDistanceFactor[1]}...')
+        print(f'finding A({averageDistanceFactor[0]}, {averageDistanceFactor[1]})...') # log message
+        allFactors.append(averageDistance( all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]]))
+\end{minted}
+\caption{Calculating $A\left(x,y\right)$ Factors}\label{cs:predictionAverageDistance}
+\end{listing}
+
+Next, we must calculate each of the average distance factors. I have defined a \pil{list} of the pairs of each object type, and so they can just be fed into the function to calculate the average distance. We can again use the \pil{progress()} function to update the progress bar.
+
+At this point, I decided to make a copy of the \pil{calc_factors.py} file, and placed it in the main directory, instead of the \pil{data_processing} directory. This is because I plan to make small edits to how some of these functions are going to work.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=8]{python}
+from calc_factors import averageDistance, calcArea, density
+\end{minted}
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=42]{python}
+    # calculate area
+    progress(0.9, desc='Calculating Area...')
+    print('calculating area...') # log message
+    area = calcArea(currentRegion)
+    # calculate density factors
+    densityFactors = ['school', 'hospital', 'pharmacy', 'police', 'library', 'toilets', 'restaurant', 'place_of_worship', 'post_box', 'vending_machine', 'bench', 'tree']
+    for num, densityFactor in enumerate(densityFactors):
+        progress(0.91+0.05*(num/len(densityFactors)), desc=f'Calculating {densityFactor} Density...')
+        print(f'finding D({densityFactor})')
+        allFactors.append(density(all_objects[densityFactor], area))
+\end{minted}
+\caption{Calculating $D\left(x\right)$ Factors}\label{cs:predictionDensity}
+\end{listing}
+
+We can also calculate the density factors in a similar way, by defining a \pil{list} of all the factors, and iterating over them. We must first however calculate the area of the region, to pass into the \pil{def density} function.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{13}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:predictionAverageDistance} \& \ref{cs:predictionDensity}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now that we have a full list of factors, we can predict the HDI
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=9]{python}
+import numpy as np
+from neural_network import MultilayerPerceptron
+
+# initialise neural network
+network = MultilayerPerceptron([24, 18, 12, 6, 3, 1])
+network.load_model('models/hdi.pkl')
+\end{minted}
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=58]{python}
+    # predict HDI
+    progress(0.96, desc='Predicting HDI...')
+    inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
+    prediction = round(network.predict(inputLayer).item(0,0), 3)
+    return prediction
+\end{minted}
+\caption{Predicting the HDI}\label{cs:predictingHDI}
+\end{listing}
+
+For this, we must first import the \pil{MultilayerPerceptron} from \pil{neural_network.py}, and set the layer sizes to the right values. We can then use the \pil{load_model} method to load the model we trained in Section \ref{sec:trainNetwork}.
+
+Then, at the end of the \pil{def processPrediction} function, we can get a matrix for the input layer (dividing the average distance factors by 10 in the same way as done before), and then we can make a prediction, to be returned. 
+
+\begin{listing}[H]
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=99]{python}
+    predictHDIbutton.click(processPrediction, inputs=[], outputs=[HDIprediction])
+\end{minted}
+\caption{Adding Functionality to the Prediction Button}\label{cs:predictionButton}
+\end{listing}
+
+To make the button actually work, we must add a gradio functionality. This line of code makes it so that when the \pil{predictHDIbutton} is \pil{click}ed, it calles the \pil{processPrediction} function, passing in no inputs (as the region is already a global variable), and outputting to the \pil{HDIprediction} textbox.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss12.4.png}
+\caption{Progress Bar}\label{fig:ss12.4}
+\end{figure}
+
+Figure \ref{fig:ss12.4} shows the progress bar as the prediction is taking place. Gradio, by default, also provides a timer for these processes (as shown in the top right).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss12.5.png}
+\caption{Successful Prediction from a Region}\label{fig:ss12.5}
+\end{figure}
+
+Figure \ref{fig:ss12.5} shows the prediction for Oxford, whici is pretty close.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{6.1}$}\OR\equal{\mtestID}{$T_{6.2}$}\OR\equal{\mtestID}{$T_{6.3}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{6}$ Testing Table (for Code Snippets \ref{cs:predictingHDI} \& \ref{cs:predictionButton})}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Unfortunately however, this took about 9 minutes to fully complete, which is too much time to wait. By looking at the progress bar, I found that the majority of the time taken was spent in calculating the average distance factors. Therefore, I plan to let the user change the \pil{max_x_objects} variable with a slider, along with a new \pil{max_y_objects} variable, which must first be implemented.
+
+\begin{listing}[H]
+\pil{calc_factors.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=18]{python}
+# finds the average distance between 2 types of objects, A(x,y)
+def averageDistance(x_objects, y_objects, max_x_objects=2000, max_y_objects=2000):
+\end{minted}
+\pil{calc_factors.py / def averageDistance}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=58]{python}
+        if len(y_objects) > max_y_objects:
+            y_objects_in_consideration = random.sample(y_objects, max_y_objects)
+        else:
+            y_objects_in_consideration = y_objects
+        for y_object in y_objects_in_consideration:
+            dist_to_ys.append(distBetween2Points(x_object, y_object))
+\end{minted}
+\caption{Implementing a Maximum for $y$-objects}\label{cs:maxYobjects}
+\end{listing}
+
+In the \pil{def averageDistance} function (in the new \pil{calc_factors.py} file), we can pass in \pil{max_y_objects} in as a parameter, with a default value of 2000. When we iterate for each \pil{x_object}, we can random sample the \pil{y_objects} if nescessary.
+
+This means that we are no longer finding the absolute Average Shortest Distance from $x$ to $y$, as the $y$-objects we select may not include the closest one to the current $x$-object. However, this may actually make the metric more realistic, for a reason which is best shown with an example. The closest school to my house is my primary school, which I no longer attend. Therefore, when I travel to school, I must travel further than the distance from my house to the closest school. This would be reflected in the code by the fact that my primary school may not be selected in the random sample of all the schools ($y$-objects in this example).
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{53}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:maxYobjects}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=28]{python}
+# predict the HDI of the given region
+def processPrediction(max_x_objects, max_y_objects, progress=gr.Progress()):
+\end{minted}
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=48]{python}
+        allFactors.append(averageDistance( all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects))
+\end{minted}
+\caption{Passing in the \pil{max_y_objects}}\label{cs:passingMaxYobjects}
+\end{listing}
+
+To then take these variables into account when calculating factors, we must pass the \pil{max_x_objects} and \pil{max_y_objects} variables into the \pil{def processPrediction} function.
+
+Then, inside that function, we must pass them into the the \pil{def averageDistance} function.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=93]{python}
+            predictHDIbutton = gr.Button(value='Predict HDI', variant='primary')
+            with gr.Group():
+                max_x_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum x-buildings', info='When calculating the average distance between 2 types of building, it will find the average of this many pairs. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
+                max_y_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum y-buildings', info='When calculating the average distance between 2 types of building, it will find the closest of the second type of building out of this many options. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
+            with gr.Group():
+                HDIprediction = gr.Textbox(label='I believe that the HDI of this region is...', value='', interactive=False)
+                similarHDI = gr.Textbox(label='That\'s a similar HDI to...', value='', interactive=False)
+\end{minted}
+\caption{Adding Sliders}\label{cs:addSliders}
+\end{listing}
+
+To let the user decide the values for \pil{max_x_objects} and \pil{max_y_objects}, we can add some sliders. For each of them, I have set the minimum value to 10 and the maximum value to 5000, with a default value of 500. They also each come with an information label, as their function may not be clear to the user.
+
+The use of the \pil{gr.Group()} block will place these elements together, as shown in Figure \ref{fig:ss12.6}. I have also added an output textbox for the similar HDI region, but I will not be implementing this until the \nth{2} prototype.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss12.6.png}
+\caption{\pil{max_x_objects} and \pil{max_y_objects} Sliders}\label{fig:ss12.6}
+\end{figure}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=104]{python}
+    predictHDIbutton.click(processPrediction, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[HDIprediction])
+\end{minted}
+\caption{Updating Functionality for Predicting HDI Button}\label{cs:addNewInputsToButton}
+\end{listing}
+
+To take these slider values into account, we must now pass them as inputs to the \pil{predictHDIbutton.click} method.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss12.7.png}
+\caption{Prediction with lower \pil{max_x_objects} and \pil{max_y_objects} values}\label{fig:ss12.7}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{54}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:passingMaxYobjects}, \ref{cs:addSliders} \& \ref{cs:addNewInputsToButton}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+This prediction 1 minute instead of 9, 50 seconds of which were spent downloading the locations of all the objects, which I have no control over how long it takes.
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Suggesting Improvements}

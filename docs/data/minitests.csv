@@ -69,4 +69,12 @@ $t_{45}$,Initialise Gradio Interface,--,--,Empty Gradio Interface,As Expected
 $t_{46}$,Map added to Interface,--,--,Gradio Interface with Map + Controlls,As Expected
 $t_{47}$,Drawing on Map,--,--,Can only draw polygons,As Expected
 $t_{48}$,Starting at a Random Location,--,--,Map Initialises at a Random City,As Expected
-$t_{49}$,Export and Upload Geojson,--,--,User can export geojson from map and upload it,As Expected
+$t_{49}$,Export GeoJSON,--,--,User can export GeoJSON from map,As Expected
+$t_{50}$,Can't Write in Log Textbox,--,--,Log Textbox is read only,As Expected
+$t_{51}$,Upload GeoJSON Files,\pil{region.geojson},--,Coordinates saved to \pil{currentRegion}\comma{} and appropriate message shown,As Expected
+$t_{52}$,Column Strucure of GUI,--,--,Width of map is 3 times the width of the prediction button,As Expected
+$T_{6.1}$,Overall Flow,User Draws Region and then Predicts,Valid,Factors are calculated\comma{} HDI is predicted and displayed,As Expected
+$T_{6.2}$,Overall Flow,User attempts to predict before uploading a region,Invalid,Error is thrown in the prediction output,As Expected
+$T_{6.3}$,Overall Flow,User Draws Region and doesn't predict,Valid,Region is saved\comma{} Factors are never calculated and HDI is never predicted,As Expected
+$t_{53}$,Maximum $y$-objects,Set of $y$-objects,--,Random sample of $y$-objects for each $x$-object,As Expected
+$t_{54}$,Prediction with lower \pil{max_x_objects} and \pil{max_y_objects} values,\pil{max_x_objects}\comma{} \pil{max_y_objects},--,Less Accurate Values for $A\left(x\comma{}y\right)$\comma{} still gives accurate prediction,As Expected

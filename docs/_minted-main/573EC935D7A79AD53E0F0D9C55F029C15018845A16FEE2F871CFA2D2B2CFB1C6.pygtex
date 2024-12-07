@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} structure of the UI}
+\PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Blocks}\PYG{p}{()} \PYG{k}{as} \PYG{n}{app}\PYG{p}{:}
+    \PYG{n+nb}{map} \PYG{o}{=} \PYG{n}{Folium}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{n}{foliumMap}\PYG{p}{)}
+    \PYG{n}{uploadButton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{UploadButton}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Upload the GeoJSON file\PYGZsq{}}\PYG{p}{,} \PYG{n}{file\PYGZus{}count}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}single\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

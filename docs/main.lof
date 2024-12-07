@@ -83,6 +83,13 @@
 \contentsline {figure}{\numberline {3.34}{\ignorespaces Drawing a Region\relax }}{152}{figure.caption.131}%
 \contentsline {figure}{\numberline {3.35}{\ignorespaces Map Starting at a Random City\relax }}{153}{figure.caption.132}%
 \contentsline {figure}{\numberline {3.36}{\ignorespaces Upload Button Added\relax }}{155}{figure.caption.133}%
+\contentsline {figure}{\numberline {3.37}{\ignorespaces Log Textbox Added\relax }}{156}{figure.caption.134}%
+\contentsline {figure}{\numberline {3.38}{\ignorespaces Uploading GeoJSON Files\relax }}{158}{figure.caption.135}%
+\contentsline {figure}{\numberline {3.39}{\ignorespaces New Structure of the GUI\relax }}{160}{figure.caption.136}%
+\contentsline {figure}{\numberline {3.40}{\ignorespaces Progress Bar\relax }}{165}{figure.caption.137}%
+\contentsline {figure}{\numberline {3.41}{\ignorespaces Successful Prediction from a Region\relax }}{165}{figure.caption.138}%
+\contentsline {figure}{\numberline {3.42}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|max_x_objects| and \mintinline [breaklines, breakafter=_]{python}|max_y_objects| Sliders\relax }}{169}{figure.caption.139}%
+\contentsline {figure}{\numberline {3.43}{\ignorespaces Prediction with lower \mintinline [breaklines, breakafter=_]{python}|max_x_objects| and \mintinline [breaklines, breakafter=_]{python}|max_y_objects| values\relax }}{170}{figure.caption.140}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

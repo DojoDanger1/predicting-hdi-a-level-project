@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} functionality}
+    \PYG{n}{uploadButton}\PYG{o}{.}\PYG{n}{upload}\PYG{p}{(}\PYG{n}{uploadGeoJSON}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{uploadButton}\PYG{p}{],} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{log}\PYG{p}{])}
+\end{Verbatim}
