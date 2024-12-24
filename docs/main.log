@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.10)  24 DEC 2024 00:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.10)  24 DEC 2024 17:10
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -7650,33 +7650,33 @@ Package pdftex.def Info: ./images//ss13.3.png  used on input line 6268.
 \openout4 = `main.pyg'.
 
  (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
-<./images//ss13.4.png, id=2196, 1505.625pt x 131.49126pt>
+<./images//ss13.4.png, id=2197, 1505.625pt x 131.49126pt>
 File: ./images//ss13.4.png Graphic file (type png)
 <use ./images//ss13.4.png>
-Package pdftex.def Info: ./images//ss13.4.png  used on input line 6287.
+Package pdftex.def Info: ./images//ss13.4.png  used on input line 6289.
 (pdftex.def)             Requested size: 398.33858pt x 34.78883pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 6308--6308
+Underfull \hbox (badness 10000) in paragraph at lines 6310--6310
 []|\OT1/cmr/m/n/12 Validation for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 6308--6308
+Underfull \hbox (badness 10000) in paragraph at lines 6310--6310
 []|\OT1/cmr/m/n/12 User at-tempts
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 6308--6308
+Underfull \hbox (badness 10000) in paragraph at lines 6310--6310
 \OT1/cmr/m/n/12 to make sug-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 6308--6308
+Underfull \hbox (badness 10000) in paragraph at lines 6310--6310
 \OT1/cmr/m/n/12 ges-tions be-fore
  []
 
 
-Overfull \hbox (31.83623pt too wide) in alignment at lines 6308--6308
+Overfull \hbox (31.83623pt too wide) in alignment at lines 6310--6310
  [] [] [] [] [] [] 
  []
 
@@ -7720,68 +7720,88 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 6308--6308
 \openout4 = `main.pyg'.
 
  (./_minted-main/845A23BFBED9E43C4C866FA474BE7AE55018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
-<./images//ss13.5.png, id=2217, 1686.3pt x 1025.8325pt>
+<./images//ss13.5.png, id=2218, 1686.3pt x 1025.8325pt>
 File: ./images//ss13.5.png Graphic file (type png)
 <use ./images//ss13.5.png>
-Package pdftex.def Info: ./images//ss13.5.png  used on input line 6349.
+Package pdftex.def Info: ./images//ss13.5.png  used on input line 6351.
 (pdftex.def)             Requested size: 398.33858pt x 242.3229pt.
 
-Underfull \hbox (badness 2726) in paragraph at lines 6370--6370
+Underfull \hbox (badness 2726) in paragraph at lines 6372--6372
 []|\OT1/cmr/m/n/12 User clicks co-
  []
 
 
-Underfull \hbox (badness 1454) in paragraph at lines 6370--6370
+Underfull \hbox (badness 1454) in paragraph at lines 6372--6372
 \OT1/cmr/m/n/12 or-di-nate to see
  []
 
 
-Overfull \hbox (31.83623pt too wide) in alignment at lines 6370--6370
+Overfull \hbox (31.83623pt too wide) in alignment at lines 6372--6372
  [] [] [] [] [] [] 
  []
 
-[181 <./images//ss13.5.png>] [182]
+
+Underfull \hbox (badness 10000) in paragraph at lines 6394--6394
+[]|\OT1/cmr/m/n/12 Optimal Place
+ []
+
+
+Underfull \hbox (badness 1275) in paragraph at lines 6394--6394
+\OT1/cmr/m/n/12 for New Build-
+ []
+
+
+Underfull \hbox (badness 3769) in paragraph at lines 6394--6394
+[]|\OT1/cmr/m/n/12 Suggestions fed
+ []
+
+[181 <./images//ss13.5.png>]
+Underfull \hbox (badness 2158) in paragraph at lines 6416--6416
+\OT1/cmr/m/n/12 the map for which they
+ []
+
+[182] [183]
 Chapter 4.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 6379.
+(hyperref)                removing `\mathsurround' on input line 6426.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 6379.
+(hyperref)                removing `\z@' on input line 6426.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 6379.
+(hyperref)                removing `superscript' on input line 6426.
 
-[183
+[184
 
-] [184]
+] [185]
 Chapter 5.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 6431.
+(hyperref)                removing `\mathsurround' on input line 6478.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 6431.
+(hyperref)                removing `\z@' on input line 6478.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 6431.
+(hyperref)                removing `superscript' on input line 6478.
 
-[185
+[186
 
 ]
 Chapter 6.
-[186
+[187
 
 ]
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 6463.
+(hyperref)                be the same. Added a new anchor on input line 6510.
 
-(./main.lof [187
+(./main.lof [188
 
 
 ]
@@ -7814,7 +7834,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/31884D3EA70719F40E4AF8879D03BA835018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/F3762BD54174BEF706895AA1E2CFED1C5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [188]
+ (./_minted-main/F3762BD54174BEF706895AA1E2CFED1C5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [189]
 \openout4 = `main.pyg'.
 
  (./_minted-main/0853210BD38F7843BAFD16EBB9ECB2E55018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
@@ -7830,7 +7850,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
 \tf@lof=\write10
 \openout10 = `main.lof'.
 
- [189] (./main.lol
+ [190] (./main.lol
 \openout4 = `main.pyg'.
 
  (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
@@ -7848,27 +7868,27 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/EECC1ECFC7801C659F7B4E8D14F5C8CD5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/7C541B516C88817AFCDC0256050A94CA5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [190
+ (./_minted-main/7C541B516C88817AFCDC0256050A94CA5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [191
 
 
 ]
 \openout4 = `main.pyg'.
 
- (./_minted-main/0D578F848F676236E6B212E72B91B8665018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [191]
+ (./_minted-main/0D578F848F676236E6B212E72B91B8665018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [192]
 \openout4 = `main.pyg'.
 
  (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex))
 \tf@lol=\write11
 \openout11 = `main.lol'.
 
- [192] (./main.lot [193
+ [193] (./main.lot [194
 
 
-] [194])
+] [195])
 \tf@lot=\write12
 \openout12 = `main.lot'.
 
- [195] (./main.bbl
+ [196] (./main.bbl
 Underfull \hbox (badness 7047) in paragraph at lines 15--18
 []\OT1/cmr/m/n/12 Human De-vel-op-ment Re-ports.  country-insights.  [][]$\OT1/cmtt/m/n/12 https : / / hdr . undp . org /
  []
@@ -7888,7 +7908,7 @@ Underfull \hbox (badness 6220) in paragraph at lines 49--54
 []\OT1/cmr/m/n/12 Micheal Nielsen.  neural-networks-and-deep-learning.  [][]$\OT1/cmtt/m/n/12 https : / / github . com /
  []
 
-) [196
+) [197
 
 
 ] (./main.aux)
@@ -7901,18 +7921,18 @@ runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 70223 strings out of 478268
- 1904794 string characters out of 5846346
- 2324766 words of memory out of 5000000
- 84464 multiletter control sequences out of 15000+600000
+ 70228 strings out of 478268
+ 1904833 string characters out of 5846346
+ 2324921 words of memory out of 5000000
+ 84466 multiletter control sequences out of 15000+600000
  493647 words of font info for 118 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  130i,23n,129p,2701b,2904s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (197 pages, 11101235 bytes).
+Output written on main.pdf (198 pages, 11105154 bytes).
 PDF statistics:
- 2954 PDF objects out of 2984 (max. 8388607)
- 2468 compressed objects within 25 object streams
- 750 named destinations out of 1000 (max. 500000)
+ 2964 PDF objects out of 2984 (max. 8388607)
+ 2477 compressed objects within 25 object streams
+ 753 named destinations out of 1000 (max. 500000)
  1119 words of extra memory for PDF output out of 10000 (max. 10000000)
 

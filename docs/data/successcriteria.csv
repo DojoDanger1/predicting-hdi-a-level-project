@@ -6,10 +6,10 @@ $S_{4}$,Calculate density factors from a given area,The number of \textit{some o
 $S_{5}$,Successfully Implement the Feedforward Algorithm,This algorithm will allow us to make predictions on the HDI given a set of factors.,\checkmark,idk
 $S_{6}$,Successfully Implement the Backpropogation Algorithm,This algorithm will allow us to train the neural network base on a set of training examples.,\checkmark,idk
 $S_{7}$,Successfully train the Neural Network,In order to accurately predict the HDI of a given area\comma{} the neural network must train on existing examples to see what makes a high HDI.,\checkmark,idk
-$S_{8}$,User can select an area on the map for which they want to analyse,This will allow the user to choose which area they want to predict the HDI of by drawing on the map.,maybe,idk
-$S_{9}$,Neural Network accurately predicts HDI from those factors,Once the user has selected their area\comma{} the HDI must be predicted based on factors calculated from that area.,maybe,idk
-$S_{10}$,Changes are suggested to increase the HDI,This will allow the user to make an informed decision on what to do in order to improve their area.,maybe,idk
-$S_{11}$,Accurately calculate where a new building would need to be in order to increase the HDI the most,The specific placement of new buildings (as suggestions to increase HDI) is important to consider\comma{} so a suitable place must be chosen in order to decrease the average distance to it as much as possible.,maybe,idk
+$S_{8}$,User can select an area on the map for which they want to analyse,This will allow the user to choose which area they want to predict the HDI of by drawing on the map.,\checkmark,idk
+$S_{9}$,Neural Network accurately predicts HDI from those factors,Once the user has selected their area\comma{} the HDI must be predicted based on factors calculated from that area.,\checkmark,idk
+$S_{10}$,Changes are suggested to increase the HDI,This will allow the user to make an informed decision on what to do in order to improve their area.,\checkmark,idk
+$S_{11}$,Accurately calculate where a new building would need to be in order to increase the HDI the most,The specific placement of new buildings (as suggestions to increase HDI) is important to consider\comma{} so a suitable place must be chosen in order to decrease the average distance to it as much as possible.,\checkmark,idk
 $S_{12}$,User can see how each factor can affect the others,This will allow the user to consider the secondary effects of their descisions\comma{} as the suggested changes may not only increase the HDI\comma{} but also some of the other factors.,maybe,idk
 $S_{13}$,Predicted HDI is ranked among other countries with a similar HDI,This will allow users who are not that familiar with HDI to get an idea of the HDI scale by comparing it to the gist of what they know.,maybe,idk
 $S_{14}$,App has a clean\comma{} simple and presentable GUI,This will make it easier for the user to use.,maybe,idk

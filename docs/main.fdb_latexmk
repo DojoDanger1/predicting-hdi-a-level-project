@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex main"] 1735000750 "main.aux" "main.bbl" "main" 1735000830
+["bibtex main"] 1735060229 "main.aux" "main.bbl" "main" 1735060354
   "/usr/local/texlive/2022/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "main.aux" 1735000823 178876 f0495dd682b25cf3981d60a3d5fdbe76 "pdflatex"
+  "main.aux" 1735060348 179532 a2b986f68b107b330031b9f999017550 "pdflatex"
   "main.bib" 1733052539 2091 ac0eca6c4522c4c8e39e4af0b59e2e20 ""
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1735000751 "/Users/luke/Desktop/FOLDERS/School/Subjects/Computing/A-Level CS/Project/docs/main.tex" "main.pdf" "main" 1735000830
-  "/Users/luke/Desktop/FOLDERS/School/Subjects/Computing/A-Level CS/Project/docs/main.tex" 1735000646 361185 3a53e0a0bcbebb78a90c00a7813a8e14 ""
+["pdflatex"] 1735060230 "/Users/luke/Desktop/FOLDERS/School/Subjects/Computing/A-Level CS/Project/docs/main.tex" "main.pdf" "main" 1735060354
+  "/Users/luke/Desktop/FOLDERS/School/Subjects/Computing/A-Level CS/Project/docs/main.tex" 1735060132 363213 4862baa05a7f76ee217d6b884d31c253 ""
   "/dev/null" 0 -1 0 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -789,8 +789,8 @@
   "_minted-main/FF27148A4F43F95B7446EDCEFF986F685018845A16FEE2F871CFA2D2B2CFB1C6.pygtex" 1720543841 65 787fe174f2f69848b15e29e93de3c724 ""
   "_minted-main/default.pygstyle" 1720543817 6428 74aba51736a5bc6590f8f7dd413c6f27 ""
   "data/minitests.csv" 1735000646 12111 1d47269bd05f92f5f7965d8a22ccb01c ""
-  "data/successcriteria.csv" 1733093612 3274 28f2484e5c3674a76ef05e19ef5a9b5b ""
-  "data/testdata.csv" 1733093612 2728 0b457a4fc9b934ba84435d5c0470ba05 ""
+  "data/successcriteria.csv" 1735060132 3294 9fd02d3000186cebaeaec48c8905e90e ""
+  "data/testdata.csv" 1735060132 2737 5b25b66abb2befef62db7b8632c2c6d8 ""
   "images//darkModeInterface.png" 1729195074 860658 02ceaac1719d747b6cb130b5ab7326db ""
   "images//existingSol1Heatmap.png" 1721519325 19423 9089d14745fe096d833ae49cbe6027b4 ""
   "images//existingSol1Jupyter.png" 1721517046 177046 aba0ebb249f9d4a67dea61493a5410b4 ""
@@ -851,14 +851,14 @@
   "images//ss9.2.png" 1732968873 30697 c8eb58c630e7c81693e22ebd0ff732e7 ""
   "images//ss9.3.png" 1732968889 36067 a67e4bddf7bf8b5bedb1f4b265896130 ""
   "images//ss9.4.png" 1732970963 36942 4fc58d62d371ee1df1988c128afcfbd6 ""
-  "main.aux" 1735000823 178876 f0495dd682b25cf3981d60a3d5fdbe76 "pdflatex"
-  "main.bbl" 1735000751 1752 4e47bde4fc93fbad6e8b9dc18a63dd1d "bibtex main"
-  "main.lof" 1735000823 12328 7d92b0ab3dfd11c1d4e11775f85fa74b "pdflatex"
-  "main.lol" 1735000823 11915 24f9cc6957d98ee9ac89ed068eca2a24 "pdflatex"
-  "main.lot" 1735000823 12967 5a9edb6b7faa38bc973d417a0c9ce873 "pdflatex"
-  "main.out" 1735000823 19119 036c1d8ea5e4098a824c9e6e9993fe1f "pdflatex"
-  "main.tex" 1735000646 361185 3a53e0a0bcbebb78a90c00a7813a8e14 ""
-  "main.toc" 1735000823 13439 8c2daafdb218afc2c26e3e99d434106e "pdflatex"
+  "main.aux" 1735060348 179532 a2b986f68b107b330031b9f999017550 "pdflatex"
+  "main.bbl" 1735060229 1752 4e47bde4fc93fbad6e8b9dc18a63dd1d "bibtex main"
+  "main.lof" 1735060348 12328 7d92b0ab3dfd11c1d4e11775f85fa74b "pdflatex"
+  "main.lol" 1735060348 11915 24f9cc6957d98ee9ac89ed068eca2a24 "pdflatex"
+  "main.lot" 1735060348 13209 232f516e88cf32de50daa9645f71cbfd "pdflatex"
+  "main.out" 1735060348 19119 036c1d8ea5e4098a824c9e6e9993fe1f "pdflatex"
+  "main.tex" 1735060132 363213 4862baa05a7f76ee217d6b884d31c253 ""
+  "main.toc" 1735060348 13439 9f971f802e9fe7521b5172876846d88c "pdflatex"
   (generated)
   "main.aux"
   "main.lof"

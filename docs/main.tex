@@ -6269,7 +6269,9 @@ This is the ammended line for creating a new row in the table, with the coordina
 \caption{Suggestions Table Successfully Generated}\label{fig:ss13.3}
 \end{figure}
 
-The user may attempt to press the suggest button before predicting the HDI, which should not be able to happen.
+Figure \ref{fig:ss13.3} shows a table of suggestions. This has \textit{functionally} worked perfectly, however you may notice that for each suggestion, the predicted HDI has not changed. I will therefore need to be improving the way we make suggestions in the next prototype.
+
+The user may also attempt to press the suggest button before predicting the HDI, which should not be able to happen.
 
 \begin{listing}[H]
 \pil{app.py / def makeSuggestions}
@@ -6371,7 +6373,52 @@ We call this function, when the \pil{suggestionsTable} is \pil{select}ed, and we
 \end{center}
 
 \subsection{Review}
-\dots
+
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$T_{6}$}\OR\equal{\testID}{$T_{7}$}\OR\equal{\testID}{$T_{8}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{8cm}|H|m{2cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Passed Testing Data for Milestone 3}
+        \end{longtable}
+    }
+}
+\end{center}
+
+All 3 of the main tests in Milestone 3 passed. As a result of that, the following success criteria has been met:
+
+\begin{center}
+\csvloop{
+    file=data/successcriteria.csv,
+    no head,
+    column count=5,
+    column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
+    filter ifthen={\equal{\scID}{$S_{8}$}\OR\equal{\scID}{$S_{9}$}\OR\equal{\scID}{$S_{3}$}\OR\equal{\scID}{$S_{10}$}\OR\equal{\scID}{$S_{11}$}\OR\equal{\scID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{5cm}|m{6cm}|m{2cm}|H}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Achieved Success Criteria for Milestone 3}
+        \end{longtable}
+    }
+}
+\end{center}
+
+I also have an initial user interface, which allows for the user to draw any region on a map, predict the HDI of it, and make suggestions on how to improve it, so overall, I believe this milestone has been a success.
+
+However, the suggestions made often do not make any change to the predicted HDI, so in the next milestone, I plan to come up with a better method for generating suggestions.
 
 \section{Feedback from Stakeholders}
 \dots

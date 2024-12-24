@@ -11208,6 +11208,8 @@ INPUT ./images//ss13.5.png
 INPUT ./images//ss13.5.png
 INPUT ./images//ss13.5.png
 INPUT data/minitests.csv
+INPUT data/testdata.csv
+INPUT data/successcriteria.csv
 INPUT ./main.lof
 INPUT main.lof
 INPUT main.lof
