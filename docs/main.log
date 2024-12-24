@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.10)  7 DEC 2024 17:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.10)  24 DEC 2024 00:39
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -6821,10 +6821,16 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5624--5624
  (./_minted-main/702A44C5DD97FD4FFE2E453B16545F7E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
 \openout4 = `main.pyg'.
 
+ (./_minted-main/9651B8505A0D29FE0C916BF982B4976D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/A5EC19A5C4D89EDF3D8939ADA65F98025018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
  (./_minted-main/3EDB76B7409B8239484C3342A836C3CF5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
 \openout3 = `main.pyg'.
 
- (./_minted-main/BD19313DC246CA300B48BE1F8F85C88F5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+ (./_minted-main/39A5BB302BEA985C87D6009C4E2E428C5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
 \openout4 = `main.pyg'.
 
  (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB6595018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
@@ -6845,24 +6851,30 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5624--5624
  (./_minted-main/4B2F2A7CFE842890E6F21ADDC1B903585018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
 \openout4 = `main.pyg'.
 
+ (./_minted-main/9651B8505A0D29FE0C916BF982B4976D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/56F76812C0F237F4CF4C7347E4DB9E8D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
  (./_minted-main/3EDB76B7409B8239484C3342A836C3CF5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
 \openout3 = `main.pyg'.
 
- (./_minted-main/29CEF0D9A3055EE8F5615B999FB14D1C5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [162]
+ (./_minted-main/0DF5A048105A5EA82D2D922CF0922FE15018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [162]
 \openout4 = `main.pyg'.
 
  (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB6595018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
 \openout4 = `main.pyg'.
 
  (./_minted-main/A28FBC8C37AA251DD8AF5BBE76F8EFBA5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
-Underfull \hbox (badness 5203) in paragraph at lines 5689--5689
+Underfull \hbox (badness 5203) in paragraph at lines 5695--5695
 []|\OT1/cmr/m/n/12 Each fac-tor is
  []
 
 \openout4 = `main.pyg'.
 
 (./_minted-main/236041BD46FD597AEEB549A5C3CE89B05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
-Overfull \hbox (31.83623pt too wide) in alignment at lines 5689--5689
+Overfull \hbox (31.83623pt too wide) in alignment at lines 5695--5695
  [] [] [] [] [] [] 
  []
 
@@ -6911,41 +6923,41 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5689--5689
 <./images//ss12.4.png, id=2047, 505.89pt x 161.60374pt>
 File: ./images//ss12.4.png Graphic file (type png)
 <use ./images//ss12.4.png>
-Package pdftex.def Info: ./images//ss12.4.png  used on input line 5731.
+Package pdftex.def Info: ./images//ss12.4.png  used on input line 5737.
 (pdftex.def)             Requested size: 341.43306pt x 109.07042pt.
  [164]
 <./images//ss12.5.png, id=2055, 1686.3pt x 1028.84375pt>
 File: ./images//ss12.5.png Graphic file (type png)
 <use ./images//ss12.5.png>
-Package pdftex.def Info: ./images//ss12.5.png  used on input line 5739.
+Package pdftex.def Info: ./images//ss12.5.png  used on input line 5745.
 (pdftex.def)             Requested size: 398.33858pt x 243.03423pt.
 
-Underfull \hbox (badness 4765) in paragraph at lines 5762--5762
+Underfull \hbox (badness 4765) in paragraph at lines 5768--5768
 \OT1/cmr/m/n/12 gion and then
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5762--5762
+Underfull \hbox (badness 10000) in paragraph at lines 5768--5768
 \OT1/cmr/m/n/12 pre-dicted and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5762--5762
+Underfull \hbox (badness 10000) in paragraph at lines 5768--5768
 []|\OT1/cmr/m/n/12 User at-tempts
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5762--5762
+Underfull \hbox (badness 10000) in paragraph at lines 5768--5768
 \OT1/cmr/m/n/12 up-load-ing a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5762--5762
+Underfull \hbox (badness 10000) in paragraph at lines 5768--5768
 \OT1/cmr/m/n/12 Fac-tors are
  []
 
 
-Overfull \hbox (31.83623pt too wide) in alignment at lines 5762--5762
+Overfull \hbox (31.83623pt too wide) in alignment at lines 5768--5768
  [] [] [] [] [] [] 
  []
 
@@ -6983,12 +6995,12 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5762--5762
 \openout4 = `main.pyg'.
 
  (./_minted-main/A4230CDD803304F8E22DDB6FB9AF38BB5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
-Underfull \hbox (badness 10000) in paragraph at lines 5806--5806
+Underfull \hbox (badness 10000) in paragraph at lines 5812--5812
 []|\OT1/cmr/m/n/12 Maximum $\OML/cmm/m/it/12 y$\OT1/cmr/m/n/12 -
  []
 
 
-Overfull \hbox (31.83623pt too wide) in alignment at lines 5806--5806
+Overfull \hbox (31.83623pt too wide) in alignment at lines 5812--5812
  [] [] [] [] [] [] 
  []
 
@@ -7041,7 +7053,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5806--5806
 <./images//ss12.6.png, id=2085, 1686.3pt x 1026.83624pt>
 File: ./images//ss12.6.png Graphic file (type png)
 <use ./images//ss12.6.png>
-Package pdftex.def Info: ./images//ss12.6.png  used on input line 5846.
+Package pdftex.def Info: ./images//ss12.6.png  used on input line 5852.
 (pdftex.def)             Requested size: 398.33858pt x 242.56001pt.
 \openout4 = `main.pyg'.
 
@@ -7067,7 +7079,7 @@ Package pdftex.def Info: ./images//ss12.6.png  used on input line 5846.
 <./images//ss12.7.png, id=2093, 1686.3pt x 1028.84375pt>
 File: ./images//ss12.7.png Graphic file (type png)
 <use ./images//ss12.7.png>
-Package pdftex.def Info: ./images//ss12.7.png  used on input line 5862.
+Package pdftex.def Info: ./images//ss12.7.png  used on input line 5868.
 (pdftex.def)             Requested size: 398.33858pt x 243.03423pt.
 \openout4 = `main.pyg'.
 
@@ -7087,22 +7099,22 @@ Package pdftex.def Info: ./images//ss12.7.png  used on input line 5862.
 \openout4 = `main.pyg'.
 
  (./_minted-main/0D578F848F676236E6B212E72B91B8665018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
-Underfull \hbox (badness 2285) in paragraph at lines 5883--5883
+Underfull \hbox (badness 2285) in paragraph at lines 5889--5889
 []|\OT1/cmr/m/n/12 Prediction with
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5883--5883
+Underfull \hbox (badness 10000) in paragraph at lines 5889--5889
 \OT1/cmr/m/n/12 lower \OT1/cmtt/m/n/12 max_[]x_[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5883--5883
+Underfull \hbox (badness 10000) in paragraph at lines 5889--5889
 \OT1/cmtt/m/n/12 objects \OT1/cmr/m/n/12 and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5883--5883
+Underfull \hbox (badness 10000) in paragraph at lines 5889--5889
 \OT1/cmtt/m/n/12 max_[]y_[]objects
  []
 
@@ -7112,77 +7124,664 @@ Underfull \hbox (badness 10000) in paragraph at lines 5883--5883
 \openout4 = `main.pyg'.
 
  (./_minted-main/0D578F848F676236E6B212E72B91B8665018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
-Underfull \hbox (badness 10000) in paragraph at lines 5883--5883
+Underfull \hbox (badness 10000) in paragraph at lines 5889--5889
 []|\OT1/cmtt/m/n/12 max_[]x_[]objects\OT1/cmr/m/n/12 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5883--5883
+Underfull \hbox (badness 10000) in paragraph at lines 5889--5889
 []|\OT1/cmr/m/n/12 Less Ac-cu-
  []
 
 
-Underfull \hbox (badness 1609) in paragraph at lines 5883--5883
+Underfull \hbox (badness 1609) in paragraph at lines 5889--5889
 \OT1/cmr/m/n/12 rate Val-ues for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5883--5883
+Underfull \hbox (badness 10000) in paragraph at lines 5889--5889
 \OML/cmm/m/it/12 A []$\OT1/cmr/m/n/12 , still
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5883--5883
+Underfull \hbox (badness 10000) in paragraph at lines 5889--5889
 \OT1/cmr/m/n/12 gives ac-cu-rate
  []
 
 
-Overfull \hbox (31.83623pt too wide) in alignment at lines 5883--5883
+Overfull \hbox (31.83623pt too wide) in alignment at lines 5889--5889
  [] [] [] [] [] [] 
  []
 
-[170 <./images//ss12.7.png>]
+\openout4 = `main.pyg'.
+
+(./_minted-main/9651B8505A0D29FE0C916BF982B4976D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/1BC98E4CF69F5A412608C5242F3475BE5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [170 <./images//ss12.7.png>]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/58CBF43DE4A03059EFD5ABF96E1506175018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/F35D7EFE3EFB3E67AF82D59C734BF4375018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/58CBF43DE4A03059EFD5ABF96E1506175018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/901139ED9E1DC45DDEA93BCF67AAF3135018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB6595018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/9139C6017D36A1C6F26520CE14C821E75018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/84D21D166CDE9C127D5DFD29D951C3855018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/79F5C9AEC1851D24424DE38AD3DE6F985018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+<./images//ss13.1.png, id=2113, 1686.3pt x 1026.83624pt>
+File: ./images//ss13.1.png Graphic file (type png)
+<use ./images//ss13.1.png>
+Package pdftex.def Info: ./images//ss13.1.png  used on input line 5912.
+(pdftex.def)             Requested size: 398.33858pt x 242.56001pt.
+\openout4 = `main.pyg'.
+
+ (./_minted-main/381CCADFB8D4848ADD470E33033B198F5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/58CBF43DE4A03059EFD5ABF96E1506175018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+Underfull \hbox (badness 1303) in paragraph at lines 5935--5935
+[]|\OT1/cmr/m/n/12 Suggestions Ta-
+ []
+
+
+Underfull \hbox (badness 1205) in paragraph at lines 5935--5935
+\OT1/cmr/m/n/12 ble and but-ton
+ []
+
+
+Underfull \hbox (badness 1990) in paragraph at lines 5935--5935
+[]|\OT1/cmr/m/n/12 At the bot-tom
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5935--5935
+\OT1/cmr/m/n/12 of the page,
+ []
+
+
+Underfull \hbox (badness 1953) in paragraph at lines 5935--5935
+\OT1/cmr/m/n/12 stacked on top
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5935--5935
+\OT1/cmr/m/n/12 of each other
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5935--5935
+\OT1/cmr/m/n/12 (ig-nor-ing the
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 5935--5935
+ [] [] [] [] [] [] 
+ []
+
+[171 <./images//ss13.1.png>]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/9651B8505A0D29FE0C916BF982B4976D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/583E63DF68E3FB7989F146B1FC2DDA445018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/0853210BD38F7843BAFD16EBB9ECB2E55018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/0D578F848F676236E6B212E72B91B8665018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/7B9DBDF3366EAE725AC05A0D99E747B35018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/8823E0A61C7A17DDAB1B74904F209F115018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/58CBF43DE4A03059EFD5ABF96E1506175018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 5975--5975
+[]|\OT1/cmr/m/n/12 Iterating over
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB6595018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+Overfull \hbox (31.83623pt too wide) in alignment at lines 5975--5975
+ [] [] [] [] [] [] 
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/9651B8505A0D29FE0C916BF982B4976D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/A0897FD77D54C6A2607466D2AAA222E35018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [172]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/9651B8505A0D29FE0C916BF982B4976D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/B47913F9C731E21A05F1DF65C74C8DCD5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/97BC523F820EDE6077944ED648C5D7745018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/F7D18C016E8BFE805D91BC6A5B1EF1315018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+[]|\OT1/cmr/m/n/12 Optimal Place
+ []
+
+
+Underfull \hbox (badness 1275) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 for New Build-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+[]|\OT1/cmr/m/n/12 Building for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 which there
+ []
+
+
+Underfull \hbox (badness 2134) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 po-si-tion of the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+[]|\OT1/cmr/m/n/12 Optimal Place
+ []
+
+
+Underfull \hbox (badness 1275) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 for New Build-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+[]|\OT1/cmr/m/n/12 Building for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 which there
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+[]|\OT1/cmr/m/n/12 Calculates the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 mean po-si-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 of the mean
+ []
+
+
+Underfull \hbox (badness 7504) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 other build-ings
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+[]|\OT1/cmr/m/n/12 Optimal Place
+ []
+
+
+Underfull \hbox (badness 1275) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 for New Build-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+[]|\OT1/cmr/m/n/12 Building for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 which there
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6034--6034
+[]|\OT1/cmr/m/n/12 Function is
+ []
+
+
+Underfull \hbox (badness 1810) in paragraph at lines 6034--6034
+\OT1/cmr/m/n/12 never ran with
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 6034--6034
+ [] [] [] [] [] [] 
+ []
+
+[173]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/FC358460EC152405C379EAB66D673A2A5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/3090DC39045B64BB1729F16EA5D788275018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/410443E4AA92030CEAD59B45CBDF7F925018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/B8ED43F177F98DADF2DC85A4016359BB5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/410443E4AA92030CEAD59B45CBDF7F925018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/A066E326F028A5EC53C35D66EF2F19455018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/E064BBD9DA341AE4FAE4D96FB5BAF56B5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/31FDDAEA59BA47AC408526F551C0BB905018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/812DA806FC9E54EE59781BAE710384225018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/08E9DE24AB150D083240557CEC091D535018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+Overfull \hbox (3.43756pt too wide) in paragraph at lines 6058--6059
+[]\OT1/cmr/m/n/12 Here, in the []\OT1/cmtt/m/n/12 def[] []averageDistance[] \OT1/cmr/m/n/12 func-tion, the pa-ram-e-ters \OT1/cmtt/m/n/12 must_[]include_[]x \OT1/cmr/m/n/12 and \OT1/cmtt/m/n/12 must_[]
+ []
+
+[174]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/97BC523F820EDE6077944ED648C5D7745018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/CC9A738DAD258DDA41F2E617B3AD30275018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/AE428C9C9C0E3034075B0A7F56CF7E1A5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/41C580378440757D43F1C21A85E8D36F5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 6097--6097
+[]|\OT1/cmr/m/n/12 Average Dis-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6097--6097
+[]|\OT1/cmr/m/n/12 Always taken
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6097--6097
+\OT1/cmr/m/n/12 into ac-cont,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6097--6097
+\OT1/cmr/m/n/12 af-ter ran-dom
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 6097--6097
+ [] [] [] [] [] [] 
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/97BC523F820EDE6077944ED648C5D7745018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/9F11AA99BB1B449FCF568DD0E9E903EC5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [175]
+Underfull \hbox (badness 10000) in paragraph at lines 6135--6135
+[]|\OT1/cmr/m/n/12 Densities with
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 6135--6135
+ [] [] [] [] [] [] 
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/97BC523F820EDE6077944ED648C5D7745018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/627AA26040EC4F1EF60E1CF2F4EE79875018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+Underfull \hbox (badness 3769) in paragraph at lines 6168--6168
+[]|\OT1/cmr/m/n/12 Suggestions fed
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6168--6168
+[]|\OT1/cmr/m/n/12 Suggested
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6168--6168
+[]|\OT1/cmr/m/n/12 Location is
+ []
+
+
+Underfull \hbox (badness 2529) in paragraph at lines 6168--6168
+\OT1/cmr/m/n/12 er-age Dis-tances
+ []
+
+
+Underfull \hbox (badness 6016) in paragraph at lines 6168--6168
+\OT1/cmr/m/n/12 are Cal-cu-lated,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6168--6168
+\OT1/cmr/m/n/12 Den-si-ties are
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 6168--6168
+ [] [] [] [] [] [] 
+ []
+
+[176]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/9651B8505A0D29FE0C916BF982B4976D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/04E226D2ADD1A2DC12D54306CB341D325018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/3EDB76B7409B8239484C3342A836C3CF5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/4778423F471CE08BFA89A57F1AB05A4B5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/3EDB76B7409B8239484C3342A836C3CF5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/F44DEAD9DF327E8568E92AF891A824565018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/97BC523F820EDE6077944ED648C5D7745018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/CFE7D4F23F30344EA765C11AFA7FAEB35018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/B6B3F51996C7DA2D8ADCBB44BAA397505018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/30E1FAC6249DFE3BFDBE085488ED9C055018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/EB844645E8E61DE0A4CF4B991E65E63E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/A4EA768F3DF94AEAF796598D2C81F8335018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/9651B8505A0D29FE0C916BF982B4976D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/C25BB836D4E5FB3B9391337308539C535018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [177]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+Overfull \hbox (29.6369pt too wide) in paragraph at lines 6206--6207
+[]\OT1/cmr/m/n/12 To make the but-ton ac-tu-ally work, we can add a func-tion-al-ity, to call the []\OT1/cmtt/m/n/12 def[] []makeSuggestions[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6225--6225
+[]|\OT1/cmr/m/n/12 Columns for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6225--6225
+\OT1/cmr/m/n/12 build-ing type,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6225--6225
+\OT1/cmr/m/n/12 lo-ca-tion, new
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 6225--6225
+ [] [] [] [] [] [] 
+ []
+
+<./images//ss13.2.png, id=2182, 1228.59pt x 244.915pt>
+File: ./images//ss13.2.png Graphic file (type png)
+<use ./images//ss13.2.png>
+Package pdftex.def Info: ./images//ss13.2.png  used on input line 6230.
+(pdftex.def)             Requested size: 369.88582pt x 73.73665pt.
+\openout4 = `main.pyg'.
+
+(./_minted-main/97BC523F820EDE6077944ED648C5D7745018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/28E25FEC55FE2D815BAC7CF986D39CD75018845A16FEE2F871CFA2D2B2CFB1C6.pygtex
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 2.
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+))
+Underfull \hbox (badness 10000) in paragraph at lines 6263--6263
+[]|\OT1/cmr/m/n/12 Columns for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6263--6263
+\OT1/cmr/m/n/12 build-ing type,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6263--6263
+\OT1/cmr/m/n/12 lo-ca-tion, new
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 6263--6263
+ [] [] [] [] [] [] 
+ []
+
+[178 <./images//ss13.2.png>]
+<./images//ss13.3.png, id=2195, 1500.60625pt x 391.4625pt>
+File: ./images//ss13.3.png Graphic file (type png)
+<use ./images//ss13.3.png>
+Package pdftex.def Info: ./images//ss13.3.png  used on input line 6268.
+(pdftex.def)             Requested size: 398.33858pt x 103.91028pt.
+\openout4 = `main.pyg'.
+
+ (./_minted-main/97BC523F820EDE6077944ED648C5D7745018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/A45648435F7F37DF4E3155FD8870B8995018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/30E1FAC6249DFE3BFDBE085488ED9C055018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/EB844645E8E61DE0A4CF4B991E65E63E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/EB844645E8E61DE0A4CF4B991E65E63E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+<./images//ss13.4.png, id=2196, 1505.625pt x 131.49126pt>
+File: ./images//ss13.4.png Graphic file (type png)
+<use ./images//ss13.4.png>
+Package pdftex.def Info: ./images//ss13.4.png  used on input line 6287.
+(pdftex.def)             Requested size: 398.33858pt x 34.78883pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 6308--6308
+[]|\OT1/cmr/m/n/12 Validation for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6308--6308
+[]|\OT1/cmr/m/n/12 User at-tempts
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6308--6308
+\OT1/cmr/m/n/12 to make sug-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6308--6308
+\OT1/cmr/m/n/12 ges-tions be-fore
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 6308--6308
+ [] [] [] [] [] [] 
+ []
+
+[179 <./images//ss13.3.png> <./images//ss13.4.png>]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/9651B8505A0D29FE0C916BF982B4976D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/C9142E119A068028728DF82F72EBDD115018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/9651B8505A0D29FE0C916BF982B4976D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/4C490C65DC92B742875C297B5240444D5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/69CA2A88D87AF63268852F405E73704A5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/845A23BFBED9E43C4C866FA474BE7AE55018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/C614739F701280CF1C20CC01BEB3BD3A5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/2B1783B20205940744DE662AAA2DFF1A5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/97BC523F820EDE6077944ED648C5D7745018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/1204089642260057F03E313D11790C465018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [180]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/3CD41F2A12F4BF4353EBA975670B803B5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/DBE93C4D55C91FAAB11DABA48F3145745018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/845A23BFBED9E43C4C866FA474BE7AE55018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
+<./images//ss13.5.png, id=2217, 1686.3pt x 1025.8325pt>
+File: ./images//ss13.5.png Graphic file (type png)
+<use ./images//ss13.5.png>
+Package pdftex.def Info: ./images//ss13.5.png  used on input line 6349.
+(pdftex.def)             Requested size: 398.33858pt x 242.3229pt.
+
+Underfull \hbox (badness 2726) in paragraph at lines 6370--6370
+[]|\OT1/cmr/m/n/12 User clicks co-
+ []
+
+
+Underfull \hbox (badness 1454) in paragraph at lines 6370--6370
+\OT1/cmr/m/n/12 or-di-nate to see
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 6370--6370
+ [] [] [] [] [] [] 
+ []
+
+[181 <./images//ss13.5.png>] [182]
 Chapter 4.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 5898.
+(hyperref)                removing `\mathsurround' on input line 6379.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 5898.
+(hyperref)                removing `\z@' on input line 6379.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 5898.
+(hyperref)                removing `superscript' on input line 6379.
 
-[171
+[183
 
-] [172]
+] [184]
 Chapter 5.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 5950.
+(hyperref)                removing `\mathsurround' on input line 6431.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 5950.
+(hyperref)                removing `\z@' on input line 6431.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 5950.
+(hyperref)                removing `superscript' on input line 6431.
 
-[173
+[185
 
 ]
 Chapter 6.
-[174
+[186
 
 ]
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 5982.
+(hyperref)                be the same. Added a new anchor on input line 6463.
 
-(./main.lof [175
+(./main.lof [187
 
 
 ]
@@ -7215,7 +7814,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/31884D3EA70719F40E4AF8879D03BA835018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/F3762BD54174BEF706895AA1E2CFED1C5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [176]
+ (./_minted-main/F3762BD54174BEF706895AA1E2CFED1C5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [188]
 \openout4 = `main.pyg'.
 
  (./_minted-main/0853210BD38F7843BAFD16EBB9ECB2E55018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
@@ -7231,7 +7830,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
 \tf@lof=\write10
 \openout10 = `main.lof'.
 
- [177] (./main.lol
+ [189] (./main.lol
 \openout4 = `main.pyg'.
 
  (./_minted-main/59182B729FA5D708AB44B6E23A2071A05018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
@@ -7249,24 +7848,27 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/EECC1ECFC7801C659F7B4E8D14F5C8CD5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/7C541B516C88817AFCDC0256050A94CA5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [178
+ (./_minted-main/7C541B516C88817AFCDC0256050A94CA5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [190
 
 
 ]
 \openout4 = `main.pyg'.
 
- (./_minted-main/0D578F848F676236E6B212E72B91B8665018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [179])
+ (./_minted-main/0D578F848F676236E6B212E72B91B8665018845A16FEE2F871CFA2D2B2CFB1C6.pygtex) [191]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E5018845A16FEE2F871CFA2D2B2CFB1C6.pygtex))
 \tf@lol=\write11
 \openout11 = `main.lol'.
 
- [180] (./main.lot [181
+ [192] (./main.lot [193
 
 
-])
+] [194])
 \tf@lot=\write12
 \openout12 = `main.lot'.
 
- [182] [183] (./main.bbl
+ [195] (./main.bbl
 Underfull \hbox (badness 7047) in paragraph at lines 15--18
 []\OT1/cmr/m/n/12 Human De-vel-op-ment Re-ports.  country-insights.  [][]$\OT1/cmtt/m/n/12 https : / / hdr . undp . org /
  []
@@ -7286,7 +7888,7 @@ Underfull \hbox (badness 6220) in paragraph at lines 49--54
 []\OT1/cmr/m/n/12 Micheal Nielsen.  neural-networks-and-deep-learning.  [][]$\OT1/cmtt/m/n/12 https : / / github . com /
  []
 
-) [184
+) [196
 
 
 ] (./main.aux)
@@ -7294,23 +7896,23 @@ Underfull \hbox (badness 6220) in paragraph at lines 49--54
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 5B86823BFAA99EDF784CC79DAF00AFBE;19119.
+(rerunfilecheck)             Checksum: 036C1D8EA5E4098A824C9E6E9993FE1F;19119.
 runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 69761 strings out of 478268
- 1874440 string characters out of 5846346
- 2293525 words of memory out of 5000000
- 84269 multiletter control sequences out of 15000+600000
- 493350 words of font info for 117 fonts, out of 8000000 for 9000
+ 70223 strings out of 478268
+ 1904794 string characters out of 5846346
+ 2324766 words of memory out of 5000000
+ 84464 multiletter control sequences out of 15000+600000
+ 493647 words of font info for 118 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  130i,23n,129p,2701b,2904s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on main.pdf (185 pages, 10015412 bytes).
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on main.pdf (197 pages, 11101235 bytes).
 PDF statistics:
- 2779 PDF objects out of 2984 (max. 8388607)
- 2332 compressed objects within 24 object streams
- 709 named destinations out of 1000 (max. 500000)
- 1094 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2954 PDF objects out of 2984 (max. 8388607)
+ 2468 compressed objects within 25 object streams
+ 750 named destinations out of 1000 (max. 500000)
+ 1119 words of extra memory for PDF output out of 10000 (max. 10000000)
 

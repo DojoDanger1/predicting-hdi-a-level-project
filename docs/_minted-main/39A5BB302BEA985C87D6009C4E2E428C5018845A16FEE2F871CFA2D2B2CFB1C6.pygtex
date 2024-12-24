@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} calculate average distances}
+    \PYG{n}{allFactors} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{num}\PYG{p}{,} \PYG{n}{averageDistanceFactor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{averageDistanceFactors}\PYG{p}{):}
+        \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mf}{0.3}\PYG{o}{+}\PYG{l+m+mf}{0.6}\PYG{o}{*}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{averageDistanceFactors}\PYG{p}{)),} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}Calculating Average Distance between }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ and }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{...\PYGZsq{}}\PYG{p}{)}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}finding A(}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{, }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)...\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+        \PYG{n}{allFactors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{averageDistance}\PYG{p}{(} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]],} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]]))}
+\end{Verbatim}

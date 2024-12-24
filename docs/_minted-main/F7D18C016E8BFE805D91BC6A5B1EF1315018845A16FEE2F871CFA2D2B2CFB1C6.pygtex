@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{c+c1}{\PYGZsh{} find optimal place}
+        \PYG{n}{progress}\PYG{p}{((}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{))}\PYG{o}{+}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{l+m+mi}{32}\PYG{p}{)),} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}Suggesting building a }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{suggestion}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ (finding optimal position)...\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{position} \PYG{o}{=} \PYG{n}{calcOptimalPlaceFor}\PYG{p}{(}\PYG{n}{suggestion}\PYG{p}{)}
+\end{Verbatim}

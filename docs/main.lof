@@ -90,6 +90,11 @@
 \contentsline {figure}{\numberline {3.41}{\ignorespaces Successful Prediction from a Region\relax }}{165}{figure.caption.138}%
 \contentsline {figure}{\numberline {3.42}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|max_x_objects| and \mintinline [breaklines, breakafter=_]{python}|max_y_objects| Sliders\relax }}{169}{figure.caption.139}%
 \contentsline {figure}{\numberline {3.43}{\ignorespaces Prediction with lower \mintinline [breaklines, breakafter=_]{python}|max_x_objects| and \mintinline [breaklines, breakafter=_]{python}|max_y_objects| values\relax }}{170}{figure.caption.140}%
+\contentsline {figure}{\numberline {3.44}{\ignorespaces Suggestions Table\relax }}{171}{figure.caption.141}%
+\contentsline {figure}{\numberline {3.45}{\ignorespaces Invalid Table Format\relax }}{178}{figure.caption.142}%
+\contentsline {figure}{\numberline {3.46}{\ignorespaces Suggestions Table Successfully Generated\relax }}{179}{figure.caption.143}%
+\contentsline {figure}{\numberline {3.47}{\ignorespaces Error Message Shown in Table\relax }}{179}{figure.caption.144}%
+\contentsline {figure}{\numberline {3.48}{\ignorespaces Pin Shown on Map for Suggestion\relax }}{181}{figure.caption.145}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

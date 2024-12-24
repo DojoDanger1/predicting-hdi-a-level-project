@@ -5629,11 +5629,14 @@ Again, we can use the \pil{progress} function to set the length of the progress 
 \begin{minted}[linenos,breaklines,frame=single,firstnumber=8]{python}
 from calc_factors import averageDistance
 \end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=13]{python}
+averageDistanceFactors = [['house', 'school'], ['house', 'hospital'], ['house', 'pharmacy'], ['house', 'restaurant'], ['school', 'hospital'], ['police', 'hospital'], ['house', 'place_of_worship'], ['bank', 'slot_machines'], ['fast_food', 'toilets'], ['house', 'police'], ['university', 'library'], ['house', 'library']]
+\end{minted}
 \pil{app.py / def processPrediction}
-\begin{minted}[linenos,breaklines,frame=single,firstnumber=35]{python}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=36]{python}
     # calculate average distances
     allFactors = []
-    averageDistanceFactors = [['house', 'school'], ['house', 'hospital'], ['house', 'pharmacy'], ['house', 'restaurant'], ['school', 'hospital'], ['police', 'hospital'], ['house', 'place_of_worship'], ['bank', 'slot_machines'], ['fast_food', 'toilets'], ['house', 'police'], ['university', 'library'], ['house', 'library']]
     for num, averageDistanceFactor in enumerate(averageDistanceFactors):
         progress(0.3+0.6*(num/len(averageDistanceFactors)), desc=f'Calculating Average Distance between {averageDistanceFactor[0]} and {averageDistanceFactor[1]}...')
         print(f'finding A({averageDistanceFactor[0]}, {averageDistanceFactor[1]})...') # log message
@@ -5651,14 +5654,17 @@ At this point, I decided to make a copy of the \pil{calc_factors.py} file, and p
 \begin{minted}[linenos,breaklines,frame=single,firstnumber=8]{python}
 from calc_factors import averageDistance, calcArea, density
 \end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=14]{python}
+densityFactors = ['school', 'hospital', 'pharmacy', 'police', 'library', 'toilets', 'restaurant', 'place_of_worship', 'post_box', 'vending_machine', 'bench', 'tree']
+\end{minted}
 \pil{app.py / def processPrediction}
-\begin{minted}[linenos,breaklines,frame=single,firstnumber=42]{python}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=43]{python}
     # calculate area
     progress(0.9, desc='Calculating Area...')
     print('calculating area...') # log message
     area = calcArea(currentRegion)
     # calculate density factors
-    densityFactors = ['school', 'hospital', 'pharmacy', 'police', 'library', 'toilets', 'restaurant', 'place_of_worship', 'post_box', 'vending_machine', 'bench', 'tree']
     for num, densityFactor in enumerate(densityFactors):
         progress(0.91+0.05*(num/len(densityFactors)), desc=f'Calculating {densityFactor} Density...')
         print(f'finding D({densityFactor})')
@@ -5740,7 +5746,7 @@ Figure \ref{fig:ss12.4} shows the progress bar as the prediction is taking place
 \caption{Successful Prediction from a Region}\label{fig:ss12.5}
 \end{figure}
 
-Figure \ref{fig:ss12.5} shows the prediction for Oxford, whici is pretty close.
+Figure \ref{fig:ss12.5} shows the prediction for Oxford, which is pretty close.
 
 \begin{center}
 \csvloop{
@@ -5887,7 +5893,482 @@ This prediction 1 minute instead of 9, 50 seconds of which were spent downloadin
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Suggesting Improvements}
-\dots
+
+In order to make suggestions, we must first define the inputs and the outputs the user will be interacting with.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=100]{python}
+    makeSuggestionsButton = gr.Button(value='Make Suggestions')
+    suggestionsTable = gr.Dataframe(label='Suggestions', headers=['New Building', 'Coordinates', 'New HDI', 'Change in HDI'], type='array', interactive=False)
+\end{minted}
+\caption{Adding a Suggestions Table}\label{cs:suggestionsTable}
+\end{listing}
+
+Here, I am defining a button in the same way as before, along with a \pil{Dataframe}. This will create a table for us to output to, with headers that we can specify. The \pil{type} of this \pil{Dataframe} is set to \pil{'array'}, as I will be returning a python \pil{list} (as opposed to a \pil{np.ndarray} or similar). To ensure that the user cannot edit the data in each cell, or add new rows and columns, \pil{interactive} has been set to \pil{False}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss13.1.png}
+\caption{Suggestions Table}\label{fig:ss13.1}
+\end{figure}
+
+Figure \ref{fig:ss13.1} shows the user interface with these new additions. Unfortunately, there is a small bug in \pil{gradio}, which causes the \pil{Dataframe} to have a small white border for scroll bars, even when they are not required (as in this case). Unfortunately, I cannot do anything about this.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{55}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:suggestionsTable}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now we must add functionality to this button.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=65]{python}
+# make suggestions from a prediction
+def makeSuggestions(max_x_objects, max_y_objects, progress=gr.Progress()):
+    global all_objects
+    suggestions = ['school', 'hospital', 'place_of_worship', 'police', 'restaurant', 'slot_machines', 'library', 'pharmacy']
+    returnTable = []
+    for num, suggestion in enumerate(suggestions):
+        progress(num/len(suggestions), desc=f'Suggesting building a {suggestion}...')
+\end{minted}
+\caption{Defining the Suggestions Function}\label{cs:suggestionsFunction}
+\end{listing}
+
+Here, I am defining the \pil{def makeSuggestions} function, which will be called when the user clicks the make suggestions button. It must take in \pil{max_x_objects} and \pil{max_y_objects} again, as we will be computing average distances. It will also use \pil{gr.Progress} again, as it may take a while.
+
+To avoid downloading all of the objects again, we can use the global variable, \pil{all_objects}, which we saved them to, when predicting the HDI. Then, we must define each of the suggestions, as well as the return list, which will be displayed in the \pil{Dataframe}. We will then iterate over each suggestion and calculate its new HDI (for now however, all we can do is update the progress bar).
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{56}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:suggestionsFunction}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+The first thing we must do for each suggestion is find the optimal place for it to go.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=65]{python}
+# helper function to calculate mean of coordinates
+def calcMeanOfCoords(coords):
+    return [np.mean([coord[0] for coord in coords]), np.mean([coord[1] for coord in coords])]
+\end{minted}
+\caption{Finding the mean of coordinates}\label{cs:meanOfCoordinates}
+\end{listing}
+
+To do this, we must be able to calculate the mean of coordinates (that is, the latitude will be the mean of all the latitudes, and the longitude will be the mean of all the longitudes).
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=69]{python}
+# calculate the optimal place for a new building to go when suggesting
+def calcOptimalPlaceFor(building):
+    global all_objects
+    means = []
+    for averageDistanceFactor in averageDistanceFactors:
+        if averageDistanceFactor[1] == building:
+            means.append(calcMeanOfCoords( all_objects[averageDistanceFactor[0]]))
+    return calcMeanOfCoords(means)
+\end{minted}
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=85]{python}
+        # find optimal place
+        progress((num/len(suggestions))+(0*(1/32)), desc=f'Suggesting building a {suggestion} (finding optimal position)...')
+        position = calcOptimalPlaceFor(suggestion)
+\end{minted}
+\caption{Finding the Optimal Place for a New Building}\label{cs:optimalPlaceForNewBuilding}
+\end{listing}
+
+To then find the optimal place (according the the algorithm shown in Figure \ref{fig:newBuilding}), we must iterate over each average distance factor, for which the second parameter is the new building, and find the mean position of the first parameter. The optimal position will then be the mean of those means.
+
+We then must call this function in the actual \pil{def makeSuggestions} function for each of the suggestions.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{7.1}$}\OR\equal{\mtestID}{$T_{7.2}$}\OR\equal{\mtestID}{$T_{7.3}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{7}$ Testing Table (for Code Snippets \ref{cs:meanOfCoordinates} \& \ref{cs:optimalPlaceForNewBuilding})}
+        \end{longtable}
+    }
+}
+\end{center}
+
+The next step is to calculate the new average distances. As we are making use of random sampling, it would not guaranteed that the new building is considered, if we just add it to the list. Therefore, we must add it to the considered objects after we random sample, which will require some extra parameters:
+
+\begin{listing}[H]
+\pil{calc_factors.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=18]{python}
+# finds the average distance between 2 types of objects, A(x,y)
+def averageDistance(x_objects, y_objects, max_x_objects=2000, max_y_objects=2000, must_include_x=None, must_include_y=None):
+\end{minted}
+\pil{calc_factors.py / def averageDistance}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=24]{python}
+    if must_include_x != None: # include the new building when making suggestions
+        x_objects[0] = must_include_x
+\end{minted}
+\pil{calc_factors.py / def averageDistance}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=34]{python}
+        if must_include_y != None: # include the new building when making suggestions
+            y_objects_in_consideration[0] = must_include_y
+\end{minted}
+\caption{Updating the Average Distance Function}\label{cs:updateAverageDistance}
+\end{listing}
+
+Here, in the \pil{def averageDistance} function, the parameters \pil{must_include_x} and \pil{must_include_y} are set to \pil{None} by default (as to not break the previous function calls). If we pass something in however, we want to include it in the calculations. We can do this by setting the first item in the list to be the new building, as each element in those lists are random ones anyway, so it is irrelevant which one we override.
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=88]{python}
+        # calculate average distances
+        progress((num/len(suggestions))+(1*(1/32)), desc=f'Suggesting building a {suggestion} (calculating new average distances)...')
+        allFactors = []
+        for averageDistanceFactor in averageDistanceFactors:
+            # ensure that we include the new building
+            if suggestion == averageDistanceFactor[0]:
+                allFactors.append(averageDistance( all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects, must_include_x=position))
+            elif suggestion == averageDistanceFactor[1]:
+                allFactors.append(averageDistance( all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects, must_include_y=position))
+            else:
+                allFactors.append(averageDistance( all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects))
+\end{minted}
+\caption{Calculating the New Average Distances}\label{cs:newAverageDistances}
+\end{listing}
+
+Then, when we calculate the new average distances, we can pass in the position of the new building as required (either as an \pil{x_object}, \pil{y_object} or neither).
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{57}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:updateAverageDistance} \& \ref{cs:newAverageDistances}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=99]{python}
+        # calculate density factors
+        progress((num/len(suggestions))+(2*(1/32)), desc=f'Suggesting building a {suggestion} (calculating new densities)...')
+        area = calcArea(currentRegion)
+        for densityFactor in densityFactors:
+            # ensure that we include the new building
+            if suggestion == densityFactor:
+                allFactors.append(density(all_objects[densityFactor] + [position], area))
+            else:
+                allFactors.append(density(all_objects[densityFactor], area))
+\end{minted}
+\caption{Calculating the New Densities}\label{cs:newDensities}
+\end{listing}
+
+When calculating the density factors, we must add the position of the new building to the list if and only if the current density factor we are calculating is about the new building. Otherwise, we can just calculate it as normal.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{58}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:newDensities}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=108]{python}
+        # predict HDI
+        progress((num/len(suggestions))+(3*(1/32)), desc=f'Suggesting building a {suggestion} (predicting new HDI)...')
+        inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
+        prediction = round(network.predict(inputLayer).item(0,0), 3)
+\end{minted}
+\caption{Predicting the New HDI}\label{cs:newHDI}
+\end{listing}
+
+Predicting the HDI from these factors is exactly the same again.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{8}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{8}$ Testing Table (for Code Snippet \ref{cs:newHDI})}
+        \end{longtable}
+    }
+}
+\end{center}
+
+We now must return these HDI predictions to the table.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=19]{python}
+currentHDI = -1
+\end{minted}
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=35]{python}
+    global currentHDI
+\end{minted}
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=65]{python}
+    currentHDI = prediction
+\end{minted}
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=115]{python}
+        returnTable.append([suggestion, position, prediction, round(prediction-currentHDI, 3)])
+    return returnTable
+\end{minted}
+\caption{Storing the Current HDI Globally \& Returing a Table}\label{cs:returnTable}
+\end{listing}
+
+One of the columns of the table is the change in HDI. In order to calculate this, we must know the predicted HDI of the region. To do this I have used a \pil{global} variable, \pil{currentHDI}. It is initially set to \pil{-1}, and updated when we make a predicton.
+
+Once we have this, we can create a row of the table, with all of the required information, and append it to the return variable defined at the start of the function (\pil{returnTable}).
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=160]{python}
+    makeSuggestionsButton.click(makeSuggestions, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[suggestionsTable])
+\end{minted}
+\caption{Adding Functionality to the Suggestions Button}\label{cs:functionalityToSuggestionsButton}
+\end{listing}
+
+To make the button actually work, we can add a functionality, to call the \pil{def makeSuggestions} function, passing in the values held by the sliders, and outputting to the table.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{59}$}\AND\equal{\mtestRealOutputs}{JSON Error}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:returnTable} \& \ref{cs:functionalityToSuggestionsButton}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss13.2.png}
+\caption{Invalid Table Format}\label{fig:ss13.2}
+\end{figure}
+
+This returned an error, which made me realise I had forgotten to format the locaiton.
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=115]{python}
+        returnTable.append([suggestion, f'{round(position[0], 7)}°N, {round(position[1], 7)}°E', str(prediction), str(round(prediction-currentHDI, 3))])
+\end{minted}
+\caption{Creating a Readable Format for the Coordinates}\label{cs:readableCoordinates}
+\end{listing}
+
+This is the ammended line for creating a new row in the table, with the coordinate being formatted as a string, stating the latitude (in degrees North) and longitude (in degrees East).
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{59}$}\AND\equal{\mtestRealOutputs}{As Expected}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:readableCoordinates}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss13.3.png}
+\caption{Suggestions Table Successfully Generated}\label{fig:ss13.3}
+\end{figure}
+
+The user may attempt to press the suggest button before predicting the HDI, which should not be able to happen.
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=84]{python}
+    if currentHDI == -1:
+        return [['You have not yet predicted an HDI!', None, None, None]]
+\end{minted}
+\caption{Validating the \pil{def makeSuggestions} function}\label{cs:validateMakeSuggestions}
+\end{listing}
+
+If the HDI has not yet been predicted, the value of the \pil{currentHDI} variable will be \pil{-1}. It is impossible for it to ever be \pil{-1} again, as HDI will be between 0 and 1. Therefore, at the start of the \pil{def makeSuggestions} function, if the user has not predicted the HDI yet, we can return an error message. The message is formatted in this list so that it is in the right format for the table.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss13.4.png}
+\caption{Error Message Shown in Table}\label{fig:ss13.4}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{60}$}\AND\equal{\mtestRealOutputs}{As Expected}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:validateMakeSuggestions}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+The final thing I would like to do in this prototype is letting the user select one of the suggestions locations, and show it on the map.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=11]{python}
+import copy
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=121]{python}
+# place a pin on the map when user clicks the suggestion
+def selectSuggestionsTable(evt: gr.SelectData):
+    cellData = evt.value
+    newMap = copy.deepcopy(foliumMap)
+    if '°' in cellData: # it is a coordinate
+        coordinates = [float(coord[:-2]) for coord in cellData.split(', ')] # convert it to floats, remove formatting
+        folium.Marker(location=coordinates).add_to(newMap)
+        newMap.location=coordinates
+    return newMap
+\end{minted}
+\caption{Placing a Pin on the Map}\label{cs:placePinOnMap}
+\end{listing}
+
+To do this, we can write a function, which takes in some \pil{gr.SelectData}, which is the cell the user has clicked on. We will update the map by changing the value of the \pil{map} component, to have a marker at the new location. To do this, we will be returning a copy of the map, (which must be copied with the \pil{copy} module).
+
+This should only happen if the user selects a cell which has coordinates. This will be the case only when it includes the \pil{'°'} character. If they have selected a valid cell, we can extract the coordinates from the string, and add a marker to the new map. We can also set the map's location to the marker, so that the user doesn't have to scroll around to find it.
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=174]{python}
+    suggestionsTable.select(selectSuggestionsTable, inputs=[], outputs=[map])
+\end{minted}
+\caption{Adding Functionality to the Suggestions Table}\label{cs:functionalityToSuggestionsTable}
+\end{listing}
+
+We call this function, when the \pil{suggestionsTable} is \pil{select}ed, and we want to return to the \pil{map} component.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss13.5.png}
+\caption{Pin Shown on Map for Suggestion}\label{fig:ss13.5}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{61}$}\AND\equal{\mtestRealOutputs}{As Expected}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:placePinOnMap} \& \ref{cs:functionalityToSuggestionsTable}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \subsection{Review}
 \dots

@@ -83,6 +83,20 @@
 \contentsline {listing}{\numberline {3.80}{\ignorespaces Passing in the \mintinline [breaklines, breakafter=_]{python}|max_y_objects|\relax }}{167}{listing.3.80}%
 \contentsline {listing}{\numberline {3.81}{\ignorespaces Adding Sliders\relax }}{168}{listing.3.81}%
 \contentsline {listing}{\numberline {3.82}{\ignorespaces Updating Functionality for Predicting HDI Button\relax }}{169}{listing.3.82}%
+\contentsline {listing}{\numberline {3.83}{\ignorespaces Adding a Suggestions Table\relax }}{171}{listing.3.83}%
+\contentsline {listing}{\numberline {3.84}{\ignorespaces Defining the Suggestions Function\relax }}{172}{listing.3.84}%
+\contentsline {listing}{\numberline {3.85}{\ignorespaces Finding the mean of coordinates\relax }}{173}{listing.3.85}%
+\contentsline {listing}{\numberline {3.86}{\ignorespaces Finding the Optimal Place for a New Building\relax }}{173}{listing.3.86}%
+\contentsline {listing}{\numberline {3.87}{\ignorespaces Updating the Average Distance Function\relax }}{174}{listing.3.87}%
+\contentsline {listing}{\numberline {3.88}{\ignorespaces Calculating the New Average Distances\relax }}{175}{listing.3.88}%
+\contentsline {listing}{\numberline {3.89}{\ignorespaces Calculating the New Densities\relax }}{176}{listing.3.89}%
+\contentsline {listing}{\numberline {3.90}{\ignorespaces Predicting the New HDI\relax }}{176}{listing.3.90}%
+\contentsline {listing}{\numberline {3.91}{\ignorespaces Storing the Current HDI Globally \& Returing a Table\relax }}{177}{listing.3.91}%
+\contentsline {listing}{\numberline {3.92}{\ignorespaces Adding Functionality to the Suggestions Button\relax }}{178}{listing.3.92}%
+\contentsline {listing}{\numberline {3.93}{\ignorespaces Creating a Readable Format for the Coordinates\relax }}{178}{listing.3.93}%
+\contentsline {listing}{\numberline {3.94}{\ignorespaces Validating the \mintinline [breaklines, breakafter=_]{python}|def makeSuggestions| function\relax }}{179}{listing.3.94}%
+\contentsline {listing}{\numberline {3.95}{\ignorespaces Placing a Pin on the Map\relax }}{180}{listing.3.95}%
+\contentsline {listing}{\numberline {3.96}{\ignorespaces Adding Functionality to the Suggestions Table\relax }}{181}{listing.3.96}%
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

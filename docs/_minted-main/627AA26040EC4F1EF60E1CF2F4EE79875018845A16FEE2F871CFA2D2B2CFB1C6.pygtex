@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{c+c1}{\PYGZsh{} predict HDI}
+        \PYG{n}{progress}\PYG{p}{((}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{))}\PYG{o}{+}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{l+m+mi}{32}\PYG{p}{)),} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}Suggesting building a }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{suggestion}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ (predicting new HDI)...\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{inputLayer} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{([[}\PYG{l+m+mi}{100} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{==} \PYG{k+kc}{None} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{10} \PYG{k}{if} \PYG{n}{index} \PYG{o}{\PYGZlt{}=} \PYG{l+m+mi}{11} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)]} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{allFactors}\PYG{p}{)])}
+        \PYG{n}{prediction} \PYG{o}{=} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{network}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{inputLayer}\PYG{p}{)}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{),} \PYG{l+m+mi}{3}\PYG{p}{)}
+\end{Verbatim}

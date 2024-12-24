@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{n}{returnTable}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{suggestion}\PYG{p}{,} \PYG{n}{position}\PYG{p}{,} \PYG{n}{prediction}\PYG{p}{,} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{prediction}\PYG{o}{\PYGZhy{}}\PYG{n}{currentHDI}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)])}
+    \PYG{k}{return} \PYG{n}{returnTable}
+\end{Verbatim}
