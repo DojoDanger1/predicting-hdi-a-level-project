@@ -6421,7 +6421,24 @@ I also have an initial user interface, which allows for the user to draw any reg
 However, the suggestions made often do not make any change to the predicted HDI, so in the next milestone, I plan to come up with a better method for generating suggestions.
 
 \section{Feedback from Stakeholders}
-\dots
+In order for my stakeholders to give feedback, I need to be able to share this application with them. Gradio again makes this very easy, as all I have to do is pass \pil{share=True} into \pil{app.launch()} (in Code Snippet \ref{cs:gradioFramework}), and a public link (as opposed to the localhost IP adress I have been using) will be generated.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{shareTrue.png}
+\caption{Output for when we set \pil{share=True}}\label{fig:shareTrue}
+\end{figure}
+
+I then shared this link with my stakeholders, and asked for general feeback about the experience of using the app, and what could be better. (Again, coloured quotes will represent each stakeholder, as shown in the Stakeholders Table (Table \ref{table:stakeholders})).
+
+\begin{flushright}
+\textit{\textcolor{Sepia}{``I thought that the user interface had a very modern and clean design, which made it pretty easy to use. However, the fact that I had to export the map and then upload it made it a little harder to understand. The processes were quite slow, but in the end made fairly accurate predictions. The main thing that needs improving is the suggestions, as all of them returned no change in HDI.''}} \\
+\textit{\textcolor{Blue}{``I did not think that it was very usable, and it took me a bit to figure out the part where you export and upload the region. I think it would be helpful to add a help screen, which gives step by step instructions on how to use the various features, similar to how the sliders are labelled. While they are slightly innacurate, the predictions are still very impressive, considering the limited data I inputted.''}} \\
+\textit{\textcolor{olive}{``My first impressions of the user interface were pretty good, as it looked quite professional. The thing I would improve most is the time taken to make predictios, but I understand not much more can be done about it. I therefore think it would be a good idea to let the user have the option to manually enter these factors, in case they have problems (such as a poor internet connection).''}} \\
+\textit{\textcolor{OliveGreen}{``Overall, I thought that the experience of using this app was pretty good, except for the fact that I ran into an error when predicting the HDI. I was told that this was caused by timing out with the Overpass Turbo server, and that I just had to try again, which then worked. I think that the user should be made aware of this, but otherwise everything went well.''}}
+\end{flushright}
+
+Overall, it seems like the main thing I need to improve from this prototype is the quality of suggestions. The stakeholders also gave some ideas on what to further add to the next prototype, such as a help menu and a way to enter factors manually.
 
 \chapter{Design of the \nth{2} Prototype}
 \section{Structure Diagram}
