@@ -6442,9 +6442,48 @@ Overall, it seems like the main thing I need to improve from this prototype is t
 
 \chapter{Design of the \nth{2} Prototype}
 \section{Structure Diagram}
-\dots
+\begin{figure}[H]
+\centering
+\begin{forest}
+forked edges,
+for tree={draw,align=center,edge={-latex}},where level=0{}{folder,grow'=0}
+[Predicting HDI App,fill=red!60
+    [Authentication System\\(Section \ref{sec:authenticationSystem}),fill=orange!60
+        [Store Data,fill=yellow!60]
+        [Encryption,fill=yellow!60
+            [Hashing,fill=green!60]
+            [Salting,fill=green!60]
+        ]
+        [Creating an Account,fill=yellow!60]
+        [Logging In,fill=yellow!60]
+    ]
+    [User Interface (Section \ref{sec:ui2}),fill=orange!60
+        [Manually Enter Factors,fill=yellow!60]
+        [Ranking Suggested Changes\\to Improve HDI,fill=yellow!60
+            [Improve Algorithm to\\Generate Suggestions,fill=green!60]
+            [Quicksort Results,fill=green!60]
+        ]
+        [Heatmap of how much each\\factor affects the others,fill=yellow!60]
+        [Comparison to\\other countries,fill=yellow!60]
+        [Help Menu,fill=yellow!60]
+    ]
+    [Everything in the\\First Structure Diagram\\(Figure \ref{fig:structDiagram}),fill=orange!60]
+]
+\end{forest}
+\begin{tikzpicture}
+    \draw[draw=white] (-4,1) -- (4,1);
+    \draw[draw=black, fill=red!60] (-4,0.5) rectangle (-2,0);
+    \draw[draw=black, fill=orange!60] (-2,0.5) rectangle (0,0);
+    \draw[draw=black, fill=yellow!60] (0,0.5) rectangle (2,0);
+    \draw[draw=black, fill=green!60] (2,0.5) rectangle (4,0);
+    \draw[draw=black, latex-latex] (-4,-0.25) -- (4,-0.25);
+    \node[black, anchor=north west] at (-4,-0.4) {Bigger Problem};
+    \node[black, anchor=north east] at (4,-0.4) {Smaller Problem};
+\end{tikzpicture}
+\caption{Structure Diagram (\nth{2} prototype)}\label{fig:structDiagram2}
+\end{figure}
 
-\section{Authentication System}
+\section{Authentication System}\label{sec:authenticationSystem}
 \subsection{Storing Data \& Encryption}
 \dots
 
@@ -6457,7 +6496,7 @@ Overall, it seems like the main thing I need to improve from this prototype is t
 \subsection{List of Key Variables}
 \dots
 
-\section{User Interface}
+\section{User Interface}\label{sec:ui2}
 \subsection{Interface Sketch}
 \dots
 
