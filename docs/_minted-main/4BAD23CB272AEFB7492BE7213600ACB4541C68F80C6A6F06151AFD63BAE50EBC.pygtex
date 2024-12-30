@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{coords} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{nwr} \PYG{o+ow}{in} \PYG{n}{data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}elements\PYGZsq{}}\PYG{p}{]:}
+        \PYG{k}{if} \PYG{n}{nwr}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}type\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}node\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{coords}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{nwr}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}lat\PYGZsq{}}\PYG{p}{],} \PYG{n}{nwr}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}lon\PYGZsq{}}\PYG{p}{]))}
+        \PYG{k}{else}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} it is a way or relation}
+            \PYG{n}{coords}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{nwr}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}center\PYGZsq{}}\PYG{p}{][}\PYG{l+s+s1}{\PYGZsq{}lat\PYGZsq{}}\PYG{p}{],} \PYG{n}{nwr}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}center\PYGZsq{}}\PYG{p}{][}\PYG{l+s+s1}{\PYGZsq{}lon\PYGZsq{}}\PYG{p}{]))}
+
+    \PYG{k}{return} \PYG{n}{coords}
+\end{Verbatim}

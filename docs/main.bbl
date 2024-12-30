@@ -3,8 +3,7 @@
 \bibitem{existingSol1}
 sandeeoppondru.
 \newblock human-development-index.
-\newblock \url{https://github.com/sandeepponduru/human-development-index},
-  2023.
+\newblock \url{https://github.com/sandeepponduru/human-development-index}, 2023.
 
 \bibitem{existingSol2}
 julieanneco.
@@ -29,9 +28,7 @@ Global~Data Lab.
 \bibitem{3blue1brown}
 Grant Sanderson.
 \newblock Neural networks -- chapters 1-4.
-\newblock
-  \url{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi},
-  2017.
+\newblock \url{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}, 2017.
 
 \bibitem{backpropogation}
 Micheal Nielsen.
@@ -41,22 +38,16 @@ Micheal Nielsen.
 \bibitem{stackOverflowConvertShapefile}
 alexisdevarennes.
 \newblock Shapefile into geojson conversion python 3.
-\newblock
-  \url{https://stackoverflow.com/questions/43119040/shapefile-into-geojson-conversion-python-3},
-  2020.
+\newblock \url{https://stackoverflow.com/questions/43119040/shapefile-into-geojson-conversion-python-3}, 2020.
 
 \bibitem{mnielsenGithub}
 Micheal Nielsen.
 \newblock neural-networks-and-deep-learning.
-\newblock
-  \url{https://github.com/unexploredtest/neural-networks-and-deep-learning},
-  2022.
+\newblock \url{https://github.com/unexploredtest/neural-networks-and-deep-learning}, 2022.
 
 \bibitem{geeksforGeeksParentDir}
 GeeksforGeeks.
 \newblock Python - import from parent directory.
-\newblock
-  \url{https://www.geeksforgeeks.org/python-import-from-parent-directory/},
-  2024.
+\newblock \url{https://www.geeksforgeeks.org/python-import-from-parent-directory/}, 2024.
 
 \end{thebibliography}

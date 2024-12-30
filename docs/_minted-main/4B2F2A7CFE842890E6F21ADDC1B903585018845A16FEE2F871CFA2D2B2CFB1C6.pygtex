@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{k+kn}{from} \PYG{n+nn}{calc\PYGZus{}factors} \PYG{k+kn}{import} \PYG{n}{averageDistance}\PYG{p}{,} \PYG{n}{calcArea}\PYG{p}{,} \PYG{n}{density}
-\end{Verbatim}

@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-    \PYG{n}{bounding\PYGZus{}coords} \PYG{o}{=} \PYG{p}{[(}\PYG{n}{latitude}\PYG{p}{,} \PYG{p}{(}\PYG{n}{longitude} \PYG{o}{+} \PYG{l+m+mi}{180}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{360} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{180}\PYG{p}{)} \PYG{k}{for} \PYG{n}{latitude}\PYG{p}{,} \PYG{n}{longitude} \PYG{o+ow}{in} \PYG{n}{bounding\PYGZus{}coords}\PYG{p}{]}
-\end{Verbatim}

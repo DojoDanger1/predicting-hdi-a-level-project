@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{k}{def} \PYG{n+nf}{feedforward}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{a0}\PYG{p}{)}
-\end{Verbatim}

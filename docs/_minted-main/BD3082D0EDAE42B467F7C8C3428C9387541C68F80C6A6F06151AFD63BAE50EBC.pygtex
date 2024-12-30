@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{from} \PYG{n+nn}{neural\PYGZus{}network} \PYG{k+kn}{import} \PYG{n}{MultilayerPerceptron}
+
+\PYG{c+c1}{\PYGZsh{} initialise neural network}
+\PYG{n}{network} \PYG{o}{=} \PYG{n}{MultilayerPerceptron}\PYG{p}{([}\PYG{l+m+mi}{24}\PYG{p}{,} \PYG{l+m+mi}{18}\PYG{p}{,} \PYG{l+m+mi}{12}\PYG{p}{,} \PYG{l+m+mi}{6}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{network}\PYG{o}{.}\PYG{n}{load\PYGZus{}model}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}models/hdi.pkl\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

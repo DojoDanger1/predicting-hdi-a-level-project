@@ -21,7 +21,7 @@
 \usepackage{pgfplotstable}
 \usepackage{tikz}
 \usepackage{tikz-3dplot}
-\usepackage{caption}
+\usepackage[compatibility=false]{caption}
 \usepackage[edges]{forest}
 \usepackage{neuralnetwork}
 \usepackage{csvsimple}
@@ -74,7 +74,7 @@
   \my@chapter}
 \makeatother
 
-\newcommand{\pil}[1]{\mintinline[breaklines, breakafter=_]{python}|#1|}
+\newcommand{\pil}[1]{\protect\mintinline[breaklines, breakafter=_]{python}|#1|}
 
 \title{A-Level Computer Science Programming Project}
 \author{Luke Williams, Candidate 2276 \\ The Cherwell School, Centre 62309 \\ OCR Computer Science A-Level --- H446}
@@ -529,7 +529,7 @@ All of the above (except for the Multilayer Perceptron) will be implemented and 
     \item \textbf{Secondary Storage} -- The pre-trained model must be stored in secondary storage so that it can be called upon at any time.
     \item (For me only) \textbf{Graphical Processing Unit} -- While no complex graphics need to be processed, a GPU would decrease the time taken for the model to be trained, as it would involve lots of the same type of calculation (matrix multiplication) to be carried out simultaneously.
 \end{itemize}
-I will be using a Mac Pro, 2.66GHz Quad-Core Intel Xeon Processor to develop this app.
+I will be using a Mac Mini, M4 10-Core Chip to develop this app.
 
 \subsection{Software Requirements}
 \begin{itemize}
@@ -543,7 +543,7 @@ I will be using a Mac Pro, 2.66GHz Quad-Core Intel Xeon Processor to develop thi
     \end{itemize}
     \item \textbf{Web Browser} -- The Gradio GUI must be accessed through a web browser. I need to be able to test the code, and the user needs to be able to use it. The user will only require a web browser as I plan to deploy this app once I have finished development.
 \end{itemize}
-I will be using macOS Big Sur 11.7.9 to develop this app.
+I will be using macOS Sequoia 15.1 to develop this app.
 
 \section{Success Criteria}
 \begin{center}
@@ -5261,7 +5261,7 @@ from gradio_folium import Folium
 with gr.Blocks() as app:
     map = Folium(value=foliumMap)
 \end{minted}
-\caption{Adding the Map to the GUI}\label{cs:adjustParameters}
+\caption{Adding the Map to the GUI}\label{cs:addMapToGUI}
 \end{listing}
 
 To add this to the gradio interface, we must first import the \pil{Folium} element from the \pil{gradio_folium} library, and then add this to our \pil{Blocks} interface. If we save this to a variable, \pil{map}, we will be able to access and update it. We also have zoom in and out buttons in the top left as well.
@@ -5296,7 +5296,7 @@ Users can also use the scroll wheel to zoom in and out of the map if they wish. 
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{Testing Table for Code Snippets \ref{cs:initialiseDrawingMap} \& \ref{cs:adjustParameters}}
+        \caption{Testing Table for Code Snippets \ref{cs:initialiseDrawingMap} \& \ref{cs:addMapToGUI}}
         \end{longtable}
     }
 }
@@ -5348,7 +5348,7 @@ Here, the \pil{list} \pil{locations} specifies the latitude/longitude coordinate
 
 Now I need to retrieve the region the user draws on the map, in order to process it and make predictions. I did not know how to do this, so I began to research the problem.
 
-After looking through many forums and StackOverflow pages and even asking ChatGPT, it seems that accessing the region drawn in the folium map dynamically is impossible.
+After looking through many forums and StackOverflow pages, it seems that accessing the region drawn in the folium map dynamically is impossible.
 
 \begin{listing}[H]
 \pil{app.py}
@@ -6449,13 +6449,15 @@ forked edges,
 for tree={draw,align=center,edge={-latex}},where level=0{}{folder,grow'=0}
 [Predicting HDI App,fill=red!60
     [Authentication System\\(Section \ref{sec:authenticationSystem}),fill=orange!60
-        [Store Data,fill=yellow!60]
-        [Encryption,fill=yellow!60
+        [Storing Data in a Database,fill=yellow!60]
+        [Encryption (Section \ref{sec:encryption}),fill=yellow!60
             [Hashing,fill=green!60]
             [Salting,fill=green!60]
         ]
-        [Creating an Account,fill=yellow!60]
-        [Logging In,fill=yellow!60]
+        [Account Management\\(Section \ref{sec:accountManagement}),fill=yellow!60
+            [Creating an Account,fill=green!60]
+            [Logging In,fill=green!60]
+        ]
     ]
     [User Interface (Section \ref{sec:ui2}),fill=orange!60
         [Manually Enter Factors,fill=yellow!60]
@@ -6483,21 +6485,189 @@ for tree={draw,align=center,edge={-latex}},where level=0{}{folder,grow'=0}
 \caption{Structure Diagram (\nth{2} prototype)}\label{fig:structDiagram2}
 \end{figure}
 
+Figure \ref{fig:structDiagram2} shows this project's structure, breaking down the larger problem of the entire app, into a series of smaller problems which are easier to consider. Some of the problems listed above were present in the first structure diagram, but they have been added to this one as well as I have not yet implemented them. I will go into more detail for each of the smaller problems above (further decomposing them), in the approximate order I would be implementing them.
+
 \section{Authentication System}\label{sec:authenticationSystem}
-\subsection{Storing Data \& Encryption}
-\dots
+\subsection{Storing Data \& Encryption}\label{sec:encryption}
+In the second prototype, users will be able to create and log into an account, which they can use to save regions they have predicted. I will be using MongoDB to store this data, which allows for \pil{json} objects to be stored in ``collections'' (tables).
 
-\subsection{Creating an Account \& Logging In}
-\dots
+Most of the data I will be entering can just be stored as it is, but the user's password must be encrypted, to ensure security. One thing we can do to encrypt the password is to pass it through a hashing function.
 
-\subsection{Saving Regions}
-\dots
+Hashing functions (such as \pil{sha256} or \pil{MD5}) take in an input and generate a unique, fixed-length key as an output, obscuring the original meaning. Hashing functions are also impossible to reverse-engineer, meaning that if a hacker gets a hold of hashed passwords, they will not be able to find the original password.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % example 1
+    \node[anchor=east] at (1,0) {\texttt{password123}};
+    \draw[-latex] (1,0) -- (5,0);
+    \node[anchor=west] at (5,0) {\texttt{03f1fc82a00bdd33ec14f43e09f074f3}};
+    \node[draw, text width=2cm, align=center, fill=white] at (3,0) {Hashing Function};
+    % example 2
+    \node[anchor=east] at (1,-2) {\texttt{Password123}};
+    \draw[-latex] (1,-2) -- (5,-2);
+    \node[anchor=west] at (5,-2) {\texttt{466883e0cf2a2662a9365d94faa6f41d}};
+    \node[draw, text width=2cm, align=center, fill=white] at (3,-2) {Hashing Function};
+\end{tikzpicture}
+\caption{Hashing Examples}
+\end{figure}
+
+As the hashed output is based on the entire input, changing the input only slightly (for example, ``p'' to ``P'') will have a big effect on the output, which makes it harder for hackers to look for patterns.
+
+However, humans are often predictable, and many of them use the same, easy to guess, password (even I have done it in the example). Therefore, if a hacker has a list of common passwords, they can pass them through the hashing function, and compare them against the database. Alternatively, they could use a ``rainbow table'', which is a table of common passwords, along with the hashed versions, which means they don't need to compute any hashes. 
+
+To avoid this, we can add salt to the passwords, before we hash them. This is where we append a random set of characters to the beginning of the password, before hashing. The salt (random characters) will be stored alongside the password, so that we can reconstruct the hashed password.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % example 1
+    \node[anchor=east] at (1,0) {\texttt{password123}};
+    \draw[] (2,1.5) -- (2,0);
+    \draw[-latex] (1,0) -- (3,0);
+    \node[anchor=west] at (3,0) {\texttt{d2876c09password123}};
+    \draw[] (5,-0.25) -- (5,-1.5);
+    \draw[-latex] (5,-1.5) -- (7,-1.5);
+    \node[anchor=west] at (7,-1.5) {\texttt{3acad4987675bf41b6a969bf977b78fa}};
+    \node[draw, text width=3cm, align=center, fill=white] at (2,1.5) {Generate Random Salt};
+    \node[draw, text width=2cm, align=center, fill=white] at (5,-1.5) {Hashing Function};
+    % example 2
+    \node[anchor=east] at (1,-5) {\texttt{password123}};
+    \draw[] (2,-3.5) -- (2,-5);
+    \draw[-latex] (1,-5) -- (3,-5);
+    \node[anchor=west] at (3,-5) {\texttt{49b38425password123}};
+    \draw[] (5,-5.25) -- (5,-6.5);
+    \draw[-latex] (5,-6.5) -- (7,-6.5);
+    \node[anchor=west] at (7,-6.5) {\texttt{1da04da1ed741115dafd1500b78a41e5}};
+    \node[draw, text width=3cm, align=center, fill=white] at (2,-3.5) {Generate Random Salt};
+    \node[draw, text width=2cm, align=center, fill=white] at (5,-6.5) {Hashing Function};
+\end{tikzpicture}
+\caption{Salting Examples}
+\end{figure}
+
+In the first example, what would be stored in the database would be \texttt{d2876c09} for the salt and \texttt{3acad4987675bf41b6a969bf977b78fa} for the hashed password.
+
+This protects agains the rainbow tables, as the hackers will then have to add the salt to each of their common passwords, and then run the hashing function, instead of just using a table. However, we should also attempt to protect against doing that, as it is still pretty easy.
+
+One way to do this, is to ensure that we use a slow hashing algorithm. Many high-end GPUs can compute billions of hashes per second, if we don't use a slow hashing algorithm, but can only compute thousands of them if we do. The slow hashing algorithm I will be using is called \pil{bcrypt}.
+
+\subsection{Account Management}\label{sec:accountManagement}
+\subsubsection{Creating an Account}
+The first thing the user must do when creating an account is select a username, but we must check that the username they select does not already exist. If it doesn't, they can write their password, validating with double entry validation. If they match, the user can submit and the password will be salted and hashed. The username, the hashed password, and the salt will be stored in the MongoDB.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (username) [fInputOutput, below of=start] {Input Username};
+    \node (usernameExists) [fDecision, below of=username, yshift=-1cm] {Does Username already exist?};
+    \node (tryAgain) [fProcess, right of=usernameExists, xshift=5cm] {Try Again};
+    \node (password) [fInputOutput, yshift=-1cm, below of=usernameExists] {Input Password, with double entry validation};
+    \node (hashPassword) [fProcess, below of=password] {Salt \& Hash the Password};
+    \node (storeDB) [fProcess, below of=hashPassword] {Store the Username, Hashed Password \& Salt in the MongoDB};
+    \node (stop) [fStartStop, below of=storeDB] {Stop};
+    
+    \draw [fArrow] (start) -- (username);
+    \draw [fArrow] (username) -- (usernameExists);
+    \draw [fArrow] (usernameExists) -- node[anchor=east] {no} (password);
+    \draw [fArrow] (usernameExists) -- node[anchor=south] {yes} (tryAgain);
+    \draw [fArrow] (tryAgain) |- (username);
+    \draw [fArrow] (password) -- (hashPassword);
+    \draw [fArrow] (hashPassword) -- (storeDB);
+    \draw [fArrow] (storeDB) -- (stop);
+\end{tikzpicture}
+\caption{Creating an Account Flowchart}
+\end{figure}
+
+\subsubsection{Logging in}
+When logging in to an existing account, the user will enter their username and password. We must check if the username exists, and if it does, we can retrieve the salt, add it to the password and hash it, and compare that against the hashed password in the database. If it matches, we can grant access, otherwise they can try again.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (username) [fInputOutput, below of=start] {Input Username};
+    \node (usernameExists) [fDecision, below of=username, yshift=-1cm] {Does the Username exist?};
+    \node (tryAgain) [fProcess, right of=usernameExists, xshift=5cm] {Try Again};
+    \node (retrieveSalt) [fProcess, yshift=-1cm, below of=usernameExists] {Retrieve the associated salt from the Database};
+    \node (password) [fInputOutput, below of=retrieveSalt] {Input Password};
+    \node (hashPassword) [fProcess, below of=password] {Salt \& Hash the Password Guess};
+    \node (correctGuess) [fDecision, below of=hashPassword, yshift=-1cm] {Does the Hashed Password Guess match?};
+    \node (tryAgain2) [fProcess, right of=correctGuess, xshift=5cm] {Try Again};
+    \node (grantAccess) [fProcess, below of=correctGuess, yshift=-1.5cm] {Grant Access to the Account};
+    \node (stop) [fStartStop, below of=grantAccess] {Stop};
+    
+    \draw [fArrow] (start) -- (username);
+    \draw [fArrow] (username) -- (usernameExists);
+    \draw [fArrow] (usernameExists) -- node[anchor=east] {yes} (retrieveSalt);
+    \draw [fArrow] (usernameExists) -- node[anchor=south] {no} (tryAgain);
+    \draw [fArrow] (tryAgain) |- (username);
+    \draw [fArrow] (retrieveSalt) -- (password);
+    \draw [fArrow] (password) -- (hashPassword);
+    \draw [fArrow] (hashPassword) -- (correctGuess);
+    \draw [fArrow] (correctGuess) -- node[anchor=east] {yes} (grantAccess);
+    \draw [fArrow] (correctGuess) -- node[anchor=south] {no} (tryAgain2);
+    \draw [fArrow] (tryAgain2) |- (password);
+    \draw [fArrow] (grantAccess) -- (stop);
+\end{tikzpicture}
+\caption{Logging In Flowchart}
+\end{figure}
 
 \subsection{List of Key Variables}
-\dots
+\subsubsection{Variables in Creating an Account}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{username} & \pil{str} & Stores what the user entered as their username & Must be checked against the database to see if it exists already \\ 
+    \hline
+    \pil{password} & \pil{str} & Stores what the user entered as their password & All accounts should have a password for authentication \\ 
+    \hline
+    \pil{password2} & \pil{str} & Stores what the user enetered as their password, in the second field & This ensures double entry validation \\ 
+    \hline
+    \pil{salt} & \pil{str} (hex) & Stores the random characters that will be added to the password & The salt must be added to the database with the password \\ 
+    \hline
+    \pil{hashed_password} & \pil{str} (hex) & Stores the password after it has been salted and hashed & This is what will be stored in the database for us to check against \\ 
+    \hline
+\caption{List of Key Variables in Creating an Account}
+\end{longtable}
+\end{center}
+
+\subsubsection{Variables in Logging In}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{username} & \pil{str} & Stores what the user entered as their username & Must be checked against the database to see if it exists \\ 
+    \hline
+    \pil{salt} & \pil{str} (hex) & Stores the random characters that were added to the password & Retrieved from the database, to get the same hash \\ 
+    \hline
+    \pil{password} & \pil{str} & Stores what the user entered as their password & All accounts should have a password for authentication \\ 
+    \hline
+    \pil{hashed_password} & \pil{str} (hex) & Stores the salted and hashed version of what the user entered as their password & Used to check if what they have entered is correct \\ 
+    \hline
+    \pil{correct_hashed_password} & \pil{str} (hex) & Stores the correct salted and hashed password & Used to check against the password guess, if they match we can grant access to the account \\ 
+    \hline
+\caption{List of Key Variables in Logging In}
+\end{longtable}
+\end{center}
+
+\subsubsection{Other Variables}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{database} & \pil{object} & Stores the database from MongoDB & We must be able to retrieve values from it, in order to authenticate the user \\ 
+    \hline
+\caption{List of Other Key Variables in Authentication System}
+\end{longtable}
+\end{center}
 
 \section{User Interface}\label{sec:ui2}
-\subsection{Interface Sketch}
+\subsection{Interface Sketch -- A Tabbed Interface}
 \dots
 
 \subsection{Input Validation}
@@ -6509,13 +6679,10 @@ for tree={draw,align=center,edge={-latex}},where level=0{}{folder,grow'=0}
 \subsection{Analysis of how much Each Factor affects the Others}
 \dots
 
-\subsection{Manually Entering Factors}
-\dots
-
 \subsection{Comparison to Similar Regions}
 \dots
 
-\subsection{Improved Algorithm for Finding an Optimal Place for a New Building}
+\subsection{Improved Algorithm for Suggestions}
 \dots
 
 \subsection{List of Key Variables}

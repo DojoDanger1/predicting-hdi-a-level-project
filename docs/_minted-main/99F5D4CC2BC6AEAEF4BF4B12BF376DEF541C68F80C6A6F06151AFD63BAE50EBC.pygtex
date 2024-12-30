@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} find the main bit of the region (if it has multiple)}
+    \PYG{n}{shapes} \PYG{o}{=} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}geometry\PYGZsq{}}\PYG{p}{][}\PYG{l+s+s1}{\PYGZsq{}coordinates\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{lengths} \PYG{o}{=} \PYG{p}{[}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{polygon}\PYG{p}{)} \PYG{k}{for} \PYG{n}{polygon} \PYG{o+ow}{in} \PYG{n}{shapes}\PYG{p}{]}
+    \PYG{n}{mainShape} \PYG{o}{=} \PYG{n}{shapes}\PYG{p}{[}\PYG{n}{lengths}\PYG{o}{.}\PYG{n}{index}\PYG{p}{(}\PYG{n+nb}{max}\PYG{p}{(}\PYG{n}{lengths}\PYG{p}{))]}
+    \PYG{n}{mainShape} \PYG{o}{=} \PYG{p}{[}\PYG{n}{coordinate}\PYG{p}{[::}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{k}{for} \PYG{n}{coordinate} \PYG{o+ow}{in} \PYG{n}{mainShape}\PYG{p}{]}
+\end{Verbatim}

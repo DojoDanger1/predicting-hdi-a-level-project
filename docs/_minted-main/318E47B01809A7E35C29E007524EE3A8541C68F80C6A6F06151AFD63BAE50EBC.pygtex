@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} save data to a file}
+\PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}data/digits.pkl\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}wb\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{file}\PYG{p}{:}
+    \PYG{n}{pickle}\PYG{o}{.}\PYG{n}{dump}\PYG{p}{(\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}training\PYGZsq{}}\PYG{p}{:} \PYG{n}{training\PYGZus{}data}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}testing\PYGZsq{}}\PYG{p}{:} \PYG{n}{test\PYGZus{}data}\PYG{p}{\PYGZcb{},} \PYG{n}{file}\PYG{p}{)}
+\end{Verbatim}

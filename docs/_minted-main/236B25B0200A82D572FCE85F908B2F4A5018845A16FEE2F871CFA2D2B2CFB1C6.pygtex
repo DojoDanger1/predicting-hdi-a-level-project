@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{c+c1}{\PYGZsh{} train the network}
-\PYG{n}{network} \PYG{o}{=} \PYG{n}{MultilayerPerceptron}\PYG{p}{([}\PYG{l+m+mi}{24}\PYG{p}{,} \PYG{l+m+mi}{18}\PYG{p}{,} \PYG{l+m+mi}{12}\PYG{p}{,} \PYG{l+m+mi}{6}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{])}
-\PYG{n}{network}\PYG{o}{.}\PYG{n}{train}\PYG{p}{(}\PYG{n}{training\PYGZus{}data}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{50}\PYG{p}{,} \PYG{l+m+mf}{0.2}\PYG{p}{)}
-\PYG{n}{network}\PYG{o}{.}\PYG{n}{save\PYGZus{}model}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}hdi\PYGZhy{}temp\PYGZsq{}}\PYG{p}{)}
-\end{Verbatim}

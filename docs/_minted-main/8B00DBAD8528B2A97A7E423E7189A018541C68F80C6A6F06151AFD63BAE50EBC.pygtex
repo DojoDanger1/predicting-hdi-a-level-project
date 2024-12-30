@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} iterate over each x\PYGZus{}object, and find the closest y\PYGZus{}object}
+    \PYG{n}{min\PYGZus{}dists} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{x\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{x\PYGZus{}objects}\PYG{p}{:}
+        \PYG{n}{dist\PYGZus{}to\PYGZus{}ys} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{k}{for} \PYG{n}{y\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{y\PYGZus{}objects}\PYG{p}{:}
+            \PYG{n}{dist\PYGZus{}to\PYGZus{}ys}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{distBetween2Points}\PYG{p}{(}\PYG{n}{x\PYGZus{}object}\PYG{p}{,} \PYG{n}{y\PYGZus{}object}\PYG{p}{))}
+        \PYG{n}{min\PYGZus{}dists}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{min}\PYG{p}{(}\PYG{n}{dist\PYGZus{}to\PYGZus{}ys}\PYG{p}{))} \PYG{c+c1}{\PYGZsh{} the closest y\PYGZus{}object}
+    \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{min\PYGZus{}dists}\PYG{p}{)}
+\end{Verbatim}

@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{data\PYGZus{}processing} \PYG{o}{/} \PYG{n}{get\PYGZus{}osm\PYGZus{}data}\PYG{o}{.}\PYG{n}{py} \PYG{o}{/} \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}osm\PYGZus{}data}
-\end{Verbatim}

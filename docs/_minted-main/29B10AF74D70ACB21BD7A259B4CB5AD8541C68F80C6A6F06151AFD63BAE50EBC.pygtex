@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} finds all the factors for a given region}
+\PYG{k}{def} \PYG{n+nf}{getAllFactors}\PYG{p}{(}\PYG{n}{region}\PYG{p}{):}
+    \PYG{c+c1}{\PYGZsh{} retrieve all relevant osm data}
+    \PYG{n}{object\PYGZus{}types} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}house\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}school\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}hospital\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}pharmacy\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}restaurant\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}place\PYGZus{}of\PYGZus{}worship\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}bank\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}slot\PYGZus{}machines\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}fast\PYGZus{}food\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}toilets\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}police\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}university\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}library\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}post\PYGZus{}box\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}vending\PYGZus{}machine\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}bench\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}tree\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{all\PYGZus{}objects} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+    \PYG{k}{for} \PYG{n}{object\PYGZus{}type} \PYG{o+ow}{in} \PYG{n}{object\PYGZus{}types}\PYG{p}{:}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}getting }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{object\PYGZus{}type}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ data...\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+        \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{object\PYGZus{}type}\PYG{p}{]} \PYG{o}{=} \PYG{n}{get\PYGZus{}osm\PYGZus{}data}\PYG{p}{(}\PYG{n}{object\PYGZus{}type}\PYG{p}{,} \PYG{n}{region}\PYG{p}{)}
+\end{Verbatim}

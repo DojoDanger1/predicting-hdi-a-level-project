@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{c+c1}{\PYGZsh{} structure of the UI}
-\PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Blocks}\PYG{p}{()} \PYG{k}{as} \PYG{n}{app}\PYG{p}{:}
-    \PYG{n+nb}{map} \PYG{o}{=} \PYG{n}{Folium}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{n}{foliumMap}\PYG{p}{)}
-\end{Verbatim}

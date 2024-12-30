@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} finds the average distance between 2 types of objects, A(x,y)}
+\PYG{k}{def} \PYG{n+nf}{averageDistance}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{o}{=}\PYG{l+m+mi}{2000}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{o}{=}\PYG{l+m+mi}{2000}\PYG{p}{,} \PYG{n}{must\PYGZus{}include\PYGZus{}x}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{,} \PYG{n}{must\PYGZus{}include\PYGZus{}y}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{):}
+\end{Verbatim}

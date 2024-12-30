@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{densityFactors} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}school\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}hospital\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}pharmacy\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}police\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}library\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}toilets\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}restaurant\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}place\PYGZus{}of\PYGZus{}worship\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}post\PYGZus{}box\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}vending\PYGZus{}machine\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}bench\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}tree\PYGZsq{}}\PYG{p}{]}
+\end{Verbatim}

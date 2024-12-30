@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-    \PYG{n}{log} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Log Messages\PYGZsq{}}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
-\end{Verbatim}

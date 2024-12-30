@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-        \PYG{n}{La} \PYG{o}{=} \PYG{n}{deg2rad}\PYG{p}{(}\PYG{n}{coord}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
-        \PYG{n}{Lo} \PYG{o}{=} \PYG{n}{deg2rad}\PYG{p}{(}\PYG{n}{coord}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])}
-\end{Verbatim}

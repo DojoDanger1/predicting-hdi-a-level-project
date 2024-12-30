@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} run the feedforward algorithm on a set of input data and return the result}
+    \PYG{k}{def} \PYG{n+nf}{predict}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{input\PYGZus{}data}\PYG{p}{):}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{n}{input\PYGZus{}data}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{feedforward}\PYG{p}{()}
+        \PYG{k}{return} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations}\PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{L}\PYG{p}{]}
+\end{Verbatim}

@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} finds the average distance between 2 types of objects, A(x,y)}
+\PYG{k}{def} \PYG{n+nf}{averageDistance}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{o}{=}\PYG{l+m+mi}{500}\PYG{p}{):}
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0} \PYG{o+ow}{or} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{y\PYGZus{}objects}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} the average distance is undefined}
+        \PYG{k}{return} \PYG{k+kc}{None}
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} random sample}
+        \PYG{n}{x\PYGZus{}objects} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{sample}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{)}
+\end{Verbatim}

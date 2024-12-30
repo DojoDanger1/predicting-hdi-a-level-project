@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} make suggestions from a prediction}
+\PYG{k}{def} \PYG{n+nf}{makeSuggestions}\PYG{p}{(}\PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{progress}\PYG{o}{=}\PYG{n}{gr}\PYG{o}{.}\PYG{n}{Progress}\PYG{p}{()):}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{n}{suggestions} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}school\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}hospital\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}place\PYGZus{}of\PYGZus{}worship\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}police\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}restaurant\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}slot\PYGZus{}machines\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}library\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}pharmacy\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{returnTable} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{num}\PYG{p}{,} \PYG{n}{suggestion} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{):}
+        \PYG{n}{progress}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{),} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}Suggesting building a }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{suggestion}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{...\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

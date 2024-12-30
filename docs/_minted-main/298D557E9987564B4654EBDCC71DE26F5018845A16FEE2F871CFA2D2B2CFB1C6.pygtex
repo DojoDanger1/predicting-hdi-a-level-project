@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-        \PYG{c+c1}{\PYGZsh{} convert it to the right format}
-        \PYG{n}{hdiData}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(\PYGZob{}}
-            \PYG{l+s+s2}{\PYGZdq{}input\PYGZdq{}}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{([[}\PYG{l+m+mi}{100} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{10} \PYG{k}{if} \PYG{n}{index} \PYG{o}{\PYGZlt{}=} \PYG{l+m+mi}{11} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)]} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{record}\PYG{o}{.}\PYG{n}{values}\PYG{p}{())[}\PYG{l+m+mi}{4}\PYG{p}{:])]),}
-            \PYG{l+s+s2}{\PYGZdq{}output\PYGZdq{}}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{([[}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{record}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}hdi\PYGZsq{}}\PYG{p}{])]])}
-        \PYG{p}{\PYGZcb{})}
-\end{Verbatim}

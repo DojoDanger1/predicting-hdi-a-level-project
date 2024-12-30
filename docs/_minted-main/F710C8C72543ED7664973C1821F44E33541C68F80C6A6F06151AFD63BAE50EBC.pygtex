@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{random}
+\PYG{k+kn}{import} \PYG{n+nn}{pickle}
+\end{Verbatim}

@@ -1,8 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-        \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{y\PYGZus{}objects}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{:}
-            \PYG{n}{y\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{sample}\PYG{p}{(}\PYG{n}{y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{)}
-        \PYG{k}{else}\PYG{p}{:}
-            \PYG{n}{y\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration} \PYG{o}{=} \PYG{n}{y\PYGZus{}objects}
-        \PYG{k}{for} \PYG{n}{y\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{y\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}\PYG{p}{:}
-            \PYG{n}{dist\PYGZus{}to\PYGZus{}ys}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{distBetween2Points}\PYG{p}{(}\PYG{n}{x\PYGZus{}object}\PYG{p}{,} \PYG{n}{y\PYGZus{}object}\PYG{p}{))}
-\end{Verbatim}

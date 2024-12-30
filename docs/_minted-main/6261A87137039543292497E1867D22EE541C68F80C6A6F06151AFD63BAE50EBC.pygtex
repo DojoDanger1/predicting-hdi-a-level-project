@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{key\PYGZus{}type} \PYG{o}{=} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}building\PYGZsq{}} \PYG{k}{if} \PYG{n}{object\PYGZus{}type} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}house\PYGZsq{}} \PYG{k}{else} \PYG{l+s+s1}{\PYGZsq{}natural\PYGZsq{}} \PYG{k}{if} \PYG{n}{object\PYGZus{}type} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}tree\PYGZsq{}} \PYG{k}{else} \PYG{l+s+s1}{\PYGZsq{}gambling\PYGZsq{}} \PYG{k}{if} \PYG{n}{object\PYGZus{}type} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}slot\PYGZus{}machines\PYGZsq{}} \PYG{k}{else} \PYG{l+s+s1}{\PYGZsq{}amenity\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} get the right key type}
+    \PYG{n}{region\PYGZus{}poly} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{latlong}\PYG{p}{)} \PYG{k}{for} \PYG{n}{latlong} \PYG{o+ow}{in} \PYG{n}{coord}\PYG{p}{])} \PYG{k}{for} \PYG{n}{coord} \PYG{o+ow}{in} \PYG{n}{bounding\PYGZus{}coords}\PYG{p}{])} \PYG{c+c1}{\PYGZsh{} converts list of tuples to correct format for overpass turbo}
+    \PYG{n}{overpass\PYGZus{}query} \PYG{o}{=} \PYG{p}{[}
+        \PYG{l+s+s1}{\PYGZsq{}[out:json];\PYGZsq{}}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}(\PYGZsq{}}\PYG{p}{,}
+        \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}   nwr[\PYGZdq{}}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{key\PYGZus{}type}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{\PYGZdq{}=\PYGZdq{}}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{object\PYGZus{}type}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{\PYGZdq{}](poly:\PYGZdq{}}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{region\PYGZus{}poly}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{\PYGZdq{});\PYGZsq{}}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{});\PYGZsq{}}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}out center;\PYGZsq{}}
+    \PYG{p}{]}
+\end{Verbatim}
