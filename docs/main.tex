@@ -2312,7 +2312,7 @@ Testing each individual algorithm in the neural network is also very difficult, 
 \newcounter{parts}
 \setcounter{parts}{0}
 \chapter{Developing the Coded Solution of the \nth{1} Prototype}
-\section{Milestone 1 -- Data Collection \& Processing}
+\section{Milestone 1 -- Data Collection \& Processing}\label{sec:milestone1}
 \subsection{Success Criteria}
 By the end of this milestone, I hope to have all the training data for the neural network to train on.
 \begin{center}
@@ -6461,12 +6461,12 @@ for tree={draw,align=center,edge={-latex}},where level=0{}{folder,grow'=0}
     ]
     [User Interface (Section \ref{sec:ui2}),fill=orange!60
         [Manually Enter Factors,fill=yellow!60]
-        [Ranking Suggested Changes\\to Improve HDI,fill=yellow!60
+        [Ranking Suggested Changes to\\Improve HDI (Section \ref{sec:betterSuggestions}),fill=yellow!60
             [Improve Algorithm to\\Generate Suggestions,fill=green!60]
             [Quicksort Results,fill=green!60]
         ]
-        [Heatmap of how much each\\factor affects the others,fill=yellow!60]
-        [Comparison to\\other countries,fill=yellow!60]
+        [Heatmap of how much each\\factor affects the others\\(Section \ref{sec:analysisOfFactors}),fill=yellow!60]
+        [Comparison to other\\countries (Section \ref{sec:comparisonToRegions}),fill=yellow!60]
         [Help Menu,fill=yellow!60]
     ]
     [Everything in the\\First Structure Diagram\\(Figure \ref{fig:structDiagram}),fill=orange!60]
@@ -6900,7 +6900,7 @@ I will go into more detail about the meaning of the key \& heatmap in Section \r
     \draw (7,8) rectangle (9,7.5) node[pos=0.5] {0.0342};
     \draw (9,8) rectangle (11,7.5) node[pos=0.5] {29.589};
     \draw (11,8) rectangle (13,7.5) node[pos=0.5] {5.4273};
-    \draw (2,7.5) rectangle (5,7) node[pos=0.5] {region-5};
+    \draw (2,7.5) rectangle (5,7) node[pos=0.5] {region};
     \draw (5,7.5) rectangle (7,7);
     \draw (7,7.5) rectangle (9,7);
     \draw (9,7.5) rectangle (11,7);
@@ -7074,18 +7074,52 @@ The labelled items shown on Figure \ref{fig:interfaceSketch2.6} are:
 This tab will be written in markdown (which gradio supports), as it allows for basic text formatting, such as different levels of headings, bullet points, ordered lists and tables.
 
 \subsection{Input Validation}
-\dots
+\subsubsection{Authentication System}
+When the user creates an account, they will first be prompted to enter a username, which must be a string. Gradio textboxes can only hold strings, so no matter what the user inputs, it will be validated. They must then enter a password, and then re-enter their password, for double entry validation. This is where the user enters data twice, to ensure they have entered the correct data (if the 2 copies do not match, they may have not entered the correct data). In order to ensure that the user uses a secure password, I will be enforcing that the password must be at least 8 characters, using a length check, and that it contains at least 1 number and 1 special character, using a format check. I will also be using a presence check to see if all 3 fields have been filled, otherwise they cannot create an account.
+
+When the user logs into an account, they will again be prompted to enter a username and password. The only input validation that must be done here is a presence check, to ensure they have entered both a username and password.
+
+\subsubsection{Manually Entering Regions}
+On the Regions tab (Figure \ref{fig:interfaceSketch2.3}), I will be using a gradio Dataframe for the regions table (which is the same thing we used for the suggestions table), except this time it will be interactive. This means that the user will be able to enter data into any of the cells, as well as create new rows.
+
+To ensure that the data in each column is of the right type (\pil{str} for the Name column, and \pil{float} for everything else), we can specify the datatype of each column. When the user creates a new region by drawing on the map, the name of it will be the same as the filename they uploaded. When the user creates a new region by adding a new row to the dataframe, it will be called ``region''.
+
+\subsubsection{Comparing Regions}
+When comparing regions, the only thing the user has to input is which region they wish to compare to. It should only be one of the $\sim 2000$ regions processed in Milestone 1 (Section \ref{sec:milestone1}), and not anything else. I will therefore be using a dropdown menu, instead of something like a textbox. The gradio dropdown menu however can act like a textbox, where the user types to filter the options.
 
 \subsection{Usabilty Features}
-\dots
+\subsubsection{Comparison Page}
+On the comparison page, users will be able to choose a region from the training data to compare their region to. They will be presented with a dropdown menu, which will be the top element in the screen (to draw their attention to it), to choose an element from. On the right side of the dropdown menu, there will be a small triangle pointing down, to suggest that clicking on this element will show a dropdown menu. A cursor will also appear when the element is selected, which suggests that they can type to search for a particular region.
+
+The rest of the elements on this page (the table, the correlation coefficient key and the correlation heatmap) will be not be interactive, as all they do is convey information (as opposed to take in information from the user). Everything will be labelled accordingly, and if the user does not understand something (for example, the correlation heatmap), they can go to the help page.
+
+In short, a correlation coefficient of 1 means the 2 variables have a very strong positive correlation, a correlation coefficient of -1 means the 2 variables have a very strong negative correlation, and a correlation coefficient of 0 means they have no correlaiton. I have therefore chosen the colour to represent 1 to be green and the colour to represent -1 to be deep red, as green often symbolises good and red bad. In the middle, for 0, there is a neutral off-white yellow, to make the gradient from red to green smoother.
+
+\subsubsection{Regions Page}
+On the regions page, users will be able to switch between different regions they have previously processed, by selecting rows in the table. They will also be able to add new regions without drawing on the map by adding new rows to the table. It may not be obvious which of their regions is the one they have currently selected, so there will be a textbox at the top of the screen showing which one they have chosen.
+
+Users will know they can add new regions by the fact that there will be a ``+'' button below the table, which suggests they can add a new row. When they add a new row, it will be empty, which will lead them to the fact that they can edit cells and change the factors.
+
+\subsubsection{Log In \& Sign Up Pages}
+On the log in page, the user will only be presented with 2 fields to fill in, a username and a password. Typically, the username comes first, so I have put that above the password. The password textbox will have the characters hidden (each chatacter will appear as a dot instead of itself), so that any onlookers cannot see the user's password as they type it in.
+
+Below both the username and passwords fields will be the log in button. It will be coloured in the same ``call to action'' colour as the predict HDI button on the main page, to suggest that this is the main function of the page. Finally, at the bottom, is a results textbox, which will tell the user if they have access, or if they have entered incorrect details.
+
+The sign in page is very similar, with fields on top of each other, followed by a ``call to action'' button to create the account, followed by the result box. Except here, there will be 2 password fields to ensure double entry verificaiton. The second one will have a slightly different label (``Re-Enter Password'' as opposed to ``Password''), to show the need for this field. This is also typical when creating accounts, so once the user reads this, they will understand why they must enter it again.
+
+\subsubsection{Help Page}
+On the help page, users can read about each feature in more detail. This will allow them to have a greater understanding of how to use the app, if they were confused. It will also clear up any misconceptions the user may have about what they can or cannot do. The help page will also include various images, to further get any points across, for those who prefer to learn things visually. Nothing on this page will be interactive, so the user must only be able to read or look at the pictures or diagrams to use it.
+
+\subsubsection{Other Usability Features}
+I also plan on adding emojis to various pieces of text all across the app. This can help in many different ways, such as further conveying a call to action, or describing further what a particular section is about.
 
 \subsection{Analysis of how much Each Factor affects the Others}\label{sec:analysisOfFactors}
 \dots
 
-\subsection{Comparison to Similar Regions}
+\subsection{Comparison to Similar Regions}\label{sec:comparisonToRegions}
 \dots
 
-\subsection{Improved Algorithm for Suggestions}
+\subsection{Improved Algorithm for Suggestions}\label{sec:betterSuggestions}
 \dots
 
 \subsection{List of Key Variables}
