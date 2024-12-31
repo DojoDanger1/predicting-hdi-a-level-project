@@ -6668,7 +6668,410 @@ When logging in to an existing account, the user will enter their username and p
 
 \section{User Interface}\label{sec:ui2}
 \subsection{Interface Sketch -- A Tabbed Interface}
-\dots
+As seen before, when implemeting the GUI, Gradio offers different ways to arrange elements (For example, I have used \pil{gr.Row()}, \pil{gr.Column()} and \pil{gr.Group()}). Another one that we can make use of is \pil{gr.Tab()}, which will place all of its elements inside a tab. Other \pil{gr.Tab()} elements on the same level will appear next to each other, for the user to switch between.  
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % border
+    \draw (0,0) rectangle (15,12);
+    % tabs
+    \draw (0,12) rectangle (2,12.65);
+    \draw (1,12.65) node[anchor=north] {Predict};
+    \draw (2,12) rectangle (4,12.65);
+    \draw (3,12.65) node[black!60,anchor=north] {Compare};
+    \draw (4,12) rectangle (6,12.65);
+    \draw (5,12.65) node[black!60,anchor=north] {Regions};
+    \draw (6,12) rectangle (8,12.65);
+    \draw (7,12.65) node[black!60,anchor=north] {Log In};
+    \draw (8,12) rectangle (10,12.65);
+    \draw (9,12.65) node[black!60,anchor=north] {Sign Up};
+    \draw (10,12) rectangle (12,12.65);
+    \draw (11,12.65) node[black!60,anchor=north] {Help};
+    % map
+    \path[fill stretch image=map] (0.5,11.5) rectangle (9,6);
+    \draw (0.5,11.5) rectangle (9,6);
+    \draw[fill=white] (0.5,11.5) rectangle (1,11);
+    \draw (0.65,11.1) -- (0.588196601125,11.290211303259) -- (0.75,11.4077683537175) -- (0.911803398875,11.290211303259) -- (0.85,11.1) -- cycle;
+    \draw[fill=white] (0.5,10.75) rectangle (1,10.25);
+    \draw (0.6,10.5) -- (0.9,10.5);
+    \draw (0.75,10.65) -- (0.75,10.35);
+    \draw[fill=white] (0.5,10.25) rectangle (1,9.75);
+    \draw (0.6,10) -- (0.9,10);
+    \draw[fill=white] (0.5,9.5) rectangle (1,9);
+    \draw (0.6,9.4) -- (0.9,9.1);
+    \draw (0.6,9.1) -- (0.9,9.4);
+    \draw[blue,fill=blue!80,fill opacity=0.4] (1.65,9.25) rectangle (3,8.5);
+    \filldraw[red] (2.3,8.9) circle (0.05); 
+    %predict button section
+    \draw[fill=orange] (9.5,11.5) rectangle (14.5,10.5) node[pos=0.5] {Predict};
+    \draw (9.5,10) node[anchor=north west] {{\scriptsize I believe the HDI of this area is...}};
+    \draw (9.5,10) rectangle (14.5,8.5) node[pos=0.5] {0.927};
+    \draw (9.5,8) node[anchor=north west] {{\scriptsize That's a similar HDI to...}};
+    \draw (9.5,8) rectangle (14.5,6) node[pos=0.5] {The USA};
+    %suggestions
+    \draw (0.5,4.5) node[anchor=south west] {{\scriptsize New Building}};
+    \draw (3,4.5) node[anchor=south west] {{\scriptsize Coordinates}};
+    \draw (9,4.5) node[anchor=south west] {{\scriptsize New HDI}};
+    \draw (11.5,4.5) node[anchor=south west] {{\scriptsize Change in HDI}};
+    \draw (0.5,4.5) rectangle (3,4) node[pos=0.5] {School};
+    \draw (3,4.5) rectangle (9,4) node[pos=0.5] {$36.922883^{\circ}\text{N},-101.709461^{\circ}\text{E}$};
+    \draw (9,4.5) rectangle (11.5,4) node[pos=0.5] {0.928};
+    \draw (11.5,4.5) rectangle (14.5,4) node[pos=0.5] {$+0.001$};
+    \draw[fill=cyan!20] (0.5,4) rectangle (3,3.5) node[pos=0.5] {Hospital};
+    \draw[fill=cyan!20] (3,4) rectangle (9,3.5) node[pos=0.5] {$43.919052^{\circ}\text{N},-106.264212^{\circ}\text{E}$};
+    \draw[fill=cyan!20] (9,4) rectangle (11.5,3.5) node[pos=0.5] {0.929};
+    \draw[fill=cyan!20] (11.5,4) rectangle (14.5,3.5) node[pos=0.5] {$+0.002$};
+    \draw (0.5,3.5) rectangle (3,3) node[pos=0.5] {Library};
+    \draw (3,3.5) rectangle (9,3) node[pos=0.5] {$36.954162^{\circ}\text{N},-87.008695^{\circ}\text{E}$};
+    \draw (9,3.5) rectangle (11.5,3) node[pos=0.5] {0.928};
+    \draw (11.5,3.5) rectangle (14.5,3) node[pos=0.5] {$+0.001$};
+    \draw (7.5,2.5) node {$\vdots$};
+    % note
+    \draw (0,0) node[anchor=south west] {{\scriptsize (The data presented in this sketch is completely made up but somewhat realistic)}};
+    % annotations
+    \draw[red,->] (1,13.65) node[red,above] {1.} -- (1,12.65);
+    \draw[red,->] (7,13.65) node[red,above] {2.} -- (7,13);
+\end{tikzpicture}
+\caption{Technical Interface Sketch (\nth{2} prototype, main page)}\label{fig:interfaceSketch2.1}
+\end{figure}
+
+Figure \ref{fig:interfaceSketch2.1} shows the main prediction page for the app, which I have already implemented, and so most of these elements are not labelled. The elements that are labelled are:
+
+\begin{enumerate}
+    \item Currently Selected Tab
+    \item Other Tabs
+\end{enumerate}
+The contents of the other 5 tabs are illustrated below, in Figures \ref{fig:interfaceSketch2.2} to \ref{fig:interfaceSketch2.6}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % border
+    \draw (0,0) rectangle (15,12);
+    % tabs
+    \draw (0,12) rectangle (2,12.65);
+    \draw (1,12.65) node[black!60,anchor=north] {Predict};
+    \draw (2,12) rectangle (4,12.65);
+    \draw (3,12.65) node[anchor=north] {Compare};
+    \draw (4,12) rectangle (6,12.65);
+    \draw (5,12.65) node[black!60,anchor=north] {Regions};
+    \draw (6,12) rectangle (8,12.65);
+    \draw (7,12.65) node[black!60,anchor=north] {Log In};
+    \draw (8,12) rectangle (10,12.65);
+    \draw (9,12.65) node[black!60,anchor=north] {Sign Up};
+    \draw (10,12) rectangle (12,12.65);
+    \draw (11,12.65) node[black!60,anchor=north] {Help};
+    % dropdown
+    \draw (4.5,11.5) rectangle (10.5,10.75);
+    \draw (4.5,11.125) node[anchor=west] {Select a Region to Compare};
+    \draw[black,fill=black] (10,11.25) -- (10.3,11.25) -- (10.15,11) -- cycle;
+    % comparing to selected region
+    \draw (5,10) node[anchor=south west] {{\scriptsize Your Region}};
+    \draw (8.5,10) node[anchor=south west] {{\scriptsize Selected Region}};
+    \draw (3,10) rectangle (5,9.5) node[pos=0.5] {HDI};
+    \draw (5,10) rectangle (8.5,9.5) node[pos=0.5] {0.735};
+    \draw (8.5,10) rectangle (12,9.5) node[pos=0.5] {0.826};
+    \draw (3,9.5) rectangle (5,9) node[pos=0.5] {$D\left(\text{School}\right)$};
+    \draw (5,9.5) rectangle (8.5,9) node[pos=0.5] {0.015372};
+    \draw (8.5,9.5) rectangle (12,9) node[pos=0.5] {0.146153};
+    \draw (3,9) rectangle (5,8.5) node[pos=0.5] {$A\left(\text{Hous...}\right)$};
+    \draw (5,9) rectangle (8.5,8.5) node[pos=0.5] {2.930836};
+    \draw (8.5,9) rectangle (12,8.5) node[pos=0.5] {2.376783};
+    \draw (7.5,8) node {$\vdots$};
+    % separator
+    \draw[dashed] (0,7.25) -- (15,7.25);
+    % gradient key
+    \definecolor{gradient1}{RGB}{189, 0, 57}
+    \definecolor{gradient2}{RGB}{240, 240, 173}
+    \definecolor{gradient3}{RGB}{0, 128, 72}
+    \draw[shading=axis, left color=gradient1, right color=gradient2] (4.5,6.5) rectangle (7.5,6);
+    \draw[shading=axis, left color=gradient2, right color=gradient3] (7.5,6.5) rectangle (10.5,6);
+    \draw (4.5,6.5) node[anchor=south west] {{\scriptsize Correlation Coefficient}};
+    \draw (4.5,6) node[anchor=north] {{\scriptsize $-1$}};
+    \draw (7.5,6) node[anchor=north] {{\scriptsize $0$}};
+    \draw (10.5,6) node[anchor=north] {{\scriptsize $1$}};
+    % heatmap
+    \definecolor{heatmap1}{RGB}{193,21,67}
+    \definecolor{heatmap2}{RGB}{213,112,111}
+    \definecolor{heatmap3}{RGB}{230,193,150}
+    \definecolor{heatmap4}{RGB}{211,227,160}
+    \definecolor{heatmap5}{RGB}{118,183,122}
+    \definecolor{heatmap6}{RGB}{24,139,82}
+    \draw[fill=heatmap5] (6,5) rectangle (6.5,4.5);
+    \draw[fill=heatmap6] (6.5,5) rectangle (7,4.5);
+    \draw[fill=heatmap5] (7,5) rectangle (7.5,4.5);
+    \draw[fill=heatmap4] (7.5,5) rectangle (8,4.5);
+    \draw[fill=heatmap6] (8,5) rectangle (8.5,4.5);
+    \draw[fill=heatmap1] (8.5,5) rectangle (9,4.5);
+    \draw[fill=heatmap6] (6.5,4.5) rectangle (7,4);
+    \draw[fill=heatmap5] (7,4.5) rectangle (7.5,4);
+    \draw[fill=heatmap2] (7.5,4.5) rectangle (8,4);
+    \draw[fill=heatmap4] (8,4.5) rectangle (8.5,4);
+    \draw[fill=heatmap2] (8.5,4.5) rectangle (9,4);
+    \draw[fill=heatmap4] (7,4) rectangle (7.5,3.5);
+    \draw[fill=heatmap1] (7.5,4) rectangle (8,3.5);
+    \draw[fill=heatmap1] (8,4) rectangle (8.5,3.5);
+    \draw[fill=heatmap5] (8.5,4) rectangle (9,3.5);
+    \draw[fill=heatmap6] (7.5,3.5) rectangle (8,3);
+    \draw[fill=heatmap2] (8,3.5) rectangle (8.5,3);
+    \draw[fill=heatmap4] (8.5,3.5) rectangle (9,3);
+    \draw[fill=heatmap1] (8,3) rectangle (8.5,2.5);
+    \draw[fill=heatmap3] (8.5,3) rectangle (9,2.5);
+    \draw[fill=heatmap4] (8.5,2.5) rectangle (9,2);
+    \draw (9.5,4.75) node {$\hdots$};
+    \draw (9.5,1.75) node {$\ddots$};
+    \draw (6,4.75) node[anchor=east] {{\scriptsize HDI}};
+    \draw (6,4.25) node[anchor=east] {{\scriptsize $D\left(\text{School}\right)$}};
+    \draw (6,3.75) node[anchor=east] {{\scriptsize $A\left(\text{House},\text{School}\right)$}};
+    \draw (6,3.25) node[anchor=east] {{\scriptsize $\vdots$}};
+    \draw (6.25,5) node[anchor=south] {{\scriptsize $D\left(\text{School}\right)$}};
+    \draw (7.25,5) node[anchor=south] {$\hdots$};
+    % note
+    \draw (0,0) node[anchor=south west] {{\scriptsize (The data presented in this sketch is completely made up but somewhat realistic)}};
+    % annotations
+    \draw[red,->] (-0.5,11.125) node[red,left] {1.} -- (4.5,11.125);
+    \draw[red,->] (-0.5,9.25) node[red,left] {2.} -- (2.5,9.25);
+    \draw[red,->] (15.5,10.5) node[red,right] {3.} -| (8,10);
+    \draw[red,->] (15.5,9.25) node[red,right] {4.} -- (12,9.25);
+    \draw[red,->] (-0.5,6.25) node[red,left] {5.} -- (4.5,6.25);
+    \draw[red,->] (15.5,4.25) node[red,right] {6.} -- (9,4.25);
+\end{tikzpicture}
+\caption{Technical Interface Sketch (\nth{2} prototype, compare page)}\label{fig:interfaceSketch2.2}
+\end{figure}
+
+The labelled items shown on Figure \ref{fig:interfaceSketch2.2} are:
+
+\begin{enumerate}
+    \item Dropdown menu to Select a Region to Compare
+    \item Table showing the HDI and each of the factors for your region and the chosen region
+    \item Column for your region
+    \item Column for the chosen region
+    \item Key for the correlation between factors and HDI
+    \item Correlation Heatmap (Analysis of how much each factor affects the others)
+\end{enumerate}
+
+I will go into more detail about the meaning of the key \& heatmap in Section \ref{sec:analysisOfFactors}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % border
+    \draw (0,0) rectangle (15,12);
+    % tabs
+    \draw (0,12) rectangle (2,12.65);
+    \draw (1,12.65) node[black!60,anchor=north] {Predict};
+    \draw (2,12) rectangle (4,12.65);
+    \draw (3,12.65) node[black!60,anchor=north] {Compare};
+    \draw (4,12) rectangle (6,12.65);
+    \draw (5,12.65) node[anchor=north] {Regions};
+    \draw (6,12) rectangle (8,12.65);
+    \draw (7,12.65) node[black!60,anchor=north] {Log In};
+    \draw (8,12) rectangle (10,12.65);
+    \draw (9,12.65) node[black!60,anchor=north] {Sign Up};
+    \draw (10,12) rectangle (12,12.65);
+    \draw (11,12.65) node[black!60,anchor=north] {Help};
+    % current region box
+    \draw (4,11) node[anchor=south west] {{\scriptsize Current Region}};
+    \draw (4,11) rectangle (11,10.5) node[pos=0.5] {London};
+    % table
+    \draw (2,9.5) node[anchor=south west] {{\scriptsize Name}};
+    \draw (5,9.5) node[anchor=south west] {{\scriptsize $D\left(\text{School}\right)$}};
+    \draw (7,9.5) node[anchor=south west] {{\scriptsize $D\left(\text{Hospital}\right)$}};
+    \draw (9,9.5) node[anchor=south west] {{\scriptsize $D\left(\text{Tree}\right)$}};
+    \draw (11,9.5) node[anchor=south west] {{\scriptsize $D\left(\text{Restaurant}\right)$}};
+    \draw (2,9.5) rectangle (5,9) node[pos=0.5] {Oxford};
+    \draw (5,9.5) rectangle (7,9) node[pos=0.5] {1.1923};
+    \draw (7,9.5) rectangle (9,9) node[pos=0.5] {0.0917};
+    \draw (9,9.5) rectangle (11,9) node[pos=0.5] {62.569};
+    \draw (11,9.5) rectangle (13,9) node[pos=0.5] {2.8799};
+    \draw (2,9) rectangle (5,8.5) node[pos=0.5] {London};
+    \draw (5,9) rectangle (7,8.5) node[pos=0.5] {1.5946};
+    \draw (7,9) rectangle (9,8.5) node[pos=0.5] {0.1248};
+    \draw (9,9) rectangle (11,8.5) node[pos=0.5] {32.861};
+    \draw (11,9) rectangle (13,8.5) node[pos=0.5] {3.3566};
+    \draw (2,8.5) rectangle (5,8) node[pos=0.5] {region-3};
+    \draw (5,8.5) rectangle (7,8) node[pos=0.5] {0.5673};
+    \draw (7,8.5) rectangle (9,8) node[pos=0.5] {0.0132};
+    \draw (9,8.5) rectangle (11,8) node[pos=0.5] {10.483};
+    \draw (11,8.5) rectangle (13,8) node[pos=0.5] {1.4084};
+    \draw (2,8) rectangle (5,7.5) node[pos=0.5] {region-4};
+    \draw (5,8) rectangle (7,7.5) node[pos=0.5] {0.9191};
+    \draw (7,8) rectangle (9,7.5) node[pos=0.5] {0.0342};
+    \draw (9,8) rectangle (11,7.5) node[pos=0.5] {29.589};
+    \draw (11,8) rectangle (13,7.5) node[pos=0.5] {5.4273};
+    \draw (2,7.5) rectangle (5,7) node[pos=0.5] {region-5};
+    \draw (5,7.5) rectangle (7,7);
+    \draw (7,7.5) rectangle (9,7);
+    \draw (9,7.5) rectangle (11,7);
+    \draw (11,7.5) rectangle (13,7);
+    \draw (13.5,8.25) node {$\hdots$};
+    % button
+    \draw (12.25,6.75) rectangle (13,6);
+    \draw (12.625,6.65) -- (12.625,6.1);
+    \draw (12.35,6.375) -- (12.9, 6.375);
+    % note
+    \draw (0,0) node[anchor=south west] {{\scriptsize (The data presented in this sketch is completely made up but somewhat realistic)}};
+    % annotations
+    \draw[red,->] (-0.5,10.75) node[red,left] {1.} -- (4,10.75);
+    \draw[red,->] (-0.5,8.25) node[red,left] {2.} -- (1.5,8.25);
+    \draw[red,->] (15.5,8) node[red,right] {3.} -- (13,8);
+    \draw[red,->] (15.5,7.25) node[red,right] {4.} -- (13,7.25);
+    \draw[red,->] (15.5,6.375) node[red,right] {5.} -- (13,6.375);
+\end{tikzpicture}
+\caption{Technical Interface Sketch (\nth{2} prototype, regions page)}\label{fig:interfaceSketch2.3}
+\end{figure}
+
+The labelled items shown on Figure \ref{fig:interfaceSketch2.3} are:
+
+\begin{enumerate}
+    \item A Textbox showing the region the user has currently selected (it may not always be obvious)
+    \item Table for each of the user's regions. The user can choose the name of each one, by typing it into the ``Name'' column.
+    \item Examples of regions where the user has not chosen a name
+    \item Example of a region where the user has not yet entered the factors
+    \item Button to add a row to the table, so that the user can manually enter factors
+\end{enumerate}
+
+In this page, the user will be able to switch between the different regions they have processed before. If they are logged in with an account, regions they have processed in a previous session will also appear here. Users can also use this to manually enter factors, by adding rows to this table.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % border
+    \draw (0,0) rectangle (15,12);
+    % tabs
+    \draw (0,12) rectangle (2,12.65);
+    \draw (1,12.65) node[black!60,anchor=north] {Predict};
+    \draw (2,12) rectangle (4,12.65);
+    \draw (3,12.65) node[black!60,anchor=north] {Compare};
+    \draw (4,12) rectangle (6,12.65);
+    \draw (5,12.65) node[black!60,anchor=north] {Regions};
+    \draw (6,12) rectangle (8,12.65);
+    \draw (7,12.65) node[anchor=north] {Log In};
+    \draw (8,12) rectangle (10,12.65);
+    \draw (9,12.65) node[black!60,anchor=north] {Sign Up};
+    \draw (10,12) rectangle (12,12.65);
+    \draw (11,12.65) node[black!60,anchor=north] {Help};
+    % elements
+    \draw (4,10.5) node[anchor=south west] {Username};
+    \draw (4,10.5) rectangle (11,9.5);
+    \draw (4,8.5) node[anchor=south west] {Password};
+    \draw (4,8.5) rectangle (11,7.5);
+    \draw[fill=orange] (4,6.5) rectangle (11,5.5) node[pos=0.5] {Log In};
+    \draw (4,4.5) node[anchor=south west] {Result};
+    \draw (4,4.5) rectangle (11,3.5);
+    % annotations
+    \draw[red,->] (-0.5,10) node[red,left] {1.} -- (4,10);
+    \draw[red,->] (15.5,8) node[red,right] {2.} -- (11,8);
+    \draw[red,->] (-0.5,6) node[red,left] {3.} -- (4,6);
+    \draw[red,->] (15.5,4) node[red,right] {4.} -- (11,4);
+\end{tikzpicture}
+\caption{Technical Interface Sketch (\nth{2} prototype, log in page)}\label{fig:interfaceSketch2.4}
+\end{figure}
+
+The labelled items shown on Figure \ref{fig:interfaceSketch2.4} are:
+
+\begin{enumerate}
+    \item Field for the user to enter their username
+    \item Field for the user to enter their password
+    \item Log in Button
+    \item Output Button showing the result of pressing the button (e.g. Login Success, Username does not exist, or Incorrect Password)
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % border
+    \draw (0,0) rectangle (15,12);
+    % tabs
+    \draw (0,12) rectangle (2,12.65);
+    \draw (1,12.65) node[black!60,anchor=north] {Predict};
+    \draw (2,12) rectangle (4,12.65);
+    \draw (3,12.65) node[black!60,anchor=north] {Compare};
+    \draw (4,12) rectangle (6,12.65);
+    \draw (5,12.65) node[black!60,anchor=north] {Regions};
+    \draw (6,12) rectangle (8,12.65);
+    \draw (7,12.65) node[black!60,anchor=north] {Log In};
+    \draw (8,12) rectangle (10,12.65);
+    \draw (9,12.65) node[anchor=north] {Sign Up};
+    \draw (10,12) rectangle (12,12.65);
+    \draw (11,12.65) node[black!60,anchor=north] {Help};
+    % elements
+    \draw (4,10.5) node[anchor=south west] {Username};
+    \draw (4,10.5) rectangle (11,9.5);
+    \draw (4,8.5) node[anchor=south west] {Password};
+    \draw (4,8.5) rectangle (11,7.5);
+    \draw (4,6.5) node[anchor=south west] {Re-Enter Password};
+    \draw (4,6.5) rectangle (11,5.5);
+    \draw[fill=orange] (4,4.5) rectangle (11,3.5) node[pos=0.5] {Create Account};
+    \draw (4,2.5) node[anchor=south west] {Result};
+    \draw (4,2.5) rectangle (11,1.5);
+    % annotations
+    \draw[red,->] (-0.5,10) node[red,left] {1.} -- (4,10);
+    \draw[red,->] (15.5,8) node[red,right] {2.} -- (11,8);
+    \draw[red,->] (-0.5,6) node[red,left] {3.} -- (4,6);
+    \draw[red,->] (15.5,4) node[red,right] {4.} -- (11,4);
+    \draw[red,->] (-0.5,2) node[red,left] {5.} -- (4,2);
+\end{tikzpicture}
+\caption{Technical Interface Sketch (\nth{2} prototype, sign up page)}\label{fig:interfaceSketch2.5}
+\end{figure}
+
+The labelled items shown on Figure \ref{fig:interfaceSketch2.5} are:
+
+\begin{enumerate}
+    \item Field for the user to enter their username
+    \item Field for the user to enter their password
+    \item Field for the user to re-enter their password (for double-entry validation)
+    \item Sign up Button
+    \item Output Button showing the result of pressing the button (e.g. Sign Up Success, Username already exists, or Password not Strong Enough, Passwords Do Not Match)
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % border
+    \draw (0,0) rectangle (15,12);
+    % tabs
+    \draw (0,12) rectangle (2,12.65);
+    \draw (1,12.65) node[black!60,anchor=north] {Predict};
+    \draw (2,12) rectangle (4,12.65);
+    \draw (3,12.65) node[black!60,anchor=north] {Compare};
+    \draw (4,12) rectangle (6,12.65);
+    \draw (5,12.65) node[black!60,anchor=north] {Regions};
+    \draw (6,12) rectangle (8,12.65);
+    \draw (7,12.65) node[black!60,anchor=north] {Log In};
+    \draw (8,12) rectangle (10,12.65);
+    \draw (9,12.65) node[black!60,anchor=north] {Sign Up};
+    \draw (10,12) rectangle (12,12.65);
+    \draw (11,12.65) node[anchor=north] {Help};
+    % help
+    \draw (2,10.5) -- (8,10.5);
+    \draw (3,9.5) -- (14,9.5);
+    \draw (3,9) -- (14,9);
+    \draw (3,8.5) -- (10,8.5);
+    \draw (4,8) -- (14,8);
+    \draw (4,7.5) -- (12,7.5);
+    \draw (3,7) -- (14,7);
+    \draw (3,6.5) -- (7,6.5);
+    \draw (4,6) rectangle (12,3);
+    \draw (3,2.5) -- (14,2.5);
+    \draw (3,2) -- (14,2);
+    \draw (3,1.5) -- (8,1.5);
+    % annotations
+    \draw[red,->] (-0.5,8) node[red,left] {1.} -- (2.5,8);
+    \draw[red,->] (15.5,4.5) node[red,right] {2.} -- (12,4.5);
+\end{tikzpicture}
+\caption{Technical Interface Sketch (\nth{2} prototype, help page)}\label{fig:interfaceSketch2.6}
+\end{figure}
+
+The labelled items shown on Figure \ref{fig:interfaceSketch2.6} are:
+
+\begin{enumerate}
+    \item Text describing the features of the app (Actual help text not included in this sketch, as I will be writing it as part of the development)
+    \item An Image or Diagram to help the understanding
+\end{enumerate}
+
+This tab will be written in markdown (which gradio supports), as it allows for basic text formatting, such as different levels of headings, bullet points, ordered lists and tables.
 
 \subsection{Input Validation}
 \dots
@@ -6676,7 +7079,7 @@ When logging in to an existing account, the user will enter their username and p
 \subsection{Usabilty Features}
 \dots
 
-\subsection{Analysis of how much Each Factor affects the Others}
+\subsection{Analysis of how much Each Factor affects the Others}\label{sec:analysisOfFactors}
 \dots
 
 \subsection{Comparison to Similar Regions}
