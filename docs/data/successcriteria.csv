@@ -11,6 +11,8 @@ $S_{9}$,Neural Network accurately predicts HDI from those factors,Once the user 
 $S_{10}$,Changes are suggested to increase the HDI,This will allow the user to make an informed decision on what to do in order to improve their area.,\checkmark,idk
 $S_{11}$,Accurately calculate where a new building would need to be in order to increase the HDI the most,The specific placement of new buildings (as suggestions to increase HDI) is important to consider\comma{} so a suitable place must be chosen in order to decrease the average distance to it as much as possible.,\checkmark,idk
 $S_{12}$,User can see how each factor can affect the others,This will allow the user to consider the secondary effects of their descisions\comma{} as the suggested changes may not only increase the HDI\comma{} but also some of the other factors.,maybe,idk
-$S_{13}$,Predicted HDI is ranked among other countries with a similar HDI,This will allow users who are not that familiar with HDI to get an idea of the HDI scale by comparing it to the gist of what they know.,maybe,idk
-$S_{14}$,App has a clean\comma{} simple and presentable GUI,This will make it easier for the user to use.,maybe,idk
-$S_{15}$,App has been deployed on Hugging Face,This will allow anyone with a web browswer to use this app\comma{} without having to install anything.,maybe,idk
+$S_{13}$,User can create an account,Eventually\comma{} I would like the user to be able to create an account\comma{} which will allow them to save different areas they have already predicted the HDI of.,maybe,idk
+$S_{14}$,User can log into an account,Once the account has been created\comma{} the user must be able to log into it\comma{} in order to make use of the features.,maybe,idk
+$S_{15}$,Predicted HDI is ranked among other countries with a similar HDI,This will allow users who are not that familiar with HDI to get an idea of the HDI scale by comparing it to the gist of what they know.,maybe,idk
+$S_{16}$,App has a clean\comma{} simple and presentable GUI,This will make it easier for the user to use.,maybe,idk
+$S_{17}$,App has been deployed on Hugging Face,This will allow anyone with a web browswer to use this app\comma{} without having to install anything.,maybe,idk
