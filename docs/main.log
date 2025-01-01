@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.28)  31 DEC 2024 15:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.28)  1 JAN 2025 14:22
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -8060,32 +8060,330 @@ Overfull \hbox (19.83124pt too wide) in paragraph at lines 7063--7064
  (./_minted-main/16F7381E2023A9B120A5485456415351541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/EDCB5B280A371D1FE22BF3489485E147541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [198] [199] [200]
+ (./_minted-main/EDCB5B280A371D1FE22BF3489485E147541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [198] [199]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/BFDD14487827B806DFC0B0E3C5E38A54541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [200] [201] [202] [203]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/7F0FCDD637E893C152278DC8BF6EDEEA541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/10BCB722F4F3FBE9379558FF2E6B029B541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 2922) in paragraph at lines 7288--7288
+[]|\OT1/cmr/m/n/12 Stores the data we
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7288--7289
+\OT1/cmr/m/n/12 pairs of val-ues to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7288--7289
+\OT1/cmr/m/n/12 train-ing data had
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/5ACAD48A07DD75DAA3940F749668E70A541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/AF70E96880ECC4EDFC0452AA3D632F66541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB659541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 1199) in paragraph at lines 7290--7291
+\OT1/cmr/m/n/12 the PMCC for each
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/F38691C6F87C5AC958C412AAEA256AE2541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/D305E4F99B5930CAB2323EAA67348A4F541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB659541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 1789) in paragraph at lines 7292--7293
+[]|\OT1/cmr/m/n/12 This will be passed
+ []
+
+
+Underfull \hbox (badness 1052) in paragraph at lines 7292--7293
+\OT1/cmr/m/n/12 into the graph-ics li-
+ []
+
+
+Underfull \hbox (badness 1199) in paragraph at lines 7292--7293
+\OT1/cmr/m/n/12 brary, to cre-ate the
+ []
+
+
+Underfull \hbox (badness 3977) in paragraph at lines 7292--7293
+\OT1/cmr/m/n/12 sim-i-lar to how the
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/60C0CA0DF4088620D69635BF9961AB9B541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/16F7381E2023A9B120A5485456415351541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 7294--7295
+\OT1/cmr/m/n/12 heatmap, we must
+ []
+
+
+Overfull \hbox (7.03627pt too wide) in alignment at lines 7284--7297
+ [] [] [] [] 
+ []
+
+[204]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/8DD17967B8DCD6D18A48350DF5B28A92541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/EDCB5B280A371D1FE22BF3489485E147541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 1983) in paragraph at lines 7306--7306
+[]|\OT1/cmr/m/n/12 Stores the pre-dicted
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/D810D5314A001CFF72B1D1D9C86F02E6541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 3--7308
+[]|\OT1/cmtt/m/n/12 possible_[]
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/B85499BA44B6F60585BF5692C38E4583541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB659541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/8DD17967B8DCD6D18A48350DF5B28A92541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 3861) in paragraph at lines 7308--7308
+[]|\OT1/cmr/m/n/12 A []\OT1/cmtt/m/n/12 list[] \OT1/cmr/m/n/12 of re-gions,
+ []
+
+
+Underfull \hbox (badness 5802) in paragraph at lines 7308--7308
+\OT1/cmr/m/n/12 which are may ei-
+ []
+
+
+Underfull \hbox (badness 6268) in paragraph at lines 7308--7308
+\OT1/cmtt/m/n/12 predictedHDI \OT1/cmr/m/n/12 or a
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/7B74A0615EC9AE2186D1E47B6F8A50BC541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 3--7310
+[]|\OT1/cmtt/m/n/12 similar_[]
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/16F7381E2023A9B120A5485456415351541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/D810D5314A001CFF72B1D1D9C86F02E6541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 6675) in paragraph at lines 7310--7310
+[]|\OT1/cmr/m/n/12 The ran-domly cho-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7310--7310
+\OT1/cmr/m/n/12 sen re-gion from
+ []
+
+
+Underfull \hbox (badness 1331) in paragraph at lines 7310--7311
+[]|\OT1/cmr/m/n/12 Will be re-turned to
+ []
+
+
+Underfull \hbox (badness 2809) in paragraph at lines 7310--7311
+\OT1/cmr/m/n/12 the ``sim-i-lar re-gion''
+ []
+
+
+Overfull \hbox (7.03627pt too wide) in alignment at lines 7302--7313
+ [] [] [] [] 
+ []
+
+[205]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/6A5D7D10352C80B02E5750B11B2E0090541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 3--7322
+[]|\OT1/cmtt/m/n/12 new_[]
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/16F7381E2023A9B120A5485456415351541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 5802) in paragraph at lines 7322--7323
+\OT1/cmr/m/n/12 other fac-tors which
+ []
+
+
+Underfull \hbox (badness 1221) in paragraph at lines 7322--7323
+\OT1/cmr/m/n/12 con-tain this type of
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/C0C97FEFC41888C5058E5431E2CB5586541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/B85499BA44B6F60585BF5692C38E4583541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 7362) in paragraph at lines 7324--7324
+[]|\OT1/cmr/m/n/12 Holds each of the
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/6316EE444229C551934134E0097A2C47541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 3--7326
+[]|\OT1/cmtt/m/n/12 current_[]
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/16F7381E2023A9B120A5485456415351541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/C0C97FEFC41888C5058E5431E2CB5586541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 3098) in paragraph at lines 7326--7326
+[]|\OT1/cmr/m/n/12 Iterator vari-able for
+ []
+
+
+Underfull \hbox (badness 1331) in paragraph at lines 7326--7327
+\OT1/cmr/m/n/12 keep track of which
+ []
+
+
+Underfull \hbox (badness 4634) in paragraph at lines 7326--7327
+\OT1/cmr/m/n/12 ob-ject we are cur-
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/9CF0010F5650D1215BDE8FFB90E4A92E541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/1C86DEF5125201630422D70724A83B9B541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/3818C3D47E6E976CC91A51FF544FD054541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 3--7330
+[]|\OT1/cmtt/m/n/12 final_[]
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/A4E69BD527833CA136AADCA535A0AB10541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 1776) in paragraph at lines 7330--7331
+\OT1/cmr/m/n/12 will need to find a
+ []
+
+
+Overfull \hbox (7.03627pt too wide) in alignment at lines 7318--7333
+ [] [] [] [] 
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/BB3385D4A52EB2D68E8A315E5E1D3F7C541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 3--7342
+[]|\OT1/cmtt/m/n/12 number_[]new_[]
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/1C2766C0203CA8489F178B9955964C54541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 7099) in paragraph at lines 7342--7342
+\OT1/cmr/m/n/12 er-ate when mak-ing
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7342--7343
+[]|\OT1/cmr/m/n/12 Building more will
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7342--7343
+\OT1/cmr/m/n/12 hope-fully lead to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7342--7343
+\OT1/cmr/m/n/12 bet-ter sug-ges-tions,
+ []
+
+
+Underfull \hbox (badness 1152) in paragraph at lines 7342--7343
+\OT1/cmr/m/n/12 there-fore be able to
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/D9F1A93D7B438F3D6DACDF439FAB89F5541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 3--7344
+[]|\OT1/cmtt/m/n/12 region_[]to_[]
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/16F7381E2023A9B120A5485456415351541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 7344--7344
+\OT1/cmr/m/n/12 user is com-par-ing
+ []
+
+
+Underfull \hbox (badness 3612) in paragraph at lines 7344--7344
+\OT1/cmr/m/n/12 theirs with, in the
+ []
+
+
+Overfull \hbox (7.03627pt too wide) in alignment at lines 7338--7347
+ [] [] [] [] 
+ []
+
+[206] [207]
 Chapter 5.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 7138.
+(hyperref)                removing `\mathsurround' on input line 7360.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 7138.
+(hyperref)                removing `\z@' on input line 7360.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 7138.
+(hyperref)                removing `superscript' on input line 7360.
 
-[201
+[208
 
 ]
 Chapter 6.
-[202
+[209
 
 ]
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 7170.
+(hyperref)                be the same. Added a new anchor on input line 7392.
 
-(./main.lof [203
+(./main.lof [210
 
 
 ]
@@ -8118,7 +8416,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/31884D3EA70719F40E4AF8879D03BA83541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/F3762BD54174BEF706895AA1E2CFED1C541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [204]
+ (./_minted-main/F3762BD54174BEF706895AA1E2CFED1C541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [211]
 \openout4 = `main.pyg'.
 
  (./_minted-main/0853210BD38F7843BAFD16EBB9ECB2E5541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
@@ -8137,7 +8435,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
 \tf@lof=\write10
 \openout10 = `main.lof'.
 
- [205] (./main.lol
+ [212] (./main.lol
 \openout4 = `main.pyg'.
 
  (./_minted-main/59182B729FA5D708AB44B6E23A2071A0541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
@@ -8155,27 +8453,27 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/EECC1ECFC7801C659F7B4E8D14F5C8CD541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/7C541B516C88817AFCDC0256050A94CA541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [206
+ (./_minted-main/7C541B516C88817AFCDC0256050A94CA541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [213
 
 
 ]
 \openout4 = `main.pyg'.
 
- (./_minted-main/0D578F848F676236E6B212E72B91B866541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [207]
+ (./_minted-main/0D578F848F676236E6B212E72B91B866541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [214]
 \openout4 = `main.pyg'.
 
  (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E541C68F80C6A6F06151AFD63BAE50EBC.pygtex))
 \tf@lol=\write11
 \openout11 = `main.lol'.
 
- [208] (./main.lot [209
+ [215] (./main.lot [216
 
 
-] [210])
+] [217])
 \tf@lot=\write12
 \openout12 = `main.lot'.
 
- [211] (./main.bbl
+ [218] (./main.bbl
 Underfull \hbox (badness 7047) in paragraph at lines 14--17
 []\OT1/cmr/m/n/12 Human De-vel-op-ment Re-ports.  country-insights.  [][]$\OT1/cmtt/m/n/12 https : / / hdr . undp . org /
  []
@@ -8195,7 +8493,7 @@ Underfull \hbox (badness 6220) in paragraph at lines 44--47
 []\OT1/cmr/m/n/12 Micheal Nielsen.  neural-networks-and-deep-learning.  [][]$\OT1/cmtt/m/n/12 https : / / github . com /
  []
 
-) [212
+) [219
 
 
 ] (./main.aux)
@@ -8204,23 +8502,23 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 9040B3726FA9A683C146E35F260E7A3B;18644.
+(rerunfilecheck)             Checksum: 5567BFD37B5F312F532D7878612D5817;18644.
 runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 72301 strings out of 474116
- 1995049 string characters out of 5743681
- 2458265 words of memory out of 5000000
- 90592 multiletter control sequences out of 15000+600000
+ 72574 strings out of 474116
+ 2009749 string characters out of 5743681
+ 2473298 words of memory out of 5000000
+ 90759 multiletter control sequences out of 15000+600000
  582457 words of font info for 126 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  130i,23n,129p,2723b,2887s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (213 pages, 11158871 bytes).
+Output written on main.pdf (220 pages, 11180160 bytes).
 PDF statistics:
- 3127 PDF objects out of 3580 (max. 8388607)
- 2619 compressed objects within 27 object streams
- 818 named destinations out of 1000 (max. 500000)
+ 3188 PDF objects out of 3580 (max. 8388607)
+ 2673 compressed objects within 27 object streams
+ 839 named destinations out of 1000 (max. 500000)
  1120 words of extra memory for PDF output out of 10000 (max. 10000000)
 

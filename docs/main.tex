@@ -2180,9 +2180,9 @@ For each of the suggested buildings, the position at which to build it must be c
     \hline
     \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
     \hline
-    \pil{new_building_type} & \pil{str} & Holds the type of new building to be places. & This is used to determine if there are any other factors which contain this type of building. \\ 
+    \pil{new_building_type} & \pil{str} & Holds the type of new building to be placed. & This is used to determine if there are any other factors which contain this type of building. \\ 
     \hline
-    \pil{other_objects} & \pil{list[str]} & Holds each of the otehr types of object to consider. & We must iterate over this to find an optimal place for a new building. \\ 
+    \pil{other_objects} & \pil{list[str]} & Holds each of the other types of object to consider. & We must iterate over this to find an optimal place for a new building. \\ 
     \hline
     \pil{current_object} & \pil{str} & Iterator variable for \pil{other_objects} & This will be used to keep track of which object we are currently considering \\ 
     \hline
@@ -7093,7 +7093,7 @@ On the comparison page, users will be able to choose a region from the training 
 
 The rest of the elements on this page (the table, the correlation coefficient key and the correlation heatmap) will be not be interactive, as all they do is convey information (as opposed to take in information from the user). Everything will be labelled accordingly, and if the user does not understand something (for example, the correlation heatmap), they can go to the help page.
 
-In short, a correlation coefficient of 1 means the 2 variables have a very strong positive correlation, a correlation coefficient of -1 means the 2 variables have a very strong negative correlation, and a correlation coefficient of 0 means they have no correlaiton. I have therefore chosen the colour to represent 1 to be green and the colour to represent -1 to be deep red, as green often symbolises good and red bad. In the middle, for 0, there is a neutral off-white yellow, to make the gradient from red to green smoother.
+In short, a correlation coefficient of $1$ means the 2 variables have a very strong positive correlation, a correlation coefficient of $-1$ means the 2 variables have a very strong negative correlation, and a correlation coefficient of $0$ means they have no correlaiton. I have therefore chosen the colour to represent 1 to be green and the colour to represent -1 to be deep red, as green often symbolises good and red bad. In the middle, for 0, there is a neutral off-white yellow, to make the gradient from red to green smoother.
 
 \subsubsection{Regions Page}
 On the regions page, users will be able to switch between different regions they have previously processed, by selecting rows in the table. They will also be able to add new regions without drawing on the map by adding new rows to the table. It may not be obvious which of their regions is the one they have currently selected, so there will be a textbox at the top of the screen showing which one they have chosen.
@@ -7114,16 +7114,238 @@ On the help page, users can read about each feature in more detail. This will al
 I also plan on adding emojis to various pieces of text all across the app. This can help in many different ways, such as further conveying a call to action, or describing further what a particular section is about.
 
 \subsection{Analysis of how much Each Factor affects the Others}\label{sec:analysisOfFactors}
-\dots
+In order to see how much each factor affects the others, and how much each factor affects the HDI, we can calculate the Product Moment Correlation Coefficient, $\rho$, for each pair of factors. $\rho$ is a number between $-1$ and $1$, which tells us how correlated 2 variables are. It is important to note that, if 2 variables are correlated, it is not the case that increasing 1 will \textit{cause} the other to increase. It may be that (and most likely will be that) they both increase due to a \nth{3} variable (for example, both $D\left(\text{School}\right)$ and $A\left(\text{House},\text{School}\right)$ may increase together when a new school is built, but increasing $A\left(\text{House},\text{School}\right)$ on its own may not increase $D\left(\text{School}\right)$).
+
+If $\rho=1$, that means the 2 variables have stong positive correlation, if $\rho=-1$, that means the 2 variables have strong negative correlation, and if $\rho=0$, that means the 2 variables have no correlation. This follows for any values in between $-1$ and $1$ (for example, $\rho=-0.3$ would mean the 2 variables have weak negative correlation).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % negative correlation
+    \draw[-latex] (0,-0.5) -- (0,4);
+    \draw[-latex] (-0.5,0) -- (4,0);
+    \filldraw[red] (0.6,3.6) circle (0.05);
+    \filldraw[red] (1.2,2.9) circle (0.05);
+    \filldraw[red] (1.4,2.5) circle (0.05);
+    \filldraw[red] (2,2.1) circle (0.05);
+    \filldraw[red] (2.5,1.4) circle (0.05);
+    \filldraw[red] (3.2,0.9) circle (0.05);
+    \filldraw[red] (3.4,0.7) circle (0.05);
+    \draw[blue] (0.25,3.75) -- (3.75,0.25);
+    \draw (2,0) node[anchor=north] {$\rho=-0.9$};
+    % no correlation
+    \draw[-latex] (5,-0.5) -- (5,4);
+    \draw[-latex] (4.5,0) -- (9,0);
+    \filldraw[red] (5.5,2) circle (0.05);
+    \filldraw[red] (6,2.5) circle (0.05);
+    \filldraw[red] (6.5,0.3) circle (0.05);
+    \filldraw[red] (7,2.1) circle (0.05);
+    \filldraw[red] (7.5,3.1) circle (0.05);
+    \filldraw[red] (8,2.9) circle (0.05);
+    \filldraw[red] (8.5,1.5) circle (0.05);
+    \filldraw[red] (5.8,0.9) circle (0.05);
+    \filldraw[red] (6.7,1.2) circle (0.05);
+    \filldraw[red] (5.8,3.6) circle (0.05);
+    \filldraw[red] (8.7,3.2) circle (0.05);
+    \draw (7,0) node[anchor=north] {$\rho=0$};
+    % positive correlation
+    \draw[-latex] (10,-0.5) -- (10,4);
+    \draw[-latex] (9.5,0) -- (14,0);
+    \filldraw[red] (10.5,0.6) circle (0.05);
+    \filldraw[red] (11.1,1) circle (0.05);
+    \filldraw[red] (11.5,1.4) circle (0.05);
+    \filldraw[red] (12,2.2) circle (0.05);
+    \filldraw[red] (12.4,2.6) circle (0.05);
+    \filldraw[red] (13,2.9) circle (0.05);
+    \filldraw[red] (13.5,3.6) circle (0.05);
+    \draw[blue] (10.25,0.25) -- (13.75,3.75);
+    \draw (12,0) node[anchor=north] {$\rho=0.9$};
+\end{tikzpicture}
+\caption{PMCC Examples}
+\end{figure}
+
+To calculate the PMCC, we can use the formula:
+
+\begin{equation}\label{eq:pmcc}
+    \rho=\frac{\sum_{i}\left(x_i-\bar{x}\right)\left(y_i-\bar{y}\right)}{\sqrt{\sum_{i}{\left(x_i-\bar{x}\right)}^{2}\sum_{i}{\left(y_i-\bar{y}\right)}^{2}}}
+\end{equation}
+where $x$ and $y$ are the lists of our variables we are comparing (and, for example, $x_i$ is the $i^{\text{th}}$ element in that list and $\bar{x}$ denotes the mean of that list).
+
+Once we have the values for $\rho$ for each of the pairs of factors, we can use a library for generating graphs and charts, such as \pil{matplotlib} to create the heatmap. This will be done in advance, instead of each time the program is run, similar to how we generated the training data and the trained model. 
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (allPairs) [fInputOutput, below of=start] {Input All Pairs of Factors \& HDI};
+    \node (allValues) [fProcess, below of=allPairs] {Find pairs $\left(x,y\right)$ of those factors for each region in the training data};
+    \node (calcPMCC) [fProcess, below of=allValues] {Calculate $\rho$ using equation \ref{eq:pmcc}};
+    \node (done) [fDecision, below of=calcPMCC, yshift=-1cm] {Have we calculated $\rho$ for all pairs?};
+    \node (nextFactor) [fProcess, right of=done, xshift=5cm] {Move onto the next pair};
+    \node (generateChart) [fProcess, yshift=-1cm, below of=done] {Use a library to create a correlation heatmap};
+    \node (stop) [fStartStop, below of=generateChart] {Stop};
+    
+    \draw [fArrow] (start) -- (allPairs);
+    \draw [fArrow] (allPairs) -- (allValues);
+    \draw [fArrow] (allValues) -- (calcPMCC);
+    \draw [fArrow] (calcPMCC) -- (done);
+    \draw [fArrow] (done) -- node[anchor=east] {yes} (generateChart);
+    \draw [fArrow] (done) -- node[anchor=south] {no} (nextFactor);
+    \draw [fArrow] (nextFactor) |- (allValues);
+    \draw [fArrow] (generateChart) -- (stop);
+\end{tikzpicture}
+\caption{Analysis of how much Each Factor Affects the Others Flowchart}
+\end{figure}
+
+Once the image has been generated, I will add it to the gradio interface, at the bottom of the Compare tab.
 
 \subsection{Comparison to Similar Regions}\label{sec:comparisonToRegions}
-\dots
+As well as directly comparing 2 regions in the Compare tab, I would also like to show the user 1 similar region on the main page (I have already added the textbox for this output, but have not done any of the functionality yet).
+
+In order to choose a region with a similar HDI, we should first see if there are any that have exactly the same HDI, and if there are we can randomly choose from them. If there aren't we can find whichever one is closest. If there is a tie for that, we can again choose randomly.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (predictedHDI) [fInputOutput, below of=start] {Input Predicted HDI};
+    \node (anyMatches) [fDecision, below of=predictedHDI, yshift=-1cm] {Are there any regions in the training data with the same HDI?};
+    \node (tie) [fDecision, yshift=-3cm, below of=anyMatches] {Is there a tie for the region which is closest in HDI};
+    \node (randomChoice1) [fProcess, right of=tie, xshift=6cm] {Randomly choose one from them to display};
+    \node (notRandomChoice) [fProcess, below of=tie, yshift=-1cm] {Choose that one};
+    \node (stop) [fStartStop, below of=notRandomChoice] {Stop};
+    
+    \draw [fArrow] (start) -- (predictedHDI);
+    \draw [fArrow] (predictedHDI) -- (anyMatches);
+    \draw [fArrow] (anyMatches) -- node[anchor=east] {no} (tie);
+    \draw [fArrow] (anyMatches) -| node[anchor=south] {yes} (randomChoice1);
+    \draw [fArrow] (tie) -- node[anchor=east] {no} (notRandomChoice);
+    \draw [fArrow] (tie) -- node[anchor=south] {yes} (randomChoice1);
+    \draw [fArrow] (randomChoice1) |- (stop);
+    \draw [fArrow] (notRandomChoice) -- (stop);
+\end{tikzpicture}
+\caption{Finding Similar Regions Flowchart}
+\end{figure}
 
 \subsection{Improved Algorithm for Suggestions}\label{sec:betterSuggestions}
-\dots
+The first improvement I would like to make for suggestions is placing multiple new buildings instead of just 1. The user will be able to choose how many, with another slider (by default, I believe 5 is a good number). However, with the current algorithm for finding where to place new buildings, all 5 of them will end up in the same place. Furthermore, some positions were unable to be calculated, as they depended on the positions of buildings such as universities, which smaller regions may not have. Therefore, we need a new algorithm to find where to place a new building.
+
+Again, placing a certain number of buildings in a region will increase the corresponding density factor by the same amount no matter where we place them, so we should focus on improving the average distance factors. For the remainder of this explanation, I will be using $A\left(\text{House},\text{School}\right)$, as an example. Therefore, the problem we are trying to solve is that of placing a new school, considering the existing positions of all houses and schools.
+
+The current algorithm for finding where to place this school to just place it in the mean position of all the houses. This does not take into account where there are schools missing, and often just puts schools in the middle of the region. We should therefore give more weight to those houses who are further from the closest school when considering the mean position.
+
+If we therefore let the weight we give each house inversely proportional to the distance from it to the nearest school, we can say that the new position for the school should be given by:
+
+\begin{equation}\label{eq:newPos}
+    \text{position}=\frac{\displaystyle\sum_{i}\displaystyle\frac{x_i}{\text{dist}\left(x_i,\text{nearest }y\right)}}{\displaystyle\sum_{i}\displaystyle\frac{1}{\text{dist}\left(x_i,\text{nearest }y\right)}}
+\end{equation}
+where $x_i$ is the position of the $i^\text{th}$ $x$-object (in this case, house), nearest $y$ is the position of the closest $y$-object (in this case, school), to that $x$-object, and $\text{dist}\left(a,b\right)$ is the distance from $a$ to $b$, as given by equaiton \ref{eq:dist2points}.
+
+We will therefore need to know beforehand which of the $y$-objects is closest to each $x$-object before we carry out this calculation, which we can find out in a similar way as we do in finding the average distance factors.
+
+Again, if there are multiple factors which will have an influence, we can repeat this process and take a mean of each of the values.
+
+This will hopefully lead to some better suggestions, but it still does not fix the issue where the new position was not able to be calculated due to the fact that there were no buildings to consider. In this case, we can place one of the required buildings in the middle of the region.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node (start) [fStartStop] {Start};
+    \node (in) [fInputOutput, below of=start] {Input all types of $x$-object for which there exists a factor $A\left(x,\text{New Building}\right)$};
+    \node (calcDists) [fProcess, below of=in, text width=8cm] {Calculate the shortest distance from each $x$-object of this type to the nearest New Building};
+    \node (meanPos) [fProcess, below of=calcDists] {Calculate the new position of this new building according to equation \ref{eq:newPos}};
+    \node (decision) [fDecision, below of=meanPos, yshift=-1cm] {Have we done this for all types of $x$-object?};
+    \node (incrementobject) [fProcess, right of=decision, xshift=5cm] {Move to the next type of $x$-object};
+    \node (nothing) [fDecision, below of=decision, yshift=-2cm] {Were there 0 of all types of $x$-object?};
+    \node (outputCentre) [fInputOutput, right of=nothing, xshift=5cm] {Output the centre of the region}; 
+    \node (out) [fInputOutput, below of=nothing, yshift=-1cm] {Output the mean of the calculated positions};
+    \node (stop) [fStartStop, below of=out] {Stop};
+    
+    \draw [fArrow] (start) -- (in);
+    \draw [fArrow] (in) -- (calcDists);
+    \draw [fArrow] (calcDists) -- (meanPos);
+    \draw [fArrow] (meanPos) -- (decision);
+    \draw [fArrow] (decision) -- node[anchor=east] {yes} (nothing);
+    \draw [fArrow] (decision) -- node[anchor=south] {no} (incrementobject);
+    \draw [fArrow] (incrementobject) |- (calcDists);
+    \draw [fArrow] (nothing) -- node[anchor=east] {no} (out);
+    \draw [fArrow] (nothing) -- node[anchor=south] {yes} (outputCentre);
+    \draw [fArrow] (out) -- (stop);
+    \draw [fArrow] (outputCentre) |- (stop);
+\end{tikzpicture}
+\caption{Finding a Better Optimal Place for New Building Flowchart}\label{fig:newBuildingBetter}
+\end{figure}
+
+Now that we can calculate the position of new buildings, in order to make suggestions we must calculate the top $n$ positions to place the new building, where $n$ is the number of new buildings, as selected by the user, recalculate the factors, and re-predict the HDI, which is similar for what we are already doing.
 
 \subsection{List of Key Variables}
-\dots
+\subsubsection{Variables in Calculating PMCC}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{training_data} & \pil{list[dict[float]]} & Stores the data we used to train the network, as it has all of the factors for each region & We must have many pairs of values to calculate an accurate value for $\rho$, and the training data had many \\ 
+    \hline
+    \pil{all_pairs} & \pil{list[list[str]]} & A \pil{list} of all possible pairs of factors & We must iterate over this list, and calculate the PMCC for each pair, to display in the heatmap \\ 
+    \hline
+    \pil{pmcc_grid} & \pil{list[list[float]]} & A 2-dimensional \pil{list}, which will store each of the values for $\rho$ & This will be passed into the graphics library, to create the chart. If we print this variable, it will look similar to how the heatmap will look, but without the colours. \\ 
+    \hline
+    \pil{file_path} & \pil{str} & A path to store the image of the heatmap & Once we generate the heatmap, we must save it to an image, so that we can add it to the gradio interface \\ 
+    \hline
+\caption{List of Key Variables in Calculating PMCC}
+\end{longtable}
+\end{center}
+
+\subsubsection{Variables in Finding Similar Regions}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{predictedHDI} & \pil{float} & Stores the predicted HDI ad given by the neural network & We must have a value for the HDI which we are trying to match \\ 
+    \hline
+    \pil{possible_choices} & \pil{list[str]} & A \pil{list} of regions, all of the same HDI, which are may either be the same as \pil{predictedHDI} or a group that is tied for closest & We will be randomly choosing a region from this list to display \\ 
+    \hline
+    \pil{similar_region} & \pil{str} & The randomly chosen region from \pil{possible_choices} & Will be returned to the ``similar region'' textbox in the main page \\ 
+    \hline
+\caption{List of Key Variables in Finding Similar Regions}
+\end{longtable}
+\end{center}
+
+\subsubsection{Variables in Finding an Optimal Place for a New Building}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{new_building_type} & \pil{str} & Holds the type of new building to be placed. & This is used to determine if there are any other factors which contain this type of building. \\ 
+    \hline
+    \pil{other_objects} & \pil{list[str]} & Holds each of the other types of object to consider. & We must iterate over this to find an optimal place for a new building. \\ 
+    \hline
+    \pil{current_object} & \pil{str} & Iterator variable for \pil{other_objects} & This will be used to keep track of which object we are currently considering \\ 
+    \hline
+    \pil{new_positions} & \pil{list[tuple[float]]} & Holds the new calculated positions when considering each of the other objects & This is a list of latitude and longitude coordinates, so a tuple is used as before. \\ 
+    \hline
+    \pil{final_position} & \pil{tuple[float]} & Holds the mean position of those newly calculated positions & If there are multiple factors to consider, we will need to find a middle position to satisfy all of them \\ 
+    \hline
+\caption{List of Key Variables in Finding an Optimal Place for a New Building}
+\end{longtable}
+\end{center}
+
+\subsubsection{Other Variables}
+\begin{center}
+\begin{longtable}{ | m{3cm} | m{4cm}| m{4cm} | m{4cm} |} 
+    \hline
+    \textbf{Identifier} & \textbf{Data Type} & \textbf{Explanation}  & \textbf{Justification} \\ 
+    \hline
+    \pil{number_new_buildings} & \pil{int} & Stores the number of new buildings to generate when making suggestions & Building more will hopefully lead to better suggestions, but will take longer to make. Users should therefore be able to change this value with a slider. \\ 
+    \hline
+    \pil{region_to_compare} & \pil{str} & Stores the region the user is comparing theirs with, in the Compare page. & We must use this, to get the right row from the training data \\ 
+    \hline
+\caption{List of Other Key Variables in User Interface}
+\end{longtable}
+\end{center}
 
 \section{Data}
 \subsection{Data Structures}
