@@ -91,29 +91,31 @@
 \contentsline {table}{\numberline {3.77}{\ignorespaces Testing Table for Code Snippet \ref {cs:validateMakeSuggestions}}}{180}{table.3.77}%
 \contentsline {table}{\numberline {3.78}{\ignorespaces Testing Table for Code Snippets \ref {cs:placePinOnMap} \& \ref {cs:functionalityToSuggestionsTable}}}{181}{table.3.78}%
 \contentsline {table}{\numberline {3.79}{\ignorespaces Passed Testing Data for Milestone 3}}{182}{table.3.79}%
-\contentsline {table}{\numberline {3.80}{\ignorespaces Achieved Success Criteria for Milestone 3}}{183}{table.3.80}%
+\contentsline {table}{\numberline {3.80}{\ignorespaces Achieved Success Criteria for Milestone 3}}{182}{table.3.80}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces List of Key Variables in Creating an Account}}{190}{table.4.1}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces List of Key Variables in Logging In}}{191}{table.4.2}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces List of Other Key Variables in Authentication System}}{191}{table.4.3}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces List of Key Variables in Calculating PMCC}}{205}{table.4.4}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces List of Key Variables in Finding Similar Regions}}{206}{table.4.5}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces List of Key Variables in Finding an Optimal Place for a New Building}}{206}{table.4.6}%
-\contentsline {table}{\numberline {4.7}{\ignorespaces List of Other Key Variables in User Interface}}{207}{table.4.7}%
-\contentsline {table}{\numberline {4.8}{\ignorespaces Testing Data for Milestone 4}}{208}{table.4.8}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces List of Key Variables in Creating an Account}}{189}{table.4.1}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces List of Key Variables in Logging In}}{190}{table.4.2}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces List of Other Key Variables in Authentication System}}{190}{table.4.3}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces List of Key Variables in Calculating PMCC}}{204}{table.4.4}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces List of Key Variables in Finding Similar Regions}}{205}{table.4.5}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces List of Key Variables in Finding an Optimal Place for a New Building}}{205}{table.4.6}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces List of Other Key Variables in User Interface}}{206}{table.4.7}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces Testing Data for Milestone 4}}{207}{table.4.8}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Success Criteria for Milestone 4}}{210}{table.5.1}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Testing Data for Milestone 4}}{211}{table.5.2}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Testing Table for Code Snippets \ref {cs:addingTabs} \& \ref {cs:logInSignUpTabs}}}{213}{table.5.3}%
-\contentsline {table}{\numberline {5.4}{\ignorespaces Testing Table for Code Snippet \ref {cs:signUpContent}}}{215}{table.5.4}%
-\contentsline {table}{\numberline {5.5}{\ignorespaces Testing Table for Code Snippet \ref {cs:logInContent}}}{216}{table.5.5}%
-\contentsline {table}{\numberline {5.6}{\ignorespaces Testing Table for Code Snippet \ref {cs:connectMongo}}}{219}{table.5.6}%
-\contentsline {table}{\numberline {5.7}{\ignorespaces Testing Table for Code Snippet \ref {cs:fixSSL}}}{220}{table.5.7}%
-\contentsline {table}{\numberline {5.8}{\ignorespaces Testing Table for Code Snippet \ref {cs:signUp}}}{220}{table.5.8}%
-\contentsline {table}{\numberline {5.9}{\ignorespaces $T_{9}$ Testing Table (for Code Snippets \ref {cs:noEmptyFields} \& \ref {cs:validateUsername})}}{223}{table.5.9}%
-\contentsline {table}{\numberline {5.10}{\ignorespaces $T_{10}$ Testing Table (for Code Snippets \ref {cs:validatePasswordDoubleEntry}, \ref {cs:validatePasswordLength}, \ref {cs:validatePasswordDigits} \& \ref {cs:validatePasswordSpecialChars})}}{226}{table.5.10}%
-\contentsline {table}{\numberline {5.11}{\ignorespaces $T_{11}$ Testing Table (for Code Snippet \ref {cs:saltHashPassword})}}{227}{table.5.11}%
-\contentsline {table}{\numberline {5.12}{\ignorespaces Testing Table for Code Snippet \ref {cs:addToMongo}}}{228}{table.5.12}%
-\contentsline {table}{\numberline {5.13}{\ignorespaces Testing Table for Code Snippet \ref {cs:logIn}}}{229}{table.5.13}%
-\contentsline {table}{\numberline {5.14}{\ignorespaces $T_{12}$ Testing Table (for Code Snippets \ref {cs:noEmptyFieldsLogIn}, \ref {cs:validateUsernameExists}, \ref {cs:correctPassword} \& \ref {cs:grantAccessToAccount})}}{231}{table.5.14}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Success Criteria for Milestone 4}}{209}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Testing Data for Milestone 4}}{210}{table.5.2}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Testing Table for Code Snippets \ref {cs:addingTabs} \& \ref {cs:logInSignUpTabs}}}{212}{table.5.3}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Testing Table for Code Snippet \ref {cs:signUpContent}}}{214}{table.5.4}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Testing Table for Code Snippet \ref {cs:logInContent}}}{215}{table.5.5}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Testing Table for Code Snippet \ref {cs:connectMongo}}}{218}{table.5.6}%
+\contentsline {table}{\numberline {5.7}{\ignorespaces Testing Table for Code Snippet \ref {cs:fixSSL}}}{219}{table.5.7}%
+\contentsline {table}{\numberline {5.8}{\ignorespaces Testing Table for Code Snippet \ref {cs:signUp}}}{219}{table.5.8}%
+\contentsline {table}{\numberline {5.9}{\ignorespaces $T_{9}$ Testing Table (for Code Snippets \ref {cs:noEmptyFields} \& \ref {cs:validateUsername})}}{222}{table.5.9}%
+\contentsline {table}{\numberline {5.10}{\ignorespaces $T_{10}$ Testing Table (for Code Snippets \ref {cs:validatePasswordDoubleEntry}, \ref {cs:validatePasswordLength}, \ref {cs:validatePasswordDigits} \& \ref {cs:validatePasswordSpecialChars})}}{225}{table.5.10}%
+\contentsline {table}{\numberline {5.11}{\ignorespaces $T_{11}$ Testing Table (for Code Snippet \ref {cs:saltHashPassword})}}{226}{table.5.11}%
+\contentsline {table}{\numberline {5.12}{\ignorespaces Testing Table for Code Snippet \ref {cs:addToMongo}}}{227}{table.5.12}%
+\contentsline {table}{\numberline {5.13}{\ignorespaces Testing Table for Code Snippet \ref {cs:logIn}}}{228}{table.5.13}%
+\contentsline {table}{\numberline {5.14}{\ignorespaces $T_{12}$ Testing Table (for Code Snippets \ref {cs:noEmptyFieldsLogIn}, \ref {cs:validateUsernameExists}, \ref {cs:correctPassword} \& \ref {cs:grantAccessToAccount})}}{230}{table.5.14}%
+\contentsline {table}{\numberline {5.15}{\ignorespaces Passed Testing Data for Milestone 4}}{231}{table.5.15}%
+\contentsline {table}{\numberline {5.16}{\ignorespaces Achieved Success Criteria for Milestone 4}}{231}{table.5.16}%
 \addvspace {10\p@ }

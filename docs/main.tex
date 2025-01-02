@@ -6402,7 +6402,7 @@ All 3 of the main tests in Milestone 3 passed. As a result of that, the followin
     no head,
     column count=5,
     column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
-    filter ifthen={\equal{\scID}{$S_{8}$}\OR\equal{\scID}{$S_{9}$}\OR\equal{\scID}{$S_{3}$}\OR\equal{\scID}{$S_{10}$}\OR\equal{\scID}{$S_{11}$}\OR\equal{\scID}{\textbf{No.}}},
+    filter ifthen={\equal{\scID}{$S_{8}$}\OR\equal{\scID}{$S_{9}$}\OR\equal{\scID}{$S_{10}$}\OR\equal{\scID}{$S_{11}$}\OR\equal{\scID}{\textbf{No.}}},
     before reading={
         \begin{longtable}{|m{1cm}|m{5cm}|m{6cm}|m{2cm}|H}
         \hline
@@ -7394,7 +7394,7 @@ By the end of this milestone, I hope to have a fully functioning authentication 
     no head,
     column count=5,
     column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
-    filter ifthen={\equal{\scID}{$S_{13}$}\OR\equal{\scID}{$S_{14}$}\OR\equal{\scID}{\textbf{No.}}},
+    filter ifthen={\equal{\scID}{$S_{12}$}\OR\equal{\scID}{$S_{13}$}\OR\equal{\scID}{\textbf{No.}}},
     before reading={
         \begin{longtable}{|m{1cm}|m{5cm}|m{8cm}|H H}
         \hline
@@ -8186,7 +8186,50 @@ If nothing has been returned yet, then that means the user has entered the corre
 \end{center}
 
 \subsection{Review}
-\dots
+
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$T_{9}$}\OR\equal{\testID}{$T_{10}$}\OR\equal{\testID}{$T_{11}$}\OR\equal{\testID}{$T_{12}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{8cm}|H|m{2cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Passed Testing Data for Milestone 4}
+        \end{longtable}
+    }
+}
+\end{center}
+
+All 4 of the main tests in Milestone 4 passed. As a result of that, the following success criteria has been met:
+
+\begin{center}
+\csvloop{
+    file=data/successcriteria.csv,
+    no head,
+    column count=5,
+    column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
+    filter ifthen={\equal{\scID}{$S_{12}$}\OR\equal{\scID}{$S_{13}$}\OR\equal{\scID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{5cm}|m{6cm}|m{2cm}|H}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Achieved Success Criteria for Milestone 4}
+        \end{longtable}
+    }
+}
+\end{center}
+
+I also have a fully functioning authentication system, where the user can create and log into an account.
 
 \section{Milestone 5 -- Final User Interface}
 \subsection{Success Criteria}
