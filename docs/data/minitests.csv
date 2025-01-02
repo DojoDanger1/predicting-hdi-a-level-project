@@ -111,3 +111,8 @@ $T_{11.1}$,Encryption Algorithm,\pil{'password123'},--,Some Hash,As Expected
 $T_{11.2}$,Encryption Algorithm,\pil{'Password123'},--,A Different Hash,As Expected
 $T_{11.3}$,Encryption Algorithm,\pil{'password123'},--,Another Different Hash,As Expected
 $t_{69}$,Insert into MongoDB,User Document,--,Username\comma{} Hashed Password\comma{} and regions saved to MongoDB,As Expected
+$t_{70}$,Log In Button,--,--,\pil{def logIn} function is executed (temporary print statement was added to test),As Expected
+$T_{12.1}$,Logging In,Username which does not exist,Invalid,Prompt to enter an existing username,As Expected
+$T_{12.2}$,Logging In,Incorrect Password,Invalid,Prompt to enter the correct password,As Expected
+$T_{12.3}$,Logging In,Existing Username \& Correct Password,Valid,Success Message,As Expected
+$T_{12.4}$,Logging In,No Username or Password,Invalid,Prompt to enter a username and password,As Expected

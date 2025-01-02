@@ -99,19 +99,24 @@
 \contentsline {listing}{\numberline {3.96}{\ignorespaces Adding Functionality to the Suggestions Table}}{181}{listing.3.96}%
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {listing}{\numberline {5.1}{\ignorespaces Embedding the current UI into a Tab}}{210}{listing.5.1}%
-\contentsline {listing}{\numberline {5.2}{\ignorespaces Adding the Log In \& Sign Up Tabs}}{211}{listing.5.2}%
-\contentsline {listing}{\numberline {5.3}{\ignorespaces Adding the Content of the Sign Up Tab}}{212}{listing.5.3}%
-\contentsline {listing}{\numberline {5.4}{\ignorespaces Adding the Content of the Log In Tab}}{215}{listing.5.4}%
-\contentsline {listing}{\numberline {5.5}{\ignorespaces Connecting to the MongoDB}}{217}{listing.5.5}%
-\contentsline {listing}{\numberline {5.6}{\ignorespaces Fixing the SSL Certificate Error}}{218}{listing.5.6}%
-\contentsline {listing}{\numberline {5.7}{\ignorespaces Adding the \mintinline [breaklines, breakafter=_]{python}|def signUp| function}}{219}{listing.5.7}%
-\contentsline {listing}{\numberline {5.8}{\ignorespaces Ensuring no Empty Fields}}{219}{listing.5.8}%
-\contentsline {listing}{\numberline {5.9}{\ignorespaces Validating the Username}}{220}{listing.5.9}%
-\contentsline {listing}{\numberline {5.10}{\ignorespaces Validating the Password -- Double Entry Validation}}{222}{listing.5.10}%
-\contentsline {listing}{\numberline {5.11}{\ignorespaces Validating the Password -- Length}}{222}{listing.5.11}%
-\contentsline {listing}{\numberline {5.12}{\ignorespaces Validating the Password -- Digits}}{223}{listing.5.12}%
-\contentsline {listing}{\numberline {5.13}{\ignorespaces Validating the Password -- Special Characters}}{223}{listing.5.13}%
-\contentsline {listing}{\numberline {5.14}{\ignorespaces Salting \& Hashing the Password}}{226}{listing.5.14}%
-\contentsline {listing}{\numberline {5.15}{\ignorespaces Adding the User to MongoDB}}{227}{listing.5.15}%
+\contentsline {listing}{\numberline {5.1}{\ignorespaces Embedding the current UI into a Tab}}{211}{listing.5.1}%
+\contentsline {listing}{\numberline {5.2}{\ignorespaces Adding the Log In \& Sign Up Tabs}}{212}{listing.5.2}%
+\contentsline {listing}{\numberline {5.3}{\ignorespaces Adding the Content of the Sign Up Tab}}{213}{listing.5.3}%
+\contentsline {listing}{\numberline {5.4}{\ignorespaces Adding the Content of the Log In Tab}}{216}{listing.5.4}%
+\contentsline {listing}{\numberline {5.5}{\ignorespaces Connecting to the MongoDB}}{218}{listing.5.5}%
+\contentsline {listing}{\numberline {5.6}{\ignorespaces Fixing the SSL Certificate Error}}{219}{listing.5.6}%
+\contentsline {listing}{\numberline {5.7}{\ignorespaces Adding the \mintinline [breaklines, breakafter=_]{python}|def signUp| function}}{220}{listing.5.7}%
+\contentsline {listing}{\numberline {5.8}{\ignorespaces Ensuring no Empty Fields}}{220}{listing.5.8}%
+\contentsline {listing}{\numberline {5.9}{\ignorespaces Validating the Username}}{221}{listing.5.9}%
+\contentsline {listing}{\numberline {5.10}{\ignorespaces Validating the Password -- Double Entry Validation}}{223}{listing.5.10}%
+\contentsline {listing}{\numberline {5.11}{\ignorespaces Validating the Password -- Length}}{223}{listing.5.11}%
+\contentsline {listing}{\numberline {5.12}{\ignorespaces Validating the Password -- Digits}}{224}{listing.5.12}%
+\contentsline {listing}{\numberline {5.13}{\ignorespaces Validating the Password -- Special Characters}}{224}{listing.5.13}%
+\contentsline {listing}{\numberline {5.14}{\ignorespaces Salting \& Hashing the Password}}{227}{listing.5.14}%
+\contentsline {listing}{\numberline {5.15}{\ignorespaces Adding the User to MongoDB}}{228}{listing.5.15}%
+\contentsline {listing}{\numberline {5.16}{\ignorespaces Adding the \mintinline [breaklines, breakafter=_]{python}|def logIn| function}}{229}{listing.5.16}%
+\contentsline {listing}{\numberline {5.17}{\ignorespaces Ensuring No Empty Fields in Logging In}}{229}{listing.5.17}%
+\contentsline {listing}{\numberline {5.18}{\ignorespaces Validating the Username's Existance}}{230}{listing.5.18}%
+\contentsline {listing}{\numberline {5.19}{\ignorespaces Checking the Password is Correct}}{230}{listing.5.19}%
+\contentsline {listing}{\numberline {5.20}{\ignorespaces Granting Access to the Account}}{230}{listing.5.20}%
 \addvspace {10pt}

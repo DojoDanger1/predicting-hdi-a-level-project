@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} validate \PYGZam{} log in the user}
+\PYG{k}{def} \PYG{n+nf}{logIn}\PYG{p}{(}\PYG{n}{username}\PYG{p}{,} \PYG{n}{password}\PYG{p}{):}
+    \PYG{k}{pass}
+\end{Verbatim}

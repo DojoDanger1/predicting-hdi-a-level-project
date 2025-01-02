@@ -8048,9 +8048,142 @@ If we check the database on the MongoDB website, we can see the account generate
 }
 \end{center}
 
+I can now therefore delete the fake \pil{'lukewilliams'} account, which has no hashed password and no regions array, as we now have a real account to test with.
+
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Log In Backend}
-\dots
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=185]{python}
+# validate & log in the user
+def logIn(username, password):
+    pass
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=246]{python}
+    logInButton.click(logIn, inputs=[logInUsername, logInPassword], outputs=[logInResult])
+\end{minted}
+\caption{Adding the \pil{def logIn} function}\label{cs:logIn}
+\end{listing}
+
+Here, I am adding a gradio functionality to the log in button, where we pass in the 2 textboxes, and output to the result textbox. For now, I am passing, so that there are no indentation errors that follow.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{70}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:logIn}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=187]{python}
+    # validate no empty fields
+    if username == '' or password == '':
+        return 'Please fill in all fields!'
+\end{minted}
+\caption{Ensuring No Empty Fields in Logging In}\label{cs:noEmptyFieldsLogIn}
+\end{listing}
+
+For logging in, we must again first check if any of the fields have been left empty. If any have, we must return a suitable message, prompting the user to fill everything in.
+
+\begin{listing}[H]
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=190]{python}
+    # check username exists
+    if users.count_documents({'username': username}) == 0:
+        return 'This username does not exist! Please ensure that you have entered the correct username.'
+\end{minted}
+\caption{Validating the Username's Existance}\label{cs:validateUsernameExists}
+\end{listing}
+
+Next, we must check if the username they entered exists in the database. To do this, we can use the same \pil{count_documents} method, but this time check if there \textit{are} 0 instead of checking if there \textit{aren't} 0. If there are 0, then they must have entered the wrong username, and so we should return a suitable message.
+
+\begin{listing}[H]
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=193]{python}
+    # check password
+    user = users.find_one({'username': username})
+    if not bcrypt.checkpw(password.encode('utf-8'), user['hashedPassword']): # the hashed passwords do not match
+        return 'Incorrect Password! Please try again.'
+\end{minted}
+\caption{Checking the Password is Correct}\label{cs:correctPassword}
+\end{listing}
+
+Now we must check the password is correct. To do this, we must first retrieve the user's document from the MongoDB collection. Now that we have ensured that the username does exist, we can pass it into the \pil{find_one} method, and be sure it won't return an error. It will instead return the dictionary we inserted into the MongoDB in the \pil{def signIn} function.
+
+Once we have the user's hashed password (from their dictionary), we must use the \pil{checkpw} function from the \pil{bcrypt} library. This is because the randomly generated salt is stored with the hashed password, and we must use \pil{bcrypt} to retrieve it and check that it is correct. If it is not correct, we should return an error message, saying that the user has entered an incorrect password.
+
+\begin{listing}[H]
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=197]{python}
+    # grant access to the account
+    return f'Successfully logged in as {username}!'
+\end{minted}
+\caption{Granting Access to the Account}\label{cs:grantAccessToAccount}
+\end{listing}
+
+If nothing has been returned yet, then that means the user has entered the correct information and can be granted access to the account. Currently this does nothing, as I have not implemented saving regions yet. However, we can add the final return success message, to tell the user they have logged in.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss16.1a.png}
+    \caption{Non-Existant Username}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss16.1b.png}
+    \caption{Incorrect Password}
+\end{subfigure}
+
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss16.1c.png}
+    \caption{Valid Login}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss16.1d.png}
+    \caption{No Login}
+\end{subfigure}
+\caption{Validating Login}\label{fig:logInValidation}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{12.1}$}\OR\equal{\mtestID}{$T_{12.2}$}\OR\equal{\mtestID}{$T_{12.3}$}\OR\equal{\mtestID}{$T_{12.4}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{12}$ Testing Table (for Code Snippets \ref{cs:noEmptyFieldsLogIn}, \ref{cs:validateUsernameExists}, \ref{cs:correctPassword} \& \ref{cs:grantAccessToAccount})}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \subsection{Review}
 \dots

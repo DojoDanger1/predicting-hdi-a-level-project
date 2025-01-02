@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} check username exists}
+    \PYG{k}{if} \PYG{n}{users}\PYG{o}{.}\PYG{n}{count\PYGZus{}documents}\PYG{p}{(\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}username\PYGZsq{}}\PYG{p}{:} \PYG{n}{username}\PYG{p}{\PYGZcb{})} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}This username does not exist! Please ensure that you have entered the correct username.\PYGZsq{}}
+\end{Verbatim}

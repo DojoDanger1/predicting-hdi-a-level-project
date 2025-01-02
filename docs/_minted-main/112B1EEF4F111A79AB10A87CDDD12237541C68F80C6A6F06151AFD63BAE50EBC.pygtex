@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} check password}
+    \PYG{n}{user} \PYG{o}{=} \PYG{n}{users}\PYG{o}{.}\PYG{n}{find\PYGZus{}one}\PYG{p}{(\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}username\PYGZsq{}}\PYG{p}{:} \PYG{n}{username}\PYG{p}{\PYGZcb{})}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{bcrypt}\PYG{o}{.}\PYG{n}{checkpw}\PYG{p}{(}\PYG{n}{password}\PYG{o}{.}\PYG{n}{encode}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}utf\PYGZhy{}8\PYGZsq{}}\PYG{p}{),} \PYG{n}{user}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}hashedPassword\PYGZsq{}}\PYG{p}{]):} \PYG{c+c1}{\PYGZsh{} the hashed passwords do not match}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}Incorrect Password! Please try again.\PYGZsq{}}
+\end{Verbatim}
