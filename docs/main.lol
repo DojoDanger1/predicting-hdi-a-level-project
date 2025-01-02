@@ -99,4 +99,8 @@
 \contentsline {listing}{\numberline {3.96}{\ignorespaces Adding Functionality to the Suggestions Table}}{181}{listing.3.96}%
 \addvspace {10pt}
 \addvspace {10pt}
+\contentsline {listing}{\numberline {5.1}{\ignorespaces Embedding the current UI into a Tab}}{210}{listing.5.1}%
+\contentsline {listing}{\numberline {5.2}{\ignorespaces Adding the Log In \& Sign Up Tabs}}{211}{listing.5.2}%
+\contentsline {listing}{\numberline {5.3}{\ignorespaces Adding the Content of the Sign Up Tab}}{212}{listing.5.3}%
+\contentsline {listing}{\numberline {5.4}{\ignorespaces Adding the Content of the Log In Tab}}{215}{listing.5.4}%
 \addvspace {10pt}

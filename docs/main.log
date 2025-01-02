@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.28)  1 JAN 2025 18:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.28)  2 JAN 2025 12:03
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -8451,16 +8451,168 @@ Underfull \hbox (badness 1231) in paragraph at lines 7430--7430
 
 [209
 
-] [210] [211]
+]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/9651B8505A0D29FE0C916BF982B4976D541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/2C74A8C4D9429BCD1C65EF0CEDB39877541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/C280DBA7819DD5B70B242A4083F31CA6541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/8671DF2B54AC16246A7A4B49A141FA9F541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+<./images/ss14.1.png, id=2448, 541.02126pt x 182.6825pt>
+File: ./images/ss14.1.png Graphic file (type png)
+<use ./images/ss14.1.png>
+Package pdftex.def Info: ./images/ss14.1.png  used on input line 7453.
+(pdftex.def)             Requested size: 341.43306pt x 115.29128pt.
+ [210]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/9651B8505A0D29FE0C916BF982B4976D541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/BB15730C1CD99200FEAD3492A4BF6341541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/C280DBA7819DD5B70B242A4083F31CA6541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/81AB62A717E411CE854FB278C7776989541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/7776A198B37DFE3C83DA8F7444C16413541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+<./images/ss14.2.png, id=2456, 540.0175pt x 191.71625pt>
+File: ./images/ss14.2.png Graphic file (type png)
+<use ./images/ss14.2.png>
+Package pdftex.def Info: ./images/ss14.2.png  used on input line 7474.
+(pdftex.def)             Requested size: 341.43306pt x 121.21774pt.
+<./images/ss14.3.png, id=2458, 276.03125pt x 101.37875pt>
+File: ./images/ss14.3.png Graphic file (type png)
+<use ./images/ss14.3.png>
+Package pdftex.def Info: ./images/ss14.3.png  used on input line 7482.
+(pdftex.def)             Requested size: 341.43306pt x 125.41287pt.
+ [211 <./images/ss14.1.png> <./images/ss14.2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 7505--7505
+[]|\OT1/cmr/m/n/12 Tabs Ap-pear-
+ []
+
+
+Underfull \hbox (badness 7451) in paragraph at lines 7505--7505
+\OT1/cmr/m/n/12 the top right,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7505--7505
+[]|\OT1/cmr/m/n/12 Gradio Mark-
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/47CCD8145BD4B532481E73D6FC729F2B541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 7505--7505
+[]|\OT1/cmr/m/n/12 Displays the
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 7505--7505
+ [] [] [] [] [] [] 
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/9651B8505A0D29FE0C916BF982B4976D541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/9B77D48126CA8B1090F323B0E707CD9B541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/FF3254B903C56A960E5A8484901A1DB6541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [212 <./images/ss14.3.png>]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/67C7AF266DB2D37B8B5814FA74DF0020541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/9EA8983A72E34E68F3A5CE57447F60B8541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+<./images/ss14.4.png, id=2480, 1911.14pt x 983.675pt>
+File: ./images/ss14.4.png Graphic file (type png)
+<use ./images/ss14.4.png>
+Package pdftex.def Info: ./images/ss14.4.png  used on input line 7527.
+(pdftex.def)             Requested size: 398.33858pt x 205.01685pt.
+<./images/ss14.5.png, id=2482, 292.09125pt x 324.21124pt>
+File: ./images/ss14.5.png Graphic file (type png)
+<use ./images/ss14.5.png>
+Package pdftex.def Info: ./images/ss14.5.png  used on input line 7535.
+(pdftex.def)             Requested size: 284.52756pt x 315.84497pt.
+ [213 <./images/ss14.4.png>]
+Underfull \hbox (badness 6608) in paragraph at lines 7558--7558
+[]|\OT1/cmr/m/n/12 3 Textbox in-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7558--7558
+\OT1/cmr/m/n/12 puts for the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7558--7558
+\OT1/cmr/m/n/12 word, and
+ []
+
+
+Underfull \hbox (badness 1939) in paragraph at lines 7558--7558
+\OT1/cmr/m/n/12 pass-word ver-i-fi-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7558--7558
+\OT1/cmr/m/n/12 and a re-sult
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7558--7558
+[]|\OT1/cmr/m/n/12 Password cen-
+ []
+
+
+Underfull \hbox (badness 3209) in paragraph at lines 7558--7558
+[]|\OT1/cmr/m/n/12 A pass-word of
+ []
+
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 7558--7558
+ [] [] [] [] [] [] 
+ []
+
+\openout4 = `main.pyg'.
+
+(./_minted-main/9651B8505A0D29FE0C916BF982B4976D541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
+\openout3 = `main.pyg'.
+
+ (./_minted-main/A1AA0A576F50577E5C2D1B700A0AFAA4541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [214 <./images/ss14.5.png>]
+<./images/ss14.6.png, id=2498, 1909.1325pt x 982.67125pt>
+File: ./images/ss14.6.png Graphic file (type png)
+<use ./images/ss14.6.png>
+Package pdftex.def Info: ./images/ss14.6.png  used on input line 7577.
+(pdftex.def)             Requested size: 398.33858pt x 205.03255pt.
+
+Overfull \hbox (31.83623pt too wide) in alignment at lines 7600--7600
+ [] [] [] [] [] [] 
+ []
+
+[215 <./images/ss14.6.png>] [216]
 Chapter 6.
-[212
+[217
 
 ]
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 7464.
+(hyperref)                be the same. Added a new anchor on input line 7630.
 
-(./main.lof [213
+(./main.lof [218
 
 
 ]
@@ -8493,7 +8645,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/31884D3EA70719F40E4AF8879D03BA83541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/F3762BD54174BEF706895AA1E2CFED1C541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [214]
+ (./_minted-main/F3762BD54174BEF706895AA1E2CFED1C541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [219]
 \openout4 = `main.pyg'.
 
  (./_minted-main/0853210BD38F7843BAFD16EBB9ECB2E5541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
@@ -8512,7 +8664,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
 \tf@lof=\write10
 \openout10 = `main.lof'.
 
- [215] (./main.lol
+ [220] (./main.lol
 \openout4 = `main.pyg'.
 
  (./_minted-main/59182B729FA5D708AB44B6E23A2071A0541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
@@ -8530,27 +8682,27 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/EECC1ECFC7801C659F7B4E8D14F5C8CD541C68F80C6A6F06151AFD63BAE50EBC.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/7C541B516C88817AFCDC0256050A94CA541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [216
+ (./_minted-main/7C541B516C88817AFCDC0256050A94CA541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [221
 
 
 ]
 \openout4 = `main.pyg'.
 
- (./_minted-main/0D578F848F676236E6B212E72B91B866541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [217]
+ (./_minted-main/0D578F848F676236E6B212E72B91B866541C68F80C6A6F06151AFD63BAE50EBC.pygtex) [222]
 \openout4 = `main.pyg'.
 
  (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364E541C68F80C6A6F06151AFD63BAE50EBC.pygtex))
 \tf@lol=\write11
 \openout11 = `main.lol'.
 
- [218] (./main.lot [219
+ [223] (./main.lot [224
 
 
-] [220])
+] [225])
 \tf@lot=\write12
 \openout12 = `main.lot'.
 
- [221] (./main.bbl
+ [226] (./main.bbl
 Underfull \hbox (badness 7047) in paragraph at lines 14--17
 []\OT1/cmr/m/n/12 Human De-vel-op-ment Re-ports.  country-insights.  [][]$\OT1/cmtt/m/n/12 https : / / hdr . undp . org /
  []
@@ -8570,7 +8722,7 @@ Underfull \hbox (badness 6220) in paragraph at lines 44--47
 []\OT1/cmr/m/n/12 Micheal Nielsen.  neural-networks-and-deep-learning.  [][]$\OT1/cmtt/m/n/12 https : / / github . com /
  []
 
-) [222
+) [227
 
 
 ] (./main.aux)
@@ -8579,23 +8731,23 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: DA6A37FF89B19308AD6B3BD8FC73110F;19002.
+(rerunfilecheck)             Checksum: 2107D376F48960491E5CA25465D3C0FC;19002.
 runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 72618 strings out of 474116
- 2012524 string characters out of 5743681
- 2476221 words of memory out of 5000000
- 90775 multiletter control sequences out of 15000+600000
+ 72792 strings out of 474116
+ 2021758 string characters out of 5743681
+ 2482869 words of memory out of 5000000
+ 90886 multiletter control sequences out of 15000+600000
  582457 words of font info for 126 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  130i,23n,129p,2723b,2887s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (223 pages, 11187144 bytes).
+Output written on main.pdf (228 pages, 11423364 bytes).
 PDF statistics:
- 3216 PDF objects out of 3580 (max. 8388607)
- 2698 compressed objects within 27 object streams
- 848 named destinations out of 1000 (max. 500000)
- 1128 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 3296 PDF objects out of 3580 (max. 8388607)
+ 2756 compressed objects within 28 object streams
+ 866 named destinations out of 1000 (max. 500000)
+ 1158 words of extra memory for PDF output out of 10000 (max. 10000000)
 

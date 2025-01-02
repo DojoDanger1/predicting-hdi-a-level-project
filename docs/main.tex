@@ -7432,7 +7432,173 @@ To determine if I have met this success criteria, I will be using the following 
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Authentication Frontend}
-\dots
+
+The first thing we must do is implement the tab structure, as shown in the interface sketches.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=152]{python}
+# structure of the UI
+with gr.Blocks() as app:
+    with gr.Tab(label='Predict'):
+        (the entirety of the ui so far, indented)
+\end{minted}
+\caption{Embedding the current UI into a Tab}\label{cs:addingTabs}
+\end{listing}
+
+In the \pil{gr.Blocks} environment, if we put the entirety of the user interface so far into a \pil{gr.Tab}, everything will be incased in a tab, with a label as specified.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss14.1.png}
+\caption{Predict Tab}\label{fig:ss14.1}
+\end{figure}
+
+Figure \ref{fig:ss14.1} shows how the tab has been added in the top left of the screen.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=170]{python}
+    with gr.Tab(label='Log In'):
+        gr.Markdown('there\'s nothing here yet!') # placeholder text
+    with gr.Tab(label='Sign Up'):
+        gr.Markdown('there\'s nothing here yet!') # placeholder text
+\end{minted}
+\caption{Adding the Log In \& Sign Up Tabs}\label{cs:logInSignUpTabs}
+\end{listing}
+
+To then add new tabs, we can add them on the same level as the first one (1 indent, inside the \pil{gr.Blocks}), after the content of the first tab. We must specify at least one element in the tab, otherwise we will have an indentation error (the python interpreter will expect at least 1 line of code to be indented by 2, after each \pil{with} statement). For now, I have added a \pil{gr.Markdown} element, which will allow us to add text to the UI. I plan on using this element for the help tab, as well as any headers that may be useful.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss14.2.png}
+\caption{Log In \& Sign Up Tabs}\label{fig:ss14.2}
+\end{figure}
+
+Figure \ref{fig:ss14.2} shows how the new tabs have been added next to the first one
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss14.3.png}
+\caption{Placeholder Markdown}\label{fig:ss14.3}
+\end{figure}
+
+If we click on one of the tabs, we see the text as specified by the markdown (``there's nothing here yet!'').
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{62}$}\OR\equal{\mtestID}{$t_{63}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:addingTabs} \& \ref{cs:logInSignUpTabs}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=172]{python}
+    with gr.Tab(label='Sign Up'):
+        signUpUsername = gr.Textbox(label='Username', placeholder='Enter your username...')
+        signUpPassword = gr.Textbox(label='Password', placeholder='Enter your password...', type='password')
+        signUpPassword2 = gr.Textbox(label='Re-Enter Password', placeholder='Re-Enter your password...', type='password')
+        signUpButton = gr.Button(value='Create an Account', variant='primary')
+        signUpResult = gr.Textbox(label='Result', interactive=False)
+\end{minted}
+\caption{Adding the Content of the Sign Up Tab}\label{cs:signUpContent}
+\end{listing}
+
+For the sign in tab, we must add 3 textboxes, one for the username, and 2 for the password. For each textbox, we can specify a label, to add text above the field, and a placeholder, to add temporary, grayed-out text inside the field. For the 2 password fields, we can also specify \pil{type='password'}, which will censor whatever the user inputs, by showing each character as a dot.
+
+Below the 3 textboxes, we must have a button for the user to press to create an account, again coloured in the primary ``call to action'' colour, so we can set \pil{variant='primary'}. Finally, below the button, we must have a textbox which is the user cannot type in, to show the result of the sign up. To make this happen, we can set \pil{interactive=False}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss14.4.png}
+\caption{Complete Sign Up Tab}\label{fig:ss14.4}
+\end{figure}
+
+Figure \ref{fig:ss14.4} shows the complete sign up page, with all of the elements correctly positioned and labelled.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=10cm]{ss14.5.png}
+\caption{Censorship of the user's password}\label{fig:ss14.5}
+\end{figure}
+
+If we try to type in a password, we can see that the censorship also works
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{64}$}\OR\equal{\mtestID}{$t_{65}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:signUpContent}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=170]{python}
+    with gr.Tab(label='Log In'):
+        logInUsername = gr.Textbox(label='Username', placeholder='Enter your username...')
+        logInPassword = gr.Textbox(label='Password', placeholder='Enter your password...', type='password')
+        logInButton = gr.Button(value='Log In', variant='primary')
+        logInResult = gr.Textbox(label='Result', interactive=False)
+\end{minted}
+\caption{Adding the Content of the Log In Tab}\label{cs:logInContent}
+\end{listing}
+
+The log in page is very similar to the sign up page, except we only have 1 password field instead of 2. Once I deleted the second password textbox, all that needed doing was changing a few labels.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss14.6.png}
+\caption{Complete Log In Tab}\label{fig:ss14.6}
+\end{figure}
+
+Figure \ref{fig:ss14.6} shows the complete log in page, with all of the elements correctly positioned and labelled.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{66}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:logInContent}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Authentication Backend}

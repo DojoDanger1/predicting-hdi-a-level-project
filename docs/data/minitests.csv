@@ -90,3 +90,8 @@ $t_{59}$,Suggestions Returned to Table,--,--,Columns for building type\comma{} l
 $t_{59}$,Suggestions Returned to Table,--,--,Columns for building type\comma{} location\comma{} new HDI\comma{} and change in HDI,As Expected
 $t_{60}$,Validation for Suggestions,User attempts to make suggestions before predicting,Invalid,Error is thrown to the table,As Expected
 $t_{61}$,User clicks coordinate to see map,--,--,Marker added to map and shows that area,As Expected
+$t_{62}$,Tabs Appearance,--,--,Tabs appear in the top right\comma{} users can switch between them,As Expected
+$t_{63}$,Gradio Markdown,``there's nothing here yet!'',--,Displays the text passed into \pil{gr.Markdown()},As Expected
+$t_{64}$,Sign Up Tab,--,--,3 Textbox inputs for the username\comma{} password\comma{} and password verification\comma{} a button\comma{} and a result textbox,As Expected
+$t_{65}$,Password censorship,A password of length $n$,--,$n$ dots,As Expected
+$t_{66}$,Sign Up Tab,--,--,2 Textbox inputs for the username and password\comma{} a button\comma{} and a result textbox,As Expected

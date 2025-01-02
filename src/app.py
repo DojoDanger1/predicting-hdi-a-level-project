@@ -151,21 +151,33 @@ draw.add_to(foliumMap)
 
 # structure of the UI
 with gr.Blocks() as app:
-    with gr.Row():
-        with gr.Column(scale=3):
-            map = Folium(value=foliumMap)
-            uploadButton = gr.UploadButton(label='Upload the GeoJSON file', file_count='single')
-        with gr.Column(scale=1):
-            predictHDIbutton = gr.Button(value='Predict HDI', variant='primary')
-            with gr.Group():
-                max_x_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum x-buildings', info='When calculating the average distance between 2 types of building, it will find the average of this many pairs. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
-                max_y_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum y-buildings', info='When calculating the average distance between 2 types of building, it will find the closest of the second type of building out of this many options. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
-            with gr.Group():
-                HDIprediction = gr.Textbox(label='I believe that the HDI of this region is...', value='', interactive=False)
-                similarHDI = gr.Textbox(label='That\'s a similar HDI to...', value='', interactive=False)
-    makeSuggestionsButton = gr.Button(value='Make Suggestions')
-    suggestionsTable = gr.Dataframe(label='Suggestions', headers=['New Building', 'Coordinates', 'New HDI', 'Change in HDI'], type='array', interactive=False)
-    log = gr.Textbox(label='Log Messages', value='', interactive=False)
+    with gr.Tab(label='Predict'):
+        with gr.Row():
+            with gr.Column(scale=3):
+                map = Folium(value=foliumMap)
+                uploadButton = gr.UploadButton(label='Upload the GeoJSON file', file_count='single')
+            with gr.Column(scale=1):
+                predictHDIbutton = gr.Button(value='Predict HDI', variant='primary')
+                with gr.Group():
+                    max_x_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum x-buildings', info='When calculating the average distance between 2 types of building, it will find the average of this many pairs. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
+                    max_y_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum y-buildings', info='When calculating the average distance between 2 types of building, it will find the closest of the second type of building out of this many options. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
+                with gr.Group():
+                    HDIprediction = gr.Textbox(label='I believe that the HDI of this region is...', value='', interactive=False)
+                    similarHDI = gr.Textbox(label='That\'s a similar HDI to...', value='', interactive=False)
+        makeSuggestionsButton = gr.Button(value='Make Suggestions')
+        suggestionsTable = gr.Dataframe(label='Suggestions', headers=['New Building', 'Coordinates', 'New HDI', 'Change in HDI'], type='array', interactive=False)
+        log = gr.Textbox(label='Log Messages', value='', interactive=False)
+    with gr.Tab(label='Log In'):
+        logInUsername = gr.Textbox(label='Username', placeholder='Enter your username...')
+        logInPassword = gr.Textbox(label='Password', placeholder='Enter your password...', type='password')
+        logInButton = gr.Button(value='Log In', variant='primary')
+        logInResult = gr.Textbox(label='Result', interactive=False)
+    with gr.Tab(label='Sign Up'):
+        signUpUsername = gr.Textbox(label='Username', placeholder='Enter your username...')
+        signUpPassword = gr.Textbox(label='Password', placeholder='Enter your password...', type='password')
+        signUpPassword2 = gr.Textbox(label='Re-Enter Password', placeholder='Re-Enter your password...', type='password')
+        signUpButton = gr.Button(value='Create an Account', variant='primary')
+        signUpResult = gr.Textbox(label='Result', interactive=False)
     
     # functionality
     uploadButton.upload(uploadGeoJSON, inputs=[uploadButton], outputs=[log])

@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Sign Up\PYGZsq{}}\PYG{p}{):}
+        \PYG{n}{signUpUsername} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Username\PYGZsq{}}\PYG{p}{,} \PYG{n}{placeholder}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Enter your username...\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{signUpPassword} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Password\PYGZsq{}}\PYG{p}{,} \PYG{n}{placeholder}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Enter your password...\PYGZsq{}}\PYG{p}{,} \PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}password\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{signUpPassword2} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Re\PYGZhy{}Enter Password\PYGZsq{}}\PYG{p}{,} \PYG{n}{placeholder}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Re\PYGZhy{}Enter your password...\PYGZsq{}}\PYG{p}{,} \PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}password\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{signUpButton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Button}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Create an Account\PYGZsq{}}\PYG{p}{,} \PYG{n}{variant}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}primary\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{signUpResult} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Result\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+\end{Verbatim}

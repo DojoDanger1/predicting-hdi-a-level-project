@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Log In\PYGZsq{}}\PYG{p}{):}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Markdown}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}there}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{s nothing here yet!\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} placeholder text}
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Sign Up\PYGZsq{}}\PYG{p}{):}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Markdown}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}there}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{s nothing here yet!\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} placeholder text}
+\end{Verbatim}
