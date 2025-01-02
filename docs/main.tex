@@ -7601,7 +7601,455 @@ Figure \ref{fig:ss14.6} shows the complete log in page, with all of the elements
 \end{center}
 
 \stepcounter{parts}
-\subsection{Part \theparts{} -- Authentication Backend}
+\subsection{Part \theparts{} -- Sign Up Backend}
+
+In order to make the sign up page work, I need to create the MongoDB that will store the user's information.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss15.1.png}
+\caption{Creating the MongoDB}\label{fig:ss15.1}
+\end{figure}
+
+Here, I am creating a cluster on the MongoDB website. The free option should be enough, which allows for 512 megabytes of data. To ensure that the connection is as fast as possible, I chose the location to be Ireland, as it was the closest option to the UK.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss15.2.png}
+\caption{Adding a Database User (me)}\label{fig:ss15.2}
+\end{figure}
+
+In order to access the database and have read and write privileges, I had to create a database user. This information will be passed into the URI that I will use to connect to the database.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss15.3.png}
+\caption{Creating a Database \& Collection (table)}\label{fig:ss15.3}
+\end{figure}
+
+Once the cluster was set up, I created a database called \pil{predictingHDI}, and a collection called \pil{users}. Collections are similar to tables in traditional databases.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=12]{python}
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+\end{minted}
+(On line 27, where I define \pil{mongoURI}, my database password has been replaced by \pil{'<db_password>'}) \\
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=26]{python}
+# connect to mongoDB
+mongoURI = "mongodb+srv://lukerhodri:<db_password>@predictinghdi.3nkqe.mongodb .net/?retryWrites=true&w=majority&appName=predictingHDI"
+mongoClient = MongoClient(mongoURI, server_api=ServerApi('1'))
+users = mongoClient['predictingHDI']['users']
+# send a ping to confirm a successful connection
+mongoClient.admin.command('ping')
+print("Pinged your deployment. You successfully connected to MongoDB!")
+\end{minted}
+\caption{Connecting to the MongoDB}\label{cs:connectMongo}
+\end{listing}
+
+Here, I am connecting to the MongoDB cluster that I just set up. First, I defined the URI to connect to, which contains my database username and password. Then, we can establish a client and use that to find the \pil{users} table.
+
+To check whether or not we have successfully connected, we can use the client to send the server a ping.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss15.4.png}
+\caption{SSL Certificate Error}\label{fig:ss15.4}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{67}$}\AND\equal{\mtestRealOutputs}{SSL Certificate Error}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:connectMongo}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Unfortunately, the ping was unsuccessful, and returned an SSL Certificate Error. After researching the problem, I found a StackOverflow solution \cite{stackOverflowFixSSL} on this problem.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=14]{python}
+import certifi
+\end{minted}
+(This code has been adapted from this StackOverflow solution: \cite{stackOverflowFixSSL}) \\
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=29]{python}
+mongoClient = MongoClient(mongoURI, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+\end{minted}
+\caption{Fixing the SSL Certificate Error}\label{cs:fixSSL}
+\end{listing}
+
+It turns out I had to pass in this extra parameter, which also meant I had to import an additional module, \pil{certifi}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss15.5.png}
+\caption{Successful Connection to MongoDB}\label{fig:ss15.5}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{67}$}\AND\equal{\mtestRealOutputs}{As Expected}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:fixSSL}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now that I could connect to the MongoDB, it was time to make the sign up button work
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=142]{python}
+# validate sign up & add account to mongoDB
+def signUp(username, password, password2):
+    # validate username
+    # validate password
+    # add to mongoDB
+    return f'Successfully created an account, with username: {username}!'
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=205]{python}
+    signUpButton.click(signUp, inputs=[signUpUsername, signUpPassword, signUpPassword2], outputs=[signUpResult])
+\end{minted}
+\caption{Adding the \pil{def signUp} function}\label{cs:signUp}
+\end{listing}
+
+Here, I am adding a gradio functionality to the sign up button, where we pass in the 3 textboxes, and output to the result textbox. At the end of the function, if everything goes well, we will return that messgage (obviously however, it is not true yet).
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{68}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:signUp}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=144]{python}
+    # validate no empty fields
+    if username == '' or password == '' or password2 == '':
+        return 'Please fill in all fields!'
+\end{minted}
+\caption{Ensuring no Empty Fields}\label{cs:noEmptyFields}
+\end{listing}
+
+The first thing we must do when validating this input, is a presence check on all 3 fields. If any of them are empty, then the user shouldn't be able to log in. If that is the case, we return a suitable message, skipping the rest of the funcion.
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=147]{python}
+    # validate username - does not already exist
+    if users.count_documents({'username': username}) != 0:
+        return 'This username is already in use! Please choose another username.'
+\end{minted}
+\caption{Validating the Username}\label{cs:validateUsername}
+\end{listing}
+
+We must also check that the username does not already exist. We can do this by counting the documents (similar to records) in the \pil{users} collection, where the \pil{'username'} is equal to the username that the user typed. If there are not 0 of them, then that means that someone has already claimed an account with this name, and so we should return another suitable message. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss15.6.png}
+\caption{Creating a Temporary, Fake Account}\label{fig:ss15.6}
+\end{figure}
+
+In order to test that these validations are working, we must first add a temporary account to the MongoDB. This can be done directly on the MongoDB website, where we can add a document with an \pil{_id} (similar to primary key) which is automatically generated, and a \pil{username}.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss15.7a.png}
+    \caption{Existing Username}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss15.7b.png}
+    \caption{Non-Existing Username}
+\end{subfigure}
+
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss15.7c.png}
+    \caption{No Username}
+\end{subfigure}
+\caption{Validating Username Input}\label{fig:signInUsernameInput}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{9.1}$}\OR\equal{\mtestID}{$T_{9.2}$}\OR\equal{\mtestID}{$T_{9.3}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{9}$ Testing Table (for Code Snippets \ref{cs:noEmptyFields} \& \ref{cs:validateUsername})}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now we must validate the password.
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=150]{python}
+    # validate password - double entry validation
+    if password != password2:
+        return 'The passwords do not match! Please ensure that you have entered the correct password.'
+\end{minted}
+\caption{Validating the Password -- Double Entry Validation}\label{cs:validatePasswordDoubleEntry}
+\end{listing}
+
+Firstly, we must check if the 2 passwords they have entered are the same, for double entry validation. If they are not the same, they must have made a mistake when typing, and so we should return a suitable message.
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=153]{python}
+    # validate password - at least 8 characters long
+    if len(password) < 8:
+        return 'Your password must have at least 8 characters!'
+\end{minted}
+\caption{Validating the Password -- Length}\label{cs:validatePasswordLength}
+\end{listing}
+
+Next, we can do a length check on the password to see if it is at least 8 characters long. If it is not, we should again return a suitable message.
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=156]{python}
+    # validate password - at least 1 digit
+    digits = '0123456789'
+    hasDigit = False
+    for digit in digits:
+        if digit in password:
+            hasDigit = True
+    if not hasDigit:
+        return 'Your password must include at least 1 digit!''
+\end{minted}
+\caption{Validating the Password -- Digits}\label{cs:validatePasswordDigits}
+\end{listing}
+
+The password must also contain at least 1 digit. To ensure this, we can define a string of all 10 digits, and create a flag \pil{hasDigits}. If we assume the password has no digits, we can iterate over the digits and check if it is in the password. If we find that a certain digit is in the password, we can set the flag to \pil{True}. Once we have checked all of the digits, we can look at the flag to see if there was a digit in the password or not. If there were no digits, we can again return a suitable message.
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=164]{python}
+    # validate password - at least 1 special character
+    specialChars = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+    hasSpecialChar = False
+    for specialChar in specialChars:
+        if specialChar in password:
+            hasSpecialChar = True
+    if not hasSpecialChar:
+        return f'Your password must include at least 1 special character! ({specialChars})'
+\end{minted}
+\caption{Validating the Password -- Special Characters}\label{cs:validatePasswordSpecialChars}
+\end{listing}
+
+The password must also contain at least 1 special character. To ensure this, we can do exactly the same thing as with the digits, but starting with a string of all special characters instead of a string of all digits. Note that for the single quote and backslash characters, we must use a backslash before them, to specify we want to use that character.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss15.8a.png}
+    \caption{Non-Matching Passwords}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss15.8b.png}
+    \caption{Less than 8 Characters (\pil{passwor})}
+\end{subfigure}
+
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss15.8c.png}
+    \caption{No Digits (\pil{password})}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss15.8d.png}
+    \caption{No Special Characters (\pil{password123})}
+\end{subfigure}
+
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss15.8e.png}
+    \caption{Valid Password (\texttt{password123!})}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss15.8f.png}
+    \caption{No Password}
+\end{subfigure}
+\caption{Validating Password Input}\label{fig:signInPasswordInput}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{10.1}$}\OR\equal{\mtestID}{$T_{10.2}$}\OR\equal{\mtestID}{$T_{10.3}$}\OR\equal{\mtestID}{$T_{10.4}$}\OR\equal{\mtestID}{$T_{10.5}$}\OR\equal{\mtestID}{$T_{10.6}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{10}$ Testing Table (for Code Snippets \ref{cs:validatePasswordDoubleEntry}, \ref{cs:validatePasswordLength}, \ref{cs:validatePasswordDigits} \& \ref{cs:validatePasswordSpecialChars})}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now that the user has entered correct and suitable values for their username and password, we can salt and hash it.
+
+In the design section, I said I planned to use the \pil{bcrypt} algorithm to do this. I didn't know much about how to implement it, so I researched the documentation about it. It turns out that the salt is saved with the hashed password, so we do not actually need to store it in a seperate key in the database. 
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=15]{python}
+import bcrypt
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=173]{python}
+    # salt & hash password
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+\end{minted}
+\caption{Salting \& Hashing the Password}\label{cs:saltHashPassword}
+\end{listing}
+
+Here, I am importing the \pil{bcrypt} module, which will allow us to generate the salt, and hash the password. We must first encode the password into \pil{'utf-8'}, as the \pil{hashpw} function cannot take in python strings.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss15.9.png}
+\caption{Hashed Password}\label{fig:ss15.9}
+\end{figure}
+
+Figure \ref{fig:ss15.9} shows the output of the hashing function for \pil{'password123'}, \pil{'Password123'} and \pil{'password123'}.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{11.1}$}\OR\equal{\mtestID}{$T_{11.2}$}\OR\equal{\mtestID}{$T_{11.3}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{11}$ Testing Table (for Code Snippet \ref{cs:saltHashPassword})}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now that we have a salted and hashed password, we can add it and the username to the MongoDB.
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=176]{python}
+    # add to mongoDB
+    user = {
+        'username': username,
+        'hashedPassword': hashed_password,
+        'regions': []
+    }
+    users.insert_one(user)
+    return f'Successfully created an account, with username: {username}!'
+\end{minted}
+\caption{Adding the User to MongoDB}\label{cs:addToMongo}
+\end{listing}
+
+To do this, we must define a \pil{dict} to act as the document, with a key for the username, hashedPassword, and list of regions. For now, this list is empty, but when I implement saving regions, I will add change this to include the regions they have processed so far.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss15.10.png}
+\caption{New Account in MongoDB}\label{fig:ss15.10}
+\end{figure}
+
+If we check the database on the MongoDB website, we can see the account generated, with username: \pil{'notlukewilliams'}, a hashed password, and an empty array of regions.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{69}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:addToMongo}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- Log In Backend}
 \dots
 
 \subsection{Review}

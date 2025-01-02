@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} add to mongoDB}
+    \PYG{n}{user} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+        \PYG{l+s+s1}{\PYGZsq{}username\PYGZsq{}}\PYG{p}{:} \PYG{n}{username}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}hashedPassword\PYGZsq{}}\PYG{p}{:} \PYG{n}{hashed\PYGZus{}password}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}regions\PYGZsq{}}\PYG{p}{:} \PYG{p}{[]}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{users}\PYG{o}{.}\PYG{n}{insert\PYGZus{}one}\PYG{p}{(}\PYG{n}{user}\PYG{p}{)}
+    \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}Successfully created an account, with username: }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{username}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{!\PYGZsq{}}
+\end{Verbatim}

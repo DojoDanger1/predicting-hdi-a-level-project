@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{signUpButton}\PYG{o}{.}\PYG{n}{click}\PYG{p}{(}\PYG{n}{signUp}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{signUpUsername}\PYG{p}{,} \PYG{n}{signUpPassword}\PYG{p}{,} \PYG{n}{signUpPassword2}\PYG{p}{],} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{signUpResult}\PYG{p}{])}
+\end{Verbatim}

@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{pymongo.mongo\PYGZus{}client} \PYG{k+kn}{import} \PYG{n}{MongoClient}
+\PYG{k+kn}{from} \PYG{n+nn}{pymongo.server\PYGZus{}api} \PYG{k+kn}{import} \PYG{n}{ServerApi}
+\end{Verbatim}

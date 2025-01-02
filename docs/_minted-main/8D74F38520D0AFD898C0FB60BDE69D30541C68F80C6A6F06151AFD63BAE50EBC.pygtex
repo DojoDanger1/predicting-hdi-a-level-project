@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} validate password \PYGZhy{} at least 1 special character}
+    \PYG{n}{specialChars} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}!\PYGZdq{}\PYGZsh{}\PYGZdl{}\PYGZpc{}\PYGZam{}}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{()*+,\PYGZhy{}./:;\PYGZlt{}=\PYGZgt{}?@[}\PYG{l+s+se}{\PYGZbs{}\PYGZbs{}}\PYG{l+s+s1}{]\PYGZca{}\PYGZus{}`\PYGZob{}|\PYGZcb{}\PYGZti{}\PYGZsq{}}
+    \PYG{n}{hasSpecialChar} \PYG{o}{=} \PYG{k+kc}{False}
+    \PYG{k}{for} \PYG{n}{specialChar} \PYG{o+ow}{in} \PYG{n}{specialChars}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{specialChar} \PYG{o+ow}{in} \PYG{n}{password}\PYG{p}{:}
+            \PYG{n}{hasSpecialChar} \PYG{o}{=} \PYG{k+kc}{True}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{hasSpecialChar}\PYG{p}{:}
+        \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}Your password must include at least 1 special character! (}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{specialChars}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)\PYGZsq{}}
+\end{Verbatim}

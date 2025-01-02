@@ -119,4 +119,14 @@
 \contentsline {figure}{\numberline {5.4}{\ignorespaces Complete Sign Up Tab}}{213}{figure.caption.184}%
 \contentsline {figure}{\numberline {5.5}{\ignorespaces Censorship of the user's password}}{214}{figure.caption.185}%
 \contentsline {figure}{\numberline {5.6}{\ignorespaces Complete Log In Tab}}{215}{figure.caption.186}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Creating the MongoDB}}{216}{figure.caption.187}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Adding a Database User (me)}}{216}{figure.caption.188}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Creating a Database \& Collection (table)}}{217}{figure.caption.189}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces SSL Certificate Error}}{218}{figure.caption.190}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Successful Connection to MongoDB}}{218}{figure.caption.191}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Creating a Temporary, Fake Account}}{220}{figure.caption.192}%
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Validating Username Input}}{221}{figure.caption.193}%
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Validating Password Input}}{224}{figure.caption.194}%
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Hashed Password}}{226}{figure.caption.195}%
+\contentsline {figure}{\numberline {5.16}{\ignorespaces New Account in MongoDB}}{227}{figure.caption.196}%
 \addvspace {10\p@ }

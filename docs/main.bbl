@@ -50,4 +50,9 @@ GeeksforGeeks.
 \newblock Python - import from parent directory.
 \newblock \url{https://www.geeksforgeeks.org/python-import-from-parent-directory/}, 2024.
 
+\bibitem{stackOverflowFixSSL}
+MaxwellN.
+\newblock Pymongo [ssl: Certificate\_verify\_failed] certificate verify failed: unable to get local issuer certificate.
+\newblock \url{https://stackoverflow.com/questions/68123923/pymongo-ssl-certificate-verify-failed-certificate-verify-failed-unable-to-ge}, 2021.
+
 \end{thebibliography}

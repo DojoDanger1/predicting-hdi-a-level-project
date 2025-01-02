@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} validate no empty fields}
+    \PYG{k}{if} \PYG{n}{username} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}} \PYG{o+ow}{or} \PYG{n}{password} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}} \PYG{o+ow}{or} \PYG{n}{password2} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{p}{:}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}Please fill in all fields!\PYGZsq{}}
+\end{Verbatim}

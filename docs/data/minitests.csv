@@ -95,3 +95,19 @@ $t_{63}$,Gradio Markdown,``there's nothing here yet!'',--,Displays the text pass
 $t_{64}$,Sign Up Tab,--,--,3 Textbox inputs for the username\comma{} password\comma{} and password verification\comma{} a button\comma{} and a result textbox,As Expected
 $t_{65}$,Password censorship,A password of length $n$,--,$n$ dots,As Expected
 $t_{66}$,Sign Up Tab,--,--,2 Textbox inputs for the username and password\comma{} a button\comma{} and a result textbox,As Expected
+$t_{67}$,Connect to MongoDB,Ping the Sever,--,No Errors,SSL Certificate Error
+$t_{67}$,Connect to MongoDB,Ping the Sever,--,No Errors,As Expected
+$t_{68}$,Sign Up Button,--,--,Success Message returned to result textbox,As Expected
+$T_{9.1}$,Username Validation,Username which already exists (\pil{lukewilliams}),Invalid,Prompt to choose a username which doesn't exist,As Expected
+$T_{9.2}$,Username Validation,Username which does not already exist (\pil{notluke williams}),Valid,Success Message,As Expected
+$T_{9.3}$,Username Validation,No Username,Invalid,Prompt to enter a username,As Expected
+$T_{10.1}$,Password Validation,Passwords do not match,Invalid,Prompt to correctly enter passwords,As Expected
+$T_{10.2}$,Password Validation,Password with less than 8 characters (\pil{passwor}),Invalid,Prompt to increase length of password,As Expected
+$T_{10.3}$,Password Validation,Password which contains no numbers (\pil{password}),Invalid,Prompt to include a number,As Expected
+$T_{10.4}$,Password Validation,Password which contains no special characters (\pil{password123}),Invalid,Prompt to include a special character,As Expected
+$T_{10.5}$,Password Validation,Password with at least 1 number and 1 special character\comma{} with length of at least 8\comma{} double entry validated (\texttt{password123!}),Valid,Success Message,As Expected
+$T_{10.6}$,Password Validation,No Password,Invalid,Prompt to enter a password,As Expected
+$T_{11.1}$,Encryption Algorithm,\pil{'password123'},--,Some Hash,As Expected
+$T_{11.2}$,Encryption Algorithm,\pil{'Password123'},--,A Different Hash,As Expected
+$T_{11.3}$,Encryption Algorithm,\pil{'password123'},--,Another Different Hash,As Expected
+$t_{69}$,Insert into MongoDB,User Document,--,Username\comma{} Hashed Password\comma{} and regions saved to MongoDB,As Expected

@@ -107,4 +107,11 @@
 \contentsline {table}{\numberline {5.3}{\ignorespaces Testing Table for Code Snippets \ref {cs:addingTabs} \& \ref {cs:logInSignUpTabs}}}{212}{table.5.3}%
 \contentsline {table}{\numberline {5.4}{\ignorespaces Testing Table for Code Snippet \ref {cs:signUpContent}}}{214}{table.5.4}%
 \contentsline {table}{\numberline {5.5}{\ignorespaces Testing Table for Code Snippet \ref {cs:logInContent}}}{215}{table.5.5}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Testing Table for Code Snippet \ref {cs:connectMongo}}}{218}{table.5.6}%
+\contentsline {table}{\numberline {5.7}{\ignorespaces Testing Table for Code Snippet \ref {cs:fixSSL}}}{219}{table.5.7}%
+\contentsline {table}{\numberline {5.8}{\ignorespaces Testing Table for Code Snippet \ref {cs:signUp}}}{219}{table.5.8}%
+\contentsline {table}{\numberline {5.9}{\ignorespaces $T_{9}$ Testing Table (for Code Snippets \ref {cs:noEmptyFields} \& \ref {cs:validateUsername})}}{222}{table.5.9}%
+\contentsline {table}{\numberline {5.10}{\ignorespaces $T_{10}$ Testing Table (for Code Snippets \ref {cs:validatePasswordDoubleEntry}, \ref {cs:validatePasswordLength}, \ref {cs:validatePasswordDigits} \& \ref {cs:validatePasswordSpecialChars})}}{225}{table.5.10}%
+\contentsline {table}{\numberline {5.11}{\ignorespaces $T_{11}$ Testing Table (for Code Snippet \ref {cs:saltHashPassword})}}{226}{table.5.11}%
+\contentsline {table}{\numberline {5.12}{\ignorespaces Testing Table for Code Snippet \ref {cs:addToMongo}}}{227}{table.5.12}%
 \addvspace {10\p@ }

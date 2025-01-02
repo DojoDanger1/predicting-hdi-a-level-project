@@ -103,4 +103,15 @@
 \contentsline {listing}{\numberline {5.2}{\ignorespaces Adding the Log In \& Sign Up Tabs}}{211}{listing.5.2}%
 \contentsline {listing}{\numberline {5.3}{\ignorespaces Adding the Content of the Sign Up Tab}}{212}{listing.5.3}%
 \contentsline {listing}{\numberline {5.4}{\ignorespaces Adding the Content of the Log In Tab}}{215}{listing.5.4}%
+\contentsline {listing}{\numberline {5.5}{\ignorespaces Connecting to the MongoDB}}{217}{listing.5.5}%
+\contentsline {listing}{\numberline {5.6}{\ignorespaces Fixing the SSL Certificate Error}}{218}{listing.5.6}%
+\contentsline {listing}{\numberline {5.7}{\ignorespaces Adding the \mintinline [breaklines, breakafter=_]{python}|def signUp| function}}{219}{listing.5.7}%
+\contentsline {listing}{\numberline {5.8}{\ignorespaces Ensuring no Empty Fields}}{219}{listing.5.8}%
+\contentsline {listing}{\numberline {5.9}{\ignorespaces Validating the Username}}{220}{listing.5.9}%
+\contentsline {listing}{\numberline {5.10}{\ignorespaces Validating the Password -- Double Entry Validation}}{222}{listing.5.10}%
+\contentsline {listing}{\numberline {5.11}{\ignorespaces Validating the Password -- Length}}{222}{listing.5.11}%
+\contentsline {listing}{\numberline {5.12}{\ignorespaces Validating the Password -- Digits}}{223}{listing.5.12}%
+\contentsline {listing}{\numberline {5.13}{\ignorespaces Validating the Password -- Special Characters}}{223}{listing.5.13}%
+\contentsline {listing}{\numberline {5.14}{\ignorespaces Salting \& Hashing the Password}}{226}{listing.5.14}%
+\contentsline {listing}{\numberline {5.15}{\ignorespaces Adding the User to MongoDB}}{227}{listing.5.15}%
 \addvspace {10pt}
