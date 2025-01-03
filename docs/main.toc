@@ -157,12 +157,18 @@
 \contentsline {subsection}{\numberline {5.1.5}Review}{231}{subsection.5.1.5}%
 \contentsline {section}{\numberline {5.2}Milestone 5 -- Final User Interface}{232}{section.5.2}%
 \contentsline {subsection}{\numberline {5.2.1}Success Criteria}{232}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Part 17{} -- The Next Bit}{232}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Review}{232}{subsection.5.2.3}%
-\contentsline {section}{\numberline {5.3}Feedback from Stakeholders}{232}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Evaluation}{233}{chapter.6}%
-\contentsline {chapter}{Index}{234}{section*.198}%
-\contentsline {section}{List of Figures}{234}{section*.199}%
-\contentsline {section}{List of Code Snippets}{238}{section*.201}%
-\contentsline {section}{List of Tables}{241}{section*.203}%
-\contentsline {chapter}{Bibliography}{244}{section*.205}%
+\contentsline {subsection}{\numberline {5.2.2}Part 17{} -- Comparing a Region to Training Data}{233}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Part 18{} -- Analysis of how much Each Factor affects the Others}{233}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Part 19{} -- Finding Similar Regions}{233}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Part 20{} -- Saving Regions}{233}{subsection.5.2.5}%
+\contentsline {subsection}{\numberline {5.2.6}Part 21{} -- Improved Suggestions}{234}{subsection.5.2.6}%
+\contentsline {subsection}{\numberline {5.2.7}Part 22{} -- Finishing Touches}{234}{subsection.5.2.7}%
+\contentsline {subsection}{\numberline {5.2.8}Part 23{} -- Deployment to Hugging Face}{234}{subsection.5.2.8}%
+\contentsline {subsection}{\numberline {5.2.9}Review}{234}{subsection.5.2.9}%
+\contentsline {section}{\numberline {5.3}Feedback from Stakeholders}{234}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Evaluation}{235}{chapter.6}%
+\contentsline {chapter}{Index}{236}{section*.198}%
+\contentsline {section}{List of Figures}{236}{section*.199}%
+\contentsline {section}{List of Code Snippets}{240}{section*.201}%
+\contentsline {section}{List of Tables}{243}{section*.203}%
+\contentsline {chapter}{Bibliography}{246}{section*.205}%

@@ -7379,7 +7379,25 @@ I will still be testing code in small increments as I am developing, to ensure t
 \end{center}
 
 \subsubsection{Milestone 5 -- Final User Interface}
-\dots
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$T_{13}$}\OR\equal{\testID}{$T_{14}$}\OR\equal{\testID}{$T_{15}$}\OR\equal{\testID}{$T_{16}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Data for Milestone 5}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \subsection{Testing Data for Post-Development}
 \dots
@@ -8233,10 +8251,75 @@ I also have a fully functioning authentication system, where the user can create
 
 \section{Milestone 5 -- Final User Interface}
 \subsection{Success Criteria}
+By the end of this milestone, I hope to have a full user interface, with all of the desired featured. At the end, I aim to deploy the app on Hugging Face. 
+\begin{center}
+\csvloop{
+    file=data/successcriteria.csv,
+    no head,
+    column count=5,
+    column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
+    filter ifthen={\equal{\scID}{$S_{14}$}\OR\equal{\scID}{$S_{15}$}\OR\equal{\scID}{$S_{16}$}\OR\equal{\scID}{$S_{17}$}\OR\equal{\scID}{$S_{18}$}\OR\equal{\scID}{$S_{19}$}\OR\equal{\scID}{$S_{20}$}\OR\equal{\scID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{5cm}|m{8cm}|H H}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Success Criteria for Milestone 5}
+        \end{longtable}
+    }
+}
+\end{center}
+
+To determine if I have met this success criteria, I will be using the following tests:
+
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$T_{13}$}\OR\equal{\testID}{$T_{14}$}\OR\equal{\testID}{$T_{15}$}\OR\equal{\testID}{$T_{16}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Data for Milestone 5}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- Comparing a Region to Training Data}
 \dots
 
 \stepcounter{parts}
-\subsection{Part \theparts{} -- The Next Bit}
+\subsection{Part \theparts{} -- Analysis of how much Each Factor affects the Others}
+\dots
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- Finding Similar Regions}
+\dots
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- Saving Regions}
+\dots
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- Improved Suggestions}
+\dots
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- Finishing Touches}
+\dots
+
+\stepcounter{parts}
+\subsection{Part \theparts{} -- Deployment to Hugging Face}
 \dots
 
 \subsection{Review}
