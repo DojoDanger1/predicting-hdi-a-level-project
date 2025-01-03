@@ -119,4 +119,12 @@
 \contentsline {listing}{\numberline {5.18}{\ignorespaces Validating the Username's Existance}}{229}{listing.5.18}%
 \contentsline {listing}{\numberline {5.19}{\ignorespaces Checking the Password is Correct}}{229}{listing.5.19}%
 \contentsline {listing}{\numberline {5.20}{\ignorespaces Granting Access to the Account}}{229}{listing.5.20}%
+\contentsline {listing}{\numberline {5.21}{\ignorespaces Adding the Compare Tab}}{233}{listing.5.21}%
+\contentsline {listing}{\numberline {5.22}{\ignorespaces Importing the Training Data}}{235}{listing.5.22}%
+\contentsline {listing}{\numberline {5.23}{\ignorespaces Adding the Regions to the Dropdown}}{235}{listing.5.23}%
+\contentsline {listing}{\numberline {5.24}{\ignorespaces Making \mintinline [breaklines, breakafter=_]{python}|allFactors| a \mintinline [breaklines, breakafter=_]{python}|global| variable}}{237}{listing.5.24}%
+\contentsline {listing}{\numberline {5.25}{\ignorespaces Adding the Functionality to the Compare Tab}}{237}{listing.5.25}%
+\contentsline {listing}{\numberline {5.26}{\ignorespaces Undoing the Concatenation}}{238}{listing.5.26}%
+\contentsline {listing}{\numberline {5.27}{\ignorespaces Getting Lists of Factors}}{239}{listing.5.27}%
+\contentsline {listing}{\numberline {5.28}{\ignorespaces Returning the 2D List of Factors}}{240}{listing.5.28}%
 \addvspace {10pt}

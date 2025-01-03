@@ -121,4 +121,8 @@
 \contentsline {table}{\numberline {5.16}{\ignorespaces Achieved Success Criteria for Milestone 4}}{231}{table.5.16}%
 \contentsline {table}{\numberline {5.17}{\ignorespaces Success Criteria for Milestone 5}}{232}{table.5.17}%
 \contentsline {table}{\numberline {5.18}{\ignorespaces Testing Data for Milestone 5}}{233}{table.5.18}%
+\contentsline {table}{\numberline {5.19}{\ignorespaces Testing Table for Code Snippet \ref {cs:compareTab}}}{235}{table.5.19}%
+\contentsline {table}{\numberline {5.20}{\ignorespaces Testing Table for Code Snippets \ref {cs:importTrainingData} \& \ref {cs:allRegionsDropdown}}}{236}{table.5.20}%
+\contentsline {table}{\numberline {5.21}{\ignorespaces Testing Table for Code Snippets \ref {cs:allFactorsGlobal} \& \ref {cs:compareFunctionality}}}{238}{table.5.21}%
+\contentsline {table}{\numberline {5.22}{\ignorespaces Testing Table for Code Snippets \ref {cs:undoConcat}, \ref {cs:listsOfFactors} \& \ref {cs:return2Dlist}}}{241}{table.5.22}%
 \addvspace {10\p@ }

@@ -8296,7 +8296,257 @@ To determine if I have met this success criteria, I will be using the following 
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Comparing a Region to Training Data}
-\dots
+
+The first thing I would like to do is implement the compare tab, where the user can select a region to compare theirs to.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=239]{python}
+    with gr.Tab(label='Compare'):
+        compareDropdown = gr.Dropdown(choices=['a', 'b', 'c'], label='Select a Region')
+        compareTable = gr.DataFrame(label='Comparison', headers=['Factor', 'Your Region', 'Selected Region'], type='array', interactive=False)
+\end{minted}
+\caption{Adding the Compare Tab}\label{cs:compareTab}
+\end{listing}
+
+Here, I am adding the gradio elements that will go inside the compare tab. The first, is a dropdown menu, which prompts the user to select a region. For now, the options are just \pil{'a'}, \pil{'b'} and \pil{'c'}, to show how the element works. Below this, we have another DataFrame, which will act as our output table. Again, we must specify that this is not \pil{interactive}, with type \pil{'array'}, and the headers for the table.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss17.1.png}
+\caption{Compare Tab Interface}\label{fig:ss17.1}
+\end{figure}
+
+Figure \ref{fig:ss17.1} shows the structure of the Compare Tab. Currently, this is looking pretty empty, but when the table is filled, and the PMCC analysis is added below, the page will look more complete.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=10cm]{ss17.2.png}
+\caption{Example Options for Dropdown}\label{fig:ss17.2}
+\end{figure}
+
+Figure \ref{fig:ss17.2} shows what happens when you select the dropdown, which is that the options we specified appear.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{71}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:compareTab}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+To make the dropdown menu have the right options (the name of each region), we must first import the training data.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=16]{python}
+import csv
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=37]{python}
+# load the training data
+with open('data/training_data.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    trainingData = []
+    for record in reader:
+        trainingData.append(record)
+\end{minted}
+\caption{Importing the Training Data}\label{cs:importTrainingData}
+\end{listing}
+
+Here, I am reading the \pil{csv} file of the training data in the same way as before, by defining a \pil{DictReader}, iterating over the records, and appending each one to a list, \pil{trainingData}.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=248]{python}
+        compareDropdown = gr.Dropdown(choices=[f'{region["region"]}, {region["country"]}' for region in trainingData], label='Select a Region')
+\end{minted}
+\caption{Adding the Regions to the Dropdown}\label{cs:allRegionsDropdown}
+\end{listing}
+
+To construct the list of choices, we can iterate over the \pil{trainingData} list, and format a string to have the name of the region, followed by the name of the country. This is so that users can search for regions by country in addition to region name.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss17.3a.png}
+    \caption{No Searching}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss17.3b.png}
+    \caption{Searching}
+\end{subfigure}
+\caption{All Dropdown Options}\label{fig:dropdwonOptions}
+\end{figure}
+
+Figure \ref{fig:dropdwonOptions} shows the first few items of the full list, and how typing can narrow down the options.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{72}$}\OR\equal{\mtestID}{$t_{73}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:importTrainingData} \& \ref{cs:allRegionsDropdown}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now we must add the functionality for this page.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=25]{python}
+allFactors = []
+\end{minted}
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=58]{python}
+    global allFactors
+\end{minted}
+\caption{Making \pil{allFactors} a \pil{global} variable}\label{cs:allFactorsGlobal}
+\end{listing}
+
+Firstly, we must be able to access the factors we calculated for the user's region. To do this, I will be using a global variable. In the \pil{def processPrediction} function, we already have a variable called \pil{allFactors}, which stores the factors that are calculated. We can therefore define it outside the function, and make the one inside the function global.
+
+There is also a variable called \pil{allFactors} in the \pil{def makeSuggestions} function, which stores the re-calculated factors for each suggestion. This must not be made global, as if it is, it will override the true \pil{allFactors} list.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=153]{python}
+# user selects an item from the dropdown menu to compare to
+def compareRegions(regionName):
+    # confirm the user has predicted
+    if allFactors == []:
+        return [['Please predict a region first!', None, None]]
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=275]{python}
+    compareDropdown.input(compareRegions, inputs=[compareDropdown], outputs=[compareTable])
+\end{minted}
+\caption{Adding the Functionality to the Compare Tab}\label{cs:compareFunctionality}
+\end{listing}
+
+Here, I am defining the \pil{def compareRegions} function, which will be executed when the value dropdown menu changes (which is when the user chooses one of the options).
+
+In this function, we must first validate that the user has in fact got a region to compare, and if not, we can return a message to prompt them to make a prediction first. The return is in this format, because we are returning to a DataFrame, instead of a textbox.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss17.4.png}
+\caption{Output when the User has not Predicted Yet}\label{fig:ss17.4}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{74}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:allFactorsGlobal} \& \ref{cs:compareFunctionality}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+What is passed into the function is the text in the dropdown, which is a string containing both the region name and the country. We must therefore un-concatenate this string to get the country and region back.
+
+\begin{listing}[H]
+\pil{app.py / def compareRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=158]{python}
+    # undo the concatenation
+    split = regionName.split(', ')
+    country = split[-1]
+    region = ', '.join(split[:-1])
+\end{minted}
+\caption{Undoing the Concatenation}\label{cs:undoConcat}
+\end{listing}
+
+As no countries contain the substring: \pil{', '}, we can split the name at every \pil{', '} and take the last element to be the country name. Everything else before that must have been the region name, so we must join those elements together, putting back the \pil{', '} in between.
+
+\begin{listing}[H]
+\pil{app.py / def compareRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=162]{python}
+    # find the region record & get lists of factors
+    regionRecord = [record for record in trainingData if record['country'] == country and record['region'] == region][0]
+    yourFactors = ['undefined' if factor == None else round(float(factor), 5) for factor in allFactors]
+    selectedFactors = ['undefined' if factor == '' else round(float(factor), 5) for factor in list(regionRecord.values())[4:]]
+\end{minted}
+\caption{Getting Lists of Factors}\label{cs:listsOfFactors}
+\end{listing}
+
+Next, we must find the correct record from the \pil{csv} file, which can easily be done by finding the record who's region and country matches with what we just found. From this, we can get a list of all factors, similar to the \pil{allFactors} list. Except here, we must replace empty ones with \pil{'undefined'} to make it more readable for the user.
+
+\begin{listing}[H]
+\pil{app.py / def compareRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=166]{python}
+    # construct the return list
+    factorNames = ['Average Distance from House to nearest School (km)','Average Distance from House to nearest Hospital (km)','Average Distance from House to nearest Pharmacy (km)','Average Distance from House to nearest Restaurant (km)','Average Distance from School to nearest Hospital (km)','Average Distance from Police Station to nearest Hospital (km)','Average Distance from House to nearest Place of Worship (km)','Average Distance from Bank to nearest Slot Machine (km)','Average Distance from Fast-Food Place to nearest Toilet (km)','Average Distance from House to nearest Police Station (km)','Average Distance from University to nearest Library (km)','Average Distance from House to nearest Library (km)','Number of Schools per km²','Number of Hospitals per km²','Number of Pharmcies per km²','Number of Police Stations per km²','Number of Libraries per km²','Number of Toilets per km²','Number of Restaurants per km²','Number of Places of Worship per km²','Number of Post Boxes per km²','Number of Vending Machines per km²','Number of Benches per km²','Number of Trees per km²']
+    returnList = [['HDI', currentHDI, regionRecord['hdi']]]
+    for num, factor in enumerate(factorNames):
+        returnList.append([factor, yourFactors[num], selectedFactors[num]])
+    return returnList
+\end{minted}
+\caption{Returning the 2D List of Factors}\label{cs:return2Dlist}
+\end{listing}
+
+To then create the list for the table, we can create a list of the factor names, not in terms of $A$ and $D$, to make sure the user understands what is meant by each row. After this, we can iterate over each factor name and get the corresponding values from the user's region and their selected region.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss17.5.png}
+\caption{Full Comparison between User's and Selected Regions}\label{fig:ss17.5}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{75}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:undoConcat}, \ref{cs:listsOfFactors} \& \ref{cs:return2Dlist}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Analysis of how much Each Factor affects the Others}

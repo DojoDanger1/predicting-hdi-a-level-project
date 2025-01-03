@@ -13,6 +13,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
 import bcrypt
+import csv
 
 # initialise neural network
 network = MultilayerPerceptron([24, 18, 12, 6, 3, 1])
@@ -21,6 +22,7 @@ network.load_model('models/hdi.pkl')
 # define global vars
 currentRegion = []
 all_objects = {}
+allFactors = []
 currentHDI = -1
 averageDistanceFactors = [['house', 'school'], ['house', 'hospital'], ['house', 'pharmacy'], ['house', 'restaurant'], ['school', 'hospital'], ['police', 'hospital'], ['house', 'place_of_worship'], ['bank', 'slot_machines'], ['fast_food', 'toilets'], ['house', 'police'], ['university', 'library'], ['house', 'library']]
 densityFactors = ['school', 'hospital', 'pharmacy', 'police', 'library', 'toilets', 'restaurant', 'place_of_worship', 'post_box', 'vending_machine', 'bench', 'tree']
@@ -32,6 +34,13 @@ users = mongoClient['predictingHDI']['users']
 # send a ping to confirm a successful connection
 mongoClient.admin.command('ping')
 print("Pinged your deployment. You successfully connected to MongoDB!")
+
+# load the training data
+with open('data/training_data.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    trainingData = []
+    for record in reader:
+        trainingData.append(record)
 
 # code to process the user uploading their geojson file
 def uploadGeoJSON(filename):
@@ -46,6 +55,7 @@ def processPrediction(max_x_objects, max_y_objects, progress=gr.Progress()):
     global currentRegion
     global all_objects
     global currentHDI
+    global allFactors
     if currentRegion == []:
         return 'You have not uploaded a region!'
     progress(0, desc='Starting...')
@@ -139,6 +149,26 @@ def selectSuggestionsTable(evt: gr.SelectData):
         folium.Marker(location=coordinates).add_to(newMap)
         newMap.location=coordinates
     return newMap
+
+# user selects an item from the dropdown menu to compare to
+def compareRegions(regionName):
+    # confirm the user has predicted
+    if allFactors == []:
+        return [['Please predict a region first!', None, None]]
+    # undo the concatenation
+    split = regionName.split(', ')
+    country = split[-1]
+    region = ', '.join(split[:-1])
+    # find the region record & get lists of factors
+    regionRecord = [record for record in trainingData if record['country'] == country and record['region'] == region][0]
+    yourFactors = ['undefined' if factor == None else round(float(factor), 5) for factor in allFactors]
+    selectedFactors = ['undefined' if factor == '' else round(float(factor), 5) for factor in list(regionRecord.values())[4:]]
+    # construct the return list
+    factorNames = ['Average Distance from House to nearest School (km)','Average Distance from House to nearest Hospital (km)','Average Distance from House to nearest Pharmacy (km)','Average Distance from House to nearest Restaurant (km)','Average Distance from School to nearest Hospital (km)','Average Distance from Police Station to nearest Hospital (km)','Average Distance from House to nearest Place of Worship (km)','Average Distance from Bank to nearest Slot Machine (km)','Average Distance from Fast-Food Place to nearest Toilet (km)','Average Distance from House to nearest Police Station (km)','Average Distance from University to nearest Library (km)','Average Distance from House to nearest Library (km)','Number of Schools per km²','Number of Hospitals per km²','Number of Pharmcies per km²','Number of Police Stations per km²','Number of Libraries per km²','Number of Toilets per km²','Number of Restaurants per km²','Number of Places of Worship per km²','Number of Post Boxes per km²','Number of Vending Machines per km²','Number of Benches per km²','Number of Trees per km²']
+    returnList = [['HDI', currentHDI, regionRecord['hdi']]]
+    for num, factor in enumerate(factorNames):
+        returnList.append([factor, yourFactors[num], selectedFactors[num]])
+    return returnList
 
 # validate sign up & add account to mongoDB
 def signUp(username, password, password2):
@@ -236,6 +266,9 @@ with gr.Blocks() as app:
         makeSuggestionsButton = gr.Button(value='Make Suggestions')
         suggestionsTable = gr.Dataframe(label='Suggestions', headers=['New Building', 'Coordinates', 'New HDI', 'Change in HDI'], type='array', interactive=False)
         log = gr.Textbox(label='Log Messages', value='', interactive=False)
+    with gr.Tab(label='Compare'):
+        compareDropdown = gr.Dropdown(choices=[f'{region["region"]}, {region["country"]}' for region in trainingData], label='Select a Region')
+        compareTable = gr.DataFrame(label='Comparison', headers=['Factor', 'Your Region', 'Selected Region'], type='array', interactive=False)
     with gr.Tab(label='Log In'):
         logInUsername = gr.Textbox(label='Username', placeholder='Enter your username...')
         logInPassword = gr.Textbox(label='Password', placeholder='Enter your password...', type='password')
@@ -253,6 +286,7 @@ with gr.Blocks() as app:
     predictHDIbutton.click(processPrediction, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[HDIprediction])
     makeSuggestionsButton.click(makeSuggestions, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[suggestionsTable])
     suggestionsTable.select(selectSuggestionsTable, inputs=[], outputs=[map])
+    compareDropdown.input(compareRegions, inputs=[compareDropdown], outputs=[compareTable])
     signUpButton.click(signUp, inputs=[signUpUsername, signUpPassword, signUpPassword2], outputs=[signUpResult])
     logInButton.click(logIn, inputs=[logInUsername, logInPassword], outputs=[logInResult])
 

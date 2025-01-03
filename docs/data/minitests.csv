@@ -94,7 +94,7 @@ $t_{62}$,Tabs Appearance,--,--,Tabs appear in the top right\comma{} users can sw
 $t_{63}$,Gradio Markdown,``there's nothing here yet!'',--,Displays the text passed into \pil{gr.Markdown()},As Expected
 $t_{64}$,Sign Up Tab,--,--,3 Textbox inputs for the username\comma{} password\comma{} and password verification\comma{} a button\comma{} and a result textbox,As Expected
 $t_{65}$,Password censorship,A password of length $n$,--,$n$ dots,As Expected
-$t_{66}$,Sign Up Tab,--,--,2 Textbox inputs for the username and password\comma{} a button\comma{} and a result textbox,As Expected
+$t_{66}$,Log In Tab,--,--,2 Textbox inputs for the username and password\comma{} a button\comma{} and a result textbox,As Expected
 $t_{67}$,Connect to MongoDB,Ping the Sever,--,No Errors,SSL Certificate Error
 $t_{67}$,Connect to MongoDB,Ping the Sever,--,No Errors,As Expected
 $t_{68}$,Sign Up Button,--,--,Success Message returned to result textbox,As Expected
@@ -116,3 +116,8 @@ $T_{12.1}$,Logging In,Username which does not exist,Invalid,Prompt to enter an e
 $T_{12.2}$,Logging In,Incorrect Password,Invalid,Prompt to enter the correct password,As Expected
 $T_{12.3}$,Logging In,Existing Username \& Correct Password,Valid,Success Message,As Expected
 $T_{12.4}$,Logging In,No Username or Password,Invalid,Prompt to enter a username and password,As Expected
+$t_{71}$,Compare Tab,--,--,Dropdown Menu \& Output Table,As Expected
+$t_{72}$,Select a Region Drowpdown,--,--,Contains all regions from training data,As Expected
+$t_{73}$,Searching for a Region,Beginning to type a name,--,Narrows down options that include that string,As Expected
+$t_{74}$,User tries to compare before Predicting,--,--,Prompt to make a prediction first,As Expected
+$t_{75}$,Comparison to Another Region,Region Name,--,Table showing HDI and Factors for both regions,As Expected

@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Compare\PYGZsq{}}\PYG{p}{):}
+        \PYG{n}{compareDropdown} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Dropdown}\PYG{p}{(}\PYG{n}{choices}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}a\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}b\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}c\PYGZsq{}}\PYG{p}{],} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Select a Region\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{compareTable} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Comparison\PYGZsq{}}\PYG{p}{,} \PYG{n}{headers}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}Factor\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Your Region\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Selected Region\PYGZsq{}}\PYG{p}{],} \PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}array\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} find the region record \PYGZam{} get lists of factors}
+    \PYG{n}{regionRecord} \PYG{o}{=} \PYG{p}{[}\PYG{n}{record} \PYG{k}{for} \PYG{n}{record} \PYG{o+ow}{in} \PYG{n}{trainingData} \PYG{k}{if} \PYG{n}{record}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}country\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{country} \PYG{o+ow}{and} \PYG{n}{record}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}region\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{region}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]}
+    \PYG{n}{yourFactors} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}undefined\PYGZsq{}} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{==} \PYG{k+kc}{None} \PYG{k}{else} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{),} \PYG{l+m+mi}{5}\PYG{p}{)} \PYG{k}{for} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n}{allFactors}\PYG{p}{]}
+    \PYG{n}{selectedFactors} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}undefined\PYGZsq{}} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}} \PYG{k}{else} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{),} \PYG{l+m+mi}{5}\PYG{p}{)} \PYG{k}{for} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{regionRecord}\PYG{o}{.}\PYG{n}{values}\PYG{p}{())[}\PYG{l+m+mi}{4}\PYG{p}{:]]}
+\end{Verbatim}
