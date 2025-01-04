@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} iterate over every pair of factors}
+\PYG{n}{factors} \PYG{o}{=} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{trainingData}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{())[}\PYG{l+m+mi}{3}\PYG{p}{:]}
+\PYG{n}{pmcc\PYGZus{}grid} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{factor1} \PYG{o+ow}{in} \PYG{n}{factors}\PYG{p}{:}
+    \PYG{n}{pmcc\PYGZus{}row} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{factor2} \PYG{o+ow}{in} \PYG{n}{factors}\PYG{p}{:}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}calculating pmcc of }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{factor1}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ and }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{factor2}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{...\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+        \PYG{n}{x\PYGZus{}values} \PYG{o}{=} \PYG{p}{[}\PYG{n}{record}\PYG{p}{[}\PYG{n}{factor1}\PYG{p}{]} \PYG{k}{for} \PYG{n}{record} \PYG{o+ow}{in} \PYG{n}{trainingData}\PYG{p}{]}
+        \PYG{n}{y\PYGZus{}values} \PYG{o}{=} \PYG{p}{[}\PYG{n}{record}\PYG{p}{[}\PYG{n}{factor2}\PYG{p}{]} \PYG{k}{for} \PYG{n}{record} \PYG{o+ow}{in} \PYG{n}{trainingData}\PYG{p}{]}
+\end{Verbatim}

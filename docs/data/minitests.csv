@@ -121,3 +121,13 @@ $t_{72}$,Select a Region Drowpdown,--,--,Contains all regions from training data
 $t_{73}$,Searching for a Region,Beginning to type a name,--,Narrows down options that include that string,As Expected
 $t_{74}$,User tries to compare before Predicting,--,--,Prompt to make a prediction first,As Expected
 $t_{75}$,Comparison to Another Region,Region Name,--,Table showing HDI and Factors for both regions,As Expected
+$t_{76}$,Retrieving Data Points for PMCC Calculation,Training Data,--,\pil{csv} is read\comma{} and we iterate over each pair of factors,As Expected
+$T_{13.1}$,Discarding Empty Strings in PMCC Calculaion,Non-empty $x$ and Non-empty $y$,Valid,Not Removed,As Expected
+$T_{13.2}$,Discarding Empty Strings in PMCC Calculaion,Non-empty $x$ and Empty $y$,Invalid,Removed,As Expected
+$T_{13.3}$,Discarding Empty Strings in PMCC Calculaion,Empty $x$ and Non-empty $y$,Invalid,Removed,As Expected
+$T_{13.4}$,Discarding Empty Strings in PMCC Calculaion,Empty $x$ and Empty $y$,Invalid,Removed,As Expected
+$t_{77}$,Calculating PMCC,2 Sets of Values,--,A Number between $-1$ and 1,As Expected
+$t_{78}$,Generate PMCC Grid,Training Data,--,2D List of PMCCs for each pair of Factors,As Expected
+$t_{79}$,Generate Heatmap,PMCC Grid,--,Image of the heatmap\comma{} showing all factors,Image of the heatmap\comma{} with the labels cut off
+$t_{79}$,Generate Heatmap,PMCC Grid,--,Image of the heatmap\comma{} showing all factors,As Expected
+$t_{80}$,Heatmap in Gradio Interface,--,--,Image of Heatmap at the Bottom of the Compare Tab,As Expected

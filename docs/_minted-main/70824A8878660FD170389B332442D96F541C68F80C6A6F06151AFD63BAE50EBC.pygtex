@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{c+c1}{\PYGZsh{} remove pairs with empty values, iterating over the lists in reverse as to not disturb the index numbers}
+        \PYG{k}{for} \PYG{n}{index} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}values}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{):}
+            \PYG{k}{if} \PYG{n}{x\PYGZus{}values}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}} \PYG{o+ow}{or} \PYG{n}{y\PYGZus{}values}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{p}{:}
+                \PYG{n}{x\PYGZus{}values}\PYG{o}{.}\PYG{n}{pop}\PYG{p}{(}\PYG{n}{index}\PYG{p}{)}
+                \PYG{n}{y\PYGZus{}values}\PYG{o}{.}\PYG{n}{pop}\PYG{p}{(}\PYG{n}{index}\PYG{p}{)}
+        \PYG{c+c1}{\PYGZsh{} convert to float}
+        \PYG{n}{x\PYGZus{}values} \PYG{o}{=} \PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)} \PYG{k}{for} \PYG{n}{x} \PYG{o+ow}{in} \PYG{n}{x\PYGZus{}values}\PYG{p}{]}
+        \PYG{n}{y\PYGZus{}values} \PYG{o}{=} \PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{y}\PYG{p}{)} \PYG{k}{for} \PYG{n}{y} \PYG{o+ow}{in} \PYG{n}{y\PYGZus{}values}\PYG{p}{]}
+\end{Verbatim}

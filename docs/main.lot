@@ -125,4 +125,10 @@
 \contentsline {table}{\numberline {5.20}{\ignorespaces Testing Table for Code Snippets \ref {cs:importTrainingData} \& \ref {cs:allRegionsDropdown}}}{236}{table.5.20}%
 \contentsline {table}{\numberline {5.21}{\ignorespaces Testing Table for Code Snippets \ref {cs:allFactorsGlobal} \& \ref {cs:compareFunctionality}}}{238}{table.5.21}%
 \contentsline {table}{\numberline {5.22}{\ignorespaces Testing Table for Code Snippets \ref {cs:undoConcat}, \ref {cs:listsOfFactors} \& \ref {cs:return2Dlist}}}{241}{table.5.22}%
+\contentsline {table}{\numberline {5.23}{\ignorespaces Testing Table for Code Snippets \ref {cs:readTraining} \& \ref {cs:iterateFactorsTwice}}}{242}{table.5.23}%
+\contentsline {table}{\numberline {5.24}{\ignorespaces $T_{13}$ Testing Table (for Code Snippet \ref {cs:completePairs})}}{243}{table.5.24}%
+\contentsline {table}{\numberline {5.25}{\ignorespaces Testing Table for Code Snippet \ref {cs:calcPMCC}}}{244}{table.5.25}%
+\contentsline {table}{\numberline {5.26}{\ignorespaces Testing Table for Code Snippet \ref {cs:exportPMCC}}}{246}{table.5.26}%
+\contentsline {table}{\numberline {5.27}{\ignorespaces Testing Table for Code Snippet \ref {cs:improveQualityOfFigure}}}{247}{table.5.27}%
+\contentsline {table}{\numberline {5.28}{\ignorespaces Testing Table for Code Snippet \ref {cs:pmccInGradio}}}{248}{table.5.28}%
 \addvspace {10\p@ }

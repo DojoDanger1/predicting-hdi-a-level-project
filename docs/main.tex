@@ -8550,7 +8550,263 @@ To then create the list for the table, we can create a list of the factor names,
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Analysis of how much Each Factor affects the Others}
-\dots
+
+\begin{listing}[H]
+\pil{data_processing / pmcc.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=1]{python}
+import csv
+
+# load the training data
+with open('data/training_data.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    trainingData = []
+    for record in reader:
+        trainingData.append(record)
+\end{minted}
+\caption{Reading the Training Data}\label{cs:readTraining}
+\end{listing}
+
+First, we must again retrieve the training data in the same way as we have done before.
+
+\begin{listing}[H]
+\pil{data_processing / pmcc.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=10]{python}
+# iterate over every pair of factors
+factors = list(trainingData[0].keys())[3:]
+pmcc_grid = []
+for factor1 in factors:
+    pmcc_row = []
+    for factor2 in factors:
+        print(f'calculating pmcc of {factor1} and {factor2}...') # log message
+        x_values = [record[factor1] for record in trainingData]
+        y_values = [record[factor2] for record in trainingData]
+\end{minted}
+\caption{Iterating over All the Factors Twice}\label{cs:iterateFactorsTwice}
+\end{listing}
+
+In order to get every possible pair of factors, we must iterate over each of them twice. Here, I am using a nested \pil{for} loop, to ensure that I cover all possible pairs. This will include factors paired with themselves, as well as double counting.
+
+Once we have the 2 factors, we can retrieve all of the data points from the training data list. At the beginning of these \pil{for} loops, we must also define variables to store the calculated values for $\rho$.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{76}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:readTraining} \& \ref{cs:iterateFactorsTwice}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+However, some of these data points will be empty, as a result of some average distances being undefined. If a certain pair of values contains an empty string, it should be removed. Otherwise, both values may be converted into floats, ready to be used in calculations.
+
+\begin{listing}[H]
+\pil{data_processing / pmcc.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=19]{python}
+        # remove pairs with empty values, iterating over the lists in reverse as to not disturb the index numbers
+        for index in range(len(x_values)-1, -1, -1):
+            if x_values[index] == '' or y_values[index] == '':
+                x_values.pop(index)
+                y_values.pop(index)
+        # convert to float
+        x_values = [float(x) for x in x_values]
+        y_values = [float(y) for y in y_values]
+\end{minted}
+\caption{Ensuring Complete Pairs}\label{cs:completePairs}
+\end{listing}
+
+Here, I am iterating an index over the length of the \pil{x_values} list, and checking if either of the lists at that index are empty. If at least one of them is, then we must remove both the empty value, and the corresponding value in the other list. However, removing a value like this will cause the index number to no longer be syncronised with the length of the lists, and so we will run into an index out of range error. To get around this, we can iterate over the lists in reverse, so that removing elements will not change the indexes of the elements we have yet to search.
+
+Once all of the empty strings have been removed, we can iterate over each of the lists and convert them to floats.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{13.1}$}\OR\equal{\mtestID}{$T_{13.2}$}\OR\equal{\mtestID}{$T_{13.3}$}\OR\equal{\mtestID}{$T_{13.4}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{13}$ Testing Table (for Code Snippet \ref{cs:completePairs})}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{data_processing / pmcc.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=2]{python}
+import numpy as np
+\end{minted}
+\pil{data_processing / pmcc.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=28]{python}
+        # calculate pmcc and add it to grid
+        pmcc = sum([(x_values[index]-np.mean(x_values))*(y_values[index] -np.mean(y_values)) for index in range(len(x_values))])/ np.sqrt((sum([(x_values[index]-np.mean(x_values))**2 for index in range(len(x_values))]))*(sum([(y_values[index] -np.mean(y_values))**2 for index in range(len(x_values))])))
+        pmcc_row.append(pmcc)
+    pmcc_grid.append(pmcc_row)
+\end{minted}
+\caption{Calculating the PMCC}\label{cs:calcPMCC}
+\end{listing}
+
+Once we have a list of valid pairs, we can calculate the PMCC, using equation \ref{eq:pmcc} (for which we need to import \pil{numpy}). Once the PMCC has been calculated, we can add it to the row, and once the full row has been completed (the \pil{for} loop has finished), we can add the row to the full grid.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{77}$}\OR\equal{\mtestID}{$t_{78}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:calcPMCC}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now we must turn this 2D list into an image of a heatmap. In the design section, I had mentioned that a possible library to do this would be \pil{matplotlib}, but after researching the topic, I believe \pil{seaborn} is a better option.
+
+\begin{listing}[H]
+\pil{data_processing / pmcc.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=3]{python}
+import seaborn
+\end{minted}
+\pil{data_processing / pmcc.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=34]{python}
+# generate the image
+heatmap = seaborn.heatmap(pmcc_grid, xticklabels=factors, yticklabels=factors, vmin=-1, vmax=1, center=0, cmap='Spectral')
+heatmap.get_figure().savefig('data/pmcc.png')
+\end{minted}
+\caption{Generating \& Exporting the Figure}\label{cs:exportPMCC}
+\end{listing}
+
+Here, I am creating a \pil{seaborn.heatmap} of the \pil{pmcc_grid}. The labels on the $x$-axis and the $y$-axis should be the factors, and the range should be $-1$ to 1. For the colour (\pil{cmap}), I believe I can only choose from certain options, instead of having my own colour scheme. I chose \pil{'Spectral'}, as I believe it is the closest to what I used in the design section. Once the heatmap is created, we can save the figure to a \pil{png} file.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss18.1.png}
+\caption{Initial Image of the Correlation Heatmap}\label{fig:ss18.1}
+\end{figure}
+
+Figure \ref{fig:ss18.1} shows the image generated, which unfortunately has the labels mostly cut off.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{79}$}\AND\equal{\mtestRealOutputs}{Image of the heatmap\comma{} with the labels cut off}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:exportPMCC}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{data_processing / pmcc.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=36]{python}
+heatmap.get_figure().savefig('data/pmcc.png', bbox_inches='tight', dpi=600)
+\end{minted}
+\caption{Improving the Quality of the Figure}\label{cs:improveQualityOfFigure}
+\end{listing}
+
+After looking at the documentation, for the \pil{savefig} method, I discovered you can pass in \pil{bbox_inches = 'tight'} to ensure that the output includes everything. While I was there, I found that you can change the resolution of the output image, by chaging the \pil{dpi} parameter (I set it to an arbitrary 600). 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss18.2.png}
+\caption{Final Image of the Correlation Heatmap}\label{fig:ss18.2}
+\end{figure}
+
+Figure \ref{fig:ss18.2} shows the new image generated, which is much better, and at much higher resolution.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{79}$}\AND\equal{\mtestRealOutputs}{As Expected}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:improveQualityOfFigure}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=272]{python}
+        pmccImage = gr.Image('data/pmcc.png', label='Correlation between Factors', height=600, interactive=False)
+\end{minted}
+\caption{Adding the Image to the Gradio Interface}\label{cs:pmccInGradio}
+\end{listing}
+
+Finally, we can add the image to the gradio interface by making use of the \pil{gr.Image} component. By default, this is used for users uploading images, but if we set \pil{interactive=False}, we can use to to just display an image.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss18.3.png}
+\caption{Correlation Heatmap in Gradio}\label{fig:ss18.3}
+\end{figure}
+
+Figure \ref{fig:ss18.3} shows the heatmap in the gradio interface. It seems that gradio also provides a download button on the image component, which allows for users to download this image and zoom in if they please.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{80}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:pmccInGradio}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Finding Similar Regions}

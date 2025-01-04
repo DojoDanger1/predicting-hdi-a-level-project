@@ -127,4 +127,11 @@
 \contentsline {listing}{\numberline {5.26}{\ignorespaces Undoing the Concatenation}}{238}{listing.5.26}%
 \contentsline {listing}{\numberline {5.27}{\ignorespaces Getting Lists of Factors}}{239}{listing.5.27}%
 \contentsline {listing}{\numberline {5.28}{\ignorespaces Returning the 2D List of Factors}}{240}{listing.5.28}%
+\contentsline {listing}{\numberline {5.29}{\ignorespaces Reading the Training Data}}{241}{listing.5.29}%
+\contentsline {listing}{\numberline {5.30}{\ignorespaces Iterating over All the Factors Twice}}{242}{listing.5.30}%
+\contentsline {listing}{\numberline {5.31}{\ignorespaces Ensuring Complete Pairs}}{243}{listing.5.31}%
+\contentsline {listing}{\numberline {5.32}{\ignorespaces Calculating the PMCC}}{244}{listing.5.32}%
+\contentsline {listing}{\numberline {5.33}{\ignorespaces Generating \& Exporting the Figure}}{245}{listing.5.33}%
+\contentsline {listing}{\numberline {5.34}{\ignorespaces Improving the Quality of the Figure}}{246}{listing.5.34}%
+\contentsline {listing}{\numberline {5.35}{\ignorespaces Adding the Image to the Gradio Interface}}{247}{listing.5.35}%
 \addvspace {10pt}

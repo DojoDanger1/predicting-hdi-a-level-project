@@ -269,6 +269,7 @@ with gr.Blocks() as app:
     with gr.Tab(label='Compare'):
         compareDropdown = gr.Dropdown(choices=[f'{region["region"]}, {region["country"]}' for region in trainingData], label='Select a Region')
         compareTable = gr.DataFrame(label='Comparison', headers=['Factor', 'Your Region', 'Selected Region'], type='array', interactive=False)
+        pmccImage = gr.Image('data/pmcc.png', label='Correlation between Factors', height=600, interactive=False)
     with gr.Tab(label='Log In'):
         logInUsername = gr.Textbox(label='Username', placeholder='Enter your username...')
         logInPassword = gr.Textbox(label='Password', placeholder='Enter your password...', type='password')

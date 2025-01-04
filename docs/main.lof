@@ -135,4 +135,7 @@
 \contentsline {figure}{\numberline {5.20}{\ignorespaces All Dropdown Options}}{236}{figure.caption.200}%
 \contentsline {figure}{\numberline {5.21}{\ignorespaces Output when the User has not Predicted Yet}}{238}{figure.caption.201}%
 \contentsline {figure}{\numberline {5.22}{\ignorespaces Full Comparison between User's and Selected Regions}}{241}{figure.caption.202}%
+\contentsline {figure}{\numberline {5.23}{\ignorespaces Initial Image of the Correlation Heatmap}}{245}{figure.caption.203}%
+\contentsline {figure}{\numberline {5.24}{\ignorespaces Final Image of the Correlation Heatmap}}{246}{figure.caption.204}%
+\contentsline {figure}{\numberline {5.25}{\ignorespaces Correlation Heatmap in Gradio}}{247}{figure.caption.205}%
 \addvspace {10\p@ }
