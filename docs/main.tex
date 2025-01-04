@@ -8810,7 +8810,110 @@ Figure \ref{fig:ss18.3} shows the heatmap in the gradio interface. It seems that
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Finding Similar Regions}
-\dots
+
+In this part, I will be implementing the textbox on the main page, which will output a region which has a similar, if not identical, HDI to the user's. First, we must find a list of possible candidates to choose from.
+
+\begin{listing}[H]
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=89]{python}
+    # find similar region
+    diff = 0
+    possible_choices = []
+    while len(possible_choices) == 0:
+        # search below & above (round to remove floating point errors)
+        possible_choices += [region for region in trainingData if region['hdi'] == str(round(prediction-diff, 3))]
+        possible_choices += [region for region in trainingData if region['hdi'] == str(round(prediction+diff, 3))]
+        # increment difference (round to remove floating point errors)
+        diff = round(diff + 0.001, 3)
+\end{minted}
+\caption{Iterating over Different Possible HDIs}\label{cs:findPossibleRegions}
+\end{listing}
+
+To do this, I have defined a list of the possible choices, and we search further and further from the predicted HDI until we find at least one that matches. Most of the time, due to the vast number of regions, it will not go beyond 1 iteration.
+
+When we add or subtract the difference, or increment the difference, we must round it to 3 decimal places, as there will often be a floating point error, causing the HDI that we are looking for to be slightly off from the ones in the data set.
+
+\begin{listing}[H]
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=98]{python}
+    # choose one of the options at random
+    chosenRegionRecord = random.choice(possible_choices)
+    similar_region = f'{chosenRegionRecord["region"]}, {chosenRegionRecord["country"]}'
+\end{minted}
+\caption{Choosing a Region to Display}\label{cs:chooseRandomRegion}
+\end{listing}
+
+Once we have a list of possible regions, we can randomly choose from one to display. From there, we can format a string in the same way we did in the dropdown menu, when the use is comparing regions.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{14.1}$}\OR\equal{\mtestID}{$T_{14.2}$}\OR\equal{\mtestID}{$T_{14.3}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{14}$ Testing Table (for Code Snippets \ref{cs:findPossibleRegions} \& \ref{cs:chooseRandomRegion})}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=101]{python}
+    return prediction, similar_region
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=299]{python}
+    predictHDIbutton.click(processPrediction, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[HDIprediction, similarHDI])
+\end{minted}
+\caption{Returning to the Textbox}\label{cs:returnToTextbox}
+\end{listing}
+
+Then, at the end of the function, when we return the predicted HDI, we must also return this similar region. In the gradio functionality, we must also accept another output, which is to the textbox stored in the variable \pil{similarHDI} (This textbox was added in Code Snippet \ref{cs:addSliders}, but was never functional).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss19.1.png}
+\caption{Similar Region Returned to Textbox}\label{fig:ss19.1}
+\end{figure}
+
+Figure \ref{fig:ss19.1} shows the output for Oxford.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{81}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:returnToTextbox}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss19.2.png}
+\caption{Comparison to Bangkok}\label{fig:ss19.2}
+\end{figure}
+
+When we look at the compare tab, and choose Bangkok to compare with, we can see that this has in fact worked, as Bangkok also has an HDI of $0.836$.
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Saving Regions}

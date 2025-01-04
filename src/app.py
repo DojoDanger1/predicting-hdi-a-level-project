@@ -86,7 +86,19 @@ def processPrediction(max_x_objects, max_y_objects, progress=gr.Progress()):
     inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
     prediction = round(network.predict(inputLayer).item(0,0), 3)
     currentHDI = prediction
-    return prediction
+    # find similar region
+    diff = 0
+    possible_choices = []
+    while len(possible_choices) == 0:
+        # search below & above (round to remove floating point errors)
+        possible_choices += [region for region in trainingData if region['hdi'] == str(round(prediction-diff, 3))]
+        possible_choices += [region for region in trainingData if region['hdi'] == str(round(prediction+diff, 3))]
+        # increment difference (round to remove floating point errors)
+        diff = round(diff + 0.001, 3)
+    # choose one of the options at random
+    chosenRegionRecord = random.choice(possible_choices)
+    similar_region = f'{chosenRegionRecord["region"]}, {chosenRegionRecord["country"]}'
+    return prediction, similar_region
 
 # helper function to calculate mean of coordinates
 def calcMeanOfCoords(coords):
@@ -284,7 +296,7 @@ with gr.Blocks() as app:
     
     # functionality
     uploadButton.upload(uploadGeoJSON, inputs=[uploadButton], outputs=[log])
-    predictHDIbutton.click(processPrediction, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[HDIprediction])
+    predictHDIbutton.click(processPrediction, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[HDIprediction, similarHDI])
     makeSuggestionsButton.click(makeSuggestions, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[suggestionsTable])
     suggestionsTable.select(selectSuggestionsTable, inputs=[], outputs=[map])
     compareDropdown.input(compareRegions, inputs=[compareDropdown], outputs=[compareTable])

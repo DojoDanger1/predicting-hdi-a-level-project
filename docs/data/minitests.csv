@@ -131,3 +131,7 @@ $t_{78}$,Generate PMCC Grid,Training Data,--,2D List of PMCCs for each pair of F
 $t_{79}$,Generate Heatmap,PMCC Grid,--,Image of the heatmap\comma{} showing all factors,Image of the heatmap\comma{} with the labels cut off
 $t_{79}$,Generate Heatmap,PMCC Grid,--,Image of the heatmap\comma{} showing all factors,As Expected
 $t_{80}$,Heatmap in Gradio Interface,--,--,Image of Heatmap at the Bottom of the Compare Tab,As Expected
+$T_{14.1}$,Choosing a Similar Region,HDI in the training data,Valid,Randomly chooses from those,As Expected
+$T_{14.2}$,Choosing a Similar Region,HDI not in the training data,Valid,Choose the closest one,As Expected
+$T_{14.3}$,Choosing a Similar Region,HDI not in the training data\comma{} with a tie for closest,Valid,Randomly chooses from those,As Expected
+$t_{81}$,Similar HDI Textbox,Region Name,--,Returned to Textbox on Main Page,As Expected

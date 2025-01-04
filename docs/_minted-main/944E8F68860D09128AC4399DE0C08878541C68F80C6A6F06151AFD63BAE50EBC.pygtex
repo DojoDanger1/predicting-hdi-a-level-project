@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} choose one of the options at random}
+    \PYG{n}{chosenRegionRecord} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{(}\PYG{n}{possible\PYGZus{}choices}\PYG{p}{)}
+    \PYG{n}{similar\PYGZus{}region} \PYG{o}{=} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{chosenRegionRecord}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}region\PYGZdq{}}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{, }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{chosenRegionRecord}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}country\PYGZdq{}}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}
+\end{Verbatim}

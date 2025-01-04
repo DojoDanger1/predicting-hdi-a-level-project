@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} find similar region}
+    \PYG{n}{diff} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{n}{possible\PYGZus{}choices} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{while} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{possible\PYGZus{}choices}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{c+c1}{\PYGZsh{} search below \PYGZam{} above (round to remove floating point errors)}
+        \PYG{n}{possible\PYGZus{}choices} \PYG{o}{+=} \PYG{p}{[}\PYG{n}{region} \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{trainingData} \PYG{k}{if} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}hdi\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{prediction}\PYG{o}{\PYGZhy{}}\PYG{n}{diff}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{))]}
+        \PYG{n}{possible\PYGZus{}choices} \PYG{o}{+=} \PYG{p}{[}\PYG{n}{region} \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{trainingData} \PYG{k}{if} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}hdi\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{prediction}\PYG{o}{+}\PYG{n}{diff}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{))]}
+        \PYG{c+c1}{\PYGZsh{} increment difference (round to remove floating point errors)}
+        \PYG{n}{diff} \PYG{o}{=} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{diff} \PYG{o}{+} \PYG{l+m+mf}{0.001}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)}
+\end{Verbatim}

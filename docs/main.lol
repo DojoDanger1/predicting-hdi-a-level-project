@@ -134,4 +134,7 @@
 \contentsline {listing}{\numberline {5.33}{\ignorespaces Generating \& Exporting the Figure}}{245}{listing.5.33}%
 \contentsline {listing}{\numberline {5.34}{\ignorespaces Improving the Quality of the Figure}}{246}{listing.5.34}%
 \contentsline {listing}{\numberline {5.35}{\ignorespaces Adding the Image to the Gradio Interface}}{247}{listing.5.35}%
+\contentsline {listing}{\numberline {5.36}{\ignorespaces Iterating over Different Possible HDIs}}{248}{listing.5.36}%
+\contentsline {listing}{\numberline {5.37}{\ignorespaces Choosing a Region to Display}}{249}{listing.5.37}%
+\contentsline {listing}{\numberline {5.38}{\ignorespaces Returning to the Textbox}}{249}{listing.5.38}%
 \addvspace {10pt}
