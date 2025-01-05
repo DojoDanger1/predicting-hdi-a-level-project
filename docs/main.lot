@@ -133,4 +133,18 @@
 \contentsline {table}{\numberline {5.28}{\ignorespaces Testing Table for Code Snippet \ref {cs:pmccInGradio}}}{248}{table.5.28}%
 \contentsline {table}{\numberline {5.29}{\ignorespaces $T_{14}$ Testing Table (for Code Snippets \ref {cs:findPossibleRegions} \& \ref {cs:chooseRandomRegion})}}{249}{table.5.29}%
 \contentsline {table}{\numberline {5.30}{\ignorespaces Testing Table for Code Snippet \ref {cs:returnToTextbox}}}{250}{table.5.30}%
+\contentsline {table}{\numberline {5.31}{\ignorespaces Testing Table for Code Snippet \ref {cs:regionsTab}}}{252}{table.5.31}%
+\contentsline {table}{\numberline {5.32}{\ignorespaces Testing Table for Code Snippet \ref {cs:shiftCode}}}{254}{table.5.32}%
+\contentsline {table}{\numberline {5.33}{\ignorespaces Testing Table for Code Snippets \ref {cs:storeNewRegions}, \ref {cs:regionsTable2DList} \& \ref {cs:updateRegionsTable}}}{256}{table.5.33}%
+\contentsline {table}{\numberline {5.34}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdown}}}{258}{table.5.34}%
+\contentsline {table}{\numberline {5.35}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdown}}}{259}{table.5.35}%
+\contentsline {table}{\numberline {5.36}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdownValue}}}{260}{table.5.36}%
+\contentsline {table}{\numberline {5.37}{\ignorespaces Testing Table for Code Snippet \ref {cs:submitEditsButton}}}{261}{table.5.37}%
+\contentsline {table}{\numberline {5.38}{\ignorespaces $T_{15}$ Testing Table (for Code Snippets \ref {cs:submitButtonFunctionality}, \ref {cs:saveIndex}, \ref {cs:uniqueRegionNames} \& \ref {cs:typeCheckCells})}}{265}{table.5.38}%
+\contentsline {table}{\numberline {5.39}{\ignorespaces Testing Table for Code Snippets \ref {cs:updateAllUserRegions} \& \ref {cs:updateSelectedRegion}}}{267}{table.5.39}%
+\contentsline {table}{\numberline {5.40}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateCurrentRegion}}}{268}{table.5.40}%
+\contentsline {table}{\numberline {5.41}{\ignorespaces Testing Table for Code Snippet \ref {cs:uploadExistingName}}}{269}{table.5.41}%
+\contentsline {table}{\numberline {5.42}{\ignorespaces Testing Table for Code Snippets \ref {cs:globalLogIn} \& \ref {cs:logIntoNewAccount}}}{270}{table.5.42}%
+\contentsline {table}{\numberline {5.43}{\ignorespaces Testing Table for Code Snippets \ref {cs:regionsIntoAccount}, \ref {cs:regionsOutOfAccount} \& \ref {cs:updateRegionsEmptyTable}}}{271}{table.5.43}%
+\contentsline {table}{\numberline {5.44}{\ignorespaces Testing Table for Code Snippet \ref {cs:tableRowsChanging}}}{272}{table.5.44}%
 \addvspace {10\p@ }

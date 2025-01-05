@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} if allUserRegions is empty, return an empty table}
+    \PYG{k}{if} \PYG{n}{table} \PYG{o}{==} \PYG{p}{[]:}
+        \PYG{n}{table}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{o}{*}\PYG{l+m+mi}{25}\PYG{p}{])}
+\end{Verbatim}

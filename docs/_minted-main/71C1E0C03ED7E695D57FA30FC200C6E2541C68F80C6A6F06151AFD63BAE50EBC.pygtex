@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{allUserRegions} \PYG{o}{=} \PYG{n}{user}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}regions\PYGZsq{}}\PYG{p}{]}
+\end{Verbatim}

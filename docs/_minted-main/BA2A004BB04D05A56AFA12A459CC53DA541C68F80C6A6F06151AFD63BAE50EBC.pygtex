@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} update the name of the selected region}
+    \PYG{k}{if} \PYG{n}{currentRegionName} \PYG{o}{==} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n}{newRegionName} \PYG{o}{=} \PYG{k+kc}{None}
+    \PYG{k}{else}\PYG{p}{:}
+        \PYG{n}{newRegionName} \PYG{o}{=} \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{currentRegionIndex}\PYG{p}{][}\PYG{l+s+s1}{\PYGZsq{}name\PYGZsq{}}\PYG{p}{]}
+    \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}Successfully Updated Regions\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(),} \PYG{n}{newRegionName}
+\end{Verbatim}

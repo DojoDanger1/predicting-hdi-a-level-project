@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{loggedInUsername} \PYG{o}{=} \PYG{n}{username}
+    \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}Successfully created \PYGZam{} logged into an account, with username: }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{username}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{!\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(),} \PYG{n}{updateRegionsDropdown}\PYG{p}{()}
+\end{Verbatim}

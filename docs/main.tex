@@ -8917,7 +8917,826 @@ When we look at the compare tab, and choose Bangkok to compare with, we can see 
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Saving Regions}
-\dots
+
+In this part, I will allow users to store different regions, and switch between which one they are predicting the HDI of.
+
+\begin{listing}[H]
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=285]{python}
+    with gr.Tab(label='Regions'):
+        regionsDropdown = gr.Dropdown(choices=[], label='Current Region')
+        regionsTable = gr.DataFrame(label='Your Regions', headers=(['Name'] + list(trainingData[0].keys())[4:]), type='array', col_count=(25,'fixed'), interactive=True)
+\end{minted}
+\caption{Adding the Regions Tab}\label{cs:regionsTab}
+\end{listing}
+
+Here, I am creating the gradio interface for the Regions Tab. In the design section I had planned that the user would select their region by clicking in the table, and the interface sketch for this tab (Figure \ref{fig:interfaceSketch2.3}) had a textbox at the top to show which one was selected.
+
+However, I now believe that it is better for the user to select which region they wish to process with a dropdown menu. At the start of the program running, this should have no possible options, as the user has not predicted any regions yet. Below this, is the table which will contain the regions. For this, we must set \pil{interactive=True}, to ensure the user will be able to edit the contents (and hence manually enter their factors). This will also add buttons below the table, to create a new row and new column. I would like the user to create new rows (new regions), but not new columns. If we also set \pil{col_count=(25,'fixed')}, then we will ensure that the number of columns stays at 25, and the new column button will not be present. Finally, the headers of these 25 columns should be ``Name'', followed by the names of all the factors, which we can get from the keys of a record from the training data.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss20.1.png}
+\caption{Regions Tab}\label{fig:ss20.1}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{82}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:regionsTab}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+In order to fill this table, we need to have some \pil{global} variable, which stores a list of all regions. When the user uploads and predicts a region, It would be better for the entirety of this list to be updated at once, and not partially at different times (for example, adding the name of a region at a certain time, and then the factors later).
+
+Currently, the name of the region is processed in the \pil{def uploadGeoJSON} function, and the factors are processed in the \pil{def processPrediction} function, and so the addition of these things will not be at the same time. Therefore, I have decided to move the part of the code that downloads all of the objects, and calculates each of the factors, to the \pil{def uploadGeoJSON} function, which means that we can update this list of all regions at the end of this function.
+
+This will also have the effect of making the upload button be really slow, and the prediction button really fast (as most of the time taken to predict is in downloading the objects). I belive that this is a good change, because users may be more used to uploading taking a while.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=45]{python}
+# code to process the user uploading their geojson file
+def uploadGeoJSON(filename, max_x_objects, max_y_objects, progress=gr.Progress()):
+    global currentRegion
+    global all_objects
+    global allFactors
+    progress(0, desc='Starting...')
+\end{minted}
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=54]{python}
+    shortFilename = filename[filename.rindex("/")+1:]
+\end{minted}
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=74]{python}
+        progress(0.91+0.09*(num/len(densityFactors)), desc=f'Calculating {densityFactor} Density...')
+\end{minted}
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=77]{python}
+    return f'Successfully Uploaded {shortFilename}'
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=79]{python}
+# predict the HDI of the given region
+def processPrediction():
+    global currentHDI
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=300]{python}
+    uploadButton.upload(uploadGeoJSON, inputs=[uploadButton, max_x_objectsSlider, max_y_objectsSlider], outputs=[log])
+    predictHDIbutton.click(processPrediction, inputs=[], outputs=[HDIprediction, similarHDI])
+\end{minted}
+\caption{Changes to Accomodate the Transition}\label{cs:shiftCode}
+\end{listing}
+
+In order to make it still work after this transition, we must make a few changes. The main change is what we pass into each function, where we now need to pass \pil{max_x_objects} and \pil{max_y_objects} into \pil{def uploadGeoJSON} instead of \pil{def processPrediction}. We therefore also need to update the gradio functionalities, at the end of the program, to ensure we pass the values of the sliders in.
+
+On top of these parameters, we must also now pass the \pil{progress} into \pil{def uploadGeoJSON} instead of \pil{def processPrediction}, as this is now the function that will take about a minute instead of \pil{def processPrediction}. As this function does not contain the prediction part, we must also slightly change the numbers in the progress bar update when calculating the density factors, as well as removing the progress bar update in \pil{def processPrediction} for predicting the HDI.
+
+Each function must now also have slightly different \pil{global} variables, as we now must make \pil{all_objects} and \pil{allFactors} global in the \pil{def uploadGeoJSON} function, and so now the only variable that must be global in \pil{def processPrediction} function is \pil{currentHDI}
+
+Finally, while I was making these changes, I also decided to store the shorter filename in its own variable, as I will need to be using it again later.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss20.2.png}
+\caption{Progress Bar in the Log Messages}\label{fig:ss20.2}
+\end{figure}
+
+This also has the effect of making the progress bar appear over the log messages, instead of the output HDI box.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{83}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:shiftCode}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=27]{python}
+allUserRegions = []
+\end{minted}
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=51]{python}
+    global allUserRegions
+\end{minted}
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=79]{python}
+    allUserRegions.append({
+        'name': shortFilename[:shortFilename.rindex('.')],
+        'objects': all_objects,
+        'factors': allFactors
+    })
+\end{minted}
+\caption{Storing New Regions when they Upload}\label{cs:storeNewRegions}
+\end{listing}
+
+Now that we have adjusted the code such that it processes the entire region in one function, we can create the \pil{allUserRegions} list. In the \pil{def uploadGeoJSON} function, we must specify this as a global variable, and at the end we can append the new region to it. The name of the region will be the name of the file, which is currently (for example) \pil{'region.geojson'}. To get the right part of the name, we must take everything before the last \pil{'.'}.
+
+The next step is to now display this region in the table
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=191]{python}
+# creates a 2d list to put in the regions table, from allUserRegions 
+def updateRegionsTable():
+    table = []
+    for region in allUserRegions:
+        table.append([region['name']] + region['factors'])
+    return table
+\end{minted}
+\caption{Creating a 2D List for the Regions Table}\label{cs:regionsTable2DList}
+\end{listing}
+
+To do this, I have written a function, \pil{def updateRegionsTable} to generate a 2D array from the \pil{allUserRegions} list. The factors are stored as a \pil{list} anyway, so we can just add this to a list containing the name and that will make up the table row. If we repeat this over all regions, we can construct a full table.
+
+\begin{listing}[H]
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=84]{python}
+    return f'Successfully Uploaded {shortFilename}', updateRegionsTable()
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=314]{python}
+    uploadButton.upload(uploadGeoJSON, inputs=[uploadButton, max_x_objectsSlider, max_y_objectsSlider], outputs=[log, regionsTable])
+\end{minted}
+\caption{Updating the Regions Table}\label{cs:updateRegionsTable}
+\end{listing}
+
+To update the table when we upload a region file, we can call the \pil{def updateRegionsTable} function, to get the new table, and then return that in addition to the log message. In the gradio functionality, we should also specify that the second return value should be passed to the regions table.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss20.3.png}
+\caption{Region added to the Table}\label{fig:ss20.3}
+\end{figure}
+
+Figure \ref{fig:ss20.3} shows the output for when I upload a file, called \pil{region.geojson}, of Oxford.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{84}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:storeNewRegions}, \ref{cs:regionsTable2DList} \& \ref{cs:updateRegionsTable}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=84]{python}
+    return f'Successfully Uploaded {shortFilename}', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=198]{python}
+# updates regions dropdown, from allUserRegions
+def updateRegionsDropdown():
+    names = [region['name'] for region in allUserRegions]
+    return gr.update(choices=names)
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=319]{python}
+    uploadButton.upload(uploadGeoJSON, inputs=[uploadButton, max_x_objectsSlider, max_y_objectsSlider], outputs=[log, regionsTable, regionsDropdown])
+\end{minted}
+\caption{Updating the Regions Dropdown}\label{cs:updateRegionsDropdown}
+\end{listing}
+
+When the user uploads a new region, the options in the dropdown menu should also update, to reflect the table rows. To do this, I have written another similar function, \pil{def updateRegionsDropdown}, which will generate a list of all the names of the regions, from the \pil{allUserRegions} list.
+
+Updating the choices is slightly more complicated however. Before, when we return something to a gradio component, we have updated the \pil{value} of it, which is the content held in the component. In the case of the dropdown menu, it would be the selected region. However, what we want to do here is change the \pil{choices}, instead of the \pil{value}. To do this, instead of just returning \pil{names}, we can return \pil{gr.update(choices=names)}, which will change the \pil{choices} attribute of whatever component we return to to be \pil{names}.
+
+We must therefore also call \pil{def updateRegionsDropdown} when we return in the \pil{def uploadGeoJSON} function, and specify in the functionality that we want to return this update to the regions dropdown.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=16cm]{ss20.4.png}
+\caption{Updating the Dropdown Options}\label{fig:ss20.4}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{85}$}\AND\equal{\mtestRealOutputs}{Dropdown is no longer interactive\comma{} gradio assumes it's an output}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:updateRegionsDropdown}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Unfortunately, this has made the dropdown non-interactive. I believe this is because, if we have returned something to it, then gradio assumes it is meant to be an ``output'' component, and so shouldn't be interactive.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=304]{python}
+        regionsDropdown = gr.Dropdown(choices=[], label='Current Region', interactive=True)
+\end{minted}
+\caption{Ensuring the Dropdown is Interactive}\label{cs:interactiveDropdown}
+\end{listing}
+
+We can fix this by just setting \pil{interactive=True} in the regions dropdown component.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss20.5.png}
+\caption{Dropdown Remains Interactive}\label{fig:ss20.5}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{85}$}\AND\equal{\mtestRealOutputs}{As Expected}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:updateRegionsDropdown}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+If the user has just uploaded a region, the selected region (the value of the dropdown menu) should also change, to be the new region.
+
+\begin{listing}[H]
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=84]{python}
+    return f'Successfully Uploaded {shortFilename}', updateRegionsTable(), updateRegionsDropdown(), shortFilename[:shortFilename.rindex('.')]
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=319]{python}
+    uploadButton.upload(uploadGeoJSON, inputs=[uploadButton, max_x_objectsSlider, max_y_objectsSlider], outputs=[log, regionsTable, regionsDropdown, regionsDropdown])
+\end{minted}
+\caption{Updating the Value of the Regions Dropdown}\label{cs:updateRegionsDropdownValue}
+\end{listing}
+
+We can do this, by just returning the name of the file to the dropdown menu. Note that this may look strange, as we are outputting to \pil{regionsDropdown} twice, but remember one is to update the \pil{choices}, and the other is now to change its value.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss20.6.png}
+\caption{Dropdown Value Updated}\label{fig:ss20.6}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{86}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:updateRegionsDropdownValue}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+The next thing to implement is updating the \pil{allUserRegions} list whenever the user makes changes to the table. In the design section, I had planned for this to happen automatically, but now I believe it will be a better idea to let the user make their changes, and have a button to make all of the changes in the backend simultaneously.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=306]{python}
+        submitEditsButton = gr.Button(value='Submit Table Changes', variant='primary')
+        submitEditsResult = gr.Textbox(label='Result', interactive=False)
+\end{minted}
+\caption{Adding a Button to Submit Edits to the Table}\label{cs:submitEditsButton}
+\end{listing}
+
+Therefore, I need to add another button and result box, this time in the regions tab.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss20.7.png}
+\caption{Submit Changes Button in Regions Tab}\label{fig:ss20.7}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{87}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:submitEditsButton}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=203]{python}
+# updates the allUserRegions list, when the regions table is updated
+def updateAllUserRegions(table, currentRegionName):
+    global allUserRegions
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=330]{python}
+    submitEditsButton.click(updateAllUserRegions, inputs=[regionsTable, regionsDropdown], outputs=[submitEditsResult, regionsDropdown, regionsDropdown])
+\end{minted}
+\caption{Adding the Submit Button Functionality}\label{cs:submitButtonFunctionality}
+\end{listing}
+
+To make this button work, we must define another function, for another gradio functionality. On top of updating the \pil{allUserRegions} variable, it should also update the dropdown to choose regions from. That is why the inputs for this function are the table and the dropdown, and the outputs are the result textbox, and the region dropdown twice (again, once to update the choices and the other to update the value).
+
+\begin{listing}[H]
+\pil{app.py / def updateAllUserRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=206]{python}
+    # store the index of the current region
+    if currentRegionName != None:
+        currentRegionIndex = [region['name'] for region in allUserRegions].index(currentRegionName)
+\end{minted}
+\caption{Saving the Index of the Current Region}\label{cs:saveIndex}
+\end{listing}
+
+In the case that the user has changed the name of their currently selected region, we must store the index of the row that this region is located it, so that we can keep it selected at the end of the function.
+
+Before we update anything however, we must first validate that the user has entered correct data.
+
+\begin{listing}[H]
+\pil{app.py / def updateAllUserRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=209]{python}
+    # validate the input - names of regions
+    regionNames = [row[0] for row in table]
+    if '' in regionNames or len(set(regionNames)) != len(regionNames):
+        return 'Please ensure every region has a unique name!', updateRegionsDropdown(), currentRegionName
+\end{minted}
+\caption{Ensuring Unique Region Names}\label{cs:uniqueRegionNames}
+\end{listing}
+
+The first thing I am checking here is that they have correclty named their regions. Regions should not be named empty strings, and there should be no duplicate region names (which makes it easier to keep track of regions).
+
+We can easily check if there are any empty names, but checking if they are all unique is a bit harder. The approach I took was to convert the list of names into a set, which can only hold unique values. If the length of the set is the same as the list, then there must have been no duplicate items. Otherwise, there are, and the user shouldn't be able to continue.
+
+If the user has not satisfied these restrictions, we can return an error, with a message going to the result box, and calling the function to update the regions dropdown and returning the \pil{currentRegionName} (which won't actually do anything, because we haven't changed \pil{allUserRegions} yet. We must still return these however, as gradio is expecting something for each of the 3 components).
+
+\begin{listing}[H]
+\pil{app.py / def updateAllUserRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=213]{python}
+    # validate the input - type check
+    for rowIndex, row in enumerate(table):
+        for cellIndex, cell in enumerate(row):
+            if cellIndex != 0 and (cellIndex > 12 or cell != ''):
+                try:
+                    table[rowIndex][cellIndex] = float(cell)
+                except ValueError:
+                    return f'Please Enter the Data Correctly! Found an error at cell (row {rowIndex}, col {cellIndex})', updateRegionsDropdown(), currentRegionName
+\end{minted}
+\caption{Type Checking Every Other Cell}\label{cs:typeCheckCells}
+\end{listing}
+
+We then must ensure that the user has not entered any erroneous data, in any of the cells. We must therefore iterate over each of the cells, by using a nested \pil{for} loop, and do a type check.
+
+We have already validated the names of the regions (in column \pil{0}), so we don't need to validate them. The next 12 columns are the average distance factors, and the final 12 are the density factors. Average distance factors must either be a float, or an empty string, but density factors can only be floats (this is because average distances may be undefined).
+
+Therefore, if we encounter a cell that is not in column 0, and that either we are considering a density factor, or it is not an empty string, then we must validate that it can be represented as a float.
+
+To do this, I have made use of a \pil{try} \pil{except} block, which will catch any errors thrown in the \pil{try} block, and then run the code in the \pil{except} block. If we use the \pil{try} block to try to turn it into a float, and it doesn't work (due to a \pil{ValueError} caused by the user entering erroneous data), we can return an error, along with the same function call and current region name as before.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss20.8a.png}
+    \caption{Region with No Name}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss20.8b.png}
+    \caption{Regions with Duplicate Names}
+\end{subfigure}
+
+\begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ss20.8c.png}
+    \caption{Region with Invalid Datatype}
+\end{subfigure}
+\caption{Validating Regions Table Input}\label{fig:regionsTableInput}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{15.1}$}\OR\equal{\mtestID}{$T_{15.2}$}\OR\equal{\mtestID}{$T_{15.3}$}\OR\equal{\mtestID}{$T_{15.4}$}\OR\equal{\mtestID}{$T_{15.5}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{15}$ Testing Table (for Code Snippets \ref{cs:submitButtonFunctionality}, \ref{cs:saveIndex}, \ref{cs:uniqueRegionNames} \& \ref{cs:typeCheckCells})}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now that the user's input has been validated, we can update \pil{allUserRegions}.
+
+\begin{listing}[H]
+\pil{app.py / def updateAllUserRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=221]{python}
+    # update the allUserRegions list
+    initialLength = len(allUserRegions)
+    for index, row in enumerate(table):
+        factors = [None if value == '' else value for value in row[1:]]
+        # if the user has changed the factors of an existing list, the associated objects should be removed
+        if index < initialLength:
+            if row[1:] != allUserRegions[index]['factors']:
+                allUserRegions[index] = {'name': row[0], 'objects': [], 'factors': factors}
+            else:
+                allUserRegions[index]['name'] = row[0]
+        # if the user has added a new region, it should have no associated objects
+        else:
+            allUserRegions.append({'name': row[0], 'objects': [], 'factors': factors})
+\end{minted}
+\caption{Updating \pil{allUserRegions}}\label{cs:updateAllUserRegions}
+\end{listing}
+
+Each row in the table corresponds to an element in the \pil{allUserRegions} list, so we can just iterate over the rows in the table, and if we get to a point where we have exceeded the original length of the list, we know that these are new regions. It is important to know this information, as if the user has manually entered factors for a region, then there should be no objects associated with it, as the values will no longer reflect them. We should therefore also remove any objects from regions which the user edits in the table.
+
+Therefore, if we haven't exceded the original length yet, we must check if they have been edited. If they have, then we can replace the name and factors, and remove the objects. Otherwise, we just need to replace the name. If we have exceeded the length however, then we must append a new region, with the name, factors, and no object.
+
+\begin{listing}[H]
+\pil{app.py / def updateAllUserRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=234]{python}
+    # update the name of the selected region
+    if currentRegionName == None:
+        newRegionName = None
+    else:
+        newRegionName = allUserRegions[currentRegionIndex]['name']
+    return 'Successfully Updated Regions', updateRegionsDropdown(), newRegionName
+\end{minted}
+\caption{Updating the Name of the Selected Region}\label{cs:updateSelectedRegion}
+\end{listing}
+
+If the user has edited the name of their currently selected region, then we must also update the current value of the regions dropdown. If it was \pil{None}, it should stay \pil{None}, otherwise it should be the new name at the index of where the old name was (no matter if it has changed or not).
+
+Once we have a name to return to the dropdown, we can return a success message, along with an update to the dropdown, and the new name of the selected region to the dropdown.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss20.9.png}
+\caption{\pil{allUserRegions} \& Dropdown Updated from Table}\label{fig:ss20.9}
+\end{figure}
+
+Figure \ref{fig:ss20.9} shows a new region added to the dropdown. You may notice that the value of the dropdown is still empty, but this is in fact correct, because it was empty to begin with.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{88}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:updateAllUserRegions} \& \ref{cs:updateSelectedRegion}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now that we can add regions to the dropdown menu in multiple ways, it is time to actually implement the functionality dropdown menu.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=241]{python}
+# updates the current region, when the user switches it with the dropdown on the regions tab
+def updateCurrentRegion(dropdownValue):
+    global all_objects
+    global allFactors
+    for region in allUserRegions:
+        if region['name'] == dropdownValue:
+            all_objects = region['objects']
+            allFactors = region['factors']
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=373]{python}
+    regionsDropdown.change(updateCurrentRegion, inputs=[regionsDropdown], outputs=[])
+\end{minted}
+\caption{Updating the Current Region}\label{cs:updateCurrentRegion}
+\end{listing}
+
+All the dropdown menu needs to do is change the current region, which should be easy enough. All we need to do is iterate over \pil{allUserRegions}, and when we find the one that matched with the new dropdown value, we set the \pil{all_objects} and \pil{allFactors} variable to the values from the list.
+
+This function should be run every time the value of the regions dropdown changes, for whatever reason (e.g. the user updates it, or it gets updated by a function).
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{89}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:updateCurrentRegion}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=46]{python}
+# code to process the user uploading their geojson file
+def uploadGeoJSON(filename, max_x_objects, max_y_objects, currentRegionName, progress=gr.Progress()):
+\end{minted}
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=57]{python}
+    if shortFilename[:shortFilename.rindex('.')] in [region['name'] for region in allUserRegions] or shortFilename[:shortFilename.rindex('.')] == '':
+        return 'There is already a region with this name! Please rename the file first.', updateRegionsTable(), updateRegionsDropdown(), currentRegionName
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=370]{python}
+    uploadButton.upload(uploadGeoJSON, inputs=[uploadButton, max_x_objectsSlider, max_y_objectsSlider, regionsDropdown], outputs=[log, regionsTable, regionsDropdown, regionsDropdown])
+\end{minted}
+\caption{Ensuring the User doesn't Upload a Duplicate Region Name}\label{cs:uploadExistingName}
+\end{listing}
+
+As the input from the table does not allow for empty region names or duplicate region names, the same should be true for when the user uploads a region file.
+
+Here, I am checking if the name is in the list of existing names, or if the name is empty, and if it is, then we can return a suitable error message, along with the nescessary updates (which again, will do nothing as we haven't changed anything yet).
+
+To do this, we must also pass in the \pil{currentRegionName}, so that we can return it back in this case if we need to.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss20.10.png}
+\caption{Cannot Upload Region with the Same Name}\label{fig:ss20.10}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{90}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:uploadExistingName}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now that I have implemented saving regions on a local level, it is time to bring this feature to accounts.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=28]{python}
+loggedInUsername = ''
+\end{minted}
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=297]{python}
+    global loggedInUsername
+\end{minted}
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=309]{python}
+    loggedInUsername = username
+\end{minted}
+\caption{Adding a Global Variable for Logging In}\label{cs:globalLogIn}
+\end{listing}
+
+First, I need a way of keeping track of which account the user is currently logged into. Here, I have defined a variable, \pil{loggedInUsername}, which keeps track of the username of the account the user is currently logged into. If it is empty, then that means that the user is not logged in, so therefore it should initially be empty.
+
+When we log in, we must ensure that we are using the \pil{global} variable, and then at the end, once we have verified everything is correct, we can set the \pil{loggedInUsername} to the username that the user has entered.
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=255]{python}
+    global loggedInUsername
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=294]{python}
+    loggedInUsername = username
+    return f'Successfully created & logged into an account, with username: {username}!', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\caption{Logging Into a Newly Created Account}\label{cs:logIntoNewAccount}
+\end{listing}
+
+The user should also be logged in when they sign up for an account. This can be easily done by again setting \pil{loggedInUsername} to the username the user entered, at the end of the function.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{91}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:globalLogIn} \& \ref{cs:logIntoNewAccount}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=87]{python}
+    # save regions to account, if logged in
+    if loggedInUsername != '':
+        users.update_one({'username': loggedInUsername}, {'$set': {'regions': allUserRegions}})
+\end{minted}
+\pil{app.py / def updateAllUserRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=240]{python}
+    # save regions to account, if logged in
+    if loggedInUsername != '':
+        users.update_one({'username': loggedInUsername}, {'$set': {'regions': allUserRegions}})
+\end{minted}
+\caption{Adding Regions to the Account}\label{cs:regionsIntoAccount}
+\end{listing}
+
+When the user uploads a new region, or makes a change in the table, we should update the user's document in the database (if they are logged in). We can do this by calling the \pil{update_one} method, and set the \pil{'regions'} attribute to \pil{allUserRegions}.
+
+\begin{listing}[H]
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=306]{python}
+    global allUserRegions
+\end{minted}
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=319]{python}
+    allUserRegions = user['regions']
+\end{minted}
+\caption{Reading Regions from the Account}\label{cs:regionsOutOfAccount}
+\end{listing}
+
+When the user logs into an account, the regions should also be replaced by those in the account. This can be done by just setting \pil{allUserRegions} to the user's \pil{'regions'} at the end of the \pil{def logIn} function.
+
+\begin{listing}[H]
+\pil{app.py / def updateRegionsTable}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=202]{python}
+    # if allUserRegions is empty, return an empty table
+    if table == []:
+        table.append([''*25])
+\end{minted}
+\caption{Handling Empty Region Lists}\label{cs:updateRegionsEmptyTable}
+\end{listing}
+
+This also made me realise about a slight oversight, which is that the regions table may be updated when \pil{allUserRegions} is empty. In which case, we should return a \pil{list}, containing a \pil{list} of 25 empty strings.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss20.11.png}
+\caption{Region Added to MongoDB}\label{fig:ss20.11}
+\end{figure}
+
+Figure \ref{fig:ss20.11} shows a region added to my account, in MongoDB.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{92}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:regionsIntoAccount}, \ref{cs:regionsOutOfAccount} \& \ref{cs:updateRegionsEmptyTable}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+However, I noticed that here the \pil{'objects'} array is empty, where it shouldn't be, because I generated it by uploading a region. This lead me to believe that the \pil{def updateRegionsTable} function had incorrectly identified that this had been edited, where in fact it had not.
+
+\begin{listing}[H]
+\pil{app.py / def updateRegionsTable}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=236]{python}
+            if [float(factor) if factor != '' else None for factor in row[1:]] != allUserRegions[index]['factors']:
+                allUserRegions[index] = {'name': row[0], 'objects': [], 'factors': factors}
+            else:
+                allUserRegions[index]['name'] = row[0]
+\end{minted}
+\caption{Correctly Identifying when Table Rows have Changed}\label{cs:tableRowsChanging}
+\end{listing}
+
+I fixed this by ensuring that we convert all factors to floats, and replace empty strings with \pil{None}s.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss20.12.png}
+\caption{Region with Objects Added to MongoDB}\label{fig:ss20.12}
+\end{figure}
+
+Figure \ref{fig:ss20.12} shows the new region added to the MongoDB, which now correctly has all of the objects
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{93}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:tableRowsChanging}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Improved Suggestions}

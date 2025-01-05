@@ -135,3 +135,21 @@ $T_{14.1}$,Choosing a Similar Region,HDI in the training data,Valid,Randomly cho
 $T_{14.2}$,Choosing a Similar Region,HDI not in the training data,Valid,Choose the closest one,As Expected
 $T_{14.3}$,Choosing a Similar Region,HDI not in the training data\comma{} with a tie for closest,Valid,Randomly chooses from those,As Expected
 $t_{81}$,Similar HDI Textbox,Region Name,--,Returned to Textbox on Main Page,As Expected
+$t_{82}$,Regions Tab,--,--,Dropdown Menu (no options) \& Interactive Regions Table with New Row button,As Expected
+$t_{83}$,Predicting HDI Still Works,--,--,Uploading region file and then predicting HDI still results in the objects being downloaded\comma{} factors being calculated\comma{} and HDI being predicted,As Expected
+$t_{84}$,Upload New Region Added to Table,region.geojson,--,New row in the table with the name \pil{region}\comma{} followed by 24 factors,As Expected
+$t_{85}$,Updating Options in Regions Dropdown,region.geojson,--,New option in Regions Dropdown\comma{} \pil{region},Dropdown is no longer interactive\comma{} gradio assumes it's an output
+$t_{85}$,Updating Options in Regions Dropdown,region.geojson,--,New option in Regions Dropdown\comma{} \pil{region},As Expected
+$t_{86}$,Updating Value of Regions Dropdown,region.geojson,--,Current region becomes \pil{region},As Expected
+$t_{87}$,Full Regions Tab,--,--,Dropdowm\comma{} Regions Table\comma{} Submit Changes Button\comma{} Submit Changes Result,As Expected
+$T_{15.1}$,Validating Regions Input,Region with No Name,Invalid,Prompt to ensure all regions have a name,As Expected
+$T_{15.2}$,Validating Regions Input,Regions with Duplicate Names,Invalid,Prompt to ensure all regions have unique names,As Expected
+$T_{15.3}$,Validating Regions Input,String in Density Factor,Invalid,Prompt to ensure all data is entered correctly,As Expected
+$T_{15.4}$,Validating Regions Input,Non-Empty String in Average Distance Factor,Invalid,Prompt to ensure all data is entered correctly,As Expected
+$T_{15.5}$,Validating Regions Input,Valid Entry,Valid,No Return (success message not implemented yet),As Expected
+$t_{88}$,Updating Dropdown from Table,New region\comma{} with a name and density factors filled in,--,Region saved to \pil{allUserRegions}\comma{} and name added to dropdown,As Expected
+$t_{89}$,User can switch between regions,--,--,Switching between 2 regions in the dropdown menu causes different predictions based on which one is selected,As Expected
+$t_{90}$,User cannot upload region with the same name,region.geojson\comma{} twice,--,Suitable error message in the log messages,As Expected
+$t_{91}$,Logging Into an Account,A username,--,\pil{loggedInUsernme} updates to that username,As Expected
+$t_{92}$,Saving Regions to an Account,Process a Region while Logged In,--,Region saved to MongoDB,As Expected
+$t_{93}$,Saving Regions with Objects to an Account,Process a Region while Logged In,--,Region with Objects saved to MongoDB,As Expected

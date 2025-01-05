@@ -24,6 +24,8 @@ currentRegion = []
 all_objects = {}
 allFactors = []
 currentHDI = -1
+allUserRegions = []
+loggedInUsername = ''
 averageDistanceFactors = [['house', 'school'], ['house', 'hospital'], ['house', 'pharmacy'], ['house', 'restaurant'], ['school', 'hospital'], ['police', 'hospital'], ['house', 'place_of_worship'], ['bank', 'slot_machines'], ['fast_food', 'toilets'], ['house', 'police'], ['university', 'library'], ['house', 'library']]
 densityFactors = ['school', 'hospital', 'pharmacy', 'police', 'library', 'toilets', 'restaurant', 'place_of_worship', 'post_box', 'vending_machine', 'bench', 'tree']
 
@@ -43,22 +45,18 @@ with open('data/training_data.csv', 'r') as file:
         trainingData.append(record)
 
 # code to process the user uploading their geojson file
-def uploadGeoJSON(filename):
+def uploadGeoJSON(filename, max_x_objects, max_y_objects, currentRegionName, progress=gr.Progress()):
     global currentRegion
+    global all_objects
+    global allFactors
+    global allUserRegions
+    progress(0, desc='Starting...')
     with open(filename, 'r') as file:
         data = json.load(file)
         currentRegion = [coordinate[::-1] for coordinate in data['features'][0]['geometry']['coordinates'][0]]
-    return f'Successfully Uploaded {filename[filename.rindex("/")+1:]}'
-
-# predict the HDI of the given region
-def processPrediction(max_x_objects, max_y_objects, progress=gr.Progress()):
-    global currentRegion
-    global all_objects
-    global currentHDI
-    global allFactors
-    if currentRegion == []:
-        return 'You have not uploaded a region!'
-    progress(0, desc='Starting...')
+    shortFilename = filename[filename.rindex("/")+1:]
+    if shortFilename[:shortFilename.rindex('.')] in [region['name'] for region in allUserRegions]:
+        return 'There is already a region with this name! Please rename the file first.', updateRegionsTable(), updateRegionsDropdown(), currentRegionName
     # retrieve all relevant osm data
     object_types = ['house', 'school', 'hospital', 'pharmacy', 'restaurant', 'place_of_worship', 'bank', 'slot_machines', 'fast_food', 'toilets', 'police', 'university', 'library', 'post_box', 'vending_machine', 'bench', 'tree']
     all_objects = {}
@@ -78,11 +76,25 @@ def processPrediction(max_x_objects, max_y_objects, progress=gr.Progress()):
     area = calcArea(currentRegion)
     # calculate density factors
     for num, densityFactor in enumerate(densityFactors):
-        progress(0.91+0.05*(num/len(densityFactors)), desc=f'Calculating {densityFactor} Density...')
+        progress(0.91+0.09*(num/len(densityFactors)), desc=f'Calculating {densityFactor} Density...')
         print(f'finding D({densityFactor})')
         allFactors.append(density(all_objects[densityFactor], area))
+    allUserRegions.append({
+        'name': shortFilename[:shortFilename.rindex('.')],
+        'objects': all_objects,
+        'factors': allFactors
+    })
+    # save regions to account, if logged in
+    if loggedInUsername != '':
+        users.update_one({'username': loggedInUsername}, {'$set': {'regions': allUserRegions}})
+    return f'Successfully Uploaded {shortFilename}', updateRegionsTable(), updateRegionsDropdown(), shortFilename[:shortFilename.rindex('.')]
+
+# predict the HDI of the given region
+def processPrediction():
+    global currentHDI
+    if currentRegion == []:
+        return 'You have not uploaded a region!'
     # predict HDI
-    progress(0.96, desc='Predicting HDI...')
     inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
     prediction = round(network.predict(inputLayer).item(0,0), 3)
     currentHDI = prediction
@@ -182,8 +194,74 @@ def compareRegions(regionName):
         returnList.append([factor, yourFactors[num], selectedFactors[num]])
     return returnList
 
+# creates a 2d list to put in the regions table, from allUserRegions 
+def updateRegionsTable():
+    table = []
+    for region in allUserRegions:
+        table.append([region['name']] + region['factors'])
+    # if allUserRegions is empty, return an empty table
+    if table == []:
+        table.append([''*25])
+    return table
+
+# updates regions dropdown, from allUserRegions
+def updateRegionsDropdown():
+    names = [region['name'] for region in allUserRegions]
+    return gr.update(choices=names)
+
+# updates the allUserRegions list, when the regions table is updated
+def updateAllUserRegions(table, currentRegionName):
+    global allUserRegions
+    # store the index of the current region
+    if currentRegionName != None:
+        currentRegionIndex = [region['name'] for region in allUserRegions].index(currentRegionName)
+    # validate the input - names of regions
+    regionNames = [row[0] for row in table]
+    if '' in regionNames or len(set(regionNames)) != len(regionNames):
+        return 'Please ensure every region has a unique name!', updateRegionsDropdown(), currentRegionName
+    # validate the input - type check
+    for rowIndex, row in enumerate(table):
+        for cellIndex, cell in enumerate(row):
+            if cellIndex != 0 and (cellIndex > 12 or cell != ''):
+                try:
+                    table[rowIndex][cellIndex] = float(cell)
+                except ValueError:
+                    return f'Please Enter the Data Correctly! Found an error at cell (row {rowIndex}, col {cellIndex})', updateRegionsDropdown(), currentRegionName
+    # update the allUserRegions list
+    initialLength = len(allUserRegions)
+    for index, row in enumerate(table):
+        factors = [None if value == '' else value for value in row[1:]]
+        # if the user has changed the factors of an existing list, the associated objects should be removed
+        if index < initialLength:
+            if [float(factor) if factor != '' else None for factor in row[1:]] != allUserRegions[index]['factors']:
+                allUserRegions[index] = {'name': row[0], 'objects': [], 'factors': factors}
+            else:
+                allUserRegions[index]['name'] = row[0]
+        # if the user has added a new region, it should have no associated objects
+        else:
+            allUserRegions.append({'name': row[0], 'objects': [], 'factors': factors})
+    # save regions to account, if logged in
+    if loggedInUsername != '':
+        users.update_one({'username': loggedInUsername}, {'$set': {'regions': allUserRegions}})
+    # update the name of the selected region
+    if currentRegionName == None:
+        newRegionName = None
+    else:
+        newRegionName = allUserRegions[currentRegionIndex]['name']
+    return 'Successfully Updated Regions', updateRegionsDropdown(), newRegionName
+
+# updates the current region, when the user switches it with the dropdown on the regions tab
+def updateCurrentRegion(dropdownValue):
+    global all_objects
+    global allFactors
+    for region in allUserRegions:
+        if region['name'] == dropdownValue:
+            all_objects = region['objects']
+            allFactors = region['factors']
+
 # validate sign up & add account to mongoDB
 def signUp(username, password, password2):
+    global loggedInUsername
     # validate no empty fields
     if username == '' or password == '' or password2 == '':
         return 'Please fill in all fields!'
@@ -222,10 +300,13 @@ def signUp(username, password, password2):
         'regions': []
     }
     users.insert_one(user)
-    return f'Successfully created an account, with username: {username}!'
+    loggedInUsername = username
+    return f'Successfully created & logged into an account, with username: {username}!', updateRegionsTable(), updateRegionsDropdown()
 
 # validate & log in the user
 def logIn(username, password):
+    global loggedInUsername
+    global allUserRegions
     # validate no empty fields
     if username == '' or password == '':
         return 'Please fill in all fields!'
@@ -237,7 +318,9 @@ def logIn(username, password):
     if not bcrypt.checkpw(password.encode('utf-8'), user['hashedPassword']): # the hashed passwords do not match
         return 'Incorrect Password! Please try again.'
     # grant access to the account
-    return f'Successfully logged in as {username}!'
+    loggedInUsername = username
+    allUserRegions = user['regions']
+    return f'Successfully logged in as {username}!', updateRegionsTable(), updateRegionsDropdown()
 
 # define some starting locations
 locations = [[51.5360, -0.1196], [40.8093, -73.9678], [34.0069, -118.2304], [25.7617, -80.1918], [48.8488, 2.3470], [41.8840, 12.4790], [52.5078, 13.4003], [37.9964, 23.7293], [59.3265, 18.0680], [40.4172, -3.6867], [41.3940, 2.1606], [38.7253, -9.1403], [55.7476, 37.6209], [31.2230, 121.4860], [39.8958, 116.4000], [37.5467, 126.9901], [35.6777, 139.7685], [1.3294, 103.8081], [-33.8782, 151.1754], [30.0465, 31.2246], [6.5047, 3.3732], [-1.2873, 36.8198], [-33.9425, 18.5065],  [19.3916, -99.1279], [-23.5727, -46.6207], [36.1458, -115.1832], [38.8939, -77.0372], [49.2501, -123.1164], [43.6888, -79.4190]]
@@ -282,6 +365,11 @@ with gr.Blocks() as app:
         compareDropdown = gr.Dropdown(choices=[f'{region["region"]}, {region["country"]}' for region in trainingData], label='Select a Region')
         compareTable = gr.DataFrame(label='Comparison', headers=['Factor', 'Your Region', 'Selected Region'], type='array', interactive=False)
         pmccImage = gr.Image('data/pmcc.png', label='Correlation between Factors', height=600, interactive=False)
+    with gr.Tab(label='Regions'):
+        regionsDropdown = gr.Dropdown(choices=[], label='Current Region', interactive=True)
+        regionsTable = gr.DataFrame(label='Your Regions', headers=(['Name'] + list(trainingData[0].keys())[4:]), type='array', col_count=(25,'fixed'), interactive=True)
+        submitEditsButton = gr.Button(value='Submit Table Changes', variant='primary')
+        submitEditsResult = gr.Textbox(label='Result', interactive=False)
     with gr.Tab(label='Log In'):
         logInUsername = gr.Textbox(label='Username', placeholder='Enter your username...')
         logInPassword = gr.Textbox(label='Password', placeholder='Enter your password...', type='password')
@@ -295,13 +383,15 @@ with gr.Blocks() as app:
         signUpResult = gr.Textbox(label='Result', interactive=False)
     
     # functionality
-    uploadButton.upload(uploadGeoJSON, inputs=[uploadButton], outputs=[log])
-    predictHDIbutton.click(processPrediction, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[HDIprediction, similarHDI])
+    uploadButton.upload(uploadGeoJSON, inputs=[uploadButton, max_x_objectsSlider, max_y_objectsSlider, regionsDropdown], outputs=[log, regionsTable, regionsDropdown, regionsDropdown])
+    predictHDIbutton.click(processPrediction, inputs=[], outputs=[HDIprediction, similarHDI])
     makeSuggestionsButton.click(makeSuggestions, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[suggestionsTable])
     suggestionsTable.select(selectSuggestionsTable, inputs=[], outputs=[map])
     compareDropdown.input(compareRegions, inputs=[compareDropdown], outputs=[compareTable])
-    signUpButton.click(signUp, inputs=[signUpUsername, signUpPassword, signUpPassword2], outputs=[signUpResult])
-    logInButton.click(logIn, inputs=[logInUsername, logInPassword], outputs=[logInResult])
+    regionsDropdown.change(updateCurrentRegion, inputs=[regionsDropdown], outputs=[])
+    submitEditsButton.click(updateAllUserRegions, inputs=[regionsTable, regionsDropdown], outputs=[submitEditsResult, regionsDropdown, regionsDropdown])
+    signUpButton.click(signUp, inputs=[signUpUsername, signUpPassword, signUpPassword2], outputs=[signUpResult, regionsTable, regionsDropdown])
+    logInButton.click(logIn, inputs=[logInUsername, logInPassword], outputs=[logInResult, regionsTable, regionsDropdown])
 
 # launch the UI
 app.launch()

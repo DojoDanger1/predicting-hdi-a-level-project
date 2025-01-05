@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+            \PYG{k}{if} \PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}} \PYG{k}{else} \PYG{k+kc}{None} \PYG{k}{for} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:]]} \PYG{o}{!=} \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{index}\PYG{p}{][}\PYG{l+s+s1}{\PYGZsq{}factors\PYGZsq{}}\PYG{p}{]:}
+                \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}name\PYGZsq{}}\PYG{p}{:} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{l+s+s1}{\PYGZsq{}objects\PYGZsq{}}\PYG{p}{:} \PYG{p}{[],} \PYG{l+s+s1}{\PYGZsq{}factors\PYGZsq{}}\PYG{p}{:} \PYG{n}{factors}\PYG{p}{\PYGZcb{}}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{index}\PYG{p}{][}\PYG{l+s+s1}{\PYGZsq{}name\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\end{Verbatim}

@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{allUserRegions}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(\PYGZob{}}
+        \PYG{l+s+s1}{\PYGZsq{}name\PYGZsq{}}\PYG{p}{:} \PYG{n}{shortFilename}\PYG{p}{[:}\PYG{n}{shortFilename}\PYG{o}{.}\PYG{n}{rindex}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}}\PYG{p}{)],}
+        \PYG{l+s+s1}{\PYGZsq{}objects\PYGZsq{}}\PYG{p}{:} \PYG{n}{all\PYGZus{}objects}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}factors\PYGZsq{}}\PYG{p}{:} \PYG{n}{allFactors}
+    \PYG{p}{\PYGZcb{})}
+\end{Verbatim}

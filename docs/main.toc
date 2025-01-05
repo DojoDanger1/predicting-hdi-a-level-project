@@ -161,14 +161,14 @@
 \contentsline {subsection}{\numberline {5.2.3}Part 18{} -- Analysis of how much Each Factor affects the Others}{241}{subsection.5.2.3}%
 \contentsline {subsection}{\numberline {5.2.4}Part 19{} -- Finding Similar Regions}{248}{subsection.5.2.4}%
 \contentsline {subsection}{\numberline {5.2.5}Part 20{} -- Saving Regions}{250}{subsection.5.2.5}%
-\contentsline {subsection}{\numberline {5.2.6}Part 21{} -- Improved Suggestions}{250}{subsection.5.2.6}%
-\contentsline {subsection}{\numberline {5.2.7}Part 22{} -- Finishing Touches}{251}{subsection.5.2.7}%
-\contentsline {subsection}{\numberline {5.2.8}Part 23{} -- Deployment to Hugging Face}{251}{subsection.5.2.8}%
-\contentsline {subsection}{\numberline {5.2.9}Review}{251}{subsection.5.2.9}%
-\contentsline {section}{\numberline {5.3}Feedback from Stakeholders}{251}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Evaluation}{252}{chapter.6}%
-\contentsline {chapter}{Index}{253}{section*.208}%
-\contentsline {section}{List of Figures}{253}{section*.209}%
-\contentsline {section}{List of Code Snippets}{257}{section*.211}%
-\contentsline {section}{List of Tables}{261}{section*.213}%
-\contentsline {chapter}{Bibliography}{265}{section*.215}%
+\contentsline {subsection}{\numberline {5.2.6}Part 21{} -- Improved Suggestions}{273}{subsection.5.2.6}%
+\contentsline {subsection}{\numberline {5.2.7}Part 22{} -- Finishing Touches}{273}{subsection.5.2.7}%
+\contentsline {subsection}{\numberline {5.2.8}Part 23{} -- Deployment to Hugging Face}{273}{subsection.5.2.8}%
+\contentsline {subsection}{\numberline {5.2.9}Review}{273}{subsection.5.2.9}%
+\contentsline {section}{\numberline {5.3}Feedback from Stakeholders}{273}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Evaluation}{274}{chapter.6}%
+\contentsline {chapter}{Index}{275}{section*.220}%
+\contentsline {section}{List of Figures}{275}{section*.221}%
+\contentsline {section}{List of Code Snippets}{279}{section*.223}%
+\contentsline {section}{List of Tables}{283}{section*.225}%
+\contentsline {chapter}{Bibliography}{287}{section*.227}%

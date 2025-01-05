@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{regionsDropdown}\PYG{o}{.}\PYG{n}{change}\PYG{p}{(}\PYG{n}{updateCurrentRegion}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{regionsDropdown}\PYG{p}{],} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[])}
+\end{Verbatim}

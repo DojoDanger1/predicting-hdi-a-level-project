@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} update the allUserRegions list}
+    \PYG{n}{initialLength} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{allUserRegions}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{row} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{table}\PYG{p}{):}
+        \PYG{n}{factors} \PYG{o}{=} \PYG{p}{[}\PYG{k+kc}{None} \PYG{k}{if} \PYG{n}{value} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}} \PYG{k}{else} \PYG{n}{value} \PYG{k}{for} \PYG{n}{value} \PYG{o+ow}{in} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:]]}
+        \PYG{c+c1}{\PYGZsh{} if the user has changed the factors of an existing list, the associated objects should be removed}
+        \PYG{k}{if} \PYG{n}{index} \PYG{o}{\PYGZlt{}} \PYG{n}{initialLength}\PYG{p}{:}
+            \PYG{k}{if} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:]} \PYG{o}{!=} \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{index}\PYG{p}{][}\PYG{l+s+s1}{\PYGZsq{}factors\PYGZsq{}}\PYG{p}{]:}
+                \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}name\PYGZsq{}}\PYG{p}{:} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{l+s+s1}{\PYGZsq{}objects\PYGZsq{}}\PYG{p}{:} \PYG{p}{[],} \PYG{l+s+s1}{\PYGZsq{}factors\PYGZsq{}}\PYG{p}{:} \PYG{n}{factors}\PYG{p}{\PYGZcb{}}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{index}\PYG{p}{][}\PYG{l+s+s1}{\PYGZsq{}name\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+        \PYG{c+c1}{\PYGZsh{} if the user has added a new region, it should have no associated objects}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{allUserRegions}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}name\PYGZsq{}}\PYG{p}{:} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{l+s+s1}{\PYGZsq{}objects\PYGZsq{}}\PYG{p}{:} \PYG{p}{[],} \PYG{l+s+s1}{\PYGZsq{}factors\PYGZsq{}}\PYG{p}{:} \PYG{n}{factors}\PYG{p}{\PYGZcb{})}
+\end{Verbatim}

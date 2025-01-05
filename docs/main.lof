@@ -140,4 +140,16 @@
 \contentsline {figure}{\numberline {5.25}{\ignorespaces Correlation Heatmap in Gradio}}{247}{figure.caption.205}%
 \contentsline {figure}{\numberline {5.26}{\ignorespaces Similar Region Returned to Textbox}}{250}{figure.caption.206}%
 \contentsline {figure}{\numberline {5.27}{\ignorespaces Comparison to Bangkok}}{250}{figure.caption.207}%
+\contentsline {figure}{\numberline {5.28}{\ignorespaces Regions Tab}}{251}{figure.caption.208}%
+\contentsline {figure}{\numberline {5.29}{\ignorespaces Progress Bar in the Log Messages}}{254}{figure.caption.209}%
+\contentsline {figure}{\numberline {5.30}{\ignorespaces Region added to the Table}}{256}{figure.caption.210}%
+\contentsline {figure}{\numberline {5.31}{\ignorespaces Updating the Dropdown Options}}{257}{figure.caption.211}%
+\contentsline {figure}{\numberline {5.32}{\ignorespaces Dropdown Remains Interactive}}{258}{figure.caption.212}%
+\contentsline {figure}{\numberline {5.33}{\ignorespaces Dropdown Value Updated}}{260}{figure.caption.213}%
+\contentsline {figure}{\numberline {5.34}{\ignorespaces Submit Changes Button in Regions Tab}}{261}{figure.caption.214}%
+\contentsline {figure}{\numberline {5.35}{\ignorespaces Validating Regions Table Input}}{264}{figure.caption.215}%
+\contentsline {figure}{\numberline {5.36}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|allUserRegions| \& Dropdown Updated from Table}}{266}{figure.caption.216}%
+\contentsline {figure}{\numberline {5.37}{\ignorespaces Cannot Upload Region with the Same Name}}{269}{figure.caption.217}%
+\contentsline {figure}{\numberline {5.38}{\ignorespaces Region Added to MongoDB}}{271}{figure.caption.218}%
+\contentsline {figure}{\numberline {5.39}{\ignorespaces Region with Objects Added to MongoDB}}{272}{figure.caption.219}%
 \addvspace {10\p@ }
