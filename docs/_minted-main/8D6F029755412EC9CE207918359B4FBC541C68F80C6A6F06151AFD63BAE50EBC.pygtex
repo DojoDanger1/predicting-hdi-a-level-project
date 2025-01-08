@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} iterate over the factors}
+    \PYG{n}{optimalPositions} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{zeroOfEverything} \PYG{o}{=} \PYG{k+kc}{True}
+    \PYG{n}{zeroOfThings} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{averageDistanceFactor} \PYG{o+ow}{in} \PYG{n}{averageDistanceFactors}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{n}{building}\PYG{p}{:}
+            \PYG{c+c1}{\PYGZsh{} initialise variables}
+            \PYG{n}{x\PYGZus{}objects} \PYG{o}{=} \PYG{n}{all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]]}
+            \PYG{n}{y\PYGZus{}objects} \PYG{o}{=} \PYG{n}{all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]]}
+\end{Verbatim}

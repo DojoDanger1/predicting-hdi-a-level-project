@@ -153,3 +153,12 @@ $t_{90}$,User cannot upload region with the same name,region.geojson\comma{} twi
 $t_{91}$,Logging Into an Account,A username,--,\pil{loggedInUsernme} updates to that username,As Expected
 $t_{92}$,Saving Regions to an Account,Process a Region while Logged In,--,Region saved to MongoDB,As Expected
 $t_{93}$,Saving Regions with Objects to an Account,Process a Region while Logged In,--,Region with Objects saved to MongoDB,As Expected
+$t_{94}$,Appearance of Suggestions Section,--,--,Number of Buildings Slider next to Make Suggestions Button,As Expected
+$T_{16.1}$,Improved Suggestions,Region for which there exists 0 of each type of $x$-object,Edge Case,We instead return another suggestion\comma{} to build that type of $x$-object,As Expected
+$T_{16.2}$,Improved Suggestions,Region for which there exists 0 of a particular type of $y$-object,Edge Case,An arbitrarily large value is used for the shortest distances,As Expected
+$T_{16.3}$,Improved Suggestions,Region for which there exists an $x$-object in the same place as a $y$-object,Edge Case,An arbitrarily small value is used for the shortest distances,As Expected
+$T_{16.4}$,Improved Suggestions,Region which does not satisfy any of the above edge cases,Valid,Optimal position calculated as normal,As Expected
+$t_{95}$,Attempt to Suggest when Selected Region has no objects,--,Invalid,Prompt to select a different region returned to user,As Expected
+$t_{96}$,Suggestions for a Region with Many Objects,A Town,--,Multiple positions of buildings shown\comma{} HDI re-predicted to be better,As Expected
+$t_{97}$,Suggestions for a Region with No Objects,A Field,--,Different Suggestions Shown,As Expected
+$t_{98}$,Placing Multiple Pins on the Map,--,--,Multiple Pins on the map in the right locations,As Expected

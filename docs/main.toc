@@ -158,17 +158,23 @@
 \contentsline {section}{\numberline {5.2}Milestone 5 -- Final User Interface}{232}{section.5.2}%
 \contentsline {subsection}{\numberline {5.2.1}Success Criteria}{232}{subsection.5.2.1}%
 \contentsline {subsection}{\numberline {5.2.2}Part 17{} -- Comparing a Region to Training Data}{233}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Part 18{} -- Analysis of how much Each Factor affects the Others}{241}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Part 19{} -- Finding Similar Regions}{248}{subsection.5.2.4}%
-\contentsline {subsection}{\numberline {5.2.5}Part 20{} -- Saving Regions}{250}{subsection.5.2.5}%
-\contentsline {subsection}{\numberline {5.2.6}Part 21{} -- Improved Suggestions}{273}{subsection.5.2.6}%
-\contentsline {subsection}{\numberline {5.2.7}Part 22{} -- Finishing Touches}{273}{subsection.5.2.7}%
-\contentsline {subsection}{\numberline {5.2.8}Part 23{} -- Deployment to Hugging Face}{273}{subsection.5.2.8}%
-\contentsline {subsection}{\numberline {5.2.9}Review}{273}{subsection.5.2.9}%
-\contentsline {section}{\numberline {5.3}Feedback from Stakeholders}{273}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Evaluation}{274}{chapter.6}%
-\contentsline {chapter}{Index}{275}{section*.220}%
-\contentsline {section}{List of Figures}{275}{section*.221}%
-\contentsline {section}{List of Code Snippets}{279}{section*.223}%
-\contentsline {section}{List of Tables}{283}{section*.225}%
-\contentsline {chapter}{Bibliography}{287}{section*.227}%
+\contentsline {subsection}{\numberline {5.2.3}Part 18{} -- Analysis of how much Each Factor affects the Others}{242}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Part 19{} -- Finding Similar Regions}{249}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Part 20{} -- Saving Regions}{251}{subsection.5.2.5}%
+\contentsline {subsection}{\numberline {5.2.6}Part 21{} -- Improved Suggestions}{274}{subsection.5.2.6}%
+\contentsline {subsection}{\numberline {5.2.7}Part 22{} -- Finishing Touches}{284}{subsection.5.2.7}%
+\contentsline {subsubsection}{Bug Fix -- Not Returning Sufficient Items}{284}{subsubsection*.225}%
+\contentsline {subsubsection}{Bug Fix -- New Account Doesn't Have Current Regions}{284}{subsubsection*.226}%
+\contentsline {subsubsection}{Bug Fix -- Switching Between Regions Doesn't Work with Comparing}{284}{subsubsection*.227}%
+\contentsline {subsubsection}{More Log Messages}{284}{subsubsection*.228}%
+\contentsline {subsubsection}{Info Popups}{284}{subsubsection*.229}%
+\contentsline {subsubsection}{Emojification}{285}{subsubsection*.230}%
+\contentsline {subsubsection}{The Help Tab}{285}{subsubsection*.231}%
+\contentsline {subsection}{\numberline {5.2.8}Review}{285}{subsection.5.2.8}%
+\contentsline {section}{\numberline {5.3}Feedback from Stakeholders}{285}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Evaluation}{286}{chapter.6}%
+\contentsline {chapter}{Index}{287}{section*.232}%
+\contentsline {section}{List of Figures}{287}{section*.233}%
+\contentsline {section}{List of Code Snippets}{291}{section*.235}%
+\contentsline {section}{List of Tables}{295}{section*.237}%
+\contentsline {chapter}{Bibliography}{299}{section*.239}%

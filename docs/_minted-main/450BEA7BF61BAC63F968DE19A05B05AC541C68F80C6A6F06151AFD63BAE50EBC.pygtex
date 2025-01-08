@@ -1,0 +1,23 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+            \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{)} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{n}{zeroOfEverything} \PYG{o}{=} \PYG{k+kc}{False}
+                \PYG{c+c1}{\PYGZsh{} calculate the shortest distance from each \PYGZob{}averageDistanceFactor[0]\PYGZcb{} to \PYGZob{}averageDistanceFactor[1]\PYGZcb{}}
+                \PYG{n}{shortest\PYGZus{}dists} \PYG{o}{=} \PYG{p}{[]}
+                \PYG{k}{for} \PYG{n}{x\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{x\PYGZus{}objects}\PYG{p}{:}
+                    \PYG{n}{dists} \PYG{o}{=} \PYG{p}{[]}
+                    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{y\PYGZus{}objects}\PYG{p}{)} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{:}
+                        \PYG{k}{for} \PYG{n}{y\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{y\PYGZus{}objects}\PYG{p}{:}
+                            \PYG{n}{dists}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{distBetween2Points}\PYG{p}{(}\PYG{n}{x\PYGZus{}object}\PYG{p}{,} \PYG{n}{y\PYGZus{}object}\PYG{p}{))}
+                    \PYG{k}{else}\PYG{p}{:}
+                        \PYG{n}{dists}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{10000}\PYG{p}{)}
+                    \PYG{k}{if} \PYG{n+nb}{min}\PYG{p}{(}\PYG{n}{dists}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+                        \PYG{n}{shortest\PYGZus{}dists}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mf}{0.00001}\PYG{p}{)}
+                    \PYG{k}{else}\PYG{p}{:}
+                        \PYG{n}{shortest\PYGZus{}dists}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{min}\PYG{p}{(}\PYG{n}{dists}\PYG{p}{))}
+                \PYG{c+c1}{\PYGZsh{} calculate the optimal position}
+                \PYG{n}{list\PYGZus{}of\PYGZus{}numpy\PYGZus{}arrays} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{x\PYGZus{}object}\PYG{p}{)} \PYG{k}{for} \PYG{n}{x\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{x\PYGZus{}objects}\PYG{p}{]}
+                \PYG{n}{optimalPosition} \PYG{o}{=} \PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{([}\PYG{n}{x\PYGZus{}object}\PYG{o}{/}\PYG{n}{shortest\PYGZus{}dists}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{x\PYGZus{}object} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{list\PYGZus{}of\PYGZus{}numpy\PYGZus{}arrays}\PYG{p}{)],} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{])))}\PYG{o}{/}\PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{([}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{n}{shortest\PYGZus{}dist} \PYG{k}{for} \PYG{n}{shortest\PYGZus{}dist} \PYG{o+ow}{in} \PYG{n}{shortest\PYGZus{}dists}\PYG{p}{]))}
+                \PYG{n}{optimalPositions}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{optimalPosition}\PYG{p}{)}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{zeroOfThings}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\end{Verbatim}

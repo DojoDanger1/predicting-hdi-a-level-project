@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} calculate area}
+    \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mf}{0.9}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Calculating Area...\PYGZsq{}}\PYG{p}{)}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}calculating area...\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+    \PYG{n}{area} \PYG{o}{=} \PYG{n}{calcArea}\PYG{p}{(}\PYG{n}{currentRegion}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} calculate density factors}
+    \PYG{k}{for} \PYG{n}{num}\PYG{p}{,} \PYG{n}{densityFactor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{densityFactors}\PYG{p}{):}
+        \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mf}{0.91}\PYG{o}{+}\PYG{l+m+mf}{0.05}\PYG{o}{*}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{densityFactors}\PYG{p}{)),} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}Calculating }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{densityFactor}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ Density...\PYGZsq{}}\PYG{p}{)}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}finding D(}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{densityFactor}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+        \PYG{n}{allFactors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{density}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{densityFactor}\PYG{p}{],} \PYG{n}{area}\PYG{p}{))}
+\end{Verbatim}

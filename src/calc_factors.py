@@ -22,7 +22,7 @@ def averageDistance(x_objects, y_objects, max_x_objects=2000, max_y_objects=2000
     if len(x_objects) > max_x_objects: # random sample
         x_objects = random.sample(x_objects, max_x_objects)
     if must_include_x != None: # include the new building when making suggestions
-        x_objects[0] = must_include_x
+        x_objects += must_include_x
     # iterate over each x_object, and find the closest y_object
     min_dists = []
     for x_object in x_objects:
@@ -32,7 +32,7 @@ def averageDistance(x_objects, y_objects, max_x_objects=2000, max_y_objects=2000
         else:
             y_objects_in_consideration = y_objects
         if must_include_y != None: # include the new building when making suggestions
-            y_objects_in_consideration[0] = must_include_y
+            y_objects_in_consideration += must_include_y
         for y_object in y_objects_in_consideration:
             dist_to_ys.append(distBetween2Points(x_object, y_object))
         min_dists.append(min(dist_to_ys)) # the closest y_object

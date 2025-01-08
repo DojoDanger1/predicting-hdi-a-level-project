@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} make suggestions from a prediction}
+\PYG{k}{def} \PYG{n+nf}{makeSuggestions}\PYG{p}{(}\PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{p}{,} \PYG{n}{progress}\PYG{o}{=}\PYG{n}{gr}\PYG{o}{.}\PYG{n}{Progress}\PYG{p}{()):}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{k}{if} \PYG{n}{currentHDI} \PYG{o}{==} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{:}
+        \PYG{k}{return} \PYG{p}{[[}\PYG{l+s+s1}{\PYGZsq{}You have not yet predicted an HDI!\PYGZsq{}}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{]]}
+    \PYG{k}{if} \PYG{n}{all\PYGZus{}objects} \PYG{o}{==} \PYG{p}{\PYGZob{}\PYGZcb{}:}
+        \PYG{k}{return} \PYG{p}{[[}\PYG{l+s+s1}{\PYGZsq{}This region does not have any associated buildings!\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Please choose a different region\PYGZsq{}}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{]]}
+    \PYG{n}{suggestions} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}school\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}hospital\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}place\PYGZus{}of\PYGZus{}worship\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}police\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}restaurant\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}slot\PYGZus{}machines\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}library\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}pharmacy\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{returnTable} \PYG{o}{=} \PYG{p}{[]}
+\end{Verbatim}

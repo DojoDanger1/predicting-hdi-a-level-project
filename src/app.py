@@ -5,7 +5,7 @@ from folium.plugins import Draw
 import random
 import json
 from data_processing.get_osm_data import get_osm_data
-from calc_factors import averageDistance, calcArea, density
+from calc_factors import averageDistance, calcArea, density, distBetween2Points
 import numpy as np
 from neural_network import MultilayerPerceptron
 import copy
@@ -55,7 +55,7 @@ def uploadGeoJSON(filename, max_x_objects, max_y_objects, currentRegionName, pro
         data = json.load(file)
         currentRegion = [coordinate[::-1] for coordinate in data['features'][0]['geometry']['coordinates'][0]]
     shortFilename = filename[filename.rindex("/")+1:]
-    if shortFilename[:shortFilename.rindex('.')] in [region['name'] for region in allUserRegions]:
+    if shortFilename[:shortFilename.rindex('.')] in [region['name'] for region in allUserRegions] or shortFilename[:shortFilename.rindex('.')] == '':
         return 'There is already a region with this name! Please rename the file first.', updateRegionsTable(), updateRegionsDropdown(), currentRegionName
     # retrieve all relevant osm data
     object_types = ['house', 'school', 'hospital', 'pharmacy', 'restaurant', 'place_of_worship', 'bank', 'slot_machines', 'fast_food', 'toilets', 'police', 'university', 'library', 'post_box', 'vending_machine', 'bench', 'tree']
@@ -77,7 +77,7 @@ def uploadGeoJSON(filename, max_x_objects, max_y_objects, currentRegionName, pro
     # calculate density factors
     for num, densityFactor in enumerate(densityFactors):
         progress(0.91+0.09*(num/len(densityFactors)), desc=f'Calculating {densityFactor} Density...')
-        print(f'finding D({densityFactor})')
+        print(f'finding D({densityFactor})') # log message
         allFactors.append(density(all_objects[densityFactor], area))
     allUserRegions.append({
         'name': shortFilename[:shortFilename.rindex('.')],
@@ -117,51 +117,103 @@ def calcMeanOfCoords(coords):
     return [np.mean([coord[0] for coord in coords]), np.mean([coord[1] for coord in coords])]
 
 # calculate the optimal place for a new building to go when suggesting
-def calcOptimalPlaceFor(building):
+def calcOptimalPlaceFor(building, extraBuildings):
     global all_objects
-    means = []
+    # construct all_objects_in_consideration
+    all_objects_in_consideration = {}
+    for key in all_objects.keys():
+        if key in extraBuildings.keys():
+            all_objects_in_consideration[key] = all_objects[key] + extraBuildings[key]
+        else:
+            all_objects_in_consideration[key] = all_objects[key]
+    # iterate over the factors
+    optimalPositions = []
+    zeroOfEverything = True
+    zeroOfThings = []
     for averageDistanceFactor in averageDistanceFactors:
         if averageDistanceFactor[1] == building:
-            means.append(calcMeanOfCoords(all_objects[averageDistanceFactor[0]]))
-    return calcMeanOfCoords(means)
+            # initialise variables
+            x_objects = all_objects_in_consideration[averageDistanceFactor[0]]
+            y_objects = all_objects_in_consideration[averageDistanceFactor[1]]
+            # update zero of everything flag
+            if len(x_objects) != 0:
+                zeroOfEverything = False
+                # calculate the shortest distance from each {averageDistanceFactor[0]} to {averageDistanceFactor[1]}
+                shortest_dists = []
+                for x_object in x_objects:
+                    dists = []
+                    if len(y_objects) != 0:
+                        for y_object in y_objects:
+                            dists.append(distBetween2Points(x_object, y_object))
+                    else:
+                        dists.append(10000)
+                    if min(dists) == 0:
+                        shortest_dists.append(0.00001)
+                    else:
+                        shortest_dists.append(min(dists))
+                # calculate the optimal position
+                list_of_numpy_arrays = [np.array(x_object) for x_object in x_objects]
+                optimalPosition = (sum([x_object/shortest_dists[index] for index, x_object in enumerate(list_of_numpy_arrays)], np.array([0,0])))/(sum([1/shortest_dist for shortest_dist in shortest_dists]))
+                optimalPositions.append(optimalPosition)
+            else:
+                zeroOfThings.append(averageDistanceFactor[0])
+    # return either something else to build, or the new position
+    if zeroOfEverything:
+        return random.choice(zeroOfThings)
+    return calcMeanOfCoords(optimalPositions)
 
 # make suggestions from a prediction
-def makeSuggestions(max_x_objects, max_y_objects, progress=gr.Progress()):
+def makeSuggestions(max_x_objects, max_y_objects, num_new_buildings, progress=gr.Progress()):
     global all_objects
     if currentHDI == -1:
         return [['You have not yet predicted an HDI!', None, None, None]]
+    if all_objects == {}:
+        return [['This region does not have any associated buildings!', 'Please choose a different region', None, None]]
     suggestions = ['school', 'hospital', 'place_of_worship', 'police', 'restaurant', 'slot_machines', 'library', 'pharmacy']
     returnTable = []
     for num, suggestion in enumerate(suggestions):
+        extraBuildings = {suggestion: []}
         progress(num/len(suggestions), desc=f'Suggesting building a {suggestion}...')
         # find optimal place
-        progress((num/len(suggestions))+(0*(1/32)), desc=f'Suggesting building a {suggestion} (finding optimal position)...')
-        position = calcOptimalPlaceFor(suggestion)
-        # calculate average distances
-        progress((num/len(suggestions))+(1*(1/32)), desc=f'Suggesting building a {suggestion} (calculating new average distances)...')
-        allFactors = []
-        for averageDistanceFactor in averageDistanceFactors:
-            # ensure that we include the new building
-            if suggestion == averageDistanceFactor[0]:
-                allFactors.append(averageDistance(all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects, must_include_x=position))
-            elif suggestion == averageDistanceFactor[1]:
-                allFactors.append(averageDistance(all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects, must_include_y=position))
-            else:
-                allFactors.append(averageDistance(all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects))
-        # calculate density factors
-        progress((num/len(suggestions))+(2*(1/32)), desc=f'Suggesting building a {suggestion} (calculating new densities)...')
-        area = calcArea(currentRegion)
-        for densityFactor in densityFactors:
-            # ensure that we include the new building
-            if suggestion == densityFactor:
-                allFactors.append(density(all_objects[densityFactor] + [position], area))
-            else:
-                allFactors.append(density(all_objects[densityFactor], area))
-        # predict HDI
-        progress((num/len(suggestions))+(3*(1/32)), desc=f'Suggesting building a {suggestion} (predicting new HDI)...')
-        inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
-        prediction = round(network.predict(inputLayer).item(0,0), 3)
-        returnTable.append([suggestion, f'{round(position[0], 7)}°N, {round(position[1], 7)}°E', str(prediction), str(round(prediction-currentHDI, 3))])
+        positions = []
+        for buildingNum in range(num_new_buildings):
+            # check for other suggestion
+            if len(positions) > 0:
+                if type(positions[0]) == type(''):
+                    continue
+            # calc actual position
+            progress((num/len(suggestions))+(buildingNum*(1/8)*(1/(num_new_buildings+3))), desc=f'Suggesting building a {suggestion} (finding optimal position, {buildingNum+1}/{num_new_buildings})...')
+            position = calcOptimalPlaceFor(suggestion, extraBuildings)
+            positions.append(position)
+            extraBuildings[suggestion].append(position)
+        if type(positions[0]) != type(''):
+            # calculate average distances
+            progress((num/len(suggestions))+((num_new_buildings)*(1/8)*(1/(num_new_buildings+3))), desc=f'Suggesting building a {suggestion} (calculating new average distances)...')
+            allFactors = []
+            for averageDistanceFactor in averageDistanceFactors:
+                # ensure that we include the new building
+                if suggestion == averageDistanceFactor[0]:
+                    allFactors.append(averageDistance(all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects, must_include_x=positions))
+                elif suggestion == averageDistanceFactor[1]:
+                    allFactors.append(averageDistance(all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects, must_include_y=positions))
+                else:
+                    allFactors.append(averageDistance(all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects))
+            # calculate density factors
+            progress((num/len(suggestions))+((num_new_buildings+1)*(1/8)*(1/(num_new_buildings+3))), desc=f'Suggesting building a {suggestion} (calculating new densities)...')
+            area = calcArea(currentRegion)
+            for densityFactor in densityFactors:
+                # ensure that we include the new building
+                if suggestion == densityFactor:
+                    allFactors.append(density(all_objects[densityFactor] + [position], area))
+                else:
+                    allFactors.append(density(all_objects[densityFactor], area))
+            # predict HDI
+            progress((num/len(suggestions))+((num_new_buildings+2)*(1/8)*(1/(num_new_buildings+3))), desc=f'Suggesting building a {suggestion} (predicting new HDI)...')
+            inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
+            prediction = round(network.predict(inputLayer).item(0,0), 3)
+            returnTable.append([suggestion, ', '.join([f'({round(position[0], 7)}°N, {round(position[1], 7)}°E)' for position in positions]), str(prediction), str(round(prediction-currentHDI, 3))])
+        else:
+            returnTable.append([suggestion, f'Build a new {positions[0]} first!', '--', '--'])
     return returnTable
 
 # place a pin on the map when user clicks the suggestion
@@ -169,9 +221,13 @@ def selectSuggestionsTable(evt: gr.SelectData):
     cellData = evt.value
     newMap = copy.deepcopy(foliumMap)
     if '°' in cellData: # it is a coordinate
-        coordinates = [float(coord[:-2]) for coord in cellData.split(', ')] # convert it to floats, remove formatting
-        folium.Marker(location=coordinates).add_to(newMap)
-        newMap.location=coordinates
+        splitByCommas = cellData.split(', ')
+        coordinates = []
+        for halfIndex in range(int(len(splitByCommas)/2)):
+            coordinates.append([float(splitByCommas[2*halfIndex][1:-2]), float(splitByCommas[2*halfIndex+1][:-3])])
+        for coordinate in coordinates:
+            folium.Marker(location=coordinate).add_to(newMap)
+        newMap.location=random.choice(coordinates)
     return newMap
 
 # user selects an item from the dropdown menu to compare to
@@ -234,12 +290,12 @@ def updateAllUserRegions(table, currentRegionName):
         # if the user has changed the factors of an existing list, the associated objects should be removed
         if index < initialLength:
             if [float(factor) if factor != '' else None for factor in row[1:]] != allUserRegions[index]['factors']:
-                allUserRegions[index] = {'name': row[0], 'objects': [], 'factors': factors}
+                allUserRegions[index] = {'name': row[0], 'objects': {}, 'factors': factors}
             else:
                 allUserRegions[index]['name'] = row[0]
         # if the user has added a new region, it should have no associated objects
         else:
-            allUserRegions.append({'name': row[0], 'objects': [], 'factors': factors})
+            allUserRegions.append({'name': row[0], 'objects': {}, 'factors': factors})
     # save regions to account, if logged in
     if loggedInUsername != '':
         users.update_one({'username': loggedInUsername}, {'$set': {'regions': allUserRegions}})
@@ -358,7 +414,9 @@ with gr.Blocks() as app:
                 with gr.Group():
                     HDIprediction = gr.Textbox(label='I believe that the HDI of this region is...', value='', interactive=False)
                     similarHDI = gr.Textbox(label='That\'s a similar HDI to...', value='', interactive=False)
-        makeSuggestionsButton = gr.Button(value='Make Suggestions')
+        with gr.Row():
+            makeSuggestionsButton = gr.Button(value='Make Suggestions')
+            newBuildingsSlider = gr.Slider(minimum=1, maximum=10, value=5, step=1, label='Number of New Buildings', interactive=True)
         suggestionsTable = gr.Dataframe(label='Suggestions', headers=['New Building', 'Coordinates', 'New HDI', 'Change in HDI'], type='array', interactive=False)
         log = gr.Textbox(label='Log Messages', value='', interactive=False)
     with gr.Tab(label='Compare'):
@@ -385,7 +443,7 @@ with gr.Blocks() as app:
     # functionality
     uploadButton.upload(uploadGeoJSON, inputs=[uploadButton, max_x_objectsSlider, max_y_objectsSlider, regionsDropdown], outputs=[log, regionsTable, regionsDropdown, regionsDropdown])
     predictHDIbutton.click(processPrediction, inputs=[], outputs=[HDIprediction, similarHDI])
-    makeSuggestionsButton.click(makeSuggestions, inputs=[max_x_objectsSlider, max_y_objectsSlider], outputs=[suggestionsTable])
+    makeSuggestionsButton.click(makeSuggestions, inputs=[max_x_objectsSlider, max_y_objectsSlider, newBuildingsSlider], outputs=[suggestionsTable])
     suggestionsTable.select(selectSuggestionsTable, inputs=[], outputs=[map])
     compareDropdown.input(compareRegions, inputs=[compareDropdown], outputs=[compareTable])
     regionsDropdown.change(updateCurrentRegion, inputs=[regionsDropdown], outputs=[])

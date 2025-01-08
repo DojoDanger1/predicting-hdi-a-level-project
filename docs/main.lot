@@ -122,29 +122,34 @@
 \contentsline {table}{\numberline {5.17}{\ignorespaces Success Criteria for Milestone 5}}{232}{table.5.17}%
 \contentsline {table}{\numberline {5.18}{\ignorespaces Testing Data for Milestone 5}}{233}{table.5.18}%
 \contentsline {table}{\numberline {5.19}{\ignorespaces Testing Table for Code Snippet \ref {cs:compareTab}}}{235}{table.5.19}%
-\contentsline {table}{\numberline {5.20}{\ignorespaces Testing Table for Code Snippets \ref {cs:importTrainingData} \& \ref {cs:allRegionsDropdown}}}{236}{table.5.20}%
-\contentsline {table}{\numberline {5.21}{\ignorespaces Testing Table for Code Snippets \ref {cs:allFactorsGlobal} \& \ref {cs:compareFunctionality}}}{238}{table.5.21}%
-\contentsline {table}{\numberline {5.22}{\ignorespaces Testing Table for Code Snippets \ref {cs:undoConcat}, \ref {cs:listsOfFactors} \& \ref {cs:return2Dlist}}}{241}{table.5.22}%
-\contentsline {table}{\numberline {5.23}{\ignorespaces Testing Table for Code Snippets \ref {cs:readTraining} \& \ref {cs:iterateFactorsTwice}}}{242}{table.5.23}%
-\contentsline {table}{\numberline {5.24}{\ignorespaces $T_{13}$ Testing Table (for Code Snippet \ref {cs:completePairs})}}{243}{table.5.24}%
-\contentsline {table}{\numberline {5.25}{\ignorespaces Testing Table for Code Snippet \ref {cs:calcPMCC}}}{244}{table.5.25}%
-\contentsline {table}{\numberline {5.26}{\ignorespaces Testing Table for Code Snippet \ref {cs:exportPMCC}}}{246}{table.5.26}%
-\contentsline {table}{\numberline {5.27}{\ignorespaces Testing Table for Code Snippet \ref {cs:improveQualityOfFigure}}}{247}{table.5.27}%
-\contentsline {table}{\numberline {5.28}{\ignorespaces Testing Table for Code Snippet \ref {cs:pmccInGradio}}}{248}{table.5.28}%
-\contentsline {table}{\numberline {5.29}{\ignorespaces $T_{14}$ Testing Table (for Code Snippets \ref {cs:findPossibleRegions} \& \ref {cs:chooseRandomRegion})}}{249}{table.5.29}%
-\contentsline {table}{\numberline {5.30}{\ignorespaces Testing Table for Code Snippet \ref {cs:returnToTextbox}}}{250}{table.5.30}%
-\contentsline {table}{\numberline {5.31}{\ignorespaces Testing Table for Code Snippet \ref {cs:regionsTab}}}{252}{table.5.31}%
-\contentsline {table}{\numberline {5.32}{\ignorespaces Testing Table for Code Snippet \ref {cs:shiftCode}}}{254}{table.5.32}%
-\contentsline {table}{\numberline {5.33}{\ignorespaces Testing Table for Code Snippets \ref {cs:storeNewRegions}, \ref {cs:regionsTable2DList} \& \ref {cs:updateRegionsTable}}}{256}{table.5.33}%
-\contentsline {table}{\numberline {5.34}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdown}}}{258}{table.5.34}%
-\contentsline {table}{\numberline {5.35}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdown}}}{259}{table.5.35}%
-\contentsline {table}{\numberline {5.36}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdownValue}}}{260}{table.5.36}%
-\contentsline {table}{\numberline {5.37}{\ignorespaces Testing Table for Code Snippet \ref {cs:submitEditsButton}}}{261}{table.5.37}%
-\contentsline {table}{\numberline {5.38}{\ignorespaces $T_{15}$ Testing Table (for Code Snippets \ref {cs:submitButtonFunctionality}, \ref {cs:saveIndex}, \ref {cs:uniqueRegionNames} \& \ref {cs:typeCheckCells})}}{265}{table.5.38}%
-\contentsline {table}{\numberline {5.39}{\ignorespaces Testing Table for Code Snippets \ref {cs:updateAllUserRegions} \& \ref {cs:updateSelectedRegion}}}{267}{table.5.39}%
-\contentsline {table}{\numberline {5.40}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateCurrentRegion}}}{268}{table.5.40}%
-\contentsline {table}{\numberline {5.41}{\ignorespaces Testing Table for Code Snippet \ref {cs:uploadExistingName}}}{269}{table.5.41}%
-\contentsline {table}{\numberline {5.42}{\ignorespaces Testing Table for Code Snippets \ref {cs:globalLogIn} \& \ref {cs:logIntoNewAccount}}}{270}{table.5.42}%
-\contentsline {table}{\numberline {5.43}{\ignorespaces Testing Table for Code Snippets \ref {cs:regionsIntoAccount}, \ref {cs:regionsOutOfAccount} \& \ref {cs:updateRegionsEmptyTable}}}{271}{table.5.43}%
-\contentsline {table}{\numberline {5.44}{\ignorespaces Testing Table for Code Snippet \ref {cs:tableRowsChanging}}}{272}{table.5.44}%
+\contentsline {table}{\numberline {5.20}{\ignorespaces Testing Table for Code Snippets \ref {cs:importTrainingData} \& \ref {cs:allRegionsDropdown}}}{237}{table.5.20}%
+\contentsline {table}{\numberline {5.21}{\ignorespaces Testing Table for Code Snippets \ref {cs:allFactorsGlobal} \& \ref {cs:compareFunctionality}}}{239}{table.5.21}%
+\contentsline {table}{\numberline {5.22}{\ignorespaces Testing Table for Code Snippets \ref {cs:undoConcat}, \ref {cs:listsOfFactors} \& \ref {cs:return2Dlist}}}{242}{table.5.22}%
+\contentsline {table}{\numberline {5.23}{\ignorespaces Testing Table for Code Snippets \ref {cs:readTraining} \& \ref {cs:iterateFactorsTwice}}}{243}{table.5.23}%
+\contentsline {table}{\numberline {5.24}{\ignorespaces $T_{13}$ Testing Table (for Code Snippet \ref {cs:completePairs})}}{244}{table.5.24}%
+\contentsline {table}{\numberline {5.25}{\ignorespaces Testing Table for Code Snippet \ref {cs:calcPMCC}}}{245}{table.5.25}%
+\contentsline {table}{\numberline {5.26}{\ignorespaces Testing Table for Code Snippet \ref {cs:exportPMCC}}}{247}{table.5.26}%
+\contentsline {table}{\numberline {5.27}{\ignorespaces Testing Table for Code Snippet \ref {cs:improveQualityOfFigure}}}{248}{table.5.27}%
+\contentsline {table}{\numberline {5.28}{\ignorespaces Testing Table for Code Snippet \ref {cs:pmccInGradio}}}{249}{table.5.28}%
+\contentsline {table}{\numberline {5.29}{\ignorespaces $T_{14}$ Testing Table (for Code Snippets \ref {cs:findPossibleRegions} \& \ref {cs:chooseRandomRegion})}}{250}{table.5.29}%
+\contentsline {table}{\numberline {5.30}{\ignorespaces Testing Table for Code Snippet \ref {cs:returnToTextbox}}}{251}{table.5.30}%
+\contentsline {table}{\numberline {5.31}{\ignorespaces Testing Table for Code Snippet \ref {cs:regionsTab}}}{253}{table.5.31}%
+\contentsline {table}{\numberline {5.32}{\ignorespaces Testing Table for Code Snippet \ref {cs:shiftCode}}}{255}{table.5.32}%
+\contentsline {table}{\numberline {5.33}{\ignorespaces Testing Table for Code Snippets \ref {cs:storeNewRegions}, \ref {cs:regionsTable2DList} \& \ref {cs:updateRegionsTable}}}{257}{table.5.33}%
+\contentsline {table}{\numberline {5.34}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdown}}}{259}{table.5.34}%
+\contentsline {table}{\numberline {5.35}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdown}}}{260}{table.5.35}%
+\contentsline {table}{\numberline {5.36}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdownValue}}}{261}{table.5.36}%
+\contentsline {table}{\numberline {5.37}{\ignorespaces Testing Table for Code Snippet \ref {cs:submitEditsButton}}}{262}{table.5.37}%
+\contentsline {table}{\numberline {5.38}{\ignorespaces $T_{15}$ Testing Table (for Code Snippets \ref {cs:submitButtonFunctionality}, \ref {cs:saveIndex}, \ref {cs:uniqueRegionNames} \& \ref {cs:typeCheckCells})}}{266}{table.5.38}%
+\contentsline {table}{\numberline {5.39}{\ignorespaces Testing Table for Code Snippets \ref {cs:updateAllUserRegions} \& \ref {cs:updateSelectedRegion}}}{268}{table.5.39}%
+\contentsline {table}{\numberline {5.40}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateCurrentRegion}}}{269}{table.5.40}%
+\contentsline {table}{\numberline {5.41}{\ignorespaces Testing Table for Code Snippet \ref {cs:uploadExistingName}}}{270}{table.5.41}%
+\contentsline {table}{\numberline {5.42}{\ignorespaces Testing Table for Code Snippets \ref {cs:globalLogIn} \& \ref {cs:logIntoNewAccount}}}{271}{table.5.42}%
+\contentsline {table}{\numberline {5.43}{\ignorespaces Testing Table for Code Snippets \ref {cs:regionsIntoAccount}, \ref {cs:regionsOutOfAccount} \& \ref {cs:updateRegionsEmptyTable}}}{272}{table.5.43}%
+\contentsline {table}{\numberline {5.44}{\ignorespaces Testing Table for Code Snippet \ref {cs:tableRowsChanging}}}{273}{table.5.44}%
+\contentsline {table}{\numberline {5.45}{\ignorespaces Testing Table for Code Snippet \ref {cs:numNewBuildings}}}{275}{table.5.45}%
+\contentsline {table}{\numberline {5.46}{\ignorespaces $T_{16}$ Testing Table (for Code Snippets \ref {cs:allObjectsInConsideration}, \ref {cs:iteratingOverFactors}, \ref {cs:calcShortestDistances} \& \ref {cs:returnOptimalPosition})}}{278}{table.5.46}%
+\contentsline {table}{\numberline {5.47}{\ignorespaces Testing Table for Code Snippet \ref {cs:newMakeSuggestions}}}{280}{table.5.47}%
+\contentsline {table}{\numberline {5.48}{\ignorespaces Testing Table for Code Snippets \ref {cs:moreThanOneOptimalPosition}, \ref {cs:returnDifferentSuggestion}, \ref {cs:ensureIncludeAllNewObjects} \& \ref {cs:returnFormatSuggestionsTable}}}{283}{table.5.48}%
+\contentsline {table}{\numberline {5.49}{\ignorespaces Testing Table for Code Snippet \ref {cs:placeMultiplePins}}}{284}{table.5.49}%
 \addvspace {10\p@ }

@@ -5667,7 +5667,7 @@ densityFactors = ['school', 'hospital', 'pharmacy', 'police', 'library', 'toilet
     # calculate density factors
     for num, densityFactor in enumerate(densityFactors):
         progress(0.91+0.05*(num/len(densityFactors)), desc=f'Calculating {densityFactor} Density...')
-        print(f'finding D({densityFactor})')
+        print(f'finding D({densityFactor})') # log message
         allFactors.append(density(all_objects[densityFactor], area))
 \end{minted}
 \caption{Calculating $D\left(x\right)$ Factors}\label{cs:predictionDensity}
@@ -9412,12 +9412,12 @@ Now that the user's input has been validated, we can update \pil{allUserRegions}
         # if the user has changed the factors of an existing list, the associated objects should be removed
         if index < initialLength:
             if row[1:] != allUserRegions[index]['factors']:
-                allUserRegions[index] = {'name': row[0], 'objects': [], 'factors': factors}
+                allUserRegions[index] = {'name': row[0], 'objects': {}, 'factors': factors}
             else:
                 allUserRegions[index]['name'] = row[0]
         # if the user has added a new region, it should have no associated objects
         else:
-            allUserRegions.append({'name': row[0], 'objects': [], 'factors': factors})
+            allUserRegions.append({'name': row[0], 'objects': {}, 'factors': factors})
 \end{minted}
 \caption{Updating \pil{allUserRegions}}\label{cs:updateAllUserRegions}
 \end{listing}
@@ -9701,7 +9701,7 @@ However, I noticed that here the \pil{'objects'} array is empty, where it should
 \pil{app.py / def updateRegionsTable}
 \begin{minted}[linenos,breaklines,frame=single,firstnumber=236]{python}
             if [float(factor) if factor != '' else None for factor in row[1:]] != allUserRegions[index]['factors']:
-                allUserRegions[index] = {'name': row[0], 'objects': [], 'factors': factors}
+                allUserRegions[index] = {'name': row[0], 'objects': {}, 'factors': factors}
             else:
                 allUserRegions[index]['name'] = row[0]
 \end{minted}
@@ -9740,15 +9740,387 @@ Figure \ref{fig:ss20.12} shows the new region added to the MongoDB, which now co
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Improved Suggestions}
-\dots
+
+By the end of this section, I hope to have better suggestions returned to the user.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=361]{python}
+        with gr.Row():
+            makeSuggestionsButton = gr.Button(value='Make Suggestions')
+            newBuildingsSlider = gr.Slider(minimum=1, maximum=10, value=5, step=1, label='Number of New Buildings', interactive=True)
+\end{minted}
+\caption{Adding a Slider for Number of New Buildings}\label{cs:numNewBuildings}
+\end{listing}
+
+Firstly, I needed to add a slider so that the user can decide how many new buildings they want to place (More buildings will lead to better suggestions, but will take longer to calculate).
+
+Here, I have added a row, which contains the button to make suggestions, as well as this new slider. I set the minimum to be 1 (we must build at least 1 new building), and the maximum to be 10 (an arbitrary upper bound, to ensure it does not take too long). I set the default value to 5, which I believe is a good middle ground between the two. We also need to ensure that we are building an integer number of buildings, so I made the step equal to 1.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss21.1.png}
+\caption{Predict Tab with New Slider}\label{fig:ss21.1}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{94}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:numNewBuildings}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+We now need to re-implement the \pil{def calcOptimalPlaceFor} function, to include the new formula to calculate the optimal position of new buildings (equation \ref{eq:newPos}), as well as lots of validation for various scenarios that could occur.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=119]{python}
+# calculate the optimal place for a new building to go when suggesting
+def calcOptimalPlaceFor(building, extraBuildings):
+    global all_objects
+    # construct all_objects_in_consideration
+    all_objects_in_consideration = {}
+    for key in all_objects.keys():
+        if key in extraBuildings.keys():
+            all_objects_in_consideration[key] = all_objects[key] + extraBuildings[key]
+        else:
+            all_objects_in_consideration[key] = all_objects[key]
+\end{minted}
+\caption{Finding All Objects in Consideration}\label{cs:allObjectsInConsideration}
+\end{listing}
+
+The first thing we must ensure is that we are considering the right lists of objects. This is slightly more complex as last time, as this time, we may be calling this function for the \nth{2} or \nth{3} (and so on) time, and so we must consider ther previous buildings we have suggested.
+
+To do this, I am adding an extra parameter, \pil{extraBuildings}, which will be a dictionary, containing lists of the new buildings to consider. To construct a dictionary of all objects in consideration, we can iterate over the keys of the \pil{all_objects} dictionary, and add the corresponding list from the \pil{extraBuildings} dictionary if it exists. Otherwise, we can just set it to the original list in the \pil{all_objects} dictionary.
+
+\begin{listing}[H]
+\pil{app.py / def calcOptimalPlaceFor}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=129]{python}
+    # iterate over the factors
+    optimalPositions = []
+    zeroOfEverything = True
+    zeroOfThings = []
+    for averageDistanceFactor in averageDistanceFactors:
+        if averageDistanceFactor[1] == building:
+            # initialise variables
+            x_objects = all_objects_in_consideration[averageDistanceFactor[0]]
+            y_objects = all_objects_in_consideration[averageDistanceFactor[1]]
+\end{minted}
+\caption{Iterating over each Factor}\label{cs:iteratingOverFactors}
+\end{listing}
+
+We then need to iterate over each average distance factor, and see which ones are in relation to the new building we are suggesting. If it is, we can define a list of \pil{x_objects} and \pil{y_objects} to process. Before this however, we must define a list of \pil{optimalPositions}, which will store the optimal position according to each factor we consider (we will be returning the mean of this).
+
+We must also create a flag, \pil{zeroOfEverything}, which will tell us if there are 0 of each type of $x$-object, as well as a list of the objects which there are 0 of (\pil{zeroOfThings}). In the design section, I had said that if there was 0 of everything, I would return the centre of the region as the optimal place to put the new building, but now I realise this is not possible, as the only data we are given is the lists of the coordinates of \pil{x_objects} and \pil{y_objects}. We cannot even estimate the centre of the region from these lists, as if the user selects a very small region, they may be empty. Therefore, if there are 0 \pil{x_objects}, I have decided to return another suggestion to the user, instead of a new HDI, which is that they should build some of those \pil{x_objects} first. There may be multiple types of \pil{x_objects} for which there are 0, which is why we must define the list, \pil{zeroOfThings}, to keep track of all of them, and at the end we will return a random one.
+
+\begin{listing}[H]
+\pil{app.py / def calcOptimalPlaceFor}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=139]{python}
+            if len(x_objects) != 0:
+                zeroOfEverything = False
+                # calculate the shortest distance from each {averageDistanceFactor[0]} to {averageDistanceFactor[1]}
+                shortest_dists = []
+                for x_object in x_objects:
+                    dists = []
+                    if len(y_objects) != 0:
+                        for y_object in y_objects:
+                            dists.append(distBetween2Points(x_object, y_object))
+                    else:
+                        dists.append(10000)
+                    if min(dists) == 0:
+                        shortest_dists.append(0.00001)
+                    else:
+                        shortest_dists.append(min(dists))
+                # calculate the optimal position
+                list_of_numpy_arrays = [np.array(x_object) for x_object in x_objects]
+                optimalPosition = (sum([x_object/shortest_dists[index] for index, x_object in enumerate(list_of_numpy_arrays)], np.array([0,0])))/(sum([1/shortest_dist for shortest_dist in shortest_dists]))
+                optimalPositions.append(optimalPosition)
+            else:
+                zeroOfThings.append(averageDistanceFactor[0])
+\end{minted}
+\caption{Calculating the Shortest Distances \& Optimal Position}\label{cs:calcShortestDistances}
+\end{listing}
+
+Here, I am calculating the optimal position of the new building. First, we must check if there are 0 $x$-objects, by checking the length of the \pil{x_objects} list. If there are in fact 0, then we can add the name of this type of object to the \pil{zeroOfThings} list, as said before. Otherwise, we can confirm that there isn't zero of \textit{everything}, and so we can set \pil{zeroOfEverything} to \pil{False} and continue to find an optimal position.
+
+The first step is finding the distance from each $x$-object, to its closest $y$-object. For each $x$-object, we must define a list of distances to each $y$-object, and find then minimum. If it turns out that there are no $y$-objects (\pil{y_objects} is empty), then we can add an arbitrarily large distance (\pil{10000}) to the list to act as the shortest distance. Another thing that may go wrong here is if the shortest distance ends up being 0, which will be a problem because we must divide by these numbers in the future. If it is 0, we can set the shortest distance to be an arbitrarily small number (\pil{0.00001}), otherwise it will be the minimum of the distances list.
+
+Once we have a list of the shortest distances, corresponding to each $x$-object, we can implement equation \ref{eq:newPos}. First however, we should convert each coordinate to a \pil{numpy.array}. This is because if we add 2 \pil{numpy} arrays, the result will be a \pil{numpy} array of the same dimension, containing the element-wise sums of the values. For example, \pil{[1,2] + [3,4] = [4,6]}, which is what we need when adding coordinates. Once we have a list of \pil{numpy} arrays, we can calculate the optimal position and add it to the \pil{optimalPositions} list.
+
+\begin{listing}[H]
+\pil{app.py / def calcOptimalPlaceFor}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=160]{python}
+    # return either something else to build, or the new position
+    if zeroOfEverything:
+        return random.choice(zeroOfThings)
+    return calcMeanOfCoords(optimalPositions)
+\end{minted}
+\caption{Returning the Optimal Position}\label{cs:returnOptimalPosition}
+\end{listing}
+
+Finally, if there was in fact \pil{zeroOfEverything}, we can return a random choice from the \pil{zeroOfThings} list, to be formatted into a string, such as \pil{'Build a new ... first!'}. Otherwise, we can just return the mean position of the optimal positions, as done before. 
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$T_{16.1}$}\OR\equal{\mtestID}{$T_{16.2}$}\OR\equal{\mtestID}{$T_{16.3}$}\OR\equal{\mtestID}{$T_{16.4}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{$T_{16}$ Testing Table (for Code Snippets \ref{cs:allObjectsInConsideration}, \ref{cs:iteratingOverFactors}, \ref{cs:calcShortestDistances} \& \ref{cs:returnOptimalPosition})}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now that we have a full function to find the optimal place to put a new building, we can adapt the \pil{def makeSuggestions} function, to work with the new requirements.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=165]{python}
+# make suggestions from a prediction
+def makeSuggestions(max_x_objects, max_y_objects, num_new_buildings, progress=gr.Progress()):
+    global all_objects
+    if currentHDI == -1:
+        return [['You have not yet predicted an HDI!', None, None, None]]
+    if all_objects == {}:
+        return [['This region does not have any associated buildings!', 'Please choose a different region', None, None]]
+    suggestions = ['school', 'hospital', 'place_of_worship', 'police', 'restaurant', 'slot_machines', 'library', 'pharmacy']
+    returnTable = []
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=427]{python}
+    makeSuggestionsButton.click(makeSuggestions, inputs=[max_x_objectsSlider, max_y_objectsSlider, newBuildingsSlider], outputs=[suggestionsTable])
+\end{minted}
+\caption{New \pil{def makeSuggestions} function}\label{cs:newMakeSuggestions}
+\end{listing}
+
+This time, we must pass \pil{num_new_buildings} in, which will be an integer specifying how many new buildings we want to place. As before, we ensured that the user has predicted an HDI, but now we also must ensure that the current region has objects associated with it, as that is what we are using to place the new buildings. If it does not, we should return an error message, along with a prompt for the user to select a different region.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss21.2.png}
+\caption{No Associated Buildings Error Message}\label{fig:ss21.2}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{95}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:newMakeSuggestions}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=174]{python}
+    for num, suggestion in enumerate(suggestions):
+        extraBuildings = {suggestion: []}
+        progress(num/len(suggestions), desc=f'Suggesting building a {suggestion}...')
+        # find optimal place
+        positions = []
+        for buildingNum in range(num_new_buildings):
+            # check for other suggestion
+            if len(positions) > 0:
+                if type(positions[0]) == type(''):
+                    continue
+            # calc actual position
+            progress((num/len(suggestions))+(buildingNum*(1/8) *(1/(num_new_buildings+3))), desc=f'Suggesting building a {suggestion} (finding optimal position, {buildingNum+1}/{num_new_buildings})...')
+            position = calcOptimalPlaceFor(suggestion, extraBuildings)
+            positions.append(position)
+            extraBuildings[suggestion].append(position)
+\end{minted}
+\caption{Finding more than 1 Optimal Position}\label{cs:moreThanOneOptimalPosition}
+\end{listing}
+
+Now that we have validated that the user has a suitable region selected, we can make our suggestions. As usual, we iterate over each type of suggestion, and find the optimal places, but this time we must also iterate for \pil{num_new_buildings} times, to find new suggestions. We can usually do each one as normal, by calling the \pil{def calcOPtimalPlaceFor} function, and then adding that to the \pil{positions} list. However, if the first one returned another suggestion (as a result of there being 0 of all $x$-objects), then we should not attempt to find location again. Therefore, we must first check if we are not on the first iteration (as to avoid an index out of range error), and if its not, we can check if the first element in \pil{positions} is a string. If it is, then that means we returned another suggestion instead of a location, and so we should \pil{continue} (skip the rest of the \pil{for} loop).
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=189]{python}
+        if type(positions[0]) != type(''):
+            ... # (continue to calculate factors & predict HDI)
+\end{minted}
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=215]{python}
+        else:
+            returnTable.append([suggestion, f'Build a new {positions[0]} first!', '--', '--'])
+\end{minted}
+\caption{Returning a Different Suggestion}\label{cs:returnDifferentSuggestion}
+\end{listing}
+
+Now that we have made a list (of length \pil{num_new_buildings}) of new locations to place new buildings, we can re-calculate the factors and re-predict the HDI as usual. However, again we can only do this if we are not returning another suggestion (which we again check by checking the \pil{type} against an empty string). If it turns out we are returning a different suggestion, we should instead append a string prompting them to build the new building, and no changes to HDI.
+
+\begin{listing}[H]
+\pil{calc_factors.py / def averageDistance}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=24]{python}
+    if must_include_x != None: # include the new building when making suggestions
+        x_objects += must_include_x
+\end{minted}
+\pil{calc_factors.py / def averageDistance}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=34]{python}
+        if must_include_y != None: # include the new building when making suggestions
+            y_objects_in_consideration += must_include_y
+\end{minted}
+\caption{Updating the \pil{must_include} functionality in \pil{def averageDistance}}\label{cs:ensureIncludeAllNewObjects}
+\end{listing}
+
+The only thing we must change if we are actually predicting a new HDI is the \pil{def averageDistance} function in \pil{calc_factors.py}, by making it able to handle multiple new buildings. We can simply do this by adding the \pil{must_include_x} list to the \pil{x_objects} list we are considering, and similar for the $y$-objects.
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=214]{python}
+            returnTable.append([suggestion, ', '.join([f'({round(position[0], 7)}°N, {round(position[1], 7)}°E)' for position in positions]), str(prediction), str(round(prediction-currentHDI, 3))])
+\end{minted}
+\caption{New Return Format for Suggestions Table}\label{cs:returnFormatSuggestionsTable}
+\end{listing}
+
+Finally, when we return, we should surround the coordinates with brakcets, and seperate them with commas.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss21.3.png}
+\caption{Output for a Region with Many Buildings}\label{fig:ss21.3}
+\end{figure}
+
+Figure \ref{fig:ss21.3} shows the output for a typical region, which contains many buildings. As you can see, these suggestions are much better than the ones from the \nth{1} prototype, as they have much more range.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss21.4.png}
+\caption{Output for a Region with No Buildings}\label{fig:ss21.4}
+\end{figure}
+
+Figure \ref{fig:ss21.4} shows the output for a region which is completely empty. For each suggestion, there are 0 of each type of $x$-object, so we should be returning different suggestions, with no improvement to HDI.
+
+Note, that these 2 options are not exclusive, and may appear in one table. For example, in finding a place to put a new library, the region may not have any universities, and so nothing will be returned for that one, but it does have houses and so the majority of the other ones will have proper suggestions.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{96}$}\OR\equal{\mtestID}{$t_{97}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:moreThanOneOptimalPosition}, \ref{cs:returnDifferentSuggestion}, \ref{cs:ensureIncludeAllNewObjects} \& \ref{cs:returnFormatSuggestionsTable}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+The final thing we must implement is placing multiple pins on the map, when we select the table.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=219]{python}
+# place a pin on the map when user clicks the suggestion
+def selectSuggestionsTable(evt: gr.SelectData):
+    cellData = evt.value
+    newMap = copy.deepcopy(foliumMap)
+    if '°' in cellData: # it is a coordinate
+        splitByCommas = cellData.split(', ')
+        coordinates = []
+        for halfIndex in range(int(len(splitByCommas)/2)):
+            coordinates.append([float(splitByCommas[2*halfIndex][1:-2]), float(splitByCommas[2*halfIndex+1][:-3])])
+        for coordinate in coordinates:
+            folium.Marker(location=coordinate).add_to(newMap)
+        newMap.location=random.choice(coordinates)
+    return newMap
+\end{minted}
+\caption{Placing Multiple Pins on the Map}\label{cs:placeMultiplePins}
+\end{listing}
+
+For this, we can do the same thing as before, but when we split every \pil{', '}, we have to be aware that both the coordinates, and the components of the coordinates have that same separator. Therefore, each coordinate will occupy 2 elements in this list generated by the \pil{split} method. We must then iterate over a \pil{halfIndex}, and add the elements of the list to a coordinates list (ensuring we remove any formatting using list splicing).
+
+Once we have all of the coordinates, we can iteratively add them to the map, and set the location to one of them at random.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss21.5.png}
+\caption{Output for Placing Pins on the Map}\label{fig:ss21.5}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{98}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:placeMultiplePins}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Finishing Touches}
-\dots
+\subsubsection{Bug Fix -- Not Returning Sufficient Items}
+\dots{}
 
-\stepcounter{parts}
-\subsection{Part \theparts{} -- Deployment to Hugging Face}
-\dots
+\subsubsection{Bug Fix -- New Account Doesn't Have Current Regions}
+\dots{}
+
+\subsubsection{Bug Fix -- Switching Between Regions Doesn't Work with Comparing}
+\dots{}
+
+\subsubsection{More Log Messages}
+\dots{}
+
+\subsubsection{Info Popups}
+\dots{}
+
+\subsubsection{Emojification}
+\dots{}
+
+\subsubsection{The Help Tab}
+\dots{}
 
 \subsection{Review}
 \dots

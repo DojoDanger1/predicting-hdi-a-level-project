@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{k}{if} \PYG{n}{must\PYGZus{}include\PYGZus{}y} \PYG{o}{!=} \PYG{k+kc}{None}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} include the new building when making suggestions}
+            \PYG{n}{y\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration} \PYG{o}{+=} \PYG{n}{must\PYGZus{}include\PYGZus{}y}
+\end{Verbatim}

@@ -131,25 +131,30 @@
 \contentsline {figure}{\numberline {5.16}{\ignorespaces New Account in MongoDB}}{227}{figure.caption.196}%
 \contentsline {figure}{\numberline {5.17}{\ignorespaces Validating Login}}{230}{figure.caption.197}%
 \contentsline {figure}{\numberline {5.18}{\ignorespaces Compare Tab Interface}}{234}{figure.caption.198}%
-\contentsline {figure}{\numberline {5.19}{\ignorespaces Example Options for Dropdown}}{234}{figure.caption.199}%
-\contentsline {figure}{\numberline {5.20}{\ignorespaces All Dropdown Options}}{236}{figure.caption.200}%
-\contentsline {figure}{\numberline {5.21}{\ignorespaces Output when the User has not Predicted Yet}}{238}{figure.caption.201}%
-\contentsline {figure}{\numberline {5.22}{\ignorespaces Full Comparison between User's and Selected Regions}}{241}{figure.caption.202}%
-\contentsline {figure}{\numberline {5.23}{\ignorespaces Initial Image of the Correlation Heatmap}}{245}{figure.caption.203}%
-\contentsline {figure}{\numberline {5.24}{\ignorespaces Final Image of the Correlation Heatmap}}{246}{figure.caption.204}%
-\contentsline {figure}{\numberline {5.25}{\ignorespaces Correlation Heatmap in Gradio}}{247}{figure.caption.205}%
-\contentsline {figure}{\numberline {5.26}{\ignorespaces Similar Region Returned to Textbox}}{250}{figure.caption.206}%
-\contentsline {figure}{\numberline {5.27}{\ignorespaces Comparison to Bangkok}}{250}{figure.caption.207}%
-\contentsline {figure}{\numberline {5.28}{\ignorespaces Regions Tab}}{251}{figure.caption.208}%
-\contentsline {figure}{\numberline {5.29}{\ignorespaces Progress Bar in the Log Messages}}{254}{figure.caption.209}%
-\contentsline {figure}{\numberline {5.30}{\ignorespaces Region added to the Table}}{256}{figure.caption.210}%
-\contentsline {figure}{\numberline {5.31}{\ignorespaces Updating the Dropdown Options}}{257}{figure.caption.211}%
-\contentsline {figure}{\numberline {5.32}{\ignorespaces Dropdown Remains Interactive}}{258}{figure.caption.212}%
-\contentsline {figure}{\numberline {5.33}{\ignorespaces Dropdown Value Updated}}{260}{figure.caption.213}%
-\contentsline {figure}{\numberline {5.34}{\ignorespaces Submit Changes Button in Regions Tab}}{261}{figure.caption.214}%
-\contentsline {figure}{\numberline {5.35}{\ignorespaces Validating Regions Table Input}}{264}{figure.caption.215}%
-\contentsline {figure}{\numberline {5.36}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|allUserRegions| \& Dropdown Updated from Table}}{266}{figure.caption.216}%
-\contentsline {figure}{\numberline {5.37}{\ignorespaces Cannot Upload Region with the Same Name}}{269}{figure.caption.217}%
-\contentsline {figure}{\numberline {5.38}{\ignorespaces Region Added to MongoDB}}{271}{figure.caption.218}%
-\contentsline {figure}{\numberline {5.39}{\ignorespaces Region with Objects Added to MongoDB}}{272}{figure.caption.219}%
+\contentsline {figure}{\numberline {5.19}{\ignorespaces Example Options for Dropdown}}{235}{figure.caption.199}%
+\contentsline {figure}{\numberline {5.20}{\ignorespaces All Dropdown Options}}{237}{figure.caption.200}%
+\contentsline {figure}{\numberline {5.21}{\ignorespaces Output when the User has not Predicted Yet}}{239}{figure.caption.201}%
+\contentsline {figure}{\numberline {5.22}{\ignorespaces Full Comparison between User's and Selected Regions}}{242}{figure.caption.202}%
+\contentsline {figure}{\numberline {5.23}{\ignorespaces Initial Image of the Correlation Heatmap}}{246}{figure.caption.203}%
+\contentsline {figure}{\numberline {5.24}{\ignorespaces Final Image of the Correlation Heatmap}}{247}{figure.caption.204}%
+\contentsline {figure}{\numberline {5.25}{\ignorespaces Correlation Heatmap in Gradio}}{248}{figure.caption.205}%
+\contentsline {figure}{\numberline {5.26}{\ignorespaces Similar Region Returned to Textbox}}{251}{figure.caption.206}%
+\contentsline {figure}{\numberline {5.27}{\ignorespaces Comparison to Bangkok}}{251}{figure.caption.207}%
+\contentsline {figure}{\numberline {5.28}{\ignorespaces Regions Tab}}{252}{figure.caption.208}%
+\contentsline {figure}{\numberline {5.29}{\ignorespaces Progress Bar in the Log Messages}}{255}{figure.caption.209}%
+\contentsline {figure}{\numberline {5.30}{\ignorespaces Region added to the Table}}{257}{figure.caption.210}%
+\contentsline {figure}{\numberline {5.31}{\ignorespaces Updating the Dropdown Options}}{258}{figure.caption.211}%
+\contentsline {figure}{\numberline {5.32}{\ignorespaces Dropdown Remains Interactive}}{259}{figure.caption.212}%
+\contentsline {figure}{\numberline {5.33}{\ignorespaces Dropdown Value Updated}}{261}{figure.caption.213}%
+\contentsline {figure}{\numberline {5.34}{\ignorespaces Submit Changes Button in Regions Tab}}{262}{figure.caption.214}%
+\contentsline {figure}{\numberline {5.35}{\ignorespaces Validating Regions Table Input}}{265}{figure.caption.215}%
+\contentsline {figure}{\numberline {5.36}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|allUserRegions| \& Dropdown Updated from Table}}{267}{figure.caption.216}%
+\contentsline {figure}{\numberline {5.37}{\ignorespaces Cannot Upload Region with the Same Name}}{270}{figure.caption.217}%
+\contentsline {figure}{\numberline {5.38}{\ignorespaces Region Added to MongoDB}}{272}{figure.caption.218}%
+\contentsline {figure}{\numberline {5.39}{\ignorespaces Region with Objects Added to MongoDB}}{273}{figure.caption.219}%
+\contentsline {figure}{\numberline {5.40}{\ignorespaces Predict Tab with New Slider}}{274}{figure.caption.220}%
+\contentsline {figure}{\numberline {5.41}{\ignorespaces No Associated Buildings Error Message}}{279}{figure.caption.221}%
+\contentsline {figure}{\numberline {5.42}{\ignorespaces Output for a Region with Many Buildings}}{282}{figure.caption.222}%
+\contentsline {figure}{\numberline {5.43}{\ignorespaces Output for a Region with No Buildings}}{282}{figure.caption.223}%
+\contentsline {figure}{\numberline {5.44}{\ignorespaces Output for Placing Pins on the Map}}{284}{figure.caption.224}%
 \addvspace {10\p@ }

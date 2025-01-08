@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Row}\PYG{p}{():}
+            \PYG{n}{makeSuggestionsButton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Button}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Make Suggestions\PYGZsq{}}\PYG{p}{)}
+            \PYG{n}{newBuildingsSlider} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Slider}\PYG{p}{(}\PYG{n}{minimum}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{maximum}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{step}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Number of New Buildings\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+\end{Verbatim}
