@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{c+c1}{\PYGZsh{} add to mongoDB}
+    \PYG{n}{user} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{username}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{username}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hashedPassword}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{hashed\PYGZus{}password}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{regions}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{p}{[}\PYG{p}{]}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{users}\PYG{o}{.}\PYG{n}{insert\PYGZus{}one}\PYG{p}{(}\PYG{n}{user}\PYG{p}{)}
+    \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully created an account, with username: }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{username}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{!}\PYG{l+s+s1}{\PYGZsq{}}
+\end{Verbatim}

@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} predict the HDI of the given region}
+\PYG{k}{def} \PYG{n+nf}{processPrediction}\PYG{p}{(}\PYG{n}{progress}\PYG{o}{=}\PYG{n}{gr}\PYG{o}{.}\PYG{n}{Progress}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{currentRegion}
+    \PYG{k}{if} \PYG{n}{currentRegion} \PYG{o}{==} \PYG{p}{[}\PYG{p}{]}\PYG{p}{:}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{You have not uploaded a region!}\PYG{l+s+s1}{\PYGZsq{}}
+    \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Starting...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

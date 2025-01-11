@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} make suggestions from a prediction}
+\PYG{k}{def} \PYG{n+nf}{makeSuggestions}\PYG{p}{(}\PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{p}{,} \PYG{n}{progress}\PYG{o}{=}\PYG{n}{gr}\PYG{o}{.}\PYG{n}{Progress}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{k}{if} \PYG{n}{currentHDI} \PYG{o}{==} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{:}
+        \PYG{k}{return} \PYG{p}{[}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{You have not yet predicted an HDI!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{]}\PYG{p}{]}
+    \PYG{k}{if} \PYG{n}{all\PYGZus{}objects} \PYG{o}{==} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{:}
+        \PYG{k}{return} \PYG{p}{[}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{This region does not have any associated buildings!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please choose a different region}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{]}\PYG{p}{]}
+    \PYG{n}{suggestions} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{school}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hospital}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{place\PYGZus{}of\PYGZus{}worship}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{police}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{restaurant}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{slot\PYGZus{}machines}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{library}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{pharmacy}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{returnTable} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+\end{Verbatim}

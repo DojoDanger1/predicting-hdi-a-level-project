@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+            \PYG{c+c1}{\PYGZsh{} backpropogate the error to previous layers}
+            \PYG{k}{for} \PYG{n}{layer} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{L}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{:}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{errors}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}
+                    \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}
+                        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{weights}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{T}\PYG{p}{,}
+                        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{errors}\PYG{p}{[}\PYG{n}{layer}\PYG{p}{]}
+                    \PYG{p}{)}\PYG{p}{,}
+                    \PYG{n}{sigmoid\PYGZus{}prime}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{z}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}
+                \PYG{p}{)}
+            \PYG{c+c1}{\PYGZsh{} save the activations, z\PYGZhy{}values and errors}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}activations}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(} \PYG{n}{copy}\PYG{o}{.}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations}\PYG{p}{)}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}z}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{copy}\PYG{o}{.}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{z}\PYG{p}{)}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}errors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{copy}\PYG{o}{.}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{errors}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}

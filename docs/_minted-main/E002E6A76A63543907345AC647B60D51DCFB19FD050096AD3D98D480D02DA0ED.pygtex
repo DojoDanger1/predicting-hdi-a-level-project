@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} calculate the optimal place for a new building to go when suggesting}
+\PYG{k}{def} \PYG{n+nf}{calcOptimalPlaceFor}\PYG{p}{(}\PYG{n}{building}\PYG{p}{,} \PYG{n}{extraBuildings}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{c+c1}{\PYGZsh{} construct all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}
+    \PYG{n}{all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}
+    \PYG{k}{for} \PYG{n}{key} \PYG{o+ow}{in} \PYG{n}{all\PYGZus{}objects}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{key} \PYG{o+ow}{in} \PYG{n}{extraBuildings}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]} \PYG{o}{=} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]} \PYG{o}{+} \PYG{n}{extraBuildings}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]} \PYG{o}{=} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]}
+\end{Verbatim}

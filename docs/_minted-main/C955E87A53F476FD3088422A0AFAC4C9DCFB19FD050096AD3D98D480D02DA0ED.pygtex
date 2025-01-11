@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{n}{compareDropdown}\PYG{o}{.}\PYG{n}{input}\PYG{p}{(}\PYG{n}{compareRegions}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{compareDropdown}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{compareTable}\PYG{p}{]}\PYG{p}{)}
+\end{Verbatim}

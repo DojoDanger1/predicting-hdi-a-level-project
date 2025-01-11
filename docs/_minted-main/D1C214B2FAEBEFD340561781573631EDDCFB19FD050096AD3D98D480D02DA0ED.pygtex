@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{c+c1}{\PYGZsh{} predict HDI}
+    \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mf}{0.96}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Predicting HDI...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{inputLayer} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{l+m+mi}{100} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{==} \PYG{k+kc}{None} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{10} \PYG{k}{if} \PYG{n}{index} \PYG{o}{\PYGZlt{}}\PYG{o}{=} \PYG{l+m+mi}{11} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{p}{]} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{allFactors}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{prediction} \PYG{o}{=} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{network}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{inputLayer}\PYG{p}{)}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{prediction}
+\end{Verbatim}

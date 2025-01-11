@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} updates the allUserRegions list, when the regions table is updated}
+\PYG{k}{def} \PYG{n+nf}{updateAllUserRegions}\PYG{p}{(}\PYG{n}{table}\PYG{p}{,} \PYG{n}{currentRegionName}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{allUserRegions}
+\end{Verbatim}

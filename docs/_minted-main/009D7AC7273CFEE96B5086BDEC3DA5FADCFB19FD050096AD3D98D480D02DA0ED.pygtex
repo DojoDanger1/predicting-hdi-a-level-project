@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{n}{uploadButton}\PYG{o}{.}\PYG{n}{upload}\PYG{p}{(}\PYG{n}{uploadGeoJSON}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{uploadButton}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objectsSlider}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objectsSlider}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{log}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{predictHDIbutton}\PYG{o}{.}\PYG{n}{click}\PYG{p}{(}\PYG{n}{processPrediction}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{HDIprediction}\PYG{p}{,} \PYG{n}{similarHDI}\PYG{p}{]}\PYG{p}{)}
+\end{Verbatim}

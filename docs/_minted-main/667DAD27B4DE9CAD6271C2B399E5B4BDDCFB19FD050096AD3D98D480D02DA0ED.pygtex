@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} validate sign up \PYGZam{} add account to mongoDB}
+\PYG{k}{def} \PYG{n+nf}{signUp}\PYG{p}{(}\PYG{n}{username}\PYG{p}{,} \PYG{n}{password}\PYG{p}{,} \PYG{n}{password2}\PYG{p}{)}\PYG{p}{:}
+    \PYG{c+c1}{\PYGZsh{} validate username}
+    \PYG{c+c1}{\PYGZsh{} validate password}
+    \PYG{c+c1}{\PYGZsh{} add to mongoDB}
+    \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully created an account, with username: }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{username}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{!}\PYG{l+s+s1}{\PYGZsq{}}
+\end{Verbatim}

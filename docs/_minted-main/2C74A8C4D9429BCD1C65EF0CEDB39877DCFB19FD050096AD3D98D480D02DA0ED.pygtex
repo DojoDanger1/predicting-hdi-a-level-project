@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} structure of the UI}
+\PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Blocks}\PYG{p}{(}\PYG{p}{)} \PYG{k}{as} \PYG{n}{app}\PYG{p}{:}
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Predict}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+        \PYG{p}{(}\PYG{n}{the} \PYG{n}{entirety} \PYG{n}{of} \PYG{n}{the} \PYG{n}{ui} \PYG{n}{so} \PYG{n}{far}\PYG{p}{,} \PYG{n}{indented}\PYG{p}{)}
+\end{Verbatim}

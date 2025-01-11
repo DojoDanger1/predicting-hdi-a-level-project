@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} updates the current region, when the user switches it with the dropdown on the regions tab}
+\PYG{k}{def} \PYG{n+nf}{updateCurrentRegion}\PYG{p}{(}\PYG{n}{dropdownValue}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{k}{global} \PYG{n}{allFactors}
+    \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{allUserRegions}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{dropdownValue}\PYG{p}{:}
+            \PYG{n}{all\PYGZus{}objects} \PYG{o}{=} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{objects}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+            \PYG{n}{allFactors} \PYG{o}{=} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{factors}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+\end{Verbatim}

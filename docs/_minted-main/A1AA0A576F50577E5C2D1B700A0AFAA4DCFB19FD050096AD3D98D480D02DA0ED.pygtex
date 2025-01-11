@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Log In}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{logInUsername} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Username}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{placeholder}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Enter your username...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{logInPassword} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Password}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{placeholder}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Enter your password...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{password}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{logInButton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Button}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Log In}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{variant}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{primary}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{logInResult} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Result}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+\end{Verbatim}

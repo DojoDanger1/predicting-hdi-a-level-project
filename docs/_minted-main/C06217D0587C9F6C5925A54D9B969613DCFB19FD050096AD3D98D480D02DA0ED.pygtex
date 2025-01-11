@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{c+c1}{\PYGZsh{} return either something else to build, or the new position}
+    \PYG{k}{if} \PYG{n}{zeroOfEverything}\PYG{p}{:}
+        \PYG{k}{return} \PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{(}\PYG{n}{zeroOfThings}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{calcMeanOfCoords}\PYG{p}{(}\PYG{n}{optimalPositions}\PYG{p}{)}
+\end{Verbatim}

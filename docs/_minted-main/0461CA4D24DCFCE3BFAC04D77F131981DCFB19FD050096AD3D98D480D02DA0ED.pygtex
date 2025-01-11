@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} connect to mongoDB}
+\PYG{n}{mongoURI} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{mongodb+srv://lukerhodri:\PYGZlt{}db\PYGZus{}password\PYGZgt{}@predictinghdi.3nkqe.mongodb .net/?retryWrites=true\PYGZam{}w=majority\PYGZam{}appName=predictingHDI}\PYG{l+s+s2}{\PYGZdq{}}
+\PYG{n}{mongoClient} \PYG{o}{=} \PYG{n}{MongoClient}\PYG{p}{(}\PYG{n}{mongoURI}\PYG{p}{,} \PYG{n}{server\PYGZus{}api}\PYG{o}{=}\PYG{n}{ServerApi}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{1}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{users} \PYG{o}{=} \PYG{n}{mongoClient}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{predictingHDI}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{users}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+\PYG{c+c1}{\PYGZsh{} send a ping to confirm a successful connection}
+\PYG{n}{mongoClient}\PYG{o}{.}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{command}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ping}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Pinged your deployment. You successfully connected to MongoDB!}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}

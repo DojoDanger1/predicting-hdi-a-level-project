@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+                \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Markdown}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+\PYG{l+s+s1}{                Your password must:}
+\PYG{l+s+s1}{                \PYGZhy{} Be at least 8 characters}
+\PYG{l+s+s1}{                \PYGZhy{} Contain at least 1 digit}
+\PYG{l+s+s1}{                \PYGZhy{} Contain at least 1 special character}
+\PYG{l+s+s1}{                }\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

@@ -171,4 +171,28 @@
 \contentsline {listing}{\numberline {5.70}{\ignorespaces Updating the \mintinline [breaklines, breakafter=_]{python}|must_include| functionality in \mintinline [breaklines, breakafter=_]{python}|def averageDistance|}}{281}{listing.5.70}%
 \contentsline {listing}{\numberline {5.71}{\ignorespaces New Return Format for Suggestions Table}}{282}{listing.5.71}%
 \contentsline {listing}{\numberline {5.72}{\ignorespaces Placing Multiple Pins on the Map}}{283}{listing.5.72}%
+\contentsline {listing}{\numberline {5.73}{\ignorespaces Fixing the Error for \mintinline [breaklines, breakafter=_]{python}|def makeSuggestions|}}{285}{listing.5.73}%
+\contentsline {listing}{\numberline {5.74}{\ignorespaces Fixing the Error for \mintinline [breaklines, breakafter=_]{python}|def signUp|}}{287}{listing.5.74}%
+\contentsline {listing}{\numberline {5.75}{\ignorespaces Fixing the Error for \mintinline [breaklines, breakafter=_]{python}|def logIn|}}{288}{listing.5.75}%
+\contentsline {listing}{\numberline {5.76}{\ignorespaces Adding Current Regions to the Account}}{289}{listing.5.76}%
+\contentsline {listing}{\numberline {5.77}{\ignorespaces Updating \mintinline [breaklines, breakafter=_]{python}|currentHDI|}}{290}{listing.5.77}%
+\contentsline {listing}{\numberline {5.78}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def processPrediction|}}{291}{listing.5.78}%
+\contentsline {listing}{\numberline {5.79}{\ignorespaces Ensuring \mintinline [breaklines, breakafter=_]{python}|def processPrediction| works with Logging In}}{292}{listing.5.79}%
+\contentsline {listing}{\numberline {5.80}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def uploadGeoJSON|}}{293}{listing.5.80}%
+\contentsline {listing}{\numberline {5.81}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def makeSuggestions|}}{293}{listing.5.81}%
+\contentsline {listing}{\numberline {5.82}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def compareRegions|}}{293}{listing.5.82}%
+\contentsline {listing}{\numberline {5.83}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def updateAllUserRegions|}}{294}{listing.5.83}%
+\contentsline {listing}{\numberline {5.84}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def signUp|}}{295}{listing.5.84}%
+\contentsline {listing}{\numberline {5.85}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def logIn|}}{296}{listing.5.85}%
+\contentsline {listing}{\numberline {5.86}{\ignorespaces Emojis in the Tabs}}{297}{listing.5.86}%
+\contentsline {listing}{\numberline {5.87}{\ignorespaces Emojis in the Predict Tab}}{298}{listing.5.87}%
+\contentsline {listing}{\numberline {5.88}{\ignorespaces Emojis in the Compare Tab}}{299}{listing.5.88}%
+\contentsline {listing}{\numberline {5.89}{\ignorespaces Emojis in the Regions Tab}}{300}{listing.5.89}%
+\contentsline {listing}{\numberline {5.90}{\ignorespaces Emojis in the Log In Tab}}{301}{listing.5.90}%
+\contentsline {listing}{\numberline {5.91}{\ignorespaces Emojis in the Sign Up Tab}}{302}{listing.5.91}%
+\contentsline {listing}{\numberline {5.92}{\ignorespaces Restructuring the Log In \& Sign Up Tabs}}{304}{listing.5.92}%
+\contentsline {listing}{\numberline {5.93}{\ignorespaces Warning Messages}}{306}{listing.5.93}%
+\contentsline {listing}{\numberline {5.94}{\ignorespaces Adding the Help Tab}}{308}{listing.5.94}%
+\contentsline {listing}{\numberline {5.95}{\ignorespaces Allowing for Images in Markdown}}{309}{listing.5.95}%
+\addvspace {10pt}
 \addvspace {10pt}

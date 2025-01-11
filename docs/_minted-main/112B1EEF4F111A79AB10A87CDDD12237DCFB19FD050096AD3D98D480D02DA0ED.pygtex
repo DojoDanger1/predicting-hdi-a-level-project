@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{c+c1}{\PYGZsh{} check password}
+    \PYG{n}{user} \PYG{o}{=} \PYG{n}{users}\PYG{o}{.}\PYG{n}{find\PYGZus{}one}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{username}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{username}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{bcrypt}\PYG{o}{.}\PYG{n}{checkpw}\PYG{p}{(}\PYG{n}{password}\PYG{o}{.}\PYG{n}{encode}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{utf\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{,} \PYG{n}{user}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hashedPassword}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{)}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} the hashed passwords do not match}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Incorrect Password! Please try again.}\PYG{l+s+s1}{\PYGZsq{}}
+\end{Verbatim}

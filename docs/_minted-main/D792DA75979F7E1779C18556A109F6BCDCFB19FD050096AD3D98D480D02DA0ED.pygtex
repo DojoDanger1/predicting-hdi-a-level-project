@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F64B}\PYG{l+s+s1}{ Help}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Markdown}\PYG{p}{(}\PYG{n}{markdown}\PYG{p}{)}
+\end{Verbatim}

@@ -76,6 +76,8 @@
 
 \newcommand{\pil}[1]{\protect\mintinline[breaklines, breakafter=_]{python}|#1|}
 
+\setminted{escapeinside=§§}
+
 \title{A-Level Computer Science Programming Project}
 \author{Luke Williams, Candidate 2276 \\ The Cherwell School, Centre 62309 \\ OCR Computer Science A-Level --- H446}
 \date{}
@@ -10102,34 +10104,893 @@ Once we have all of the coordinates, we can iteratively add them to the map, and
 \stepcounter{parts}
 \subsection{Part \theparts{} -- Finishing Touches}
 \subsubsection{Bug Fix -- Not Returning Sufficient Items}
-\dots{}
+When testing out the program, I noticed that some functionalities were returning errors, instead of a prompt for the user to do something different.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss22.1.png}
+\caption{Screenshot of an Errored Output}\label{fig:ss22.1}
+\end{figure}
+
+Figure \ref{fig:ss22.1} shows the output for when we attempt to make a prediction before uploading any regions, which is an error, instead of a prompt. I then found that this was because I was not returning a sufficient number of values. For example, when we press the predict HDI button, we are expecting to output to the HDI textbox \textit{and} the similar region textbox, and so we should return 2 items (e.g \pil{return 'a', 'b'}).
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=96]{python}
+        return 'You have not uploaded a region!', ''
+\end{minted}
+\caption{Fixing the Error for \pil{def makeSuggestions}}\label{cs:fixForMakeSuggestions}
+\end{listing}
+
+The regular output, for when the user does everything correctly was returning 2 values, but the invalid output, for when the user has not yet uploaded a region only had 1 output, so I added another one to go to the similar regions texbox.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss22.2.png}
+\caption{Screenshot of the Corrected Output (\pil{def makeSuggestions})}\label{fig:ss22.2}
+\end{figure}
+
+Figure \ref{fig:ss22.2} shows the corrected output.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{99}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:fixForMakeSuggestions}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+There was also a similar problem for the log in function, and the sign up function, where we were expecting to also update the regions table and the dropdown options, but only returned to the result box.
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=323]{python}
+        return 'Please fill in all fields!', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=326]{python}
+        return 'This username is already in use! Please choose another username.', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=329]{python}
+        return 'The passwords do not match! Please ensure that you have entered the correct password.', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=332]{python}
+        return 'Your password must have at least 8 characters!', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=340]{python}
+        return 'Your password must include at least 1 digit!', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=348]{python}
+        return f'Your password must include at least 1 special character! ({specialChars})', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\caption{Fixing the Error for \pil{def signUp}}\label{cs:fixForSignUp}
+\end{listing}
+
+We can fix this by also returning the result of the \pil{def updateRegionsTable} and \pil{def updateRegionsDropdown} functions, on the invalid returns.
+
+\begin{listing}[H]
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=368]{python}
+        return 'Please fill in all fields!', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=371]{python}
+        return 'This username does not exist! Please ensure that you have entered the correct username.', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=375]{python}
+        return 'Incorrect Password! Please try again.', updateRegionsTable(), updateRegionsDropdown()
+\end{minted}
+\caption{Fixing the Error for \pil{def logIn}}\label{cs:fixForLogIn}
+\end{listing}
+
+The \pil{def logIn} function had the exact same issue, so I fixed it in the exact same way
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ss22.3.png}
+\caption{Screenshot of the Corrected Output (\pil{def logIn})}\label{fig:ss22.3}
+\end{figure}
+
+Figure \ref{fig:ss22.3} shows the corrected output for the \pil{def logIn} function (which before was returning the same error).
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{100}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:fixForSignUp} \& \ref{cs:fixForLogIn}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \subsubsection{Bug Fix -- New Account Doesn't Have Current Regions}
-\dots{}
+I also noticed that creating a new account with existing regions did not add these regions to the account. I discovered that this was because I had accidentally kept \pil{'regions': []}, when creating a new account, instead of updating it to \pil{allUserRegions}, when I made that list.
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=356]{python}
+        'regions': allUserRegions
+\end{minted}
+\caption{Adding Current Regions to the Account}\label{cs:addCurrentRegionsToAccount}
+\end{listing}
+
+To fix this, all I needed to do was pass \pil{allUserRegions} into the dictionary instead of \pil{[]}.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{101}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:addCurrentRegionsToAccount}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \subsubsection{Bug Fix -- Switching Between Regions Doesn't Work with Comparing}
-\dots{}
+Another bug that I noticed is that the Compare Tab doesn't function as intended after switching between regions on the Regions Tab.
 
-\subsubsection{More Log Messages}
-\dots{}
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss22.4.png}
+\caption{HDI is not updating when Comparing}\label{fig:ss22.4}
+\end{figure}
+
+Figure \ref{fig:ss22.4} illustrates the problem, where if I switch from region $A$ to region $B$, and then compare the current region to one in the training data, the factors are correct for region $B$, but the HDI is for region $A$.
+
+I found that this is because that cell that isn't being updated is based on the \pil{global} variable, \pil{currentHDI}, which is only updated when the user pressed the predict HDI button on the Predict Tab. Therefore, we should also update it when the current region is changed from the dropdown menu, in the \pil{def updateCurrentRegion} function.
+
+\begin{listing}[H]
+\pil{app.py / def updateCurrentRegion}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=313]{python}
+    global currentHDI
+\end{minted}
+\pil{app.py / def updateCurrentRegion}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=318]{python}
+            # predict HDI - to update it internally
+            inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
+            prediction = round(network.predict(inputLayer).item(0,0), 3)
+            currentHDI = prediction
+\end{minted}
+\caption{Updating \pil{currentHDI}}\label{cs:updateCurrentHDI}
+\end{listing}
+
+First, we must ensure that we are using the \pil{global} variable, \pil{currentHDI}, and then after we update \pil{all_objects} and \pil{allFactors}, we can re-predict the HDI in the same way as we have done before.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss22.5.png}
+\caption{HDI is now updating when Comparing}\label{fig:ss22.5}
+\end{figure}
+
+Figure \ref{fig:ss22.5} shows the output now, for the same regions $A$ and $B$. The HDI it displays is now correct.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{102}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:updateCurrentHDI}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \subsubsection{Info Popups}
-\dots{}
+Gradio also supports the use of Info \& Warning Popups, which will appear on the top right of the screen for a short number of seconds. We can program them to say whatever we want, for example, in the \pil{def processPrediction} function, we can add the following lines right before we make a return:
+
+\begin{listing}[H]
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=96]{python}
+        gr.Warning('You have not uploaded a region!')
+\end{minted}
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=114]{python}
+    gr.Info('Successfully Predicted HDI!', 5)
+\end{minted}
+\caption{Info Popups in \pil{def processPrediction}}\label{cs:infoPopups1}
+\end{listing}
+
+The first being before the return when the user has not yet uploaded a region, and the second being if the function has successfully ran and the HDI has been predicted.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{ss22.6a.png}
+    \caption{Warning Example}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{ss22.6b.png}
+    \caption{Info Example}
+\end{subfigure}
+\caption{Info Popup Examples}\label{fig:popupExamples}
+\end{figure}
+
+Figure \ref{fig:popupExamples} shows how the popups look. You may have also noticed the extra \pil{5} being passed into the info popup, which is to specify how long it stays on the screen for. By default it is 10 seconds, but when the message just shows a success, the message does not need to stay for very long, as the user does not need to do anything about it (so I decreased it to 5 seconds). The bar at the bottom of the popup shows how long is left until it disappears, with the bar initially being full then moving to the left.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{103}$}\OR\equal{\mtestID}{$t_{104}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:infoPopups1}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+However, while I was adding this feature, I found that if I logged into my account, and then selected a region from there, and then predicted the HDI (as opposed to uploading one using the upload button), I still got the yellow warning box, instead of a predicted HDI.
+
+I found that this was because I was using \pil{currentRegion} to check if the user has a region selected or not, which was sensible in the old function arrangement, but now it makes more sense for it to be \pil{allFactors}, as that is what it is using to make a prediction.
+
+\begin{listing}[H]
+\pil{app.py / def processPrediction}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=95]{python}
+    if allFactors == []:
+        gr.Warning('You have not uploaded a region!')
+        return 'You have not uploaded a region!', ''
+\end{minted}
+\caption{Ensuring \pil{def processPrediction} works with Logging In}\label{cs:processAccountRegion}
+\end{listing}
+
+Replacing \pil{currentRegion} with \pil{allFactors} fixed this issue.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{105}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:processAccountRegion}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+Now that I had fixed this minor error, I could add the popups for the rest of the functions.
+
+\begin{listing}[H]
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=59]{python}
+        gr.Warning('There is already a region with this name! Please rename the file first.')
+\end{minted}
+\pil{app.py / def uploadGeoJSON}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=91]{python}
+    gr.Info(f'Successfully Uploaded {shortFilename}', 5)
+\end{minted}
+\caption{Info Popups in \pil{def uploadGeoJSON}}\label{cs:infoPopups2}
+\end{listing}
+
+For \pil{def uploadGeoJSON}, there was only the success message and the error for when the user attempts to upload a region with an existing name.
+
+\begin{listing}[H]
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=173]{python}
+        gr.Warning('You have not yet predicted an HDI! Please predict one first.')
+\end{minted}
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=176]{python}
+        gr.Warning('This region does not have any associated buildings! Please choose a different region')
+\end{minted}
+\pil{app.py / def makeSuggestions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=225]{python}
+    gr.Info('Successfully Made Suggestions!', 5)
+\end{minted}
+\caption{Info Popups in \pil{def makeSuggestions}}\label{cs:infoPopups3}
+\end{listing}
+
+For \pil{def makeSuggestions}, there was the success message, as well as 2 possible errors, depending on the status of the current region.
+
+\begin{listing}[H]
+\pil{app.py / def compareRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=244]{python}
+        gr.Warning('Please predict a region first!')
+\end{minted}
+\caption{Info Popups in \pil{def compareRegions}}\label{cs:infoPopups4}
+\end{listing}
+
+For \pil{def compareRegions}, I decided not to include a success popup, as the response from selecting a region from the dropdown menu is almost instant, where the other processes take tens of seconds. The only popup I had to implement is the warning where the user hasn't got any region selected, and so cannot compare.
+
+\begin{listing}[H]
+\pil{app.py / def updateAllUserRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=285]{python}
+        gr.Warning('Please ensure every region has a unique name!')
+\end{minted}
+\pil{app.py / def updateAllUserRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=294]{python}
+                    gr.Warning(f'Please Enter the Data Correctly! Found an error at cell (row {rowIndex}, col {cellIndex})')
+\end{minted}
+\pil{app.py / def updateAllUserRegions}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=317]{python}
+    gr.Info('Successfully Updated Regions', 5)
+\end{minted}
+\caption{Info Popups in \pil{def updateAllUserRegions}}\label{cs:infoPopups5}
+\end{listing}
+
+For \pil{def updateAllUserRegions} (which is called when the user pressed the ``Save Table Changes'' button on the Regions Tab), I added the success message, as well as the 2 possible errors in validating the user's input.
+
+\begin{listing}[H]
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=339]{python}
+        gr.Warning('A field has been left empty! Please fill in all fields.')
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=343]{python}
+        gr.Warning('This username is already in use! Please choose another username.')
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=347]{python}
+        gr.Warning('The passwords do not match! Please ensure that you have entered the correct password.')
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=351]{python}
+        gr.Warning('Your password must have at least 8 characters!')
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=360]{python}
+        gr.Warning('Your password must include at least 1 digit!')
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=369]{python}
+        gr.Warning('Your password must include at least 1 special character!')
+\end{minted}
+\pil{app.py / def signUp}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=382]{python}
+    gr.Info('Successfully created & logged into an account', 5)
+\end{minted}
+\caption{Info Popups in \pil{def signUp}}\label{cs:infoPopups6}
+\end{listing}
+
+For \pil{def signUp}, there are many restrictions on the user's username and password, which meant I had to add 6 warning popups, as well as a success info popup at the end.
+
+\begin{listing}[H]
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=391]{python}
+        gr.Warning('A field has been left empty! Please fill in all fields.')
+\end{minted}
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=395]{python}
+        gr.Warning('This username does not exist! Please ensure that you have entered the correct username.')
+\end{minted}
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=400]{python}
+        gr.Warning('Incorrect Password! Please try again.')
+\end{minted}
+\pil{app.py / def logIn}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=405]{python}
+    gr.Info(f'Successfully logged in as {username}!', 5)
+\end{minted}
+\caption{Info Popups in \pil{def logIn}}\label{cs:infoPopups7}
+\end{listing}
+
+For \pil{def logIn}, there aren't as many things we need to check, but we still need to ensure that the user has entered the correct information, and if not, create a suitable warning popup. Otherwise, we can do another success message.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{103}$}\OR\equal{\mtestID}{$t_{104}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:infoPopups2}, \ref{cs:infoPopups3}, \ref{cs:infoPopups4}, \ref{cs:infoPopups5}, \ref{cs:infoPopups6} \& \ref{cs:infoPopups7}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \subsubsection{Emojification}
-\dots{}
+The next thing I wanted to do to inprove the user interface is add emojis to each of the labels of the components. I found a website (\cite{emojisSearch}) which allowed me to search for emojis that matched a given keyword, even if that word wasn't part of the name of the emoji.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=431]{python}
+    with gr.Tab(label='\U0001F52E Predict'):
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=449]{python}
+    with gr.Tab(label='\U0001F19A Compare'):
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=453]{python}
+    with gr.Tab(label='\U0001F30D Regions'):
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=458]{python}
+    with gr.Tab(label='\U0001F513 Log In'):
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=463]{python}
+    with gr.Tab(label='\U0001F4DD Sign Up'):
+\end{minted}
+\caption{Emojis in the Tabs}\label{cs:emojis1}
+\end{listing}
+
+Using this website, I found suitable emojis for each of the tabs. I added the emoji at the start, by using their respecive unicode codes, ensuring we have a space inbetween the emoji and the name (otherwise it will look too squished together).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=13cm]{ss22.7.png}
+\caption{Emojis in Tabs}\label{fig:ss22.7}
+\end{figure}
+
+Figure \ref{fig:ss22.7} shows the new appearence of the tabs, with the emojis. I believe that this is a very good usability feature, as if the user does not speak english, they may now be able to have a vague understanding of what each tab may contain.
+
+I was happy with how this looked, and so I added it to the rest of the content in the tabs.
+
+\begin{listing}[H]
+(Note, the \pil{info} attributes of the sliders on lines 439 and 440 have been removed for this code snippet, as they are quite long) \\
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=431]{python}
+    with gr.Tab(label='\U0001F52E Predict'):
+        with gr.Row():
+            with gr.Column(scale=3):
+                map = Folium(value=foliumMap)
+                uploadButton = gr.UploadButton(label='\U0001F4E4 Upload the GeoJSON file \U0001F4E4', file_count='single')
+            with gr.Column(scale=1):
+                predictHDIbutton = gr.Button(value='\U0001F52E Predict HDI \U0001F52E', variant='primary')
+                with gr.Group():
+                    max_x_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum x-buildings \U0001F3E0', info='...')
+                    max_y_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum y-buildings \U0001F3EB', info='...')
+                with gr.Group():
+                    HDIprediction = gr.Textbox(label='I believe that the HDI of this region is... \U00002728', value='', interactive=False)
+                    similarHDI = gr.Textbox(label='That\'s a similar HDI to... \U0001F30D', value='', interactive=False)
+        with gr.Row():
+            makeSuggestionsButton = gr.Button(value='\U0001F914 Make Suggestions \U0001F914')
+            newBuildingsSlider = gr.Slider(minimum=1, maximum=10, value=5, step=1, label='Number of New Buildings \U0001F3D9', interactive=True)
+        suggestionsTable = gr.Dataframe(label='Suggestions \U0001F4A1', headers=['New Building', 'Coordinates', 'New HDI', 'Change in HDI'], type='array', interactive=False)
+        log = gr.Textbox(label='Log Messages \U0001F4C4', value='', interactive=False)
+\end{minted}
+\caption{Emojis in the Predict Tab}\label{cs:emojis2}
+\end{listing}
+
+While adding the emojis for this tab, I decided on a standard, which is that tabs will have the emoji before the label, most components will have the emoji after the label, and buttons will have the emoji either side of the label. This is to draw attention to the buttons, which is the main source of input.
+
+This was the biggest tab to fill with emojis, as I had to decide on one for the predict button, the maximum $x$-objects and $y$-objects sliders, the HDI output box, the similar region output box, the upload button, the make suggestions button, the number of new buildings slider, the suggestions table and the log messages.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss22.8.png}
+\caption{Emojis in the Predict Tab}\label{fig:ss22.8}
+\end{figure}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=449]{python}
+    with gr.Tab(label='\U0001F19A Compare'):
+        compareDropdown = gr.Dropdown(choices=[f'{region["region"]}, {region["country"]}' for region in trainingData], label='Select a Region \U0001F30D')
+        compareTable = gr.DataFrame(label='Comparison \U0001F4CA', headers=['Factor', 'Your Region', 'Selected Region'], type='array', interactive=False)
+        pmccImage = gr.Image('data/pmcc.png', label='Correlation between Factors \U0001F4C8', height=600, interactive=False)
+\end{minted}
+\caption{Emojis in the Compare Tab}\label{cs:emojis3}
+\end{listing}
+
+For the compare tab, I only had to find ones for the region dropdown menu, the comparison table, and the factor heatmap. For the region dropdown menu, I decided to use the same emoji as for the regions tab, as I believe this will create a sense of cohesion around the app.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss22.9.png}
+\caption{Emojis in the Compare Tab}\label{fig:ss22.9}
+\end{figure}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=453]{python}
+    with gr.Tab(label='\U0001F30D Regions'):
+        regionsDropdown = gr.Dropdown(choices=[], label='Current Region \U0001F30D', interactive=True)
+        regionsTable = gr.DataFrame(label='Your Regions \U0001F304', headers=(['Name'] + list(trainingData[0].keys())[4:]), type='array', col_count=(25,'fixed'), interactive=True)
+        submitEditsButton = gr.Button(value='\U0001F504 Submit Table Changes \U0001F504', variant='primary')
+        submitEditsResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
+\end{minted}
+\caption{Emojis in the Regions Tab}\label{cs:emojis4}
+\end{listing}
+
+For the regions tab, I needed emojis for the region dropdown menu, the table of the user's regions, the submit table changes button, and the result box. I again used the same emoji for the dropdown, and I also used the same emoji for the result box as the log messages in the Predict Tab, to further the continuity.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss22.10.png}
+\caption{Emojis in the Regions Tab}\label{fig:ss22.10}
+\end{figure}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=458]{python}
+    with gr.Tab(label='\U0001F513 Log In'):
+        logInUsername = gr.Textbox(label='Username \U0001F50F', placeholder='Enter your username...')
+        logInPassword = gr.Textbox(label='Password \U0001F511', placeholder='Enter your password...', type='password')
+        logInButton = gr.Button(value='\U0001F4F2 Log In \U0001F4F2', variant='primary')
+        logInResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
+\end{minted}
+\caption{Emojis in the Log In Tab}\label{cs:emojis5}
+\end{listing}
+
+For the log in tab, I needed new emojis for the username, password and log in button (result box re-uses the same one from the region tab and the predict tab).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss22.11.png}
+\caption{Emojis in the Log In Tab}\label{fig:ss22.11}
+\end{figure}
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=463]{python}
+    with gr.Tab(label='\U0001F4DD Sign Up'):
+        signUpUsername = gr.Textbox(label='Username \U0001F50F', placeholder='Enter your username...')
+        signUpPassword = gr.Textbox(label='Password \U0001F511', placeholder='Enter your password...', type='password')
+        signUpPassword2 = gr.Textbox(label='Re-Enter Password \U0001F510', placeholder='Re-Enter your password...', type='password')
+        signUpButton = gr.Button(value='\U0001F680 Create an Account \U0001F680', variant='primary')
+        signUpResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
+\end{minted}
+\caption{Emojis in the Sign Up Tab}\label{cs:emojis6}
+\end{listing}
+
+Finally, for the sign up tab, I only needed new emojis for the re-entering of the password, and the create account button (the others are re-used from the log in tab). 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss22.12.png}
+\caption{Emojis in the Sign Up Tab}\label{fig:ss22.12}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{106}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippets \ref{cs:emojis1}, \ref{cs:emojis2}, \ref{cs:emojis3}, \ref{cs:emojis4}, \ref{cs:emojis5} \& \ref{cs:emojis6}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\subsubsection{Other Interface Changes}
+After I added all of the emojis, I thought that the log in \& sign up tabs looked too plain and monotonous, as it was just 4 or 5 elements stacked on top of each other. I therefore decided that I wanted to put the ``submit'' button and the return textbox in a different column, next to the input fields.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=458]{python}
+    with gr.Tab(label='\U0001F513 Log In'):
+        with gr.Row():
+            with gr.Column():
+                logInUsername = gr.Textbox(label='Username \U0001F50F', placeholder='Enter your username...')
+                logInPassword = gr.Textbox(label='Password \U0001F511', placeholder='Enter your password...', type='password')
+            with gr.Column():
+                logInButton = gr.Button(value='\U0001F4F2 Log In \U0001F4F2', variant='primary')
+                logInResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
+    with gr.Tab(label='\U0001F4DD Sign Up'):
+        with gr.Row():
+            with gr.Column():
+                signUpUsername = gr.Textbox(label='Username \U0001F50F', placeholder='Enter your username...')
+                signUpPassword = gr.Textbox(label='Password \U0001F511', placeholder='Enter your password...', type='password')
+                signUpPassword2 = gr.Textbox(label='Re-Enter Password \U0001F510', placeholder='Re-Enter your password...', type='password')
+            with gr.Column():
+                signUpButton = gr.Button(value='\U0001F680 Create an Account \U0001F680', variant='primary')
+                signUpResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
+\end{minted}
+\caption{Restructuring the Log In \& Sign Up Tabs}\label{cs:restructureTabs}
+\end{listing}
+
+To do this, we can put the button and the result textbox in a column, and the fields in a column, and put those columns in a row. The same can be done for the sign up page, as well as the log in page.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{ss22.13a.png}
+    \caption{Log In Tab}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{ss22.13b.png}
+    \caption{Sign Up Tab}
+\end{subfigure}
+\caption{Restructuring the Log In \& Sign Up Tabs}\label{fig:restructureTabs}
+\end{figure}
+
+Figure \ref{fig:restructureTabs} shows the new appearences of the log in and sign up tabs, which I believe are better and more interesting to look at.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{107}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:restructureTabs}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+I also thought that I should add a few warnings, for some behaviour that may be unexpected.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=457]{python}
+        gr.Markdown('\U00002757 **WARNING:** You will no longer be able to make suggestions from regions that you edit here. \U00002757')
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=466]{python}
+                gr.Markdown('\U00002757 **WARNING:** Logging in will override the regions in the \U0001F30D Regions Tab, and replace them with the ones in the account you log into. \U00002757')
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=474]{python}
+                gr.Markdown('''
+                Your password must:
+                - Be at least 8 characters
+                - Contain at least 1 digit
+                - Contain at least 1 special character
+                ''')
+\end{minted}
+\caption{Warning Messages}\label{cs:warningMarkdown}
+\end{listing}
+
+I thought that the user should know that editing regions in the table directly will cause them to no longer be able to make suggestions, and that if they log into an account, their regions will be replaced by the ones in the account. I also thought that the user should know the password requirements, before they type a password.
+
+To do this, I used \pil{gr.Markdown}, which allows us to add simple text to the interface, and format it with markdown (for example, here, writing \pil{'**WARNING:**'} made ``WARNING:'' bold).
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{ss22.14a.png}
+    \caption{Update Regions Table}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{ss22.14b.png}
+    \caption{Logging Into an Account}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{ss22.14c.png}
+    \caption{Sign Up Password Requirements}
+\end{subfigure}
+\caption{Adding Warnings}\label{fig:warningMessages}
+\end{figure}
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{108}$}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:warningMarkdown}}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \subsubsection{The Help Tab}
-\dots{}
+The final thing to add to the user interface is the help tab. I wanted to write this last, as I wanted to be sure that all of the other features were in their final state.
+
+\begin{listing}[H]
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=429]{python}
+# define markdown in help tab
+markdown = '''
+this is a test that this markdown has been rendered correctly
+
+# this text should be a heading with the crystal ball emoji \U0001F52E
+
+ - this text should be in
+ - bullet points
+ 
+![](data/pmcc.png "Alt Text")
+'''
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=443]{python}
+    with gr.Tab(label='\U0001F64B Help'):
+        gr.Markdown(markdown)
+\end{minted}
+\caption{Adding the Help Tab}\label{cs:helpTab}
+\end{listing}
+
+Here, I am adding the Help Tab. In the design section, I had put the help tab at the end of the interface, but I have since decided to put it as the first tab. This is because this is what the user will immediately see, and so they should use this to get started.
+
+For now, I have written a small sample to test out some of the markdown formatting features. The test includes a regular paragraph, a heading, an emoji, bullet points, and an image with alt-text.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss22.15.png}
+\caption{Markdown Test Initial Attempt}\label{fig:ss22.15}
+\end{figure}
+
+Figure \ref{fig:ss22.15} shows the current output for the help tab. Everything seems to have worked except for the image.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{109}$}\AND\equal{\mtestRealOutputs}{No Images}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:helpTab}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+I did not know how to resolve this issue, so I researched the problem. I found someone who was having a similar problem to me, who had asked how to fix this problem in the \pil{gradio} GitHub repository \cite{markdownImage}.
+
+\begin{listing}[H]
+(Note, the declaration in line 437 is just to show that this is part of the string. In reality, this line is still line 430) \\
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=437]{python}
+markdown = '''
+![](file/data/pmcc.png "Alt Text")
+'''
+\end{minted}
+\pil{app.py}
+\begin{minted}[linenos,breaklines,frame=single,firstnumber=509]{python}
+# launch the UI
+app.launch(allowed_paths=["/"])
+\end{minted}
+\caption{Allowing for Images in Markdown}\label{cs:allowImages}
+\end{listing}
+
+After reading the responses, I found that I needed to add \pil{'file/'} to the start of the file path, as well as pass \pil{allowed_paths=["/"]} into \pil{app.launch()} at the very end of the program.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss22.16.png}
+\caption{Markdown Test Successul}\label{fig:ss22.16}
+\end{figure}
+
+Figure \ref{fig:ss22.16} shows the correct output for this test.
+
+\begin{center}
+\csvloop{
+    file=data/minitests.csv,
+    no head,
+    column count=6,
+    column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
+    filter ifthen={\equal{\mtestID}{$t_{109}$}\AND\equal{\mtestRealOutputs}{As Expected}\OR\equal{\mtestID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing Table for Code Snippet \ref{cs:allowImages}}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{ss22.17.png}
+\caption{Markdown Test Successul}\label{fig:ss22.17}
+\end{figure}
+
+Figure \ref{fig:ss22.16} shows the top part of the appearance of the Help Tab, now that I have written the full text. I will not include it here, as it is quite long, but it will be included in the Final Code Section (Appendix \ref{sec:finalCode}).
 
 \subsection{Review}
 \dots
 
-\section{Feedback from Stakeholders}
-\dots
-
 \chapter{Evaluation}
-\dots
+\section{Testing to Inform Evaluation}
+\subsection{Testing for Function}
+\dots{}
+
+\subsection{Testing for Robustness}
+\dots{}
+
+\subsection{Testing for Usability}
+\dots{}
+
+\section{Evaluation of the Coded Solution}
+\dots{}
+
+\appendix
+\chapter{Final Code}\label{sec:finalCode}
+\dots{}
 
 \cleardoublepage{}
 \phantomsection{}

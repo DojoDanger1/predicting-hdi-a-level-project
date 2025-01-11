@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{c+c1}{\PYGZsh{} salt \PYGZam{} hash password}
+    \PYG{n}{salt} \PYG{o}{=} \PYG{n}{bcrypt}\PYG{o}{.}\PYG{n}{gensalt}\PYG{p}{(}\PYG{p}{)}
+    \PYG{n}{hashed\PYGZus{}password} \PYG{o}{=} \PYG{n}{bcrypt}\PYG{o}{.}\PYG{n}{hashpw}\PYG{p}{(}\PYG{n}{password}\PYG{o}{.}\PYG{n}{encode}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{utf\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{,} \PYG{n}{salt}\PYG{p}{)}
+\end{Verbatim}

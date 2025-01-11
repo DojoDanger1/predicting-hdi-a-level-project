@@ -56,6 +56,7 @@ def uploadGeoJSON(filename, max_x_objects, max_y_objects, currentRegionName, pro
         currentRegion = [coordinate[::-1] for coordinate in data['features'][0]['geometry']['coordinates'][0]]
     shortFilename = filename[filename.rindex("/")+1:]
     if shortFilename[:shortFilename.rindex('.')] in [region['name'] for region in allUserRegions] or shortFilename[:shortFilename.rindex('.')] == '':
+        gr.Warning('There is already a region with this name! Please rename the file first.')
         return 'There is already a region with this name! Please rename the file first.', updateRegionsTable(), updateRegionsDropdown(), currentRegionName
     # retrieve all relevant osm data
     object_types = ['house', 'school', 'hospital', 'pharmacy', 'restaurant', 'place_of_worship', 'bank', 'slot_machines', 'fast_food', 'toilets', 'police', 'university', 'library', 'post_box', 'vending_machine', 'bench', 'tree']
@@ -87,13 +88,15 @@ def uploadGeoJSON(filename, max_x_objects, max_y_objects, currentRegionName, pro
     # save regions to account, if logged in
     if loggedInUsername != '':
         users.update_one({'username': loggedInUsername}, {'$set': {'regions': allUserRegions}})
+    gr.Info(f'Successfully Uploaded {shortFilename}', 5)
     return f'Successfully Uploaded {shortFilename}', updateRegionsTable(), updateRegionsDropdown(), shortFilename[:shortFilename.rindex('.')]
 
 # predict the HDI of the given region
 def processPrediction():
     global currentHDI
-    if currentRegion == []:
-        return 'You have not uploaded a region!'
+    if allFactors == []:
+        gr.Warning('You have not uploaded a region!')
+        return 'You have not uploaded a region!', ''
     # predict HDI
     inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
     prediction = round(network.predict(inputLayer).item(0,0), 3)
@@ -110,6 +113,7 @@ def processPrediction():
     # choose one of the options at random
     chosenRegionRecord = random.choice(possible_choices)
     similar_region = f'{chosenRegionRecord["region"]}, {chosenRegionRecord["country"]}'
+    gr.Info('Successfully Predicted HDI!', 5)
     return prediction, similar_region
 
 # helper function to calculate mean of coordinates
@@ -166,8 +170,10 @@ def calcOptimalPlaceFor(building, extraBuildings):
 def makeSuggestions(max_x_objects, max_y_objects, num_new_buildings, progress=gr.Progress()):
     global all_objects
     if currentHDI == -1:
+        gr.Warning('You have not yet predicted an HDI! Please predict one first.')
         return [['You have not yet predicted an HDI!', None, None, None]]
     if all_objects == {}:
+        gr.Warning('This region does not have any associated buildings! Please choose a different region')
         return [['This region does not have any associated buildings!', 'Please choose a different region', None, None]]
     suggestions = ['school', 'hospital', 'place_of_worship', 'police', 'restaurant', 'slot_machines', 'library', 'pharmacy']
     returnTable = []
@@ -214,6 +220,7 @@ def makeSuggestions(max_x_objects, max_y_objects, num_new_buildings, progress=gr
             returnTable.append([suggestion, ', '.join([f'({round(position[0], 7)}°N, {round(position[1], 7)}°E)' for position in positions]), str(prediction), str(round(prediction-currentHDI, 3))])
         else:
             returnTable.append([suggestion, f'Build a new {positions[0]} first!', '--', '--'])
+    gr.Info('Successfully Made Suggestions!', 5)
     return returnTable
 
 # place a pin on the map when user clicks the suggestion
@@ -234,6 +241,7 @@ def selectSuggestionsTable(evt: gr.SelectData):
 def compareRegions(regionName):
     # confirm the user has predicted
     if allFactors == []:
+        gr.Warning('Please predict a region first!')
         return [['Please predict a region first!', None, None]]
     # undo the concatenation
     split = regionName.split(', ')
@@ -274,6 +282,7 @@ def updateAllUserRegions(table, currentRegionName):
     # validate the input - names of regions
     regionNames = [row[0] for row in table]
     if '' in regionNames or len(set(regionNames)) != len(regionNames):
+        gr.Warning('Please ensure every region has a unique name!')
         return 'Please ensure every region has a unique name!', updateRegionsDropdown(), currentRegionName
     # validate the input - type check
     for rowIndex, row in enumerate(table):
@@ -282,6 +291,7 @@ def updateAllUserRegions(table, currentRegionName):
                 try:
                     table[rowIndex][cellIndex] = float(cell)
                 except ValueError:
+                    gr.Warning(f'Please Enter the Data Correctly! Found an error at cell (row {rowIndex}, col {cellIndex})')
                     return f'Please Enter the Data Correctly! Found an error at cell (row {rowIndex}, col {cellIndex})', updateRegionsDropdown(), currentRegionName
     # update the allUserRegions list
     initialLength = len(allUserRegions)
@@ -304,32 +314,42 @@ def updateAllUserRegions(table, currentRegionName):
         newRegionName = None
     else:
         newRegionName = allUserRegions[currentRegionIndex]['name']
+    gr.Info('Successfully Updated Regions', 5)
     return 'Successfully Updated Regions', updateRegionsDropdown(), newRegionName
 
 # updates the current region, when the user switches it with the dropdown on the regions tab
 def updateCurrentRegion(dropdownValue):
     global all_objects
     global allFactors
+    global currentHDI
     for region in allUserRegions:
         if region['name'] == dropdownValue:
             all_objects = region['objects']
             allFactors = region['factors']
+            # predict HDI - to update it internally
+            inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
+            prediction = round(network.predict(inputLayer).item(0,0), 3)
+            currentHDI = prediction
 
 # validate sign up & add account to mongoDB
 def signUp(username, password, password2):
     global loggedInUsername
     # validate no empty fields
     if username == '' or password == '' or password2 == '':
-        return 'Please fill in all fields!'
+        gr.Warning('A field has been left empty! Please fill in all fields.')
+        return 'Please fill in all fields!', updateRegionsTable(), updateRegionsDropdown()
     # validate username - does not already exist
     if users.count_documents({'username': username}) != 0:
-        return 'This username is already in use! Please choose another username.'
+        gr.Warning('This username is already in use! Please choose another username.')
+        return 'This username is already in use! Please choose another username.', updateRegionsTable(), updateRegionsDropdown()
     # validate password - double entry validation
     if password != password2:
-        return 'The passwords do not match! Please ensure that you have entered the correct password.'
+        gr.Warning('The passwords do not match! Please ensure that you have entered the correct password.')
+        return 'The passwords do not match! Please ensure that you have entered the correct password.', updateRegionsTable(), updateRegionsDropdown()
     # validate password - at least 8 characters long
     if len(password) < 8:
-        return 'Your password must have at least 8 characters!'
+        gr.Warning('Your password must have at least 8 characters!')
+        return 'Your password must have at least 8 characters!', updateRegionsTable(), updateRegionsDropdown()
     # validate password - at least 1 digit
     digits = '0123456789'
     hasDigit = False
@@ -337,7 +357,8 @@ def signUp(username, password, password2):
         if digit in password:
             hasDigit = True
     if not hasDigit:
-        return 'Your password must include at least 1 digit!'
+        gr.Warning('Your password must include at least 1 digit!')
+        return 'Your password must include at least 1 digit!', updateRegionsTable(), updateRegionsDropdown()
     # validate password - at least 1 special character
     specialChars = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
     hasSpecialChar = False
@@ -345,7 +366,8 @@ def signUp(username, password, password2):
         if specialChar in password:
             hasSpecialChar = True
     if not hasSpecialChar:
-        return f'Your password must include at least 1 special character! ({specialChars})'
+        gr.Warning('Your password must include at least 1 special character!')
+        return f'Your password must include at least 1 special character! ({specialChars})', updateRegionsTable(), updateRegionsDropdown()
     # salt & hash password
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
@@ -353,10 +375,11 @@ def signUp(username, password, password2):
     user = {
         'username': username,
         'hashedPassword': hashed_password,
-        'regions': []
+        'regions': allUserRegions
     }
     users.insert_one(user)
     loggedInUsername = username
+    gr.Info('Successfully created & logged into an account', 5)
     return f'Successfully created & logged into an account, with username: {username}!', updateRegionsTable(), updateRegionsDropdown()
 
 # validate & log in the user
@@ -365,17 +388,21 @@ def logIn(username, password):
     global allUserRegions
     # validate no empty fields
     if username == '' or password == '':
-        return 'Please fill in all fields!'
+        gr.Warning('A field has been left empty! Please fill in all fields.')
+        return 'Please fill in all fields!', updateRegionsTable(), updateRegionsDropdown()
     # check username exists
     if users.count_documents({'username': username}) == 0:
-        return 'This username does not exist! Please ensure that you have entered the correct username.'
+        gr.Warning('This username does not exist! Please ensure that you have entered the correct username.')
+        return 'This username does not exist! Please ensure that you have entered the correct username.', updateRegionsTable(), updateRegionsDropdown()
     # check password
     user = users.find_one({'username': username})
     if not bcrypt.checkpw(password.encode('utf-8'), user['hashedPassword']): # the hashed passwords do not match
-        return 'Incorrect Password! Please try again.'
+        gr.Warning('Incorrect Password! Please try again.')
+        return 'Incorrect Password! Please try again.', updateRegionsTable(), updateRegionsDropdown()
     # grant access to the account
     loggedInUsername = username
     allUserRegions = user['regions']
+    gr.Info(f'Successfully logged in as {username}!', 5)
     return f'Successfully logged in as {username}!', updateRegionsTable(), updateRegionsDropdown()
 
 # define some starting locations
@@ -399,46 +426,178 @@ draw = Draw(
 )
 draw.add_to(foliumMap)
 
+# define markdown in help tab
+markdown = '''
+# \U0001F44B Welcome to Predicting HDI! \U0001F44B
+
+This app allows you to predict the HDI of any region you draw on the map. From there, you can make some suggestions on how to improve it.
+
+## Getting Started \U00002728
+
+Head over to the \U0001F52E Predict tab, and find your region on the map. Once you have found your region, you can predict the HDI by following these steps:
+
+1. Select the Draw Tool by Clicking the **Pentagon** \U00002B53 Icon in the Top Left.
+2. Draw your Region, by creating vertices. Make sure you close the region by clicking on your first vertex at the end.
+3. Press the **Export** button in the Top Right. This will download a file called `region.geojson` to your computer.
+4. Press the \U0001F4E4 **Upload the GeoJSON file** \U0001F4E4 button, below the map, and choose your `region.geojson`. You can scroll down to see a progress bar for this upload. Once the upload is complete, you will get a notification in the top right corner.
+5. Finally, press the orange \U0001F52E **Predict HDI** \U0001F52E button to predict the HDI of your region!
+
+![](file/data/helpTab1.png "Diagram visually showing the above steps")
+
+## More Detail on The \U0001F52E Predict Tab
+
+### Help! It's Taking Too Long! \U0001F553
+
+If you drew a very large region, it is likely that Uploading it took a **very long** time \U0001F553. This is because, to predict the HDI, we use data about the positions of buildings, such as houses, schools, hospitals and police stations. This data must be downloaded, so if you chose a region with a lot of these things, then it will take quite a while to download it all.
+
+To predict the HDI from these positions, we calculate different different factors, such as the average distance from a house to the nearest school, or nearest hospital, which can also take a while. To decrease the time this may take, you can change the values of the **Maximum x-buildings** \U0001F3E0 and **Maximum y-buildings** \U0001F3EB sliders.
+
+Changing **Maximum x-buildings** \U0001F3E0 will decrease the number of x-buildings we consider. For example, in the case of average distance from house to school, this slider corresponds to the number of houses we consider. Similarly, changing **Maximum y-buildings** \U0001F3EB corresponds to changing the number of schools we consider for each house (in this example). However, this will cause the calculated values for these factors to be less accurate, and therefore may cause the predicted HDI to be less accurate.
+
+### Help! It Just Crashed! \U0000274C
+
+If the progress bar suddenly turned into an **ERROR** when uploading a region, it is likely that you just timed out from the OverpassTurbo servers, which is what we are using to get the location of all these buildings. This is totally normal, and so if this happens, just try to upload it again.
+
+If the issue persists, it is likely something is wrong with your region, so try a different one
+
+### Suggestions \U0001F4A1
+
+Once you have predicted the HDI of a region, you can make some suggestions. Do this, by simply pressing the \U0001F914 **Make Suggestions** \U0001F914 button. The suggestions will be in the format: "Build (a number of) new buildings, in these locations". You can change this value, to anything between 1 and 10, by moving the slider, labelled **Number of New Buildings** \U0001F3D9.
+
+This may also take some time, As we must calculate the optimal position to place these new buildings, and the re-calculate the factors. Once it is finished, the Suggestions \U0001F4A1 Table will be populated with 8 different suggestions, on how to improve the HDI of your region. To view the locations of the suggestion on the map, simply select the cell that contains the coordinates. The map will update to have pins.
+
+![](file/data/helpTab2.png "Typical Output for the Suggestions Table")
+
+If your region is quite empty, you may have got some suggestions that did not return any locations, or a new HDI, but instead a prompt to build some other buildings first. This is because we did not have sufficient data to calculate where a new building should go, and so unfortunately, there is no real suggestion.
+
+### What Makes a Good Region? \U0001F914
+
+This brings me onto how to select a region, which will yield good results.
+
+- **Don't make your region too large.** Larger regions will take longer to download, and longer to calculate the factors of. You will therefore want to decrease the **Maximum x-buildings** \U0001F3E0 and **Maximum y-buildings** \U0001F3EB sliders, leading to a less accurate prediction. You will then also not get very good suggestions, as building 5 schools in a large metropolitan area isn't going to do anything.
+- **Ensure your region doesn't self-intersect.** Your region should be a simple 2D shape.
+- **Use Small Towns.** I believe this works best with small towns, as the suggestions will often increase the HDI by a more significant amount. Downloading the Region and Calculating the Factors also won't take too long.
+- **Don't Make Empty Regons.** Predicting the HDI of an empty field or the ocean is not going to yield any useful results.
+
+### Drawing Regions \U0001F58B
+
+If you make a mistake while drawing your region, you can press the "Delete last point" button, next to the Pentagon \U00002B53 icon. If you wish to delete your region, press the Bin \U0001F5D1 icon in the top left.
+
+You can zoom in and out of the map, by using the scroll wheel, or by using the + and - buttons in the top right.
+
+If you draw multiple regions before pressing Export, we will only consider the first one you drew. If you wish to predict the HDI of 2 disconnected regions, you can get around this by connecting them with a very thin line.
+
+## The \U0001F19A Compare Tab
+
+### Comparing your Region \U0001F4CA
+
+You can use the \U0001F19A Compare tab to compare your region to an existing sub-national region. Sub-national regions are 1 level below countries, so for example, the sub-national regions of the United States are the 50 states.
+
+To do this, simply select a region from the dropdown menu at the top of the screen. To search for a specific region, you can also type into this dropdown menu. When you select one, the table below will populate with the HDI of your region and the selected region, as well as each of the factors that contribute to it.
+
+![](file/data/helpTab3.png "Typical Output for the Comparison Table")
+
+\U0001F4C4 **Note:** You must predict the HDI of a region first, before you do this.
+
+### Correlation Heatmap \U0001F4C8
+
+At the bottom of this tab, you will also find a graph, showing the correlation between each factor, and HDI. You can use this to find out which factors contribute most towards the HDI, as well as which ones contribute towards each other.
+
+Each cell has a colour, which corresponds to a number between -1 and 1, as shown by the key on the right. A value of 1 means that the 2 factors are very positively correlated, a value of -1 means that the 2 factors are very negatively correlated, and a value of 0 means that the 2 factors are not correlated. All values in between are as you would expect (for example, a value of -0.3 would mean that the 2 factors are slightly negatively correlated).
+
+## The \U0001F30D Regions Tab
+
+In the \U0001F30D Regions tab, you can switch between different regions that you have predicted the HDI of. To do this, simply select one from the dropdown menu at the top of the screen.
+
+This tab also allows you to manually edit the factors of your regions, rename your regions, and add new ones. You can edit any cell in the table, so long as they follow these rules:
+
+- The values in the columns for A(... ...) must either be a number or empty
+- The values in the columns for D(...) must be a number
+- The values in the name column must be unique
+
+(A(x y) means "Average distance from x to nearest y", and D(x) means "Number of x per unit area")
+
+Once you have made your changes, you can press the \U0001F504 **Submit Table Changes** \U0001F504 button, to make your changes. If any of the rules above have not been met, the changes will not go through, and you will be told which cell is causing an error.
+
+\U00002757 **WARNING:** You will no longer be able to make suggestions from regions that you edit in the table. \U00002757 This is because the factors no longer reflect the positions of the buildings in the region, and so they are no longer accurate. We therefore cannot make any suggestions, as there are no buildings associated with the region.
+
+## Account Management \U0001F510
+
+You can also create an account, to save your regions.
+
+### Creating an Account \U0001F4DD
+
+To create an account, simply head to the \U0001F4DD Sign Up tab. Here, you get to choose a username and password. Your username must be unique, and your password must:
+
+- Be at least 8 characters long
+- Contain at least 1 digit
+- Contain at least 1 special character. The characters that count as special characters are: ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~
+
+When you create an account, you will automatically be logged in. Any changes you make while logged in will be saved to your account.
+
+### Logging Into an Account \U0001F513
+
+To log into your account, head to the \U0001F513 Log In tab, and enter your username and password.
+
+\U00002757 **WARNING:** Logging in will override the regions in the \U0001F30D Regions Tab, and replace them with the ones in the account you log into. \U00002757
+'''
+
 # structure of the UI
 with gr.Blocks() as app:
-    with gr.Tab(label='Predict'):
+    with gr.Tab(label='\U0001F64B Help'):
+        gr.Markdown(markdown)
+    with gr.Tab(label='\U0001F52E Predict'):
         with gr.Row():
             with gr.Column(scale=3):
                 map = Folium(value=foliumMap)
-                uploadButton = gr.UploadButton(label='Upload the GeoJSON file', file_count='single')
+                uploadButton = gr.UploadButton(label='\U0001F4E4 Upload the GeoJSON file \U0001F4E4', file_count='single')
             with gr.Column(scale=1):
-                predictHDIbutton = gr.Button(value='Predict HDI', variant='primary')
+                predictHDIbutton = gr.Button(value='\U0001F52E Predict HDI \U0001F52E', variant='primary')
                 with gr.Group():
-                    max_x_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum x-buildings', info='When calculating the average distance between 2 types of building, it will find the average of this many pairs. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
-                    max_y_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum y-buildings', info='When calculating the average distance between 2 types of building, it will find the closest of the second type of building out of this many options. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
+                    max_x_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum x-buildings \U0001F3E0', info='When calculating the average distance between 2 types of building, it will find the average of this many pairs. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
+                    max_y_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum y-buildings \U0001F3EB', info='When calculating the average distance between 2 types of building, it will find the closest of the second type of building out of this many options. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
                 with gr.Group():
-                    HDIprediction = gr.Textbox(label='I believe that the HDI of this region is...', value='', interactive=False)
-                    similarHDI = gr.Textbox(label='That\'s a similar HDI to...', value='', interactive=False)
+                    HDIprediction = gr.Textbox(label='I believe that the HDI of this region is... \U00002728', value='', interactive=False)
+                    similarHDI = gr.Textbox(label='That\'s a similar HDI to... \U0001F30D', value='', interactive=False)
         with gr.Row():
-            makeSuggestionsButton = gr.Button(value='Make Suggestions')
-            newBuildingsSlider = gr.Slider(minimum=1, maximum=10, value=5, step=1, label='Number of New Buildings', interactive=True)
-        suggestionsTable = gr.Dataframe(label='Suggestions', headers=['New Building', 'Coordinates', 'New HDI', 'Change in HDI'], type='array', interactive=False)
-        log = gr.Textbox(label='Log Messages', value='', interactive=False)
-    with gr.Tab(label='Compare'):
-        compareDropdown = gr.Dropdown(choices=[f'{region["region"]}, {region["country"]}' for region in trainingData], label='Select a Region')
-        compareTable = gr.DataFrame(label='Comparison', headers=['Factor', 'Your Region', 'Selected Region'], type='array', interactive=False)
-        pmccImage = gr.Image('data/pmcc.png', label='Correlation between Factors', height=600, interactive=False)
-    with gr.Tab(label='Regions'):
-        regionsDropdown = gr.Dropdown(choices=[], label='Current Region', interactive=True)
-        regionsTable = gr.DataFrame(label='Your Regions', headers=(['Name'] + list(trainingData[0].keys())[4:]), type='array', col_count=(25,'fixed'), interactive=True)
-        submitEditsButton = gr.Button(value='Submit Table Changes', variant='primary')
-        submitEditsResult = gr.Textbox(label='Result', interactive=False)
-    with gr.Tab(label='Log In'):
-        logInUsername = gr.Textbox(label='Username', placeholder='Enter your username...')
-        logInPassword = gr.Textbox(label='Password', placeholder='Enter your password...', type='password')
-        logInButton = gr.Button(value='Log In', variant='primary')
-        logInResult = gr.Textbox(label='Result', interactive=False)
-    with gr.Tab(label='Sign Up'):
-        signUpUsername = gr.Textbox(label='Username', placeholder='Enter your username...')
-        signUpPassword = gr.Textbox(label='Password', placeholder='Enter your password...', type='password')
-        signUpPassword2 = gr.Textbox(label='Re-Enter Password', placeholder='Re-Enter your password...', type='password')
-        signUpButton = gr.Button(value='Create an Account', variant='primary')
-        signUpResult = gr.Textbox(label='Result', interactive=False)
+            makeSuggestionsButton = gr.Button(value='\U0001F914 Make Suggestions \U0001F914')
+            newBuildingsSlider = gr.Slider(minimum=1, maximum=10, value=5, step=1, label='Number of New Buildings \U0001F3D9', interactive=True)
+        suggestionsTable = gr.Dataframe(label='Suggestions \U0001F4A1', headers=['New Building', 'Coordinates', 'New HDI', 'Change in HDI'], type='array', interactive=False)
+        log = gr.Textbox(label='Log Messages \U0001F4C4', value='', interactive=False)
+    with gr.Tab(label='\U0001F19A Compare'):
+        compareDropdown = gr.Dropdown(choices=[f'{region["region"]}, {region["country"]}' for region in trainingData], label='Select a Region \U0001F30D')
+        compareTable = gr.DataFrame(label='Comparison \U0001F4CA', headers=['Factor', 'Your Region', 'Selected Region'], type='array', interactive=False)
+        pmccImage = gr.Image('data/pmcc.png', label='Correlation between Factors \U0001F4C8', height=600, interactive=False)
+    with gr.Tab(label='\U0001F30D Regions'):
+        regionsDropdown = gr.Dropdown(choices=[], label='Current Region \U0001F30D', interactive=True)
+        regionsTable = gr.DataFrame(label='Your Regions \U0001F304', headers=(['Name'] + list(trainingData[0].keys())[4:]), type='array', col_count=(25,'fixed'), interactive=True)
+        submitEditsButton = gr.Button(value='\U0001F504 Submit Table Changes \U0001F504', variant='primary')
+        gr.Markdown('\U00002757 **WARNING:** You will no longer be able to make suggestions from regions that you edit here. \U00002757')
+        submitEditsResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
+    with gr.Tab(label='\U0001F513 Log In'):
+        with gr.Row():
+            with gr.Column():
+                logInUsername = gr.Textbox(label='Username \U0001F50F', placeholder='Enter your username...')
+                logInPassword = gr.Textbox(label='Password \U0001F511', placeholder='Enter your password...', type='password')
+            with gr.Column():
+                logInButton = gr.Button(value='\U0001F4F2 Log In \U0001F4F2', variant='primary')
+                gr.Markdown('\U00002757 **WARNING:** Logging in will override the regions in the \U0001F30D Regions Tab, and replace them with the ones in the account you log into. \U00002757')
+                logInResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
+    with gr.Tab(label='\U0001F4DD Sign Up'):
+        with gr.Row():
+            with gr.Column():
+                signUpUsername = gr.Textbox(label='Username \U0001F50F', placeholder='Enter your username...')
+                signUpPassword = gr.Textbox(label='Password \U0001F511', placeholder='Enter your password...', type='password')
+                signUpPassword2 = gr.Textbox(label='Re-Enter Password \U0001F510', placeholder='Re-Enter your password...', type='password')
+                gr.Markdown('''
+                Your password must:
+                - Be at least 8 characters
+                - Contain at least 1 digit
+                - Contain at least 1 special character
+                ''')
+            with gr.Column():
+                signUpButton = gr.Button(value='\U0001F680 Create an Account \U0001F680', variant='primary')
+                signUpResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
     
     # functionality
     uploadButton.upload(uploadGeoJSON, inputs=[uploadButton, max_x_objectsSlider, max_y_objectsSlider, regionsDropdown], outputs=[log, regionsTable, regionsDropdown, regionsDropdown])
@@ -452,4 +611,4 @@ with gr.Blocks() as app:
     logInButton.click(logIn, inputs=[logInUsername, logInPassword], outputs=[logInResult, regionsTable, regionsDropdown])
 
 # launch the UI
-app.launch()
+app.launch(allowed_paths=["/"])

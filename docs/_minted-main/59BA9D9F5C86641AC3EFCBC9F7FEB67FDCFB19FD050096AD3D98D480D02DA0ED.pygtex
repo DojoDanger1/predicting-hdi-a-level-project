@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+        \PYG{k}{if} \PYG{n+nb}{type}\PYG{p}{(}\PYG{n}{positions}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)} \PYG{o}{!=} \PYG{n+nb}{type}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+            \PYG{o}{.}\PYG{o}{.}\PYG{o}{.} \PYG{c+c1}{\PYGZsh{} (continue to calculate factors \PYGZam{} predict HDI)}
+\end{Verbatim}

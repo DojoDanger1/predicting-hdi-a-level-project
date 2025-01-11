@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} updates regions dropdown, from allUserRegions}
+\PYG{k}{def} \PYG{n+nf}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{names} \PYG{o}{=} \PYG{p}{[}\PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{allUserRegions}\PYG{p}{]}
+    \PYG{k}{return} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(}\PYG{n}{choices}\PYG{o}{=}\PYG{n}{names}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,23 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k+kn}{import} \PYG{n+nn}{shapefile}
+\PYG{k+kn}{import} \PYG{n+nn}{json}
+
+\PYG{c+c1}{\PYGZsh{} read records of shapefile}
+\PYG{n}{reader} \PYG{o}{=} \PYG{n}{shapefile}\PYG{o}{.}\PYG{n}{Reader}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{data/shapefiles/GDL Shapefiles V6.3 large.shp}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{fields} \PYG{o}{=} \PYG{n}{reader}\PYG{o}{.}\PYG{n}{fields}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{p}{]}
+\PYG{n}{field\PYGZus{}names} \PYG{o}{=} \PYG{p}{[}\PYG{n}{field}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{k}{for} \PYG{n}{field} \PYG{o+ow}{in} \PYG{n}{fields}\PYG{p}{]}
+\PYG{n}{data} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+\PYG{k}{for} \PYG{n}{shape\PYGZus{}record} \PYG{o+ow}{in} \PYG{n}{reader}\PYG{o}{.}\PYG{n}{shapeRecords}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{shape\PYGZus{}record}\PYG{o}{.}\PYG{n}{record}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+    \PYG{n}{data}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{\PYGZob{}}
+        \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{type}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Feature}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,}
+        \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{geometry}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{shape\PYGZus{}record}\PYG{o}{.}\PYG{n}{shape}\PYG{o}{.}\PYG{n}{\PYGZus{}\PYGZus{}geo\PYGZus{}interface\PYGZus{}\PYGZus{}}\PYG{p}{,}
+        \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{properties}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{:} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n+nb}{zip}\PYG{p}{(}\PYG{n}{field\PYGZus{}names}\PYG{p}{,} \PYG{n}{shape\PYGZus{}record}\PYG{o}{.}\PYG{n}{record}\PYG{p}{)}\PYG{p}{)}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} write data to file}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{writing to file...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+\PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{data/region\PYGZus{}coords.json}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{w}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{file}\PYG{p}{:}
+    \PYG{n}{json}\PYG{o}{.}\PYG{n}{dump}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{file}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{done!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+\end{Verbatim}

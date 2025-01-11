@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} define markdown in help tab}
+\PYG{n}{markdown} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+\PYG{l+s+s1}{this is a test that this markdown has been rendered correctly}
+
+\PYG{l+s+s1}{\PYGZsh{} this text should be a heading with the crystal ball emoji }\PYG{l+s+se}{\PYGZbs{}U0001F52E}
+
+\PYG{l+s+s1}{ \PYGZhy{} this text should be in}
+\PYG{l+s+s1}{ \PYGZhy{} bullet points}
+
+\PYG{l+s+s1}{![](data/pmcc.png }\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Alt Text}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{)}
+\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+\end{Verbatim}

@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{c+c1}{\PYGZsh{} validate password \PYGZhy{} double entry validation}
+    \PYG{k}{if} \PYG{n}{password} \PYG{o}{!=} \PYG{n}{password2}\PYG{p}{:}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{The passwords do not match! Please ensure that you have entered the correct password.}\PYG{l+s+s1}{\PYGZsq{}}
+\end{Verbatim}

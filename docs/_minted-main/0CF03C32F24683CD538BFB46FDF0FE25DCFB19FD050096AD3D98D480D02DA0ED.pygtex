@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} derivative of the activation function}
+\PYG{k}{def} \PYG{n+nf}{sigmoid\PYGZus{}prime}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{n}{sigmoid}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{sigmoid}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}

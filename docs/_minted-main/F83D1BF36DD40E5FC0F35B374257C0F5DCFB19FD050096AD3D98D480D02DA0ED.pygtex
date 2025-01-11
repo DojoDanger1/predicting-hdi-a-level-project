@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{c+c1}{\PYGZsh{} validate password \PYGZhy{} at least 1 digit}
+    \PYG{n}{digits} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{0123456789}\PYG{l+s+s1}{\PYGZsq{}}
+    \PYG{n}{hasDigit} \PYG{o}{=} \PYG{k+kc}{False}
+    \PYG{k}{for} \PYG{n}{digit} \PYG{o+ow}{in} \PYG{n}{digits}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{digit} \PYG{o+ow}{in} \PYG{n}{password}\PYG{p}{:}
+            \PYG{n}{hasDigit} \PYG{o}{=} \PYG{k+kc}{True}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{hasDigit}\PYG{p}{:}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Your password must include at least 1 digit!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}
+\end{Verbatim}

@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{c+c1}{\PYGZsh{} validate the input \PYGZhy{} names of regions}
+    \PYG{n}{regionNames} \PYG{o}{=} \PYG{p}{[}\PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{k}{for} \PYG{n}{row} \PYG{o+ow}{in} \PYG{n}{table}\PYG{p}{]}
+    \PYG{k}{if} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{in} \PYG{n}{regionNames} \PYG{o+ow}{or} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{regionNames}\PYG{p}{)}\PYG{p}{)} \PYG{o}{!=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{regionNames}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please ensure every region has a unique name!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{currentRegionName}
+\end{Verbatim}

@@ -162,3 +162,15 @@ $t_{95}$,Attempt to Suggest when Selected Region has no objects,--,Invalid,Promp
 $t_{96}$,Suggestions for a Region with Many Objects,A Town,--,Multiple positions of buildings shown\comma{} HDI re-predicted to be better,As Expected
 $t_{97}$,Suggestions for a Region with No Objects,A Field,--,Different Suggestions Shown,As Expected
 $t_{98}$,Placing Multiple Pins on the Map,--,--,Multiple Pins on the map in the right locations,As Expected
+$t_{99}$,Fixing Error on Predicing HDI before Uploading,--,--,Prompt to upload a region,As Expected
+$t_{100}$,Fixing Error on Signing Up \& Logging In,--,--,Prompt to enter correct/valid credentials,As Expected
+$t_{101}$,Signing Up Creates an Account with the User's Regions,--,--,Signing Up Creates an Account with the User's Regions,As Expected
+$t_{102}$,HDI Updates when we Switch Regions,Switch from region $A$ to $B$,--,When Predicting\comma{} it displays region $B$'s HDI,As Expected
+$t_{103}$,Warning Popup,An Invalid Input,--,Yellow Box appears in the Top Right Corner\comma{} for 10 seconds\comma{} displaying useful information,As Expected
+$t_{104}$,Info Popup,An Valid Input,--,Gray Box appears in the Top Right Corner\comma{} for 5 seconds\comma{} displaying a success message,As Expected
+$t_{105}$,Predicting HDI from a region in an Account,Region in an account,--,HDI is predicted,As Expected
+$t_{106}$,Emojification of the User Interface,--,--,Each element in the interface as an emoji relating to its function,As Expected
+$t_{107}$,Restructuing Authentication Appearance,--,--,Button and Result Textbox on the Side,As Expected
+$t_{108}$,Warning Notes,--,--,Short Warning Message below buttons with potentially unexpected behaviour,As Expected
+$t_{109}$,Help Tab,--,--,Markdown is Rendered Correctly,No Images
+$t_{109}$,Help Tab,--,--,Markdown is Rendered Correctly,As Expected

@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{n}{allUserRegions}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{\PYGZob{}}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{shortFilename}\PYG{p}{[}\PYG{p}{:}\PYG{n}{shortFilename}\PYG{o}{.}\PYG{n}{rindex}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{objects}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{all\PYGZus{}objects}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{factors}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{allFactors}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{)}
+\end{Verbatim}

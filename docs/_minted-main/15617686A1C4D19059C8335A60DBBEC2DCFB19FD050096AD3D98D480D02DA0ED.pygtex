@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} creates a 2d list to put in the regions table, from allUserRegions}
+\PYG{k}{def} \PYG{n+nf}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{table} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{allUserRegions}\PYG{p}{:}
+        \PYG{n}{table}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{[}\PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{]} \PYG{o}{+} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{factors}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{table}
+\end{Verbatim}

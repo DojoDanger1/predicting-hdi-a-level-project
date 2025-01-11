@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{c+c1}{\PYGZsh{} validate the input \PYGZhy{} type check}
+    \PYG{k}{for} \PYG{n}{rowIndex}\PYG{p}{,} \PYG{n}{row} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{table}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{for} \PYG{n}{cellIndex}\PYG{p}{,} \PYG{n}{cell} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{row}\PYG{p}{)}\PYG{p}{:}
+            \PYG{k}{if} \PYG{n}{cellIndex} \PYG{o}{!=} \PYG{l+m+mi}{0} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n}{cellIndex} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{12} \PYG{o+ow}{or} \PYG{n}{cell} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+                \PYG{k}{try}\PYG{p}{:}
+                    \PYG{n}{table}\PYG{p}{[}\PYG{n}{rowIndex}\PYG{p}{]}\PYG{p}{[}\PYG{n}{cellIndex}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{cell}\PYG{p}{)}
+                \PYG{k}{except} \PYG{n+ne}{ValueError}\PYG{p}{:}
+                    \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please Enter the Data Correctly! Found an error at cell (row }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{rowIndex}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{, col }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{cellIndex}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{currentRegionName}
+\end{Verbatim}

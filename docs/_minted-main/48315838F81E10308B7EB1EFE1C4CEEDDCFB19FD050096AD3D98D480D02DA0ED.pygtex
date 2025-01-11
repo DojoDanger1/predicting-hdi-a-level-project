@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} structure of the UI}
+\PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Blocks}\PYG{p}{(}\PYG{p}{)} \PYG{k}{as} \PYG{n}{app}\PYG{p}{:}
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Row}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Column}\PYG{p}{(}\PYG{n}{scale}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n+nb}{map} \PYG{o}{=} \PYG{n}{Folium}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{n}{foliumMap}\PYG{p}{)}
+            \PYG{n}{uploadButton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{UploadButton}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Upload the GeoJSON file}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{file\PYGZus{}count}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{single}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Column}\PYG{p}{(}\PYG{n}{scale}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{predictHDIbutton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Button}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Predict HDI}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{variant}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{primary}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+            \PYG{n}{HDIprediction} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{I believe that the HDI of this region is...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+    \PYG{n}{log} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Log Messages}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+\end{Verbatim}

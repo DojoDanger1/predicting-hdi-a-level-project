@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{n}{SKIP\PYGZus{}THE\PYGZus{}FIRST} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{c+c1}{\PYGZsh{} iterate over each region}
+\PYG{k}{for} \PYG{n}{region\PYGZus{}number}\PYG{p}{,} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{regionData}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{if} \PYG{n}{region\PYGZus{}number} \PYG{o}{\PYGZlt{}} \PYG{n}{SKIP\PYGZus{}THE\PYGZus{}FIRST}\PYG{p}{:}
+        \PYG{k}{continue}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Processing }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{region}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{properties}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{gdlcode}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+\end{Verbatim}

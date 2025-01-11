@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{c+c1}{\PYGZsh{} save regions to account, if logged in}
+    \PYG{k}{if} \PYG{n}{loggedInUsername} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{users}\PYG{o}{.}\PYG{n}{update\PYGZus{}one}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{username}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{loggedInUsername}\PYG{p}{\PYGZcb{}}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZdl{}set}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{regions}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{allUserRegions}\PYG{p}{\PYGZcb{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} code to process the user uploading their geojson file}
+\PYG{k}{def} \PYG{n+nf}{uploadGeoJSON}\PYG{p}{(}\PYG{n}{filename}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{progress}\PYG{o}{=}\PYG{n}{gr}\PYG{o}{.}\PYG{n}{Progress}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{currentRegion}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{k}{global} \PYG{n}{allFactors}
+    \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Starting...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

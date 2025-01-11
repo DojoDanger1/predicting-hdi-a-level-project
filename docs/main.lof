@@ -157,4 +157,22 @@
 \contentsline {figure}{\numberline {5.42}{\ignorespaces Output for a Region with Many Buildings}}{282}{figure.caption.222}%
 \contentsline {figure}{\numberline {5.43}{\ignorespaces Output for a Region with No Buildings}}{282}{figure.caption.223}%
 \contentsline {figure}{\numberline {5.44}{\ignorespaces Output for Placing Pins on the Map}}{284}{figure.caption.224}%
+\contentsline {figure}{\numberline {5.45}{\ignorespaces Screenshot of an Errored Output}}{285}{figure.caption.226}%
+\contentsline {figure}{\numberline {5.46}{\ignorespaces Screenshot of the Corrected Output (\mintinline [breaklines, breakafter=_]{python}|def makeSuggestions|)}}{286}{figure.caption.227}%
+\contentsline {figure}{\numberline {5.47}{\ignorespaces Screenshot of the Corrected Output (\mintinline [breaklines, breakafter=_]{python}|def logIn|)}}{288}{figure.caption.228}%
+\contentsline {figure}{\numberline {5.48}{\ignorespaces HDI is not updating when Comparing}}{289}{figure.caption.231}%
+\contentsline {figure}{\numberline {5.49}{\ignorespaces HDI is now updating when Comparing}}{290}{figure.caption.232}%
+\contentsline {figure}{\numberline {5.50}{\ignorespaces Info Popup Examples}}{291}{figure.caption.234}%
+\contentsline {figure}{\numberline {5.51}{\ignorespaces Emojis in Tabs}}{297}{figure.caption.236}%
+\contentsline {figure}{\numberline {5.52}{\ignorespaces Emojis in the Predict Tab}}{299}{figure.caption.237}%
+\contentsline {figure}{\numberline {5.53}{\ignorespaces Emojis in the Compare Tab}}{300}{figure.caption.238}%
+\contentsline {figure}{\numberline {5.54}{\ignorespaces Emojis in the Regions Tab}}{301}{figure.caption.239}%
+\contentsline {figure}{\numberline {5.55}{\ignorespaces Emojis in the Log In Tab}}{302}{figure.caption.240}%
+\contentsline {figure}{\numberline {5.56}{\ignorespaces Emojis in the Sign Up Tab}}{303}{figure.caption.241}%
+\contentsline {figure}{\numberline {5.57}{\ignorespaces Restructuring the Log In \& Sign Up Tabs}}{305}{figure.caption.243}%
+\contentsline {figure}{\numberline {5.58}{\ignorespaces Adding Warnings}}{307}{figure.caption.244}%
+\contentsline {figure}{\numberline {5.59}{\ignorespaces Markdown Test Initial Attempt}}{308}{figure.caption.246}%
+\contentsline {figure}{\numberline {5.60}{\ignorespaces Markdown Test Successul}}{309}{figure.caption.247}%
+\contentsline {figure}{\numberline {5.61}{\ignorespaces Markdown Test Successul}}{310}{figure.caption.248}%
+\addvspace {10\p@ }
 \addvspace {10\p@ }

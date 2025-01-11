@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{n}{suggestionsTable}\PYG{o}{.}\PYG{n}{select}\PYG{p}{(}\PYG{n}{selectSuggestionsTable}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n+nb}{map}\PYG{p}{]}\PYG{p}{)}
+\end{Verbatim}

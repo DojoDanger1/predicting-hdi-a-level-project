@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+        \PYG{c+c1}{\PYGZsh{} initialise lists for training states}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}activations} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}z} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}errors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+\end{Verbatim}

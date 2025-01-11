@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{n}{newcsv} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{record} \PYG{o+ow}{in} \PYG{n}{reader}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{record}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{year}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{2022}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} the most recent year}
+            \PYG{n}{newRecord} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+                \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{country}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{record}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{country}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{region}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{record}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{region}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{code}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{record}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{GDLCODE}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{hdi}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{record}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{shdi}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}
+            \PYG{p}{\PYGZcb{}} \PYG{c+c1}{\PYGZsh{} only the most useful information}
+            \PYG{n}{newcsv}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{newRecord}\PYG{p}{)}
+            \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{newRecord}\PYG{p}{)}
+\end{Verbatim}

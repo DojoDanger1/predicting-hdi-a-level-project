@@ -55,4 +55,14 @@ MaxwellN.
 \newblock Pymongo [ssl: Certificate\_verify\_failed] certificate verify failed: unable to get local issuer certificate.
 \newblock \url{https://stackoverflow.com/questions/68123923/pymongo-ssl-certificate-verify-failed-certificate-verify-failed-unable-to-ge}, 2021.
 
+\bibitem{emojisSearch}
+EmojiDB.
+\newblock Emojidb beta.
+\newblock \url{https://emojidb.org}, 2024.
+
+\bibitem{markdownImage}
+millermuttu.
+\newblock Adding image in markdown not working, gives broken image in the browser.
+\newblock \url{https://github.com/gradio-app/gradio/issues/1997}, 2022.
+
 \end{thebibliography}

@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k+kn}{import} \PYG{n+nn}{folium}
+\PYG{k+kn}{from} \PYG{n+nn}{folium}\PYG{n+nn}{.}\PYG{n+nn}{plugins} \PYG{k+kn}{import} \PYG{n}{Draw}
+
+\PYG{c+c1}{\PYGZsh{} initialise the map for drawing on}
+\PYG{n}{foliumMap} \PYG{o}{=} \PYG{n}{folium}\PYG{o}{.}\PYG{n}{Map}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{draw} \PYG{o}{=} \PYG{n}{Draw}\PYG{p}{(}
+    \PYG{n}{export}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{,}
+    \PYG{n}{position}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{topleft}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}
+    \PYG{n}{draw\PYGZus{}options}\PYG{o}{=}\PYG{p}{\PYGZob{}}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{polyline}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{circlemarker}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{polygon}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{allowIntersection}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{marker}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{circle}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{rectangle}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{,}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{,}
+    \PYG{n}{edit\PYGZus{}options}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{poly}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{allowIntersection}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{\PYGZcb{}}\PYG{p}{\PYGZcb{}}
+\PYG{p}{)}
+\PYG{n}{draw}\PYG{o}{.}\PYG{n}{add\PYGZus{}to}\PYG{p}{(}\PYG{n}{foliumMap}\PYG{p}{)}
+\end{Verbatim}

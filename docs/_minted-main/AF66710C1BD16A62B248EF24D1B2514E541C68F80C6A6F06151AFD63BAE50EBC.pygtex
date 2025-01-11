@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}Your password must include at least 1 digit!\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(),} \PYG{n}{updateRegionsDropdown}\PYG{p}{()}
+\end{Verbatim}

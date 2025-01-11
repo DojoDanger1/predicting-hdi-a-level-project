@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} calculate the optimal place for a new building to go when suggesting}
+\PYG{k}{def} \PYG{n+nf}{calcOptimalPlaceFor}\PYG{p}{(}\PYG{n}{building}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{n}{means} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{averageDistanceFactor} \PYG{o+ow}{in} \PYG{n}{averageDistanceFactors}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{n}{building}\PYG{p}{:}
+            \PYG{n}{means}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{calcMeanOfCoords}\PYG{p}{(} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{]}\PYG{p}{)}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{calcMeanOfCoords}\PYG{p}{(}\PYG{n}{means}\PYG{p}{)}
+\end{Verbatim}

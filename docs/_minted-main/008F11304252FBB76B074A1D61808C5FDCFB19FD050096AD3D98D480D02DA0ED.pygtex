@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+    \PYG{k}{for} \PYG{n}{num}\PYG{p}{,} \PYG{n}{suggestion} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{extraBuildings} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{n}{suggestion}\PYG{p}{:} \PYG{p}{[}\PYG{p}{]}\PYG{p}{\PYGZcb{}}
+        \PYG{n}{progress}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Suggesting building a }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{suggestion}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{c+c1}{\PYGZsh{} find optimal place}
+        \PYG{n}{positions} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{k}{for} \PYG{n}{buildingNum} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{p}{)}\PYG{p}{:}
+            \PYG{c+c1}{\PYGZsh{} check for other suggestion}
+            \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{positions}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{k}{if} \PYG{n+nb}{type}\PYG{p}{(}\PYG{n}{positions}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)} \PYG{o}{==} \PYG{n+nb}{type}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+                    \PYG{k}{continue}
+            \PYG{c+c1}{\PYGZsh{} calc actual position}
+            \PYG{n}{progress}\PYG{p}{(}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{)}\PYG{p}{)}\PYG{o}{+}\PYG{p}{(}\PYG{n}{buildingNum}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{l+m+mi}{8}\PYG{p}{)} \PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{p}{(}\PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{o}{+}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Suggesting building a }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{suggestion}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ (finding optimal position, }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{buildingNum}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{/}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+            \PYG{n}{position} \PYG{o}{=} \PYG{n}{calcOptimalPlaceFor}\PYG{p}{(}\PYG{n}{suggestion}\PYG{p}{,} \PYG{n}{extraBuildings}\PYG{p}{)}
+            \PYG{n}{positions}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{position}\PYG{p}{)}
+            \PYG{n}{extraBuildings}\PYG{p}{[}\PYG{n}{suggestion}\PYG{p}{]}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{position}\PYG{p}{)}
+\end{Verbatim}

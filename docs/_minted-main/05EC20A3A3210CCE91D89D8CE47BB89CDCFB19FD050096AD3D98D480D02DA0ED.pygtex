@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{\PYGZsh{} user selects an item from the dropdown menu to compare to}
+\PYG{k}{def} \PYG{n+nf}{compareRegions}\PYG{p}{(}\PYG{n}{regionName}\PYG{p}{)}\PYG{p}{:}
+    \PYG{c+c1}{\PYGZsh{} confirm the user has predicted}
+    \PYG{k}{if} \PYG{n}{allFactors} \PYG{o}{==} \PYG{p}{[}\PYG{p}{]}\PYG{p}{:}
+        \PYG{k}{return} \PYG{p}{[}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please predict a region first!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{]}\PYG{p}{]}
+\end{Verbatim}
