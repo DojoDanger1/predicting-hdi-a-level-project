@@ -8249,18 +8249,18 @@ All 4 of the main tests in Milestone 4 passed. As a result of that, the followin
 }
 \end{center}
 
-I also have a fully functioning authentication system, where the user can create and log into an account.
+I also have a fully functioning authentication system, where the user can create and log into an account, so overall, I believe this milestone has been a success.
 
 \section{Milestone 5 -- Final User Interface}
 \subsection{Success Criteria}
-By the end of this milestone, I hope to have a full user interface, with all of the desired featured. At the end, I aim to deploy the app on Hugging Face. 
+By the end of this milestone, I hope to have a full user interface, with all of the desired features.
 \begin{center}
 \csvloop{
     file=data/successcriteria.csv,
     no head,
     column count=5,
     column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
-    filter ifthen={\equal{\scID}{$S_{14}$}\OR\equal{\scID}{$S_{15}$}\OR\equal{\scID}{$S_{16}$}\OR\equal{\scID}{$S_{17}$}\OR\equal{\scID}{$S_{18}$}\OR\equal{\scID}{$S_{19}$}\OR\equal{\scID}{$S_{20}$}\OR\equal{\scID}{\textbf{No.}}},
+    filter ifthen={\equal{\scID}{$S_{14}$}\OR\equal{\scID}{$S_{15}$}\OR\equal{\scID}{$S_{16}$}\OR\equal{\scID}{$S_{17}$}\OR\equal{\scID}{$S_{18}$}\OR\equal{\scID}{\textbf{No.}}},
     before reading={
         \begin{longtable}{|m{1cm}|m{5cm}|m{8cm}|H H}
         \hline
@@ -9204,7 +9204,7 @@ We can fix this by just setting \pil{interactive=True} in the regions dropdown c
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{Testing Table for Code Snippet \ref{cs:updateRegionsDropdown}}
+        \caption{Testing Table for Code Snippet \ref{cs:interactiveDropdown}}
         \end{longtable}
     }
 }
@@ -10966,13 +10966,58 @@ Figure \ref{fig:ss22.16} shows the correct output for this test.
 \begin{figure}[H]
 \centering
 \includegraphics[width=14cm]{ss22.17.png}
-\caption{Markdown Test Successul}\label{fig:ss22.17}
+\caption{Help Tab}\label{fig:ss22.17}
 \end{figure}
 
-Figure \ref{fig:ss22.16} shows the top part of the appearance of the Help Tab, now that I have written the full text. I will not include it here, as it is quite long, but it will be included in the Final Code Section (Appendix \ref{sec:finalCode}).
+Figure \ref{fig:ss22.17} shows the top part of the appearance of the Help Tab, now that I have written the full text. I will not include it here, as it is quite long, but it will be included in the Final Code Section (Appendix \ref{sec:finalCode}).
 
 \subsection{Review}
-\dots
+
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$T_{13}$}\OR\equal{\testID}{$T_{14}$}\OR\equal{\testID}{$T_{15}$}\OR\equal{\testID}{$T_{16}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{3cm}|m{8cm}|H|m{2cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Passed Testing Data for Milestone 5}
+        \end{longtable}
+    }
+}
+\end{center}
+
+All 4 of the main tests in Milestone 5 passed. As a result of that, the following success criteria has been met:
+
+\begin{center}
+\csvloop{
+    file=data/successcriteria.csv,
+    no head,
+    column count=5,
+    column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
+    filter ifthen={\equal{\scID}{$S_{14}$}\OR\equal{\scID}{$S_{15}$}\OR\equal{\scID}{$S_{16}$}\OR\equal{\scID}{$S_{17}$}\OR\equal{\scID}{$S_{18}$}\OR\equal{\scID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{5cm}|m{6cm}|m{2cm}|H}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Achieved Success Criteria for Milestone 5}
+        \end{longtable}
+    }
+}
+\end{center}
+
+I also have a full user interface, with all of the desired features, so overall, I believe this milestone has been a success.
+
+I would now ask my stakeholders for feedback, as I did at the end of the \nth{1} prototype, but this will instead be done while Testing for Usability (Section \ref{sec:testingUsability}).
 
 \chapter{Evaluation}
 \section{Testing to Inform Evaluation}
@@ -10982,7 +11027,7 @@ Figure \ref{fig:ss22.16} shows the top part of the appearance of the Help Tab, n
 \subsection{Testing for Robustness}
 \dots{}
 
-\subsection{Testing for Usability}
+\subsection{Testing for Usability}\label{sec:testingUsability}
 \dots{}
 
 \section{Evaluation of the Coded Solution}

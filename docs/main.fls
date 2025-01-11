@@ -9421,6 +9421,8 @@ INPUT ./images/ss22.17.png
 INPUT ./images/ss22.17.png
 INPUT ./images/ss22.17.png
 INPUT ./images/ss22.17.png
+INPUT data/testdata.csv
+INPUT data/successcriteria.csv
 INPUT ./main.lof
 INPUT ./main.lof
 INPUT main.lof

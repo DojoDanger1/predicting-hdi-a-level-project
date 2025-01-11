@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex main"] 1736614832.66891 "main.aux" "main.bbl" "main" 1736614860.68769 0
+["bibtex main"] 1736616065.02758 "main.aux" "main.bbl" "main" 1736616142.05709 0
   "./main.bib" 1736552182.57631 2814 5e9c2ced2090bad3fd1e8534e0470fab ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "main.aux" 1736614859.85263 306803 83ed1d6243b2ec4f3c4de817d1278650 "pdflatex"
+  "main.aux" 1736616141.10697 307508 536ad7c9941f9f3ba6ac08a20ac1eac1 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1736614832.82635 "/Users/luke/Desktop/FOLDERS/computer science/A-Level CS Project/predicting-hdi-a-level-project/docs/main.tex" "main.pdf" "main" 1736614860.68833 0
-  "/Users/luke/Desktop/FOLDERS/computer science/A-Level CS Project/predicting-hdi-a-level-project/docs/main.tex" 1736614803.50703 591451 d10003fc140f0a1ec77e787039cf13c6 ""
+["pdflatex"] 1736616114.66214 "/Users/luke/Desktop/FOLDERS/computer science/A-Level CS Project/predicting-hdi-a-level-project/docs/main.tex" "main.pdf" "main" 1736616142.05766 0
+  "/Users/luke/Desktop/FOLDERS/computer science/A-Level CS Project/predicting-hdi-a-level-project/docs/main.tex" 1736616114.38755 593116 4369c47359731d703b4822ee6c1b79da ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1136768653 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -1083,8 +1083,8 @@
   "_minted-main/FF3254B903C56A960E5A8484901A1DB6DCFB19FD050096AD3D98D480D02DA0ED.pygtex" 1736527766.07716 202 0d989c7ab57d8881f074117551af76f3 ""
   "_minted-main/default.pygstyle" 1735234310 6428 74aba51736a5bc6590f8f7dd413c6f27 ""
   "data/minitests.csv" 1736553850.61819 22378 0a260ed414fad4a698cbc61f2e9f30cd ""
-  "data/successcriteria.csv" 1735910951.91934 4196 b323824e0863ac31f44e9992a6a62b14 ""
-  "data/testdata.csv" 1736288976.14925 5637 36c7367b7b3f77bb388eddfd7dac035f ""
+  "data/successcriteria.csv" 1736615852.30928 4327 be4d5dc02eaa10b8abc74459f9162087 ""
+  "data/testdata.csv" 1736615280.73581 5649 c2807af6b65d6365bda6774bb8139fd0 ""
   "images/darkModeInterface.png" 1735234310 860658 02ceaac1719d747b6cb130b5ab7326db ""
   "images/existingSol1Heatmap.png" 1735234310 19423 9089d14745fe096d833ae49cbe6027b4 ""
   "images/existingSol1Jupyter.png" 1735234310 177046 aba0ebb249f9d4a67dea61493a5410b4 ""
@@ -1224,14 +1224,14 @@
   "images/ss9.2.png" 1735234310 30697 c8eb58c630e7c81693e22ebd0ff732e7 ""
   "images/ss9.3.png" 1735234310 36067 a67e4bddf7bf8b5bedb1f4b265896130 ""
   "images/ss9.4.png" 1735234310 36942 4fc58d62d371ee1df1988c128afcfbd6 ""
-  "main.aux" 1736614859.85263 306803 83ed1d6243b2ec4f3c4de817d1278650 "pdflatex"
-  "main.bbl" 1736614832.81537 2333 70627543b55dac79f8eff65cc8aeb27f "bibtex main"
-  "main.lof" 1736614859.88855 20976 c4257d9c50725fb5b88a8817b709724c "pdflatex"
-  "main.lol" 1736614859.88859 22911 7d8e4d0d56e3d5aa4a7c16ea68645e7e "pdflatex"
-  "main.lot" 1736614859.8886 22826 a152310ed5fc6b257ddc1c719a9c7523 "pdflatex"
-  "main.out" 1736614859.8788 21446 4c8b3f52baf0fa889995433e42252729 "pdflatex"
-  "main.tex" 1736614803.50703 591451 d10003fc140f0a1ec77e787039cf13c6 ""
-  "main.toc" 1736614859.88852 16645 ce67c8393a72cae69223bf2e585bd908 "pdflatex"
+  "main.aux" 1736616141.10697 307508 536ad7c9941f9f3ba6ac08a20ac1eac1 "pdflatex"
+  "main.bbl" 1736616065.15308 2333 70627543b55dac79f8eff65cc8aeb27f "bibtex main"
+  "main.lof" 1736616141.12936 20961 e4fb6a153897880a8941fbfd48c57f56 "pdflatex"
+  "main.lol" 1736616141.12939 22911 39b589fa93ceb7cef30a96064b524281 "pdflatex"
+  "main.lot" 1736616141.12942 23052 040b50921baec7c1f37bd94dcaa361a3 "pdflatex"
+  "main.out" 1736616141.12007 21446 4c8b3f52baf0fa889995433e42252729 "pdflatex"
+  "main.tex" 1736616114.38755 593116 4369c47359731d703b4822ee6c1b79da ""
+  "main.toc" 1736616141.12931 16645 3f8bf6eecdf6c297aac1ff7c2d94d969 "pdflatex"
   (generated)
   "main.aux"
   "main.lof"

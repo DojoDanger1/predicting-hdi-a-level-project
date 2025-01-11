@@ -137,7 +137,7 @@
 \contentsline {table}{\numberline {5.32}{\ignorespaces Testing Table for Code Snippet \ref {cs:shiftCode}}}{255}{table.5.32}%
 \contentsline {table}{\numberline {5.33}{\ignorespaces Testing Table for Code Snippets \ref {cs:storeNewRegions}, \ref {cs:regionsTable2DList} \& \ref {cs:updateRegionsTable}}}{257}{table.5.33}%
 \contentsline {table}{\numberline {5.34}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdown}}}{259}{table.5.34}%
-\contentsline {table}{\numberline {5.35}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdown}}}{260}{table.5.35}%
+\contentsline {table}{\numberline {5.35}{\ignorespaces Testing Table for Code Snippet \ref {cs:interactiveDropdown}}}{260}{table.5.35}%
 \contentsline {table}{\numberline {5.36}{\ignorespaces Testing Table for Code Snippet \ref {cs:updateRegionsDropdownValue}}}{261}{table.5.36}%
 \contentsline {table}{\numberline {5.37}{\ignorespaces Testing Table for Code Snippet \ref {cs:submitEditsButton}}}{262}{table.5.37}%
 \contentsline {table}{\numberline {5.38}{\ignorespaces $T_{15}$ Testing Table (for Code Snippets \ref {cs:submitButtonFunctionality}, \ref {cs:saveIndex}, \ref {cs:uniqueRegionNames} \& \ref {cs:typeCheckCells})}}{266}{table.5.38}%
@@ -164,5 +164,7 @@
 \contentsline {table}{\numberline {5.59}{\ignorespaces Testing Table for Code Snippet \ref {cs:warningMarkdown}}}{307}{table.5.59}%
 \contentsline {table}{\numberline {5.60}{\ignorespaces Testing Table for Code Snippet \ref {cs:helpTab}}}{309}{table.5.60}%
 \contentsline {table}{\numberline {5.61}{\ignorespaces Testing Table for Code Snippet \ref {cs:allowImages}}}{310}{table.5.61}%
+\contentsline {table}{\numberline {5.62}{\ignorespaces Passed Testing Data for Milestone 5}}{311}{table.5.62}%
+\contentsline {table}{\numberline {5.63}{\ignorespaces Achieved Success Criteria for Milestone 5}}{312}{table.5.63}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -171,15 +171,15 @@
 \contentsline {subsubsection}{Other Interface Changes}{303}{subsubsection*.242}%
 \contentsline {subsubsection}{The Help Tab}{307}{subsubsection*.245}%
 \contentsline {subsection}{\numberline {5.2.8}Review}{310}{subsection.5.2.8}%
-\contentsline {chapter}{\numberline {6}Evaluation}{311}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Testing to Inform Evaluation}{311}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Testing for Function}{311}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Testing for Robustness}{311}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Testing for Usability}{311}{subsection.6.1.3}%
-\contentsline {section}{\numberline {6.2}Evaluation of the Coded Solution}{311}{section.6.2}%
-\contentsline {chapter}{\numberline {A}Final Code}{312}{appendix.A}%
-\contentsline {chapter}{Index}{313}{section*.249}%
-\contentsline {section}{List of Figures}{313}{section*.250}%
-\contentsline {section}{List of Code Snippets}{318}{section*.252}%
-\contentsline {section}{List of Tables}{323}{section*.254}%
-\contentsline {chapter}{Bibliography}{327}{section*.256}%
+\contentsline {chapter}{\numberline {6}Evaluation}{313}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Testing to Inform Evaluation}{313}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Testing for Function}{313}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Testing for Robustness}{313}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Testing for Usability}{313}{subsection.6.1.3}%
+\contentsline {section}{\numberline {6.2}Evaluation of the Coded Solution}{313}{section.6.2}%
+\contentsline {chapter}{\numberline {A}Final Code}{314}{appendix.A}%
+\contentsline {chapter}{Index}{315}{section*.249}%
+\contentsline {section}{List of Figures}{315}{section*.250}%
+\contentsline {section}{List of Code Snippets}{320}{section*.252}%
+\contentsline {section}{List of Tables}{325}{section*.254}%
+\contentsline {chapter}{Bibliography}{329}{section*.256}%
