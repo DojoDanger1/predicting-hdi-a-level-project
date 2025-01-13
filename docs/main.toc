@@ -148,38 +148,40 @@
 \contentsline {subsubsection}{Milestone 4 -- Authentication System}{206}{subsubsection*.179}%
 \contentsline {subsubsection}{Milestone 5 -- Final User Interface}{207}{subsubsection*.180}%
 \contentsline {subsection}{\numberline {4.4.3}Testing Data for Post-Development}{208}{subsection.4.4.3}%
-\contentsline {chapter}{\numberline {5}Developing the Coded Solution of the 2\relax \textsuperscript {nd} Prototype}{209}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Milestone 4 -- Authentication System}{209}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Success Criteria}{209}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Part 14{} -- Authentication Frontend}{210}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Part 15{} -- Sign Up Backend}{216}{subsection.5.1.3}%
-\contentsline {subsection}{\numberline {5.1.4}Part 16{} -- Log In Backend}{228}{subsection.5.1.4}%
-\contentsline {subsection}{\numberline {5.1.5}Review}{231}{subsection.5.1.5}%
-\contentsline {section}{\numberline {5.2}Milestone 5 -- Final User Interface}{232}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Success Criteria}{232}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Part 17{} -- Comparing a Region to Training Data}{233}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Part 18{} -- Analysis of how much Each Factor affects the Others}{242}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Part 19{} -- Finding Similar Regions}{249}{subsection.5.2.4}%
-\contentsline {subsection}{\numberline {5.2.5}Part 20{} -- Saving Regions}{251}{subsection.5.2.5}%
-\contentsline {subsection}{\numberline {5.2.6}Part 21{} -- Improved Suggestions}{274}{subsection.5.2.6}%
-\contentsline {subsection}{\numberline {5.2.7}Part 22{} -- Finishing Touches}{284}{subsection.5.2.7}%
-\contentsline {subsubsection}{Bug Fix -- Not Returning Sufficient Items}{284}{subsubsection*.225}%
-\contentsline {subsubsection}{Bug Fix -- New Account Doesn't Have Current Regions}{289}{subsubsection*.229}%
-\contentsline {subsubsection}{Bug Fix -- Switching Between Regions Doesn't Work with Comparing}{289}{subsubsection*.230}%
-\contentsline {subsubsection}{Info Popups}{291}{subsubsection*.233}%
-\contentsline {subsubsection}{Emojification}{297}{subsubsection*.235}%
-\contentsline {subsubsection}{Other Interface Changes}{303}{subsubsection*.242}%
-\contentsline {subsubsection}{The Help Tab}{307}{subsubsection*.245}%
-\contentsline {subsection}{\numberline {5.2.8}Review}{310}{subsection.5.2.8}%
-\contentsline {chapter}{\numberline {6}Evaluation}{313}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Testing to Inform Evaluation}{313}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Testing for Function}{313}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Testing for Robustness}{313}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Testing for Usability}{313}{subsection.6.1.3}%
-\contentsline {section}{\numberline {6.2}Evaluation of the Coded Solution}{313}{section.6.2}%
-\contentsline {chapter}{\numberline {A}Final Code}{314}{appendix.A}%
-\contentsline {chapter}{Index}{315}{section*.249}%
-\contentsline {section}{List of Figures}{315}{section*.250}%
-\contentsline {section}{List of Code Snippets}{320}{section*.252}%
-\contentsline {section}{List of Tables}{325}{section*.254}%
-\contentsline {chapter}{Bibliography}{329}{section*.256}%
+\contentsline {subsubsection}{Testing for Function}{208}{subsubsection*.181}%
+\contentsline {subsubsection}{Testing for Robustness}{210}{subsubsection*.182}%
+\contentsline {subsubsection}{Testing for Usability}{213}{subsubsection*.183}%
+\contentsline {chapter}{\numberline {5}Developing the Coded Solution of the 2\relax \textsuperscript {nd} Prototype}{215}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Milestone 4 -- Authentication System}{215}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Success Criteria}{215}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Part 14{} -- Authentication Frontend}{216}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Part 15{} -- Sign Up Backend}{222}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}Part 16{} -- Log In Backend}{234}{subsection.5.1.4}%
+\contentsline {subsection}{\numberline {5.1.5}Review}{237}{subsection.5.1.5}%
+\contentsline {section}{\numberline {5.2}Milestone 5 -- Final User Interface}{238}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Success Criteria}{238}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Part 17{} -- Comparing a Region to Training Data}{239}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Part 18{} -- Analysis of how much Each Factor affects the Others}{248}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Part 19{} -- Finding Similar Regions}{255}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Part 20{} -- Saving Regions}{257}{subsection.5.2.5}%
+\contentsline {subsection}{\numberline {5.2.6}Part 21{} -- Improved Suggestions}{280}{subsection.5.2.6}%
+\contentsline {subsection}{\numberline {5.2.7}Part 22{} -- Finishing Touches}{290}{subsection.5.2.7}%
+\contentsline {subsubsection}{Bug Fix -- Not Returning Sufficient Items}{290}{subsubsection*.228}%
+\contentsline {subsubsection}{Bug Fix -- New Account Doesn't Have Current Regions}{295}{subsubsection*.232}%
+\contentsline {subsubsection}{Bug Fix -- Switching Between Regions Doesn't Work with Comparing}{295}{subsubsection*.233}%
+\contentsline {subsubsection}{Info Popups}{297}{subsubsection*.236}%
+\contentsline {subsubsection}{Emojification}{303}{subsubsection*.238}%
+\contentsline {subsubsection}{Other Interface Changes}{309}{subsubsection*.245}%
+\contentsline {subsubsection}{The Help Tab}{313}{subsubsection*.248}%
+\contentsline {subsection}{\numberline {5.2.8}Review}{316}{subsection.5.2.8}%
+\contentsline {chapter}{\numberline {6}Evaluation}{319}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Testing to Inform Evaluation}{319}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Testing for Function \& Robustness}{319}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Testing for Usability}{319}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}Evaluation of the Coded Solution}{319}{section.6.2}%
+\contentsline {chapter}{\numberline {A}Final Code}{320}{appendix.A}%
+\contentsline {chapter}{Index}{321}{section*.252}%
+\contentsline {section}{List of Figures}{321}{section*.253}%
+\contentsline {section}{List of Code Snippets}{326}{section*.255}%
+\contentsline {section}{List of Tables}{331}{section*.257}%
+\contentsline {chapter}{Bibliography}{335}{section*.259}%

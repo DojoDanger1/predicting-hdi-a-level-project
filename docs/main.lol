@@ -99,100 +99,100 @@
 \contentsline {listing}{\numberline {3.96}{\ignorespaces Adding Functionality to the Suggestions Table}}{181}{listing.3.96}%
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {listing}{\numberline {5.1}{\ignorespaces Embedding the current UI into a Tab}}{210}{listing.5.1}%
-\contentsline {listing}{\numberline {5.2}{\ignorespaces Adding the Log In \& Sign Up Tabs}}{211}{listing.5.2}%
-\contentsline {listing}{\numberline {5.3}{\ignorespaces Adding the Content of the Sign Up Tab}}{212}{listing.5.3}%
-\contentsline {listing}{\numberline {5.4}{\ignorespaces Adding the Content of the Log In Tab}}{215}{listing.5.4}%
-\contentsline {listing}{\numberline {5.5}{\ignorespaces Connecting to the MongoDB}}{217}{listing.5.5}%
-\contentsline {listing}{\numberline {5.6}{\ignorespaces Fixing the SSL Certificate Error}}{218}{listing.5.6}%
-\contentsline {listing}{\numberline {5.7}{\ignorespaces Adding the \mintinline [breaklines, breakafter=_]{python}|def signUp| function}}{219}{listing.5.7}%
-\contentsline {listing}{\numberline {5.8}{\ignorespaces Ensuring no Empty Fields}}{219}{listing.5.8}%
-\contentsline {listing}{\numberline {5.9}{\ignorespaces Validating the Username}}{220}{listing.5.9}%
-\contentsline {listing}{\numberline {5.10}{\ignorespaces Validating the Password -- Double Entry Validation}}{222}{listing.5.10}%
-\contentsline {listing}{\numberline {5.11}{\ignorespaces Validating the Password -- Length}}{222}{listing.5.11}%
-\contentsline {listing}{\numberline {5.12}{\ignorespaces Validating the Password -- Digits}}{223}{listing.5.12}%
-\contentsline {listing}{\numberline {5.13}{\ignorespaces Validating the Password -- Special Characters}}{223}{listing.5.13}%
-\contentsline {listing}{\numberline {5.14}{\ignorespaces Salting \& Hashing the Password}}{226}{listing.5.14}%
-\contentsline {listing}{\numberline {5.15}{\ignorespaces Adding the User to MongoDB}}{227}{listing.5.15}%
-\contentsline {listing}{\numberline {5.16}{\ignorespaces Adding the \mintinline [breaklines, breakafter=_]{python}|def logIn| function}}{228}{listing.5.16}%
-\contentsline {listing}{\numberline {5.17}{\ignorespaces Ensuring No Empty Fields in Logging In}}{228}{listing.5.17}%
-\contentsline {listing}{\numberline {5.18}{\ignorespaces Validating the Username's Existance}}{229}{listing.5.18}%
-\contentsline {listing}{\numberline {5.19}{\ignorespaces Checking the Password is Correct}}{229}{listing.5.19}%
-\contentsline {listing}{\numberline {5.20}{\ignorespaces Granting Access to the Account}}{229}{listing.5.20}%
-\contentsline {listing}{\numberline {5.21}{\ignorespaces Adding the Compare Tab}}{233}{listing.5.21}%
-\contentsline {listing}{\numberline {5.22}{\ignorespaces Importing the Training Data}}{236}{listing.5.22}%
-\contentsline {listing}{\numberline {5.23}{\ignorespaces Adding the Regions to the Dropdown}}{236}{listing.5.23}%
-\contentsline {listing}{\numberline {5.24}{\ignorespaces Making \mintinline [breaklines, breakafter=_]{python}|allFactors| a \mintinline [breaklines, breakafter=_]{python}|global| variable}}{238}{listing.5.24}%
-\contentsline {listing}{\numberline {5.25}{\ignorespaces Adding the Functionality to the Compare Tab}}{238}{listing.5.25}%
-\contentsline {listing}{\numberline {5.26}{\ignorespaces Undoing the Concatenation}}{239}{listing.5.26}%
-\contentsline {listing}{\numberline {5.27}{\ignorespaces Getting Lists of Factors}}{240}{listing.5.27}%
-\contentsline {listing}{\numberline {5.28}{\ignorespaces Returning the 2D List of Factors}}{241}{listing.5.28}%
-\contentsline {listing}{\numberline {5.29}{\ignorespaces Reading the Training Data}}{242}{listing.5.29}%
-\contentsline {listing}{\numberline {5.30}{\ignorespaces Iterating over All the Factors Twice}}{243}{listing.5.30}%
-\contentsline {listing}{\numberline {5.31}{\ignorespaces Ensuring Complete Pairs}}{244}{listing.5.31}%
-\contentsline {listing}{\numberline {5.32}{\ignorespaces Calculating the PMCC}}{245}{listing.5.32}%
-\contentsline {listing}{\numberline {5.33}{\ignorespaces Generating \& Exporting the Figure}}{246}{listing.5.33}%
-\contentsline {listing}{\numberline {5.34}{\ignorespaces Improving the Quality of the Figure}}{247}{listing.5.34}%
-\contentsline {listing}{\numberline {5.35}{\ignorespaces Adding the Image to the Gradio Interface}}{248}{listing.5.35}%
-\contentsline {listing}{\numberline {5.36}{\ignorespaces Iterating over Different Possible HDIs}}{249}{listing.5.36}%
-\contentsline {listing}{\numberline {5.37}{\ignorespaces Choosing a Region to Display}}{250}{listing.5.37}%
-\contentsline {listing}{\numberline {5.38}{\ignorespaces Returning to the Textbox}}{250}{listing.5.38}%
-\contentsline {listing}{\numberline {5.39}{\ignorespaces Adding the Regions Tab}}{252}{listing.5.39}%
-\contentsline {listing}{\numberline {5.40}{\ignorespaces Changes to Accomodate the Transition}}{254}{listing.5.40}%
-\contentsline {listing}{\numberline {5.41}{\ignorespaces Storing New Regions when they Upload}}{256}{listing.5.41}%
-\contentsline {listing}{\numberline {5.42}{\ignorespaces Creating a 2D List for the Regions Table}}{256}{listing.5.42}%
-\contentsline {listing}{\numberline {5.43}{\ignorespaces Updating the Regions Table}}{257}{listing.5.43}%
-\contentsline {listing}{\numberline {5.44}{\ignorespaces Updating the Regions Dropdown}}{258}{listing.5.44}%
-\contentsline {listing}{\numberline {5.45}{\ignorespaces Ensuring the Dropdown is Interactive}}{259}{listing.5.45}%
-\contentsline {listing}{\numberline {5.46}{\ignorespaces Updating the Value of the Regions Dropdown}}{260}{listing.5.46}%
-\contentsline {listing}{\numberline {5.47}{\ignorespaces Adding a Button to Submit Edits to the Table}}{261}{listing.5.47}%
-\contentsline {listing}{\numberline {5.48}{\ignorespaces Adding the Submit Button Functionality}}{262}{listing.5.48}%
-\contentsline {listing}{\numberline {5.49}{\ignorespaces Saving the Index of the Current Region}}{263}{listing.5.49}%
-\contentsline {listing}{\numberline {5.50}{\ignorespaces Ensuring Unique Region Names}}{263}{listing.5.50}%
-\contentsline {listing}{\numberline {5.51}{\ignorespaces Type Checking Every Other Cell}}{264}{listing.5.51}%
-\contentsline {listing}{\numberline {5.52}{\ignorespaces Updating \mintinline [breaklines, breakafter=_]{python}|allUserRegions|}}{266}{listing.5.52}%
-\contentsline {listing}{\numberline {5.53}{\ignorespaces Updating the Name of the Selected Region}}{267}{listing.5.53}%
-\contentsline {listing}{\numberline {5.54}{\ignorespaces Updating the Current Region}}{268}{listing.5.54}%
-\contentsline {listing}{\numberline {5.55}{\ignorespaces Ensuring the User doesn't Upload a Duplicate Region Name}}{269}{listing.5.55}%
-\contentsline {listing}{\numberline {5.56}{\ignorespaces Adding a Global Variable for Logging In}}{270}{listing.5.56}%
-\contentsline {listing}{\numberline {5.57}{\ignorespaces Logging Into a Newly Created Account}}{271}{listing.5.57}%
-\contentsline {listing}{\numberline {5.58}{\ignorespaces Adding Regions to the Account}}{271}{listing.5.58}%
-\contentsline {listing}{\numberline {5.59}{\ignorespaces Reading Regions from the Account}}{272}{listing.5.59}%
-\contentsline {listing}{\numberline {5.60}{\ignorespaces Handling Empty Region Lists}}{272}{listing.5.60}%
-\contentsline {listing}{\numberline {5.61}{\ignorespaces Correctly Identifying when Table Rows have Changed}}{273}{listing.5.61}%
-\contentsline {listing}{\numberline {5.62}{\ignorespaces Adding a Slider for Number of New Buildings}}{274}{listing.5.62}%
-\contentsline {listing}{\numberline {5.63}{\ignorespaces Finding All Objects in Consideration}}{275}{listing.5.63}%
-\contentsline {listing}{\numberline {5.64}{\ignorespaces Iterating over each Factor}}{276}{listing.5.64}%
-\contentsline {listing}{\numberline {5.65}{\ignorespaces Calculating the Shortest Distances \& Optimal Position}}{277}{listing.5.65}%
-\contentsline {listing}{\numberline {5.66}{\ignorespaces Returning the Optimal Position}}{278}{listing.5.66}%
-\contentsline {listing}{\numberline {5.67}{\ignorespaces New \mintinline [breaklines, breakafter=_]{python}|def makeSuggestions| function}}{279}{listing.5.67}%
-\contentsline {listing}{\numberline {5.68}{\ignorespaces Finding more than 1 Optimal Position}}{280}{listing.5.68}%
-\contentsline {listing}{\numberline {5.69}{\ignorespaces Returning a Different Suggestion}}{281}{listing.5.69}%
-\contentsline {listing}{\numberline {5.70}{\ignorespaces Updating the \mintinline [breaklines, breakafter=_]{python}|must_include| functionality in \mintinline [breaklines, breakafter=_]{python}|def averageDistance|}}{281}{listing.5.70}%
-\contentsline {listing}{\numberline {5.71}{\ignorespaces New Return Format for Suggestions Table}}{282}{listing.5.71}%
-\contentsline {listing}{\numberline {5.72}{\ignorespaces Placing Multiple Pins on the Map}}{283}{listing.5.72}%
-\contentsline {listing}{\numberline {5.73}{\ignorespaces Fixing the Error for \mintinline [breaklines, breakafter=_]{python}|def makeSuggestions|}}{285}{listing.5.73}%
-\contentsline {listing}{\numberline {5.74}{\ignorespaces Fixing the Error for \mintinline [breaklines, breakafter=_]{python}|def signUp|}}{287}{listing.5.74}%
-\contentsline {listing}{\numberline {5.75}{\ignorespaces Fixing the Error for \mintinline [breaklines, breakafter=_]{python}|def logIn|}}{288}{listing.5.75}%
-\contentsline {listing}{\numberline {5.76}{\ignorespaces Adding Current Regions to the Account}}{289}{listing.5.76}%
-\contentsline {listing}{\numberline {5.77}{\ignorespaces Updating \mintinline [breaklines, breakafter=_]{python}|currentHDI|}}{290}{listing.5.77}%
-\contentsline {listing}{\numberline {5.78}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def processPrediction|}}{291}{listing.5.78}%
-\contentsline {listing}{\numberline {5.79}{\ignorespaces Ensuring \mintinline [breaklines, breakafter=_]{python}|def processPrediction| works with Logging In}}{292}{listing.5.79}%
-\contentsline {listing}{\numberline {5.80}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def uploadGeoJSON|}}{293}{listing.5.80}%
-\contentsline {listing}{\numberline {5.81}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def makeSuggestions|}}{293}{listing.5.81}%
-\contentsline {listing}{\numberline {5.82}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def compareRegions|}}{293}{listing.5.82}%
-\contentsline {listing}{\numberline {5.83}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def updateAllUserRegions|}}{294}{listing.5.83}%
-\contentsline {listing}{\numberline {5.84}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def signUp|}}{295}{listing.5.84}%
-\contentsline {listing}{\numberline {5.85}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def logIn|}}{296}{listing.5.85}%
-\contentsline {listing}{\numberline {5.86}{\ignorespaces Emojis in the Tabs}}{297}{listing.5.86}%
-\contentsline {listing}{\numberline {5.87}{\ignorespaces Emojis in the Predict Tab}}{298}{listing.5.87}%
-\contentsline {listing}{\numberline {5.88}{\ignorespaces Emojis in the Compare Tab}}{299}{listing.5.88}%
-\contentsline {listing}{\numberline {5.89}{\ignorespaces Emojis in the Regions Tab}}{300}{listing.5.89}%
-\contentsline {listing}{\numberline {5.90}{\ignorespaces Emojis in the Log In Tab}}{301}{listing.5.90}%
-\contentsline {listing}{\numberline {5.91}{\ignorespaces Emojis in the Sign Up Tab}}{302}{listing.5.91}%
-\contentsline {listing}{\numberline {5.92}{\ignorespaces Restructuring the Log In \& Sign Up Tabs}}{304}{listing.5.92}%
-\contentsline {listing}{\numberline {5.93}{\ignorespaces Warning Messages}}{306}{listing.5.93}%
-\contentsline {listing}{\numberline {5.94}{\ignorespaces Adding the Help Tab}}{308}{listing.5.94}%
-\contentsline {listing}{\numberline {5.95}{\ignorespaces Allowing for Images in Markdown}}{309}{listing.5.95}%
+\contentsline {listing}{\numberline {5.1}{\ignorespaces Embedding the current UI into a Tab}}{216}{listing.5.1}%
+\contentsline {listing}{\numberline {5.2}{\ignorespaces Adding the Log In \& Sign Up Tabs}}{217}{listing.5.2}%
+\contentsline {listing}{\numberline {5.3}{\ignorespaces Adding the Content of the Sign Up Tab}}{218}{listing.5.3}%
+\contentsline {listing}{\numberline {5.4}{\ignorespaces Adding the Content of the Log In Tab}}{221}{listing.5.4}%
+\contentsline {listing}{\numberline {5.5}{\ignorespaces Connecting to the MongoDB}}{223}{listing.5.5}%
+\contentsline {listing}{\numberline {5.6}{\ignorespaces Fixing the SSL Certificate Error}}{224}{listing.5.6}%
+\contentsline {listing}{\numberline {5.7}{\ignorespaces Adding the \mintinline [breaklines, breakafter=_]{python}|def signUp| function}}{225}{listing.5.7}%
+\contentsline {listing}{\numberline {5.8}{\ignorespaces Ensuring no Empty Fields}}{225}{listing.5.8}%
+\contentsline {listing}{\numberline {5.9}{\ignorespaces Validating the Username}}{226}{listing.5.9}%
+\contentsline {listing}{\numberline {5.10}{\ignorespaces Validating the Password -- Double Entry Validation}}{228}{listing.5.10}%
+\contentsline {listing}{\numberline {5.11}{\ignorespaces Validating the Password -- Length}}{228}{listing.5.11}%
+\contentsline {listing}{\numberline {5.12}{\ignorespaces Validating the Password -- Digits}}{229}{listing.5.12}%
+\contentsline {listing}{\numberline {5.13}{\ignorespaces Validating the Password -- Special Characters}}{229}{listing.5.13}%
+\contentsline {listing}{\numberline {5.14}{\ignorespaces Salting \& Hashing the Password}}{232}{listing.5.14}%
+\contentsline {listing}{\numberline {5.15}{\ignorespaces Adding the User to MongoDB}}{233}{listing.5.15}%
+\contentsline {listing}{\numberline {5.16}{\ignorespaces Adding the \mintinline [breaklines, breakafter=_]{python}|def logIn| function}}{234}{listing.5.16}%
+\contentsline {listing}{\numberline {5.17}{\ignorespaces Ensuring No Empty Fields in Logging In}}{234}{listing.5.17}%
+\contentsline {listing}{\numberline {5.18}{\ignorespaces Validating the Username's Existance}}{235}{listing.5.18}%
+\contentsline {listing}{\numberline {5.19}{\ignorespaces Checking the Password is Correct}}{235}{listing.5.19}%
+\contentsline {listing}{\numberline {5.20}{\ignorespaces Granting Access to the Account}}{235}{listing.5.20}%
+\contentsline {listing}{\numberline {5.21}{\ignorespaces Adding the Compare Tab}}{239}{listing.5.21}%
+\contentsline {listing}{\numberline {5.22}{\ignorespaces Importing the Training Data}}{242}{listing.5.22}%
+\contentsline {listing}{\numberline {5.23}{\ignorespaces Adding the Regions to the Dropdown}}{242}{listing.5.23}%
+\contentsline {listing}{\numberline {5.24}{\ignorespaces Making \mintinline [breaklines, breakafter=_]{python}|allFactors| a \mintinline [breaklines, breakafter=_]{python}|global| variable}}{244}{listing.5.24}%
+\contentsline {listing}{\numberline {5.25}{\ignorespaces Adding the Functionality to the Compare Tab}}{244}{listing.5.25}%
+\contentsline {listing}{\numberline {5.26}{\ignorespaces Undoing the Concatenation}}{245}{listing.5.26}%
+\contentsline {listing}{\numberline {5.27}{\ignorespaces Getting Lists of Factors}}{246}{listing.5.27}%
+\contentsline {listing}{\numberline {5.28}{\ignorespaces Returning the 2D List of Factors}}{247}{listing.5.28}%
+\contentsline {listing}{\numberline {5.29}{\ignorespaces Reading the Training Data}}{248}{listing.5.29}%
+\contentsline {listing}{\numberline {5.30}{\ignorespaces Iterating over All the Factors Twice}}{249}{listing.5.30}%
+\contentsline {listing}{\numberline {5.31}{\ignorespaces Ensuring Complete Pairs}}{250}{listing.5.31}%
+\contentsline {listing}{\numberline {5.32}{\ignorespaces Calculating the PMCC}}{251}{listing.5.32}%
+\contentsline {listing}{\numberline {5.33}{\ignorespaces Generating \& Exporting the Figure}}{252}{listing.5.33}%
+\contentsline {listing}{\numberline {5.34}{\ignorespaces Improving the Quality of the Figure}}{253}{listing.5.34}%
+\contentsline {listing}{\numberline {5.35}{\ignorespaces Adding the Image to the Gradio Interface}}{254}{listing.5.35}%
+\contentsline {listing}{\numberline {5.36}{\ignorespaces Iterating over Different Possible HDIs}}{255}{listing.5.36}%
+\contentsline {listing}{\numberline {5.37}{\ignorespaces Choosing a Region to Display}}{256}{listing.5.37}%
+\contentsline {listing}{\numberline {5.38}{\ignorespaces Returning to the Textbox}}{256}{listing.5.38}%
+\contentsline {listing}{\numberline {5.39}{\ignorespaces Adding the Regions Tab}}{258}{listing.5.39}%
+\contentsline {listing}{\numberline {5.40}{\ignorespaces Changes to Accomodate the Transition}}{260}{listing.5.40}%
+\contentsline {listing}{\numberline {5.41}{\ignorespaces Storing New Regions when they Upload}}{262}{listing.5.41}%
+\contentsline {listing}{\numberline {5.42}{\ignorespaces Creating a 2D List for the Regions Table}}{262}{listing.5.42}%
+\contentsline {listing}{\numberline {5.43}{\ignorespaces Updating the Regions Table}}{263}{listing.5.43}%
+\contentsline {listing}{\numberline {5.44}{\ignorespaces Updating the Regions Dropdown}}{264}{listing.5.44}%
+\contentsline {listing}{\numberline {5.45}{\ignorespaces Ensuring the Dropdown is Interactive}}{265}{listing.5.45}%
+\contentsline {listing}{\numberline {5.46}{\ignorespaces Updating the Value of the Regions Dropdown}}{266}{listing.5.46}%
+\contentsline {listing}{\numberline {5.47}{\ignorespaces Adding a Button to Submit Edits to the Table}}{267}{listing.5.47}%
+\contentsline {listing}{\numberline {5.48}{\ignorespaces Adding the Submit Button Functionality}}{268}{listing.5.48}%
+\contentsline {listing}{\numberline {5.49}{\ignorespaces Saving the Index of the Current Region}}{269}{listing.5.49}%
+\contentsline {listing}{\numberline {5.50}{\ignorespaces Ensuring Unique Region Names}}{269}{listing.5.50}%
+\contentsline {listing}{\numberline {5.51}{\ignorespaces Type Checking Every Other Cell}}{270}{listing.5.51}%
+\contentsline {listing}{\numberline {5.52}{\ignorespaces Updating \mintinline [breaklines, breakafter=_]{python}|allUserRegions|}}{272}{listing.5.52}%
+\contentsline {listing}{\numberline {5.53}{\ignorespaces Updating the Name of the Selected Region}}{273}{listing.5.53}%
+\contentsline {listing}{\numberline {5.54}{\ignorespaces Updating the Current Region}}{274}{listing.5.54}%
+\contentsline {listing}{\numberline {5.55}{\ignorespaces Ensuring the User doesn't Upload a Duplicate Region Name}}{275}{listing.5.55}%
+\contentsline {listing}{\numberline {5.56}{\ignorespaces Adding a Global Variable for Logging In}}{276}{listing.5.56}%
+\contentsline {listing}{\numberline {5.57}{\ignorespaces Logging Into a Newly Created Account}}{277}{listing.5.57}%
+\contentsline {listing}{\numberline {5.58}{\ignorespaces Adding Regions to the Account}}{277}{listing.5.58}%
+\contentsline {listing}{\numberline {5.59}{\ignorespaces Reading Regions from the Account}}{278}{listing.5.59}%
+\contentsline {listing}{\numberline {5.60}{\ignorespaces Handling Empty Region Lists}}{278}{listing.5.60}%
+\contentsline {listing}{\numberline {5.61}{\ignorespaces Correctly Identifying when Table Rows have Changed}}{279}{listing.5.61}%
+\contentsline {listing}{\numberline {5.62}{\ignorespaces Adding a Slider for Number of New Buildings}}{280}{listing.5.62}%
+\contentsline {listing}{\numberline {5.63}{\ignorespaces Finding All Objects in Consideration}}{281}{listing.5.63}%
+\contentsline {listing}{\numberline {5.64}{\ignorespaces Iterating over each Factor}}{282}{listing.5.64}%
+\contentsline {listing}{\numberline {5.65}{\ignorespaces Calculating the Shortest Distances \& Optimal Position}}{283}{listing.5.65}%
+\contentsline {listing}{\numberline {5.66}{\ignorespaces Returning the Optimal Position}}{284}{listing.5.66}%
+\contentsline {listing}{\numberline {5.67}{\ignorespaces New \mintinline [breaklines, breakafter=_]{python}|def makeSuggestions| function}}{285}{listing.5.67}%
+\contentsline {listing}{\numberline {5.68}{\ignorespaces Finding more than 1 Optimal Position}}{286}{listing.5.68}%
+\contentsline {listing}{\numberline {5.69}{\ignorespaces Returning a Different Suggestion}}{287}{listing.5.69}%
+\contentsline {listing}{\numberline {5.70}{\ignorespaces Updating the \mintinline [breaklines, breakafter=_]{python}|must_include| functionality in \mintinline [breaklines, breakafter=_]{python}|def averageDistance|}}{287}{listing.5.70}%
+\contentsline {listing}{\numberline {5.71}{\ignorespaces New Return Format for Suggestions Table}}{288}{listing.5.71}%
+\contentsline {listing}{\numberline {5.72}{\ignorespaces Placing Multiple Pins on the Map}}{289}{listing.5.72}%
+\contentsline {listing}{\numberline {5.73}{\ignorespaces Fixing the Error for \mintinline [breaklines, breakafter=_]{python}|def makeSuggestions|}}{291}{listing.5.73}%
+\contentsline {listing}{\numberline {5.74}{\ignorespaces Fixing the Error for \mintinline [breaklines, breakafter=_]{python}|def signUp|}}{293}{listing.5.74}%
+\contentsline {listing}{\numberline {5.75}{\ignorespaces Fixing the Error for \mintinline [breaklines, breakafter=_]{python}|def logIn|}}{294}{listing.5.75}%
+\contentsline {listing}{\numberline {5.76}{\ignorespaces Adding Current Regions to the Account}}{295}{listing.5.76}%
+\contentsline {listing}{\numberline {5.77}{\ignorespaces Updating \mintinline [breaklines, breakafter=_]{python}|currentHDI|}}{296}{listing.5.77}%
+\contentsline {listing}{\numberline {5.78}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def processPrediction|}}{297}{listing.5.78}%
+\contentsline {listing}{\numberline {5.79}{\ignorespaces Ensuring \mintinline [breaklines, breakafter=_]{python}|def processPrediction| works with Logging In}}{298}{listing.5.79}%
+\contentsline {listing}{\numberline {5.80}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def uploadGeoJSON|}}{299}{listing.5.80}%
+\contentsline {listing}{\numberline {5.81}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def makeSuggestions|}}{299}{listing.5.81}%
+\contentsline {listing}{\numberline {5.82}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def compareRegions|}}{299}{listing.5.82}%
+\contentsline {listing}{\numberline {5.83}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def updateAllUserRegions|}}{300}{listing.5.83}%
+\contentsline {listing}{\numberline {5.84}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def signUp|}}{301}{listing.5.84}%
+\contentsline {listing}{\numberline {5.85}{\ignorespaces Info Popups in \mintinline [breaklines, breakafter=_]{python}|def logIn|}}{302}{listing.5.85}%
+\contentsline {listing}{\numberline {5.86}{\ignorespaces Emojis in the Tabs}}{303}{listing.5.86}%
+\contentsline {listing}{\numberline {5.87}{\ignorespaces Emojis in the Predict Tab}}{304}{listing.5.87}%
+\contentsline {listing}{\numberline {5.88}{\ignorespaces Emojis in the Compare Tab}}{305}{listing.5.88}%
+\contentsline {listing}{\numberline {5.89}{\ignorespaces Emojis in the Regions Tab}}{306}{listing.5.89}%
+\contentsline {listing}{\numberline {5.90}{\ignorespaces Emojis in the Log In Tab}}{307}{listing.5.90}%
+\contentsline {listing}{\numberline {5.91}{\ignorespaces Emojis in the Sign Up Tab}}{308}{listing.5.91}%
+\contentsline {listing}{\numberline {5.92}{\ignorespaces Restructuring the Log In \& Sign Up Tabs}}{310}{listing.5.92}%
+\contentsline {listing}{\numberline {5.93}{\ignorespaces Warning Messages}}{312}{listing.5.93}%
+\contentsline {listing}{\numberline {5.94}{\ignorespaces Adding the Help Tab}}{314}{listing.5.94}%
+\contentsline {listing}{\numberline {5.95}{\ignorespaces Allowing for Images in Markdown}}{315}{listing.5.95}%
 \addvspace {10pt}
 \addvspace {10pt}
