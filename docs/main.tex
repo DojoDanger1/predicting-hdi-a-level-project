@@ -509,7 +509,7 @@ I may ask further questions to my stakeholders as required, when I am developing
 \end{center}
 All of the above (except for the Multilayer Perceptron) will be implemented and accessed using a GUI.
 
-\section{Limitations}
+\section{Limitations}\label{sec:limitations}
 \begin{itemize}
     \item \textbf{Only 1 Time Period} -- As I am using OpenStreetMaps, I will only be able to access the data as it is now, so I won't be able to train the model on previous year's HDI. Older versions of OpenStreetMaps are only more inaccurate, so the training data will just be dirty and the final product will have a smaller chance of working.
     \item \textbf{Only Geographical Factors} -- Factors such as life expectancy will not be accounted for, as I would like all the data to come from the same place (OpenStreetMaps), such that the user can circle an area on a map and the HDI will be estimated from that.
@@ -7438,7 +7438,7 @@ In testing for robustness, I will be checking that the program cannot break or c
     no head,
     column count=5,
     column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
-    filter ifthen={\equal{\testID}{$RT_{1}$}\OR\equal{\testID}{$RT_{2}$}\OR\equal{\testID}{$RT_{3}$}\OR\equal{\testID}{$RT_{4}$}\OR\equal{\testID}{$RT_{5}$}\OR\equal{\testID}{$RT_{6}$}\OR\equal{\testID}{$RT_{7}$}\OR\equal{\testID}{$RT_{8}$}\OR\equal{\testID}{$RT_{9}$}\OR\equal{\testID}{\textbf{No.}}},
+    filter ifthen={\equal{\testID}{$RT_{1}$}\OR\equal{\testID}{$RT_{2}$}\OR\equal{\testID}{$RT_{3}$}\OR\equal{\testID}{$RT_{4}$}\OR\equal{\testID}{$RT_{5}$}\OR\equal{\testID}{$RT_{6}$}\OR\equal{\testID}{$RT_{7}$}\OR\equal{\testID}{$RT_{8}$}\OR\equal{\testID}{\textbf{No.}}},
     before reading={
         \begin{longtable}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H}
         \hline
@@ -11095,12 +11095,81 @@ I would now ask my stakeholders for feedback, as I did at the end of the \nth{1}
 \chapter{Evaluation}
 \section{Testing to Inform Evaluation}
 \subsection{Testing for Function \& Robustness}
-\dots{}
+To carry out these tests, I recorded a short video, which can be found \href{https://www.youtube.com/watch?v=2h3wpsdf_6g}{here}. The timestamps at which I do each test are in the table below. I mention some in the video, but did not for all of them. 
+
+\subsubsection{Testing for Function}
+Again, each test for function matches with a success criterion, and will be used to determine if that success criterion has been met. Success criteria $S_{1}$ to $S_{7}$ are to do with the backend, and so are not tested here (but instead, during development). The fact that the features presented here work is enough evidence to suggest that the nescessary backend requirements are met (for example, calculating the distance between 2 points).
+
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$FT_{1}$}\OR\equal{\testID}{$FT_{2}$}\OR\equal{\testID}{$FT_{3}$}\OR\equal{\testID}{$FT_{4}$}\OR\equal{\testID}{$FT_{5}$}\OR\equal{\testID}{$FT_{6}$}\OR\equal{\testID}{$FT_{7}$}\OR\equal{\testID}{$FT_{8}$}\OR\equal{\testID}{$FT_{9}$}\OR\equal{\testID}{$FT_{10}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{5cm} H|m{6cm}|m{2cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing for Function to Inform Evaluation}
+        \end{longtable}
+    }
+}
+\end{center}
+
+All of the tests $FT_{1}$ to $FT_{10}$ passed, except for $FT_{2}$ and $FT_{3}$, which I decided to only give a partial pass. While the features do function correctly, the quality of the predictions and suggestions is not as good as I initially had hoped. This is most likely due to the limitations, outlined in Section \ref{sec:limitations}.
+
+\subsubsection{Testing for Robustness}
+
+\begin{center}
+\csvloop{
+    file=data/testdata.csv,
+    no head,
+    column count=5,
+    column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
+    filter ifthen={\equal{\testID}{$RT_{1}$}\OR\equal{\testID}{$RT_{2}$}\OR\equal{\testID}{$RT_{3}$}\OR\equal{\testID}{$RT_{4}$}\OR\equal{\testID}{$RT_{5}$}\OR\equal{\testID}{$RT_{6}$}\OR\equal{\testID}{$RT_{7}$}\OR\equal{\testID}{$RT_{8}$}\OR\equal{\testID}{\textbf{No.}}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{2.5cm}|m{4.5cm}|m{4.5cm}|m{1.5cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Testing for Robustness to Inform Evaluation}
+        \end{longtable}
+    }
+}
+\end{center}
+
+All of the tests $RT_{1}$ to $RT_{8}$ passed, so I believe that this app is robust.
 
 \subsection{Testing for Usability}\label{sec:testingUsability}
 \dots{}
 
-\section{Evaluation of the Coded Solution}
+\section{Success Criteria}
+\subsection{Cross Referencing with Test Data}
+\dots{}
+
+\subsection{Addressing Partially Met Success Criteria in Further Development}
+\dots{}
+
+\section{Usability Features}
+\subsection{Effective Usability Features}
+\dots{}
+
+\subsection{Addressing Poor Usability Features in Further Development}
+\dots{}
+
+\section{Maintenance Issues}
+\dots{}
+
+\section{Limitations of the Solution}
+\dots{}
+
+\section{Conclusion}
 \dots{}
 
 \appendix

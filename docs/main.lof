@@ -1,178 +1,178 @@
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Jupyter Notebook Format (Not Suitable)}}{9}{figure.caption.10}%
-\contentsline {figure}{\numberline {1.2}{\ignorespaces HDI Scatter Plot By Country}}{9}{figure.caption.11}%
-\contentsline {figure}{\numberline {1.3}{\ignorespaces HDI Factor Heatmap}}{10}{figure.caption.12}%
-\contentsline {figure}{\numberline {1.4}{\ignorespaces HDI Factor Pie Chart Heatmap}}{11}{figure.caption.14}%
-\contentsline {figure}{\numberline {1.5}{\ignorespaces Social, Economic \& Environmental Factors Across Years (Not Suitable)}}{11}{figure.caption.15}%
-\contentsline {figure}{\numberline {1.6}{\ignorespaces Random Forest Classification (Not Suitable)}}{12}{figure.caption.16}%
-\contentsline {figure}{\numberline {1.7}{\ignorespaces HDI Ranking Chart}}{12}{figure.caption.18}%
-\contentsline {figure}{\numberline {1.8}{\ignorespaces Hovering Over HDI Ranking Chart}}{13}{figure.caption.19}%
-\contentsline {figure}{\numberline {1.9}{\ignorespaces HDI Over Time Waterfall Chart (Not Suitable)}}{13}{figure.caption.20}%
-\contentsline {figure}{\numberline {1.10}{\ignorespaces Score for each end-feature}}{14}{figure.caption.23}%
-\contentsline {figure}{\numberline {1.11}{\ignorespaces Score for each density factor}}{16}{figure.caption.26}%
-\contentsline {figure}{\numberline {1.12}{\ignorespaces Score for each distance factor}}{17}{figure.caption.28}%
-\contentsline {figure}{\numberline {1.13}{\ignorespaces Map of all shelters from OpenStreetMaps}}{18}{figure.caption.29}%
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Jupyter Notebook Format (Not Suitable)}}{10}{figure.caption.10}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces HDI Scatter Plot By Country}}{10}{figure.caption.11}%
+\contentsline {figure}{\numberline {1.3}{\ignorespaces HDI Factor Heatmap}}{11}{figure.caption.12}%
+\contentsline {figure}{\numberline {1.4}{\ignorespaces HDI Factor Pie Chart Heatmap}}{12}{figure.caption.14}%
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Social, Economic \& Environmental Factors Across Years (Not Suitable)}}{12}{figure.caption.15}%
+\contentsline {figure}{\numberline {1.6}{\ignorespaces Random Forest Classification (Not Suitable)}}{13}{figure.caption.16}%
+\contentsline {figure}{\numberline {1.7}{\ignorespaces HDI Ranking Chart}}{13}{figure.caption.18}%
+\contentsline {figure}{\numberline {1.8}{\ignorespaces Hovering Over HDI Ranking Chart}}{14}{figure.caption.19}%
+\contentsline {figure}{\numberline {1.9}{\ignorespaces HDI Over Time Waterfall Chart (Not Suitable)}}{14}{figure.caption.20}%
+\contentsline {figure}{\numberline {1.10}{\ignorespaces Score for each end-feature}}{15}{figure.caption.23}%
+\contentsline {figure}{\numberline {1.11}{\ignorespaces Score for each density factor}}{17}{figure.caption.26}%
+\contentsline {figure}{\numberline {1.12}{\ignorespaces Score for each distance factor}}{18}{figure.caption.28}%
+\contentsline {figure}{\numberline {1.13}{\ignorespaces Map of all shelters from OpenStreetMaps}}{19}{figure.caption.29}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Structure Diagram}}{22}{figure.caption.30}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Abstracted Model of the Earth}}{24}{figure.caption.32}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces $P_1$ and $P_2$}}{25}{figure.caption.33}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Line segment $AB$}}{25}{figure.caption.34}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Line segment $P_{1}P_{2}$}}{26}{figure.caption.35}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Finding $b$}}{27}{figure.caption.36}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Angle $\theta $ between $P_1$ and $P_2$}}{27}{figure.caption.37}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Arc between $P_1$ and $P_2$}}{28}{figure.caption.38}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces $A\left (x,y\right )$ Flowchart}}{30}{figure.caption.40}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Cutting into Triangles}}{31}{figure.caption.43}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Triangle Edges Extended}}{32}{figure.caption.44}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Area of a Spherical Lune}}{32}{figure.caption.45}%
-\contentsline {figure}{\numberline {2.13}{\ignorespaces Considering Vectors}}{34}{figure.caption.47}%
-\contentsline {figure}{\numberline {2.14}{\ignorespaces Projecting the Other Points onto the $xy$-plane}}{35}{figure.caption.48}%
-\contentsline {figure}{\numberline {2.15}{\ignorespaces $D\left (x\right )$ Flowchart}}{37}{figure.caption.50}%
-\contentsline {figure}{\numberline {2.16}{\ignorespaces Overall Data Collection \& Processing Algorithm Flowchart}}{39}{figure.caption.51}%
-\contentsline {figure}{\numberline {2.17}{\ignorespaces Neural Network Structure}}{43}{figure.caption.56}%
-\contentsline {figure}{\numberline {2.18}{\ignorespaces Neural Network Weights}}{44}{figure.caption.58}%
-\contentsline {figure}{\numberline {2.19}{\ignorespaces Calculating $a^{\left (1\right )}_1$ Example}}{45}{figure.caption.60}%
-\contentsline {figure}{\numberline {2.20}{\ignorespaces Graph of $y=\sigma \left (x\right )$}}{46}{figure.caption.62}%
-\contentsline {figure}{\numberline {2.21}{\ignorespaces Graph of $y=\sigma \left (x+2\right )$}}{47}{figure.caption.64}%
-\contentsline {figure}{\numberline {2.22}{\ignorespaces Calculating an entire layer of neurons}}{48}{figure.caption.66}%
-\contentsline {figure}{\numberline {2.23}{\ignorespaces Feedforward Algorithm Flowchart}}{50}{figure.caption.68}%
-\contentsline {figure}{\numberline {2.24}{\ignorespaces Gradient Descent Example}}{51}{figure.caption.70}%
-\contentsline {figure}{\numberline {2.25}{\ignorespaces $z^{\left (l-1\right )}_i$ Affects all neurons in layer $l$, which all affect $C$}}{54}{figure.caption.74}%
-\contentsline {figure}{\numberline {2.26}{\ignorespaces Backpropogation Algorithm Flowchart}}{57}{figure.caption.77}%
-\contentsline {figure}{\numberline {2.27}{\ignorespaces Shuffling into Mini Batches}}{58}{figure.caption.78}%
-\contentsline {figure}{\numberline {2.28}{\ignorespaces Full Training Algorithm Flowchart}}{59}{figure.caption.79}%
-\contentsline {figure}{\numberline {2.29}{\ignorespaces Multilayer Perceptron Class Diagram}}{60}{figure.caption.80}%
-\contentsline {figure}{\numberline {2.30}{\ignorespaces Technical Interface Sketch}}{61}{figure.caption.81}%
-\contentsline {figure}{\numberline {2.31}{\ignorespaces Interface Style Examples}}{63}{figure.caption.82}%
-\contentsline {figure}{\numberline {2.32}{\ignorespaces Finding an Optimal Place for New Building Flowchart}}{66}{figure.caption.86}%
-\contentsline {figure}{\numberline {2.33}{\ignorespaces Overall User Predicting HDI Algorithm Flowchart}}{68}{figure.caption.87}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Structure Diagram}}{23}{figure.caption.30}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Abstracted Model of the Earth}}{25}{figure.caption.32}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces $P_1$ and $P_2$}}{26}{figure.caption.33}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Line segment $AB$}}{26}{figure.caption.34}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Line segment $P_{1}P_{2}$}}{27}{figure.caption.35}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Finding $b$}}{28}{figure.caption.36}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Angle $\theta $ between $P_1$ and $P_2$}}{28}{figure.caption.37}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Arc between $P_1$ and $P_2$}}{29}{figure.caption.38}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces $A\left (x,y\right )$ Flowchart}}{31}{figure.caption.40}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Cutting into Triangles}}{32}{figure.caption.43}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Triangle Edges Extended}}{33}{figure.caption.44}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Area of a Spherical Lune}}{33}{figure.caption.45}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Considering Vectors}}{35}{figure.caption.47}%
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Projecting the Other Points onto the $xy$-plane}}{36}{figure.caption.48}%
+\contentsline {figure}{\numberline {2.15}{\ignorespaces $D\left (x\right )$ Flowchart}}{38}{figure.caption.50}%
+\contentsline {figure}{\numberline {2.16}{\ignorespaces Overall Data Collection \& Processing Algorithm Flowchart}}{40}{figure.caption.51}%
+\contentsline {figure}{\numberline {2.17}{\ignorespaces Neural Network Structure}}{44}{figure.caption.56}%
+\contentsline {figure}{\numberline {2.18}{\ignorespaces Neural Network Weights}}{45}{figure.caption.58}%
+\contentsline {figure}{\numberline {2.19}{\ignorespaces Calculating $a^{\left (1\right )}_1$ Example}}{46}{figure.caption.60}%
+\contentsline {figure}{\numberline {2.20}{\ignorespaces Graph of $y=\sigma \left (x\right )$}}{47}{figure.caption.62}%
+\contentsline {figure}{\numberline {2.21}{\ignorespaces Graph of $y=\sigma \left (x+2\right )$}}{48}{figure.caption.64}%
+\contentsline {figure}{\numberline {2.22}{\ignorespaces Calculating an entire layer of neurons}}{49}{figure.caption.66}%
+\contentsline {figure}{\numberline {2.23}{\ignorespaces Feedforward Algorithm Flowchart}}{51}{figure.caption.68}%
+\contentsline {figure}{\numberline {2.24}{\ignorespaces Gradient Descent Example}}{52}{figure.caption.70}%
+\contentsline {figure}{\numberline {2.25}{\ignorespaces $z^{\left (l-1\right )}_i$ Affects all neurons in layer $l$, which all affect $C$}}{55}{figure.caption.74}%
+\contentsline {figure}{\numberline {2.26}{\ignorespaces Backpropogation Algorithm Flowchart}}{58}{figure.caption.77}%
+\contentsline {figure}{\numberline {2.27}{\ignorespaces Shuffling into Mini Batches}}{59}{figure.caption.78}%
+\contentsline {figure}{\numberline {2.28}{\ignorespaces Full Training Algorithm Flowchart}}{60}{figure.caption.79}%
+\contentsline {figure}{\numberline {2.29}{\ignorespaces Multilayer Perceptron Class Diagram}}{61}{figure.caption.80}%
+\contentsline {figure}{\numberline {2.30}{\ignorespaces Technical Interface Sketch}}{62}{figure.caption.81}%
+\contentsline {figure}{\numberline {2.31}{\ignorespaces Interface Style Examples}}{64}{figure.caption.82}%
+\contentsline {figure}{\numberline {2.32}{\ignorespaces Finding an Optimal Place for New Building Flowchart}}{67}{figure.caption.86}%
+\contentsline {figure}{\numberline {2.33}{\ignorespaces Overall User Predicting HDI Algorithm Flowchart}}{69}{figure.caption.87}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Full dataset containing unnecessary data}}{76}{figure.caption.98}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces The new records}}{77}{figure.caption.99}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Dataset of only useful HDI information}}{78}{figure.caption.100}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Output of Example Overpass Turbo Query}}{81}{figure.caption.101}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Output of a \mintinline [breaklines, breakafter=_]{python}|list| of Latitude/Longitude pairs}}{82}{figure.caption.102}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces $A\left (x,y\right )$ 20 times, with \mintinline [breaklines, breakafter=_]{python}|max_x_objects| set to 500}}{86}{figure.caption.103}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces $A\left (x,y\right )$ 20 times, with \mintinline [breaklines, breakafter=_]{python}|max_x_objects| set to 2000}}{87}{figure.caption.104}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Area of Oxford, with an Invalid Self-Intersection}}{94}{figure.caption.105}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Area of Oxford, with a Valid Self-Intersection}}{94}{figure.caption.106}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces $D\left (\text {School}\right )$ for Oxford}}{95}{figure.caption.107}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Log messages for Collecting data for all objects}}{97}{figure.caption.108}%
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Example all factors \mintinline [breaklines, breakafter=_]{python}|dict| for Oxford}}{100}{figure.caption.109}%
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Each record of the shapefile}}{102}{figure.caption.110}%
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Sample of the resulting \mintinline [breaklines, breakafter=_]{python}|.json| file}}{102}{figure.caption.111}%
-\contentsline {figure}{\numberline {3.15}{\ignorespaces HTTP \mintinline [breaklines, breakafter=_]{python}|414| Error}}{107}{figure.caption.112}%
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Overpass Turbo's \mintinline [breaklines, breakafter=_]{python}|POST| request}}{108}{figure.caption.113}%
-\contentsline {figure}{\numberline {3.17}{\ignorespaces All HTTP Responses now \mintinline [breaklines, breakafter=_]{python}|200: OK|}}{109}{figure.caption.114}%
-\contentsline {figure}{\numberline {3.18}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|list[list[list[coordinate]]]| debug print statement}}{110}{figure.caption.115}%
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Longitude Error Message}}{112}{figure.caption.116}%
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Final Training Data}}{114}{figure.caption.117}%
-\contentsline {figure}{\numberline {3.21}{\ignorespaces Graph of the Standard Normal Distribution}}{118}{figure.caption.118}%
-\contentsline {figure}{\numberline {3.22}{\ignorespaces Printing activations, weights and biases}}{119}{figure.caption.119}%
-\contentsline {figure}{\numberline {3.23}{\ignorespaces Backpropogation Error}}{129}{figure.caption.120}%
-\contentsline {figure}{\numberline {3.24}{\ignorespaces Examples from the MNIST Data Set}}{131}{figure.caption.121}%
-\contentsline {figure}{\numberline {3.25}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|ModuleNotFoundError|}}{134}{figure.caption.122}%
-\contentsline {figure}{\numberline {3.26}{\ignorespaces Output for the first 7 training examples}}{138}{figure.caption.123}%
-\contentsline {figure}{\numberline {3.27}{\ignorespaces Output for the last 7 training examples}}{138}{figure.caption.124}%
-\contentsline {figure}{\numberline {3.28}{\ignorespaces Improved Output for the last 7 training examples}}{138}{figure.caption.125}%
-\contentsline {figure}{\numberline {3.29}{\ignorespaces Some HDI Predictions}}{144}{figure.caption.126}%
-\contentsline {figure}{\numberline {3.30}{\ignorespaces Improved HDI Predictions}}{146}{figure.caption.127}%
-\contentsline {figure}{\numberline {3.31}{\ignorespaces Launching the Gradio App}}{149}{figure.caption.128}%
-\contentsline {figure}{\numberline {3.32}{\ignorespaces Empty Gradio UI}}{149}{figure.caption.129}%
-\contentsline {figure}{\numberline {3.33}{\ignorespaces Map Added to GUI}}{151}{figure.caption.130}%
-\contentsline {figure}{\numberline {3.34}{\ignorespaces Drawing a Region}}{152}{figure.caption.131}%
-\contentsline {figure}{\numberline {3.35}{\ignorespaces Map Starting at a Random City}}{153}{figure.caption.132}%
-\contentsline {figure}{\numberline {3.36}{\ignorespaces Upload Button Added}}{155}{figure.caption.133}%
-\contentsline {figure}{\numberline {3.37}{\ignorespaces Log Textbox Added}}{156}{figure.caption.134}%
-\contentsline {figure}{\numberline {3.38}{\ignorespaces Uploading GeoJSON Files}}{158}{figure.caption.135}%
-\contentsline {figure}{\numberline {3.39}{\ignorespaces New Structure of the GUI}}{160}{figure.caption.136}%
-\contentsline {figure}{\numberline {3.40}{\ignorespaces Progress Bar}}{165}{figure.caption.137}%
-\contentsline {figure}{\numberline {3.41}{\ignorespaces Successful Prediction from a Region}}{165}{figure.caption.138}%
-\contentsline {figure}{\numberline {3.42}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|max_x_objects| and \mintinline [breaklines, breakafter=_]{python}|max_y_objects| Sliders}}{169}{figure.caption.139}%
-\contentsline {figure}{\numberline {3.43}{\ignorespaces Prediction with lower \mintinline [breaklines, breakafter=_]{python}|max_x_objects| and \mintinline [breaklines, breakafter=_]{python}|max_y_objects| values}}{170}{figure.caption.140}%
-\contentsline {figure}{\numberline {3.44}{\ignorespaces Suggestions Table}}{171}{figure.caption.141}%
-\contentsline {figure}{\numberline {3.45}{\ignorespaces Invalid Table Format}}{178}{figure.caption.142}%
-\contentsline {figure}{\numberline {3.46}{\ignorespaces Suggestions Table Successfully Generated}}{179}{figure.caption.143}%
-\contentsline {figure}{\numberline {3.47}{\ignorespaces Error Message Shown in Table}}{179}{figure.caption.144}%
-\contentsline {figure}{\numberline {3.48}{\ignorespaces Pin Shown on Map for Suggestion}}{181}{figure.caption.145}%
-\contentsline {figure}{\numberline {3.49}{\ignorespaces Output for when we set \mintinline [breaklines, breakafter=_]{python}|share=True|}}{183}{figure.caption.146}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Full dataset containing unnecessary data}}{77}{figure.caption.98}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces The new records}}{78}{figure.caption.99}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Dataset of only useful HDI information}}{79}{figure.caption.100}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Output of Example Overpass Turbo Query}}{82}{figure.caption.101}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Output of a \mintinline [breaklines, breakafter=_]{python}|list| of Latitude/Longitude pairs}}{83}{figure.caption.102}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces $A\left (x,y\right )$ 20 times, with \mintinline [breaklines, breakafter=_]{python}|max_x_objects| set to 500}}{87}{figure.caption.103}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces $A\left (x,y\right )$ 20 times, with \mintinline [breaklines, breakafter=_]{python}|max_x_objects| set to 2000}}{88}{figure.caption.104}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Area of Oxford, with an Invalid Self-Intersection}}{95}{figure.caption.105}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Area of Oxford, with a Valid Self-Intersection}}{95}{figure.caption.106}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces $D\left (\text {School}\right )$ for Oxford}}{96}{figure.caption.107}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Log messages for Collecting data for all objects}}{98}{figure.caption.108}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Example all factors \mintinline [breaklines, breakafter=_]{python}|dict| for Oxford}}{101}{figure.caption.109}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Each record of the shapefile}}{103}{figure.caption.110}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Sample of the resulting \mintinline [breaklines, breakafter=_]{python}|.json| file}}{103}{figure.caption.111}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces HTTP \mintinline [breaklines, breakafter=_]{python}|414| Error}}{108}{figure.caption.112}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Overpass Turbo's \mintinline [breaklines, breakafter=_]{python}|POST| request}}{109}{figure.caption.113}%
+\contentsline {figure}{\numberline {3.17}{\ignorespaces All HTTP Responses now \mintinline [breaklines, breakafter=_]{python}|200: OK|}}{110}{figure.caption.114}%
+\contentsline {figure}{\numberline {3.18}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|list[list[list[coordinate]]]| debug print statement}}{111}{figure.caption.115}%
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Longitude Error Message}}{113}{figure.caption.116}%
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Final Training Data}}{115}{figure.caption.117}%
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Graph of the Standard Normal Distribution}}{119}{figure.caption.118}%
+\contentsline {figure}{\numberline {3.22}{\ignorespaces Printing activations, weights and biases}}{120}{figure.caption.119}%
+\contentsline {figure}{\numberline {3.23}{\ignorespaces Backpropogation Error}}{130}{figure.caption.120}%
+\contentsline {figure}{\numberline {3.24}{\ignorespaces Examples from the MNIST Data Set}}{132}{figure.caption.121}%
+\contentsline {figure}{\numberline {3.25}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|ModuleNotFoundError|}}{135}{figure.caption.122}%
+\contentsline {figure}{\numberline {3.26}{\ignorespaces Output for the first 7 training examples}}{139}{figure.caption.123}%
+\contentsline {figure}{\numberline {3.27}{\ignorespaces Output for the last 7 training examples}}{139}{figure.caption.124}%
+\contentsline {figure}{\numberline {3.28}{\ignorespaces Improved Output for the last 7 training examples}}{139}{figure.caption.125}%
+\contentsline {figure}{\numberline {3.29}{\ignorespaces Some HDI Predictions}}{145}{figure.caption.126}%
+\contentsline {figure}{\numberline {3.30}{\ignorespaces Improved HDI Predictions}}{147}{figure.caption.127}%
+\contentsline {figure}{\numberline {3.31}{\ignorespaces Launching the Gradio App}}{150}{figure.caption.128}%
+\contentsline {figure}{\numberline {3.32}{\ignorespaces Empty Gradio UI}}{150}{figure.caption.129}%
+\contentsline {figure}{\numberline {3.33}{\ignorespaces Map Added to GUI}}{152}{figure.caption.130}%
+\contentsline {figure}{\numberline {3.34}{\ignorespaces Drawing a Region}}{153}{figure.caption.131}%
+\contentsline {figure}{\numberline {3.35}{\ignorespaces Map Starting at a Random City}}{154}{figure.caption.132}%
+\contentsline {figure}{\numberline {3.36}{\ignorespaces Upload Button Added}}{156}{figure.caption.133}%
+\contentsline {figure}{\numberline {3.37}{\ignorespaces Log Textbox Added}}{157}{figure.caption.134}%
+\contentsline {figure}{\numberline {3.38}{\ignorespaces Uploading GeoJSON Files}}{159}{figure.caption.135}%
+\contentsline {figure}{\numberline {3.39}{\ignorespaces New Structure of the GUI}}{161}{figure.caption.136}%
+\contentsline {figure}{\numberline {3.40}{\ignorespaces Progress Bar}}{166}{figure.caption.137}%
+\contentsline {figure}{\numberline {3.41}{\ignorespaces Successful Prediction from a Region}}{166}{figure.caption.138}%
+\contentsline {figure}{\numberline {3.42}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|max_x_objects| and \mintinline [breaklines, breakafter=_]{python}|max_y_objects| Sliders}}{170}{figure.caption.139}%
+\contentsline {figure}{\numberline {3.43}{\ignorespaces Prediction with lower \mintinline [breaklines, breakafter=_]{python}|max_x_objects| and \mintinline [breaklines, breakafter=_]{python}|max_y_objects| values}}{171}{figure.caption.140}%
+\contentsline {figure}{\numberline {3.44}{\ignorespaces Suggestions Table}}{172}{figure.caption.141}%
+\contentsline {figure}{\numberline {3.45}{\ignorespaces Invalid Table Format}}{179}{figure.caption.142}%
+\contentsline {figure}{\numberline {3.46}{\ignorespaces Suggestions Table Successfully Generated}}{180}{figure.caption.143}%
+\contentsline {figure}{\numberline {3.47}{\ignorespaces Error Message Shown in Table}}{180}{figure.caption.144}%
+\contentsline {figure}{\numberline {3.48}{\ignorespaces Pin Shown on Map for Suggestion}}{182}{figure.caption.145}%
+\contentsline {figure}{\numberline {3.49}{\ignorespaces Output for when we set \mintinline [breaklines, breakafter=_]{python}|share=True|}}{184}{figure.caption.146}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Structure Diagram (2\relax \textsuperscript {nd} prototype)}}{184}{figure.caption.147}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Hashing Examples}}{185}{figure.caption.148}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Salting Examples}}{186}{figure.caption.149}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Creating an Account Flowchart}}{187}{figure.caption.151}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Logging In Flowchart}}{188}{figure.caption.153}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, main page)}}{191}{figure.caption.157}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, compare page)}}{192}{figure.caption.158}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, regions page)}}{193}{figure.caption.159}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, log in page)}}{194}{figure.caption.160}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, sign up page)}}{195}{figure.caption.161}%
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, help page)}}{196}{figure.caption.162}%
-\contentsline {figure}{\numberline {4.12}{\ignorespaces PMCC Examples}}{199}{figure.caption.171}%
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Analysis of how much Each Factor Affects the Others Flowchart}}{200}{figure.caption.172}%
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Finding Similar Regions Flowchart}}{201}{figure.caption.173}%
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Finding a Better Optimal Place for New Building Flowchart}}{203}{figure.caption.174}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Structure Diagram (2\relax \textsuperscript {nd} prototype)}}{185}{figure.caption.147}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Hashing Examples}}{186}{figure.caption.148}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Salting Examples}}{187}{figure.caption.149}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Creating an Account Flowchart}}{188}{figure.caption.151}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Logging In Flowchart}}{189}{figure.caption.153}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, main page)}}{192}{figure.caption.157}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, compare page)}}{193}{figure.caption.158}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, regions page)}}{194}{figure.caption.159}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, log in page)}}{195}{figure.caption.160}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, sign up page)}}{196}{figure.caption.161}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Technical Interface Sketch (2\relax \textsuperscript {nd} prototype, help page)}}{197}{figure.caption.162}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces PMCC Examples}}{200}{figure.caption.171}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Analysis of how much Each Factor Affects the Others Flowchart}}{201}{figure.caption.172}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Finding Similar Regions Flowchart}}{202}{figure.caption.173}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Finding a Better Optimal Place for New Building Flowchart}}{204}{figure.caption.174}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Predict Tab}}{217}{figure.caption.184}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Log In \& Sign Up Tabs}}{217}{figure.caption.185}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Placeholder Markdown}}{218}{figure.caption.186}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Complete Sign Up Tab}}{219}{figure.caption.187}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Censorship of the user's password}}{220}{figure.caption.188}%
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Complete Log In Tab}}{221}{figure.caption.189}%
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Creating the MongoDB}}{222}{figure.caption.190}%
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Adding a Database User (me)}}{222}{figure.caption.191}%
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Creating a Database \& Collection (table)}}{223}{figure.caption.192}%
-\contentsline {figure}{\numberline {5.10}{\ignorespaces SSL Certificate Error}}{224}{figure.caption.193}%
-\contentsline {figure}{\numberline {5.11}{\ignorespaces Successful Connection to MongoDB}}{224}{figure.caption.194}%
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Creating a Temporary, Fake Account}}{226}{figure.caption.195}%
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Validating Username Input}}{227}{figure.caption.196}%
-\contentsline {figure}{\numberline {5.14}{\ignorespaces Validating Password Input}}{230}{figure.caption.197}%
-\contentsline {figure}{\numberline {5.15}{\ignorespaces Hashed Password}}{232}{figure.caption.198}%
-\contentsline {figure}{\numberline {5.16}{\ignorespaces New Account in MongoDB}}{233}{figure.caption.199}%
-\contentsline {figure}{\numberline {5.17}{\ignorespaces Validating Login}}{236}{figure.caption.200}%
-\contentsline {figure}{\numberline {5.18}{\ignorespaces Compare Tab Interface}}{240}{figure.caption.201}%
-\contentsline {figure}{\numberline {5.19}{\ignorespaces Example Options for Dropdown}}{241}{figure.caption.202}%
-\contentsline {figure}{\numberline {5.20}{\ignorespaces All Dropdown Options}}{243}{figure.caption.203}%
-\contentsline {figure}{\numberline {5.21}{\ignorespaces Output when the User has not Predicted Yet}}{245}{figure.caption.204}%
-\contentsline {figure}{\numberline {5.22}{\ignorespaces Full Comparison between User's and Selected Regions}}{248}{figure.caption.205}%
-\contentsline {figure}{\numberline {5.23}{\ignorespaces Initial Image of the Correlation Heatmap}}{252}{figure.caption.206}%
-\contentsline {figure}{\numberline {5.24}{\ignorespaces Final Image of the Correlation Heatmap}}{253}{figure.caption.207}%
-\contentsline {figure}{\numberline {5.25}{\ignorespaces Correlation Heatmap in Gradio}}{254}{figure.caption.208}%
-\contentsline {figure}{\numberline {5.26}{\ignorespaces Similar Region Returned to Textbox}}{257}{figure.caption.209}%
-\contentsline {figure}{\numberline {5.27}{\ignorespaces Comparison to Bangkok}}{257}{figure.caption.210}%
-\contentsline {figure}{\numberline {5.28}{\ignorespaces Regions Tab}}{258}{figure.caption.211}%
-\contentsline {figure}{\numberline {5.29}{\ignorespaces Progress Bar in the Log Messages}}{261}{figure.caption.212}%
-\contentsline {figure}{\numberline {5.30}{\ignorespaces Region added to the Table}}{263}{figure.caption.213}%
-\contentsline {figure}{\numberline {5.31}{\ignorespaces Updating the Dropdown Options}}{264}{figure.caption.214}%
-\contentsline {figure}{\numberline {5.32}{\ignorespaces Dropdown Remains Interactive}}{265}{figure.caption.215}%
-\contentsline {figure}{\numberline {5.33}{\ignorespaces Dropdown Value Updated}}{267}{figure.caption.216}%
-\contentsline {figure}{\numberline {5.34}{\ignorespaces Submit Changes Button in Regions Tab}}{268}{figure.caption.217}%
-\contentsline {figure}{\numberline {5.35}{\ignorespaces Validating Regions Table Input}}{271}{figure.caption.218}%
-\contentsline {figure}{\numberline {5.36}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|allUserRegions| \& Dropdown Updated from Table}}{273}{figure.caption.219}%
-\contentsline {figure}{\numberline {5.37}{\ignorespaces Cannot Upload Region with the Same Name}}{276}{figure.caption.220}%
-\contentsline {figure}{\numberline {5.38}{\ignorespaces Region Added to MongoDB}}{278}{figure.caption.221}%
-\contentsline {figure}{\numberline {5.39}{\ignorespaces Region with Objects Added to MongoDB}}{279}{figure.caption.222}%
-\contentsline {figure}{\numberline {5.40}{\ignorespaces Predict Tab with New Slider}}{280}{figure.caption.223}%
-\contentsline {figure}{\numberline {5.41}{\ignorespaces No Associated Buildings Error Message}}{285}{figure.caption.224}%
-\contentsline {figure}{\numberline {5.42}{\ignorespaces Output for a Region with Many Buildings}}{288}{figure.caption.225}%
-\contentsline {figure}{\numberline {5.43}{\ignorespaces Output for a Region with No Buildings}}{288}{figure.caption.226}%
-\contentsline {figure}{\numberline {5.44}{\ignorespaces Output for Placing Pins on the Map}}{290}{figure.caption.227}%
-\contentsline {figure}{\numberline {5.45}{\ignorespaces Screenshot of an Errored Output}}{291}{figure.caption.229}%
-\contentsline {figure}{\numberline {5.46}{\ignorespaces Screenshot of the Corrected Output (\mintinline [breaklines, breakafter=_]{python}|def makeSuggestions|)}}{292}{figure.caption.230}%
-\contentsline {figure}{\numberline {5.47}{\ignorespaces Screenshot of the Corrected Output (\mintinline [breaklines, breakafter=_]{python}|def logIn|)}}{294}{figure.caption.231}%
-\contentsline {figure}{\numberline {5.48}{\ignorespaces HDI is not updating when Comparing}}{295}{figure.caption.234}%
-\contentsline {figure}{\numberline {5.49}{\ignorespaces HDI is now updating when Comparing}}{296}{figure.caption.235}%
-\contentsline {figure}{\numberline {5.50}{\ignorespaces Info Popup Examples}}{297}{figure.caption.237}%
-\contentsline {figure}{\numberline {5.51}{\ignorespaces Emojis in Tabs}}{303}{figure.caption.239}%
-\contentsline {figure}{\numberline {5.52}{\ignorespaces Emojis in the Predict Tab}}{305}{figure.caption.240}%
-\contentsline {figure}{\numberline {5.53}{\ignorespaces Emojis in the Compare Tab}}{306}{figure.caption.241}%
-\contentsline {figure}{\numberline {5.54}{\ignorespaces Emojis in the Regions Tab}}{307}{figure.caption.242}%
-\contentsline {figure}{\numberline {5.55}{\ignorespaces Emojis in the Log In Tab}}{308}{figure.caption.243}%
-\contentsline {figure}{\numberline {5.56}{\ignorespaces Emojis in the Sign Up Tab}}{309}{figure.caption.244}%
-\contentsline {figure}{\numberline {5.57}{\ignorespaces Restructuring the Log In \& Sign Up Tabs}}{311}{figure.caption.246}%
-\contentsline {figure}{\numberline {5.58}{\ignorespaces Adding Warnings}}{313}{figure.caption.247}%
-\contentsline {figure}{\numberline {5.59}{\ignorespaces Markdown Test Initial Attempt}}{314}{figure.caption.249}%
-\contentsline {figure}{\numberline {5.60}{\ignorespaces Markdown Test Successul}}{315}{figure.caption.250}%
-\contentsline {figure}{\numberline {5.61}{\ignorespaces Help Tab}}{316}{figure.caption.251}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Predict Tab}}{218}{figure.caption.184}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Log In \& Sign Up Tabs}}{218}{figure.caption.185}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Placeholder Markdown}}{219}{figure.caption.186}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Complete Sign Up Tab}}{220}{figure.caption.187}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Censorship of the user's password}}{221}{figure.caption.188}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Complete Log In Tab}}{222}{figure.caption.189}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Creating the MongoDB}}{223}{figure.caption.190}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Adding a Database User (me)}}{223}{figure.caption.191}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Creating a Database \& Collection (table)}}{224}{figure.caption.192}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces SSL Certificate Error}}{225}{figure.caption.193}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Successful Connection to MongoDB}}{225}{figure.caption.194}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Creating a Temporary, Fake Account}}{227}{figure.caption.195}%
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Validating Username Input}}{228}{figure.caption.196}%
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Validating Password Input}}{231}{figure.caption.197}%
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Hashed Password}}{233}{figure.caption.198}%
+\contentsline {figure}{\numberline {5.16}{\ignorespaces New Account in MongoDB}}{234}{figure.caption.199}%
+\contentsline {figure}{\numberline {5.17}{\ignorespaces Validating Login}}{237}{figure.caption.200}%
+\contentsline {figure}{\numberline {5.18}{\ignorespaces Compare Tab Interface}}{241}{figure.caption.201}%
+\contentsline {figure}{\numberline {5.19}{\ignorespaces Example Options for Dropdown}}{242}{figure.caption.202}%
+\contentsline {figure}{\numberline {5.20}{\ignorespaces All Dropdown Options}}{244}{figure.caption.203}%
+\contentsline {figure}{\numberline {5.21}{\ignorespaces Output when the User has not Predicted Yet}}{246}{figure.caption.204}%
+\contentsline {figure}{\numberline {5.22}{\ignorespaces Full Comparison between User's and Selected Regions}}{249}{figure.caption.205}%
+\contentsline {figure}{\numberline {5.23}{\ignorespaces Initial Image of the Correlation Heatmap}}{253}{figure.caption.206}%
+\contentsline {figure}{\numberline {5.24}{\ignorespaces Final Image of the Correlation Heatmap}}{254}{figure.caption.207}%
+\contentsline {figure}{\numberline {5.25}{\ignorespaces Correlation Heatmap in Gradio}}{255}{figure.caption.208}%
+\contentsline {figure}{\numberline {5.26}{\ignorespaces Similar Region Returned to Textbox}}{258}{figure.caption.209}%
+\contentsline {figure}{\numberline {5.27}{\ignorespaces Comparison to Bangkok}}{258}{figure.caption.210}%
+\contentsline {figure}{\numberline {5.28}{\ignorespaces Regions Tab}}{259}{figure.caption.211}%
+\contentsline {figure}{\numberline {5.29}{\ignorespaces Progress Bar in the Log Messages}}{262}{figure.caption.212}%
+\contentsline {figure}{\numberline {5.30}{\ignorespaces Region added to the Table}}{264}{figure.caption.213}%
+\contentsline {figure}{\numberline {5.31}{\ignorespaces Updating the Dropdown Options}}{265}{figure.caption.214}%
+\contentsline {figure}{\numberline {5.32}{\ignorespaces Dropdown Remains Interactive}}{266}{figure.caption.215}%
+\contentsline {figure}{\numberline {5.33}{\ignorespaces Dropdown Value Updated}}{268}{figure.caption.216}%
+\contentsline {figure}{\numberline {5.34}{\ignorespaces Submit Changes Button in Regions Tab}}{269}{figure.caption.217}%
+\contentsline {figure}{\numberline {5.35}{\ignorespaces Validating Regions Table Input}}{272}{figure.caption.218}%
+\contentsline {figure}{\numberline {5.36}{\ignorespaces \mintinline [breaklines, breakafter=_]{python}|allUserRegions| \& Dropdown Updated from Table}}{274}{figure.caption.219}%
+\contentsline {figure}{\numberline {5.37}{\ignorespaces Cannot Upload Region with the Same Name}}{277}{figure.caption.220}%
+\contentsline {figure}{\numberline {5.38}{\ignorespaces Region Added to MongoDB}}{279}{figure.caption.221}%
+\contentsline {figure}{\numberline {5.39}{\ignorespaces Region with Objects Added to MongoDB}}{280}{figure.caption.222}%
+\contentsline {figure}{\numberline {5.40}{\ignorespaces Predict Tab with New Slider}}{281}{figure.caption.223}%
+\contentsline {figure}{\numberline {5.41}{\ignorespaces No Associated Buildings Error Message}}{286}{figure.caption.224}%
+\contentsline {figure}{\numberline {5.42}{\ignorespaces Output for a Region with Many Buildings}}{289}{figure.caption.225}%
+\contentsline {figure}{\numberline {5.43}{\ignorespaces Output for a Region with No Buildings}}{289}{figure.caption.226}%
+\contentsline {figure}{\numberline {5.44}{\ignorespaces Output for Placing Pins on the Map}}{291}{figure.caption.227}%
+\contentsline {figure}{\numberline {5.45}{\ignorespaces Screenshot of an Errored Output}}{292}{figure.caption.229}%
+\contentsline {figure}{\numberline {5.46}{\ignorespaces Screenshot of the Corrected Output (\mintinline [breaklines, breakafter=_]{python}|def makeSuggestions|)}}{293}{figure.caption.230}%
+\contentsline {figure}{\numberline {5.47}{\ignorespaces Screenshot of the Corrected Output (\mintinline [breaklines, breakafter=_]{python}|def logIn|)}}{295}{figure.caption.231}%
+\contentsline {figure}{\numberline {5.48}{\ignorespaces HDI is not updating when Comparing}}{296}{figure.caption.234}%
+\contentsline {figure}{\numberline {5.49}{\ignorespaces HDI is now updating when Comparing}}{297}{figure.caption.235}%
+\contentsline {figure}{\numberline {5.50}{\ignorespaces Info Popup Examples}}{298}{figure.caption.237}%
+\contentsline {figure}{\numberline {5.51}{\ignorespaces Emojis in Tabs}}{304}{figure.caption.239}%
+\contentsline {figure}{\numberline {5.52}{\ignorespaces Emojis in the Predict Tab}}{306}{figure.caption.240}%
+\contentsline {figure}{\numberline {5.53}{\ignorespaces Emojis in the Compare Tab}}{307}{figure.caption.241}%
+\contentsline {figure}{\numberline {5.54}{\ignorespaces Emojis in the Regions Tab}}{308}{figure.caption.242}%
+\contentsline {figure}{\numberline {5.55}{\ignorespaces Emojis in the Log In Tab}}{309}{figure.caption.243}%
+\contentsline {figure}{\numberline {5.56}{\ignorespaces Emojis in the Sign Up Tab}}{310}{figure.caption.244}%
+\contentsline {figure}{\numberline {5.57}{\ignorespaces Restructuring the Log In \& Sign Up Tabs}}{312}{figure.caption.246}%
+\contentsline {figure}{\numberline {5.58}{\ignorespaces Adding Warnings}}{314}{figure.caption.247}%
+\contentsline {figure}{\numberline {5.59}{\ignorespaces Markdown Test Initial Attempt}}{315}{figure.caption.249}%
+\contentsline {figure}{\numberline {5.60}{\ignorespaces Markdown Test Successul}}{316}{figure.caption.250}%
+\contentsline {figure}{\numberline {5.61}{\ignorespaces Help Tab}}{317}{figure.caption.251}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
