@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.28)  18 JAN 2025 13:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.28)  18 JAN 2025 22:38
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1190,19 +1190,19 @@ Underfull \hbox (badness 1354) in paragraph at lines 174--175
 \openout4 = `main.pyg'.
 
  (./_minted-main/default.pygstyle) (./_minted-main/19891BF7ABBB15E137B4961D71AC5B9DDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/existingSol1Jupyter.png, id=665, 1181.41376pt x 869.2475pt>
+<./images/existingSol1Jupyter.png, id=670, 1181.41376pt x 869.2475pt>
 File: ./images/existingSol1Jupyter.png Graphic file (type png)
 <use ./images/existingSol1Jupyter.png>
 Package pdftex.def Info: ./images/existingSol1Jupyter.png  used on input line 193.
 (pdftex.def)             Requested size: 256.0748pt x 188.40988pt.
  [9]
-<./images/existingSol1Scatter.png, id=676, 393.47pt x 373.395pt>
+<./images/existingSol1Scatter.png, id=681, 393.47pt x 373.395pt>
 File: ./images/existingSol1Scatter.png Graphic file (type png)
 <use ./images/existingSol1Scatter.png>
 Package pdftex.def Info: ./images/existingSol1Scatter.png  used on input line 207.
 (pdftex.def)             Requested size: 256.0748pt x 243.00584pt.
  [10 <./images/existingSol1Jupyter.png> <./images/existingSol1Scatter.png>]
-<./images/existingSol1Heatmap.png, id=685, 550.055pt x 437.635pt>
+<./images/existingSol1Heatmap.png, id=690, 550.055pt x 437.635pt>
 File: ./images/existingSol1Heatmap.png Graphic file (type png)
 <use ./images/existingSol1Heatmap.png>
 Package pdftex.def Info: ./images/existingSol1Heatmap.png  used on input line 221.
@@ -1212,7 +1212,7 @@ Overfull \hbox (22.89325pt too wide) in paragraph at lines 228--229
  [][] 
  []
 
-<./images/existingSol2Pies.png, id=689, 796.9775pt x 775.89874pt>
+<./images/existingSol2Pies.png, id=694, 796.9775pt x 775.89874pt>
 File: ./images/existingSol2Pies.png Graphic file (type png)
 <use ./images/existingSol2Pies.png>
 Package pdftex.def Info: ./images/existingSol2Pies.png  used on input line 240.
@@ -1223,7 +1223,7 @@ Overfull \hbox (8.66689pt too wide) in paragraph at lines 247--248
  []
 
 [11 <./images/existingSol1Heatmap.png>]
-<./images/existingSol2Factors.png, id=700, 653.44125pt x 460.72125pt>
+<./images/existingSol2Factors.png, id=705, 653.44125pt x 460.72125pt>
 File: ./images/existingSol2Factors.png Graphic file (type png)
 <use ./images/existingSol2Factors.png>
 Package pdftex.def Info: ./images/existingSol2Factors.png  used on input line 256.
@@ -1236,7 +1236,7 @@ Overfull \hbox (51.346pt too wide) in paragraph at lines 261--262
 \openout4 = `main.pyg'.
 
 (./_minted-main/B9B2A182913BEED7BE4719DC07B3C765DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [12 <./images/existingSol2Pies.png> <./images/existingSol2Factors.png>]
-<./images/existingSol2Classification.png, id=710, 160.6pt x 108.405pt>
+<./images/existingSol2Classification.png, id=715, 160.6pt x 108.405pt>
 File: ./images/existingSol2Classification.png Graphic file (type png)
 <use ./images/existingSol2Classification.png>
 Package pdftex.def Info: ./images/existingSol2Classification.png  used on input line 270.
@@ -1246,7 +1246,7 @@ Overfull \hbox (22.89325pt too wide) in paragraph at lines 275--276
  [][] 
  []
 
-<./images/existingSol3Rank.png, id=714, 1097.09875pt x 252.945pt>
+<./images/existingSol3Rank.png, id=719, 1097.09875pt x 252.945pt>
 File: ./images/existingSol3Rank.png Graphic file (type png)
 <use ./images/existingSol3Rank.png>
 Package pdftex.def Info: ./images/existingSol3Rank.png  used on input line 285.
@@ -1256,13 +1256,13 @@ Overfull \hbox (22.89325pt too wide) in paragraph at lines 290--291
  [][] 
  []
 
-<./images/existingSol3Hover.png, id=716, 1093.08376pt x 249.93375pt>
+<./images/existingSol3Hover.png, id=721, 1093.08376pt x 249.93375pt>
 File: ./images/existingSol3Hover.png Graphic file (type png)
 <use ./images/existingSol3Hover.png>
 Package pdftex.def Info: ./images/existingSol3Hover.png  used on input line 297.
 (pdftex.def)             Requested size: 256.0748pt x 58.55138pt.
 [13 <./images/existingSol2Classification.png> <./images/existingSol3Rank.png>]
-<./images/existingSol3Waterfall.png, id=728, 1098.1025pt x 507.8975pt>
+<./images/existingSol3Waterfall.png, id=733, 1098.1025pt x 507.8975pt>
 File: ./images/existingSol3Waterfall.png Graphic file (type png)
 <use ./images/existingSol3Waterfall.png>
 Package pdftex.def Info: ./images/existingSol3Waterfall.png  used on input line 311.
@@ -1328,7 +1328,7 @@ Underfull \hbox (badness 2762) in paragraph at lines 503--503
  []
 
 [18]
-<./images/limitationShelter.png, id=765, 271.0125pt x 135.50626pt>
+<./images/limitationShelter.png, id=770, 271.0125pt x 135.50626pt>
 File: ./images/limitationShelter.png Graphic file (type png)
 <use ./images/limitationShelter.png>
 Package pdftex.def Info: ./images/limitationShelter.png  used on input line 518.
@@ -3269,7 +3269,7 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
 \openout4 = `main.pyg'.
 
  (./_minted-main/2C3338F9D148B311245EBC29B62474C7DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [61]
-<./images/map.jpg, id=1160, 1666.225pt x 1120.185pt>
+<./images/map.jpg, id=1165, 1666.225pt x 1120.185pt>
 File: ./images/map.jpg Graphic file (type jpg)
 <use ./images/map.jpg>
 Package pdftex.def Info: ./images/map.jpg  used on input line 1981.
@@ -3283,12 +3283,12 @@ Overfull \hbox (25.70618pt too wide) in paragraph at lines 2033--2034
 \openout4 = `main.pyg'.
 
  (./_minted-main/381CCADFB8D4848ADD470E33033B198FDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/lightModeInterface.png, id=1169, 1405.25pt x 720.6925pt>
+<./images/lightModeInterface.png, id=1174, 1405.25pt x 720.6925pt>
 File: ./images/lightModeInterface.png Graphic file (type png)
 <use ./images/lightModeInterface.png>
 Package pdftex.def Info: ./images/lightModeInterface.png  used on input line 2057.
 (pdftex.def)             Requested size: 338.2226pt x 173.4536pt.
-<./images/darkModeInterface.png, id=1170, 1929.2075pt x 1373.13pt>
+<./images/darkModeInterface.png, id=1175, 1929.2075pt x 1373.13pt>
 File: ./images/darkModeInterface.png Graphic file (type png)
 <use ./images/darkModeInterface.png>
 Package pdftex.def Info: ./images/darkModeInterface.png  used on input line 2062.
@@ -3638,7 +3638,7 @@ Underfull \hbox (badness 5403) in paragraph at lines 2359--2359
 [75
 
 ]
-<./images/ss1.1.png, id=1278, 1686.3pt x 1053.9375pt>
+<./images/ss1.1.png, id=1283, 1686.3pt x 1053.9375pt>
 File: ./images/ss1.1.png Graphic file (type png)
 <use ./images/ss1.1.png>
 Package pdftex.def Info: ./images/ss1.1.png  used on input line 2370.
@@ -3696,7 +3696,7 @@ Package hyperref Info: bookmark level for unknown listing defaults to 0 on input
 \openout4 = `main.pyg'.
 
  (./_minted-main/F5F22DB0C23B3F1EFCE9D21BF8E15F62DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss1.2.png, id=1292, 1272.755pt x 592.2125pt>
+<./images/ss1.2.png, id=1297, 1272.755pt x 592.2125pt>
 File: ./images/ss1.2.png Graphic file (type png)
 <use ./images/ss1.2.png>
 Package pdftex.def Info: ./images/ss1.2.png  used on input line 2410.
@@ -3743,7 +3743,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 2432--2432
 \openout4 = `main.pyg'.
 
  (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB659DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss1.3.png, id=1307, 1686.3pt x 1053.9375pt>
+<./images/ss1.3.png, id=1312, 1686.3pt x 1053.9375pt>
 File: ./images/ss1.3.png Graphic file (type png)
 <use ./images/ss1.3.png>
 Package pdftex.def Info: ./images/ss1.3.png  used on input line 2452.
@@ -3845,7 +3845,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 2474--2474
 \openout4 = `main.pyg'.
 
  (./_minted-main/2C4867C70B27C755B23B221040D01334DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss2.1.png, id=1325, 791.95876pt x 871.255pt>
+<./images/ss2.1.png, id=1330, 791.95876pt x 871.255pt>
 File: ./images/ss2.1.png Graphic file (type png)
 <use ./images/ss2.1.png>
 Package pdftex.def Info: ./images/ss2.1.png  used on input line 2532.
@@ -3918,7 +3918,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 2554--2554
 \openout4 = `main.pyg'.
 
  (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB659DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss2.2.png, id=1343, 1261.71375pt x 302.12875pt>
+<./images/ss2.2.png, id=1348, 1261.71375pt x 302.12875pt>
 File: ./images/ss2.2.png Graphic file (type png)
 <use ./images/ss2.2.png>
 Package pdftex.def Info: ./images/ss2.2.png  used on input line 2579.
@@ -4150,7 +4150,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 2757--2757
  [] [] [] [] [] [] 
  []
 
-<./images/ss3.1.png, id=1389, 850.17625pt x 441.65pt>
+<./images/ss3.1.png, id=1394, 850.17625pt x 441.65pt>
 File: ./images/ss3.1.png Graphic file (type png)
 <use ./images/ss3.1.png>
 Package pdftex.def Info: ./images/ss3.1.png  used on input line 2764.
@@ -4167,7 +4167,7 @@ Package pdftex.def Info: ./images/ss3.1.png  used on input line 2764.
 \openout4 = `main.pyg'.
 
  (./_minted-main/0853210BD38F7843BAFD16EBB9ECB2E5DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss3.2.png, id=1391, 847.165pt x 441.65pt>
+<./images/ss3.2.png, id=1396, 847.165pt x 441.65pt>
 File: ./images/ss3.2.png Graphic file (type png)
 <use ./images/ss3.2.png>
 Package pdftex.def Info: ./images/ss3.2.png  used on input line 2774.
@@ -4422,7 +4422,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 3021--3021
  []
 
 [94]
-<./images/ss4.1.png, id=1462, 825.0825pt x 91.34125pt>
+<./images/ss4.1.png, id=1467, 825.0825pt x 91.34125pt>
 File: ./images/ss4.1.png Graphic file (type png)
 <use ./images/ss4.1.png>
 Package pdftex.def Info: ./images/ss4.1.png  used on input line 3030.
@@ -4440,7 +4440,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 3063--3063
  [] [] [] [] [] [] 
  []
 
-<./images/ss4.2.png, id=1465, 801.99625pt x 87.32625pt>
+<./images/ss4.2.png, id=1470, 801.99625pt x 87.32625pt>
 File: ./images/ss4.2.png Graphic file (type png)
 <use ./images/ss4.2.png>
 Package pdftex.def Info: ./images/ss4.2.png  used on input line 3068.
@@ -4458,7 +4458,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 3103--3103
  [] [] [] [] [] [] 
  []
 
-<./images/ss4.3.png, id=1478, 545.03625pt x 25.09375pt>
+<./images/ss4.3.png, id=1483, 545.03625pt x 25.09375pt>
 File: ./images/ss4.3.png Graphic file (type png)
 <use ./images/ss4.3.png>
 Package pdftex.def Info: ./images/ss4.3.png  used on input line 3108.
@@ -4506,7 +4506,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 3159--3159
  [] [] [] [] [] [] 
  []
 
-<./images/ss5.1.png, id=1491, 336.25626pt x 716.6775pt>
+<./images/ss5.1.png, id=1496, 336.25626pt x 716.6775pt>
 File: ./images/ss5.1.png Graphic file (type png)
 <use ./images/ss5.1.png>
 Package pdftex.def Info: ./images/ss5.1.png  used on input line 3164.
@@ -4550,7 +4550,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 3237--3237
  [] [] [] [] [] [] 
  []
 
-<./images/ss5.2.png, id=1516, 520.94624pt x 510.90875pt>
+<./images/ss5.2.png, id=1521, 520.94624pt x 510.90875pt>
 File: ./images/ss5.2.png Graphic file (type png)
 <use ./images/ss5.2.png>
 Package pdftex.def Info: ./images/ss5.2.png  used on input line 3242.
@@ -4600,7 +4600,7 @@ Package pdftex.def Info: ./images/ss5.2.png  used on input line 3242.
 \openout4 = `main.pyg'.
 
  (./_minted-main/519D7E6BAA4FC8B59BCD980F89723F5EDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss5.3.png, id=1537, 653.44125pt x 611.28375pt>
+<./images/ss5.3.png, id=1542, 653.44125pt x 611.28375pt>
 File: ./images/ss5.3.png Graphic file (type png)
 <use ./images/ss5.3.png>
 Package pdftex.def Info: ./images/ss5.3.png  used on input line 3289.
@@ -4620,7 +4620,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 3312--3312
  [] [] [] [] [] [] 
  []
 
-<./images/ss5.4.png, id=1547, 531.9875pt x 198.7425pt>
+<./images/ss5.4.png, id=1552, 531.9875pt x 198.7425pt>
 File: ./images/ss5.4.png Graphic file (type png)
 <use ./images/ss5.4.png>
 Package pdftex.def Info: ./images/ss5.4.png  used on input line 3317.
@@ -4877,7 +4877,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 3493--3493
  [] [] [] [] [] [] 
  []
 
-<./images/ss5.5.png, id=1591, 1279.78125pt x 284.06125pt>
+<./images/ss5.5.png, id=1596, 1279.78125pt x 284.06125pt>
 File: ./images/ss5.5.png Graphic file (type png)
 <use ./images/ss5.5.png>
 Package pdftex.def Info: ./images/ss5.5.png  used on input line 3498.
@@ -4909,7 +4909,7 @@ Package pdftex.def Info: ./images/ss5.5.png  used on input line 3498.
 \openout4 = `main.pyg'.
 
  (./_minted-main/7C541B516C88817AFCDC0256050A94CADCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss5.6.png, id=1592, 1684.2925pt x 1028.84375pt>
+<./images/ss5.6.png, id=1597, 1684.2925pt x 1028.84375pt>
 File: ./images/ss5.6.png Graphic file (type png)
 <use ./images/ss5.6.png>
 Package pdftex.def Info: ./images/ss5.6.png  used on input line 3510.
@@ -4968,7 +4968,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 3543--3543
  [] [] [] [] [] [] 
  []
 
-<./images/ss5.7.png, id=1603, 351.3125pt x 289.08pt>
+<./images/ss5.7.png, id=1608, 351.3125pt x 289.08pt>
 File: ./images/ss5.7.png Graphic file (type png)
 <use ./images/ss5.7.png>
 Package pdftex.def Info: ./images/ss5.7.png  used on input line 3548.
@@ -5006,7 +5006,7 @@ Package pdftex.def Info: ./images/ss5.7.png  used on input line 3548.
 \openout4 = `main.pyg'.
 
  (./_minted-main/F7E4492971F57F28D0E84B9979BBE1A5DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss5.8.png, id=1612, 448.67625pt x 613.29124pt>
+<./images/ss5.8.png, id=1617, 448.67625pt x 613.29124pt>
 File: ./images/ss5.8.png Graphic file (type png)
 <use ./images/ss5.8.png>
 Package pdftex.def Info: ./images/ss5.8.png  used on input line 3558.
@@ -5160,7 +5160,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 3650--3650
 \openout4 = `main.pyg'.
 
 (./_minted-main/C77E81851C491083002351ED1470B584DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss5.9.png, id=1639, 881.2925pt x 300.12125pt>
+<./images/ss5.9.png, id=1644, 881.2925pt x 300.12125pt>
 File: ./images/ss5.9.png Graphic file (type png)
 <use ./images/ss5.9.png>
 Package pdftex.def Info: ./images/ss5.9.png  used on input line 3659.
@@ -5224,7 +5224,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 3728--3728
  []
 
 [114]
-<./images/ss5.10.png, id=1661, 1686.3pt x 1053.9375pt>
+<./images/ss5.10.png, id=1667, 1686.3pt x 1053.9375pt>
 File: ./images/ss5.10.png Graphic file (type png)
 <use ./images/ss5.10.png>
 Package pdftex.def Info: ./images/ss5.10.png  used on input line 3735.
@@ -5348,7 +5348,7 @@ Overfull \hbox (18.38217pt too wide) in paragraph at lines 3900--3901
 \openout4 = `main.pyg'.
 
  (./_minted-main/C4DD4A7415DABC1EB43EE1DD5C9D2B47DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss6.1.png, id=1689, 553.06625pt x 591.20876pt>
+<./images/ss6.1.png, id=1694, 553.06625pt x 591.20876pt>
 File: ./images/ss6.1.png Graphic file (type png)
 <use ./images/ss6.1.png>
 Package pdftex.def Info: ./images/ss6.1.png  used on input line 3910.
@@ -5741,7 +5741,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 4313--4313
  []
 
 [129]
-<./images/ss8.1.png, id=1800, 640.3925pt x 82.3075pt>
+<./images/ss8.1.png, id=1805, 640.3925pt x 82.3075pt>
 File: ./images/ss8.1.png Graphic file (type png)
 <use ./images/ss8.1.png>
 Package pdftex.def Info: ./images/ss8.1.png  used on input line 4318.
@@ -5813,7 +5813,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 4398--4398
 \openout4 = `main.pyg'.
 
 (./_minted-main/2C3338F9D148B311245EBC29B62474C7DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [131]
-<./images/mnistExamples.png, id=1820, 1114.1625pt x 845.1575pt>
+<./images/mnistExamples.png, id=1825, 1114.1625pt x 845.1575pt>
 File: ./images/mnistExamples.png Graphic file (type png)
 <use ./images/mnistExamples.png>
 Package pdftex.def Info: ./images/mnistExamples.png  used on input line 4412.
@@ -5915,7 +5915,7 @@ Overfull \hbox (1.38881pt too wide) in paragraph at lines 4539--4540
 []\OT1/cmr/m/n/12 We then need to im-port the []\OT1/cmtt/m/n/12 class[] []MultilayerPerceptron[] \OT1/cmr/m/n/12 from the \OT1/cmtt/m/n/12 neural_[]network[].[]py
  []
 
-<./images/ss9.1.png, id=1851, 564.1075pt x 69.25874pt>
+<./images/ss9.1.png, id=1856, 564.1075pt x 69.25874pt>
 File: ./images/ss9.1.png Graphic file (type png)
 <use ./images/ss9.1.png>
 Package pdftex.def Info: ./images/ss9.1.png  used on input line 4543.
@@ -6102,13 +6102,13 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 4719--4719
  [] [] [] [] [] [] 
  []
 
-<./images/ss9.2.png, id=1889, 589.20125pt x 151.56625pt>
+<./images/ss9.2.png, id=1894, 589.20125pt x 151.56625pt>
 File: ./images/ss9.2.png Graphic file (type png)
 <use ./images/ss9.2.png>
 Package pdftex.def Info: ./images/ss9.2.png  used on input line 4724.
 (pdftex.def)             Requested size: 398.33858pt x 102.46931pt.
 [138]
-<./images/ss9.3.png, id=1898, 627.34375pt x 145.54375pt>
+<./images/ss9.3.png, id=1903, 627.34375pt x 145.54375pt>
 File: ./images/ss9.3.png Graphic file (type png)
 <use ./images/ss9.3.png>
 Package pdftex.def Info: ./images/ss9.3.png  used on input line 4732.
@@ -6125,7 +6125,7 @@ Package pdftex.def Info: ./images/ss9.3.png  used on input line 4732.
 \openout4 = `main.pyg'.
 
  (./_minted-main/5C5686C044D4C09200769D4C1D6B1075DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss9.4.png, id=1900, 625.33624pt x 148.555pt>
+<./images/ss9.4.png, id=1905, 625.33624pt x 148.555pt>
 File: ./images/ss9.4.png Graphic file (type png)
 <use ./images/ss9.4.png>
 Package pdftex.def Info: ./images/ss9.4.png  used on input line 4750.
@@ -6277,7 +6277,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 4974--4974
  [] [] [] [] [] [] 
  []
 
-<./images/ss10.1.png, id=1949, 667.49374pt x 466.74374pt>
+<./images/ss10.1.png, id=1954, 667.49374pt x 466.74374pt>
 File: ./images/ss10.1.png Graphic file (type png)
 <use ./images/ss10.1.png>
 Package pdftex.def Info: ./images/ss10.1.png  used on input line 4979.
@@ -6331,7 +6331,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5059--5059
  [] [] [] [] [] [] 
  []
 
-<./images/ss10.2.png, id=1970, 668.4975pt x 423.5825pt>
+<./images/ss10.2.png, id=1975, 668.4975pt x 423.5825pt>
 File: ./images/ss10.2.png Graphic file (type png)
 <use ./images/ss10.2.png>
 Package pdftex.def Info: ./images/ss10.2.png  used on input line 5064.
@@ -6398,7 +6398,7 @@ Underfull \hbox (badness 3769) in paragraph at lines 5158--5158
 \openout4 = `main.pyg'.
 
  (./_minted-main/597F8227CB722C2B32891C16985018FEDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss11.1.png, id=1996, 573.14125pt x 67.25125pt>
+<./images/ss11.1.png, id=2001, 573.14125pt x 67.25125pt>
 File: ./images/ss11.1.png Graphic file (type png)
 <use ./images/ss11.1.png>
 Package pdftex.def Info: ./images/ss11.1.png  used on input line 5189.
@@ -6412,7 +6412,7 @@ Package pdftex.def Info: ./images/ss11.1.png  used on input line 5189.
 \openout4 = `main.pyg'.
 
  (./_minted-main/2909A2C64757CE93DAA60E3CFC653EF1DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss11.2.png, id=1998, 1686.3pt x 1028.84375pt>
+<./images/ss11.2.png, id=2003, 1686.3pt x 1028.84375pt>
 File: ./images/ss11.2.png Graphic file (type png)
 <use ./images/ss11.2.png>
 Package pdftex.def Info: ./images/ss11.2.png  used on input line 5197.
@@ -6492,12 +6492,12 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5220--5220
 \openout4 = `main.pyg'.
 
  (./_minted-main/845A23BFBED9E43C4C866FA474BE7AE5DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [151]
-<./images/ss11.3.png, id=2017, 1686.3pt x 1027.84pt>
+<./images/ss11.3.png, id=2022, 1686.3pt x 1027.84pt>
 File: ./images/ss11.3.png Graphic file (type png)
 <use ./images/ss11.3.png>
 Package pdftex.def Info: ./images/ss11.3.png  used on input line 5273.
 (pdftex.def)             Requested size: 398.33858pt x 242.79712pt.
-<./images/ss11.4.png, id=2019, 1686.3pt x 1028.84375pt>
+<./images/ss11.4.png, id=2024, 1686.3pt x 1028.84375pt>
 File: ./images/ss11.4.png Graphic file (type png)
 <use ./images/ss11.4.png>
 Package pdftex.def Info: ./images/ss11.4.png  used on input line 5283.
@@ -6546,7 +6546,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5304--5304
 \openout4 = `main.pyg'.
 
  (./_minted-main/AC0E4F99992FDC2FD829C1E39D4A0F85DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss11.5.png, id=2037, 1686.3pt x 1028.84375pt>
+<./images/ss11.5.png, id=2042, 1686.3pt x 1028.84375pt>
 File: ./images/ss11.5.png Graphic file (type png)
 <use ./images/ss11.5.png>
 Package pdftex.def Info: ./images/ss11.5.png  used on input line 5327.
@@ -6604,7 +6604,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5348--5348
 \openout4 = `main.pyg'.
 
  (./_minted-main/C61F4BC796A67156383F7C7962A95683DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss11.6.png, id=2047, 1686.3pt x 1028.84375pt>
+<./images/ss11.6.png, id=2052, 1686.3pt x 1028.84375pt>
 File: ./images/ss11.6.png Graphic file (type png)
 <use ./images/ss11.6.png>
 Package pdftex.def Info: ./images/ss11.6.png  used on input line 5377.
@@ -6642,7 +6642,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5400--5400
 \openout4 = `main.pyg'.
 
  (./_minted-main/79F5C9AEC1851D24424DE38AD3DE6F98DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [156 <./images/ss11.6.png>]
-<./images/ss12.1.png, id=2066, 1686.3pt x 1026.83624pt>
+<./images/ss12.1.png, id=2071, 1686.3pt x 1026.83624pt>
 File: ./images/ss12.1.png Graphic file (type png)
 <use ./images/ss12.1.png>
 Package pdftex.def Info: ./images/ss12.1.png  used on input line 5422.
@@ -6690,7 +6690,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5443--5443
 \openout4 = `main.pyg'.
 
  (./_minted-main/2C2685294556C7D5EE1DF2782A19D82CDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss12.2.png, id=2076, 1686.3pt x 1025.8325pt>
+<./images/ss12.2.png, id=2082, 1686.3pt x 1025.8325pt>
 File: ./images/ss12.2.png Graphic file (type png)
 <use ./images/ss12.2.png>
 Package pdftex.def Info: ./images/ss12.2.png  used on input line 5481.
@@ -6765,7 +6765,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5502--5502
 \openout4 = `main.pyg'.
 
  (./_minted-main/86AF1DFB255078AFBD70F5E4C07899FBDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss12.3.png, id=2093, 1686.3pt x 1026.83624pt>
+<./images/ss12.3.png, id=2098, 1686.3pt x 1026.83624pt>
 File: ./images/ss12.3.png Graphic file (type png)
 <use ./images/ss12.3.png>
 Package pdftex.def Info: ./images/ss12.3.png  used on input line 5532.
@@ -6959,13 +6959,13 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5697--5697
 \openout4 = `main.pyg'.
 
  (./_minted-main/35AF1A63BCB818EABA29529A63B24843DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss12.4.png, id=2137, 505.89pt x 161.60374pt>
+<./images/ss12.4.png, id=2142, 505.89pt x 161.60374pt>
 File: ./images/ss12.4.png Graphic file (type png)
 <use ./images/ss12.4.png>
 Package pdftex.def Info: ./images/ss12.4.png  used on input line 5739.
 (pdftex.def)             Requested size: 341.43306pt x 109.07042pt.
  [165]
-<./images/ss12.5.png, id=2145, 1686.3pt x 1028.84375pt>
+<./images/ss12.5.png, id=2150, 1686.3pt x 1028.84375pt>
 File: ./images/ss12.5.png Graphic file (type png)
 <use ./images/ss12.5.png>
 Package pdftex.def Info: ./images/ss12.5.png  used on input line 5747.
@@ -7089,7 +7089,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5814--5814
 \openout4 = `main.pyg'.
 
  (./_minted-main/8E68A3F2E22C19E6BD3980A7370DCDB2DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss12.6.png, id=2175, 1686.3pt x 1026.83624pt>
+<./images/ss12.6.png, id=2180, 1686.3pt x 1026.83624pt>
 File: ./images/ss12.6.png Graphic file (type png)
 <use ./images/ss12.6.png>
 Package pdftex.def Info: ./images/ss12.6.png  used on input line 5854.
@@ -7115,7 +7115,7 @@ Package pdftex.def Info: ./images/ss12.6.png  used on input line 5854.
 \openout4 = `main.pyg'.
 
  (./_minted-main/5D37B47846C6B318D7D7E5FD3EFA977DDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss12.7.png, id=2182, 1686.3pt x 1028.84375pt>
+<./images/ss12.7.png, id=2187, 1686.3pt x 1028.84375pt>
 File: ./images/ss12.7.png Graphic file (type png)
 <use ./images/ss12.7.png>
 Package pdftex.def Info: ./images/ss12.7.png  used on input line 5870.
@@ -7222,7 +7222,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 5891--5891
 \openout4 = `main.pyg'.
 
  (./_minted-main/79F5C9AEC1851D24424DE38AD3DE6F98DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss13.1.png, id=2202, 1686.3pt x 1026.83624pt>
+<./images/ss13.1.png, id=2207, 1686.3pt x 1026.83624pt>
 File: ./images/ss13.1.png Graphic file (type png)
 <use ./images/ss13.1.png>
 Package pdftex.def Info: ./images/ss13.1.png  used on input line 5914.
@@ -7625,7 +7625,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 6227--6227
  [] [] [] [] [] [] 
  []
 
-<./images/ss13.2.png, id=2272, 1228.59pt x 244.915pt>
+<./images/ss13.2.png, id=2277, 1228.59pt x 244.915pt>
 File: ./images/ss13.2.png Graphic file (type png)
 <use ./images/ss13.2.png>
 Package pdftex.def Info: ./images/ss13.2.png  used on input line 6232.
@@ -7660,7 +7660,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 6265--6265
  []
 
 [179 <./images/ss13.2.png>]
-<./images/ss13.3.png, id=2285, 1500.60625pt x 391.4625pt>
+<./images/ss13.3.png, id=2290, 1500.60625pt x 391.4625pt>
 File: ./images/ss13.3.png Graphic file (type png)
 <use ./images/ss13.3.png>
 Package pdftex.def Info: ./images/ss13.3.png  used on input line 6270.
@@ -7689,7 +7689,7 @@ Package pdftex.def Info: ./images/ss13.3.png  used on input line 6270.
 \openout4 = `main.pyg'.
 
  (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364EDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss13.4.png, id=2287, 1505.625pt x 131.49126pt>
+<./images/ss13.4.png, id=2292, 1505.625pt x 131.49126pt>
 File: ./images/ss13.4.png Graphic file (type png)
 <use ./images/ss13.4.png>
 Package pdftex.def Info: ./images/ss13.4.png  used on input line 6291.
@@ -7759,7 +7759,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 6312--6312
 \openout4 = `main.pyg'.
 
  (./_minted-main/845A23BFBED9E43C4C866FA474BE7AE5DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss13.5.png, id=2307, 1686.3pt x 1025.8325pt>
+<./images/ss13.5.png, id=2312, 1686.3pt x 1025.8325pt>
 File: ./images/ss13.5.png Graphic file (type png)
 <use ./images/ss13.5.png>
 Package pdftex.def Info: ./images/ss13.5.png  used on input line 6353.
@@ -7810,7 +7810,7 @@ Underfull \hbox (badness 2158) in paragraph at lines 6418--6418
 \openout4 = `main.pyg'.
 
  (./_minted-main/889CAD928691830B1C01F9F25626F815DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [183]
-<./images/shareTrue.png, id=2327, 652.4375pt x 56.21pt>
+<./images/shareTrue.png, id=2332, 652.4375pt x 56.21pt>
 File: ./images/shareTrue.png Graphic file (type png)
 <use ./images/shareTrue.png>
 Package pdftex.def Info: ./images/shareTrue.png  used on input line 6430.
@@ -8805,7 +8805,7 @@ Underfull \hbox (badness 1231) in paragraph at lines 7523--7523
 \openout4 = `main.pyg'.
 
  (./_minted-main/8671DF2B54AC16246A7A4B49A141FA9FDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss14.1.png, id=2575, 541.02126pt x 182.6825pt>
+<./images/ss14.1.png, id=2580, 541.02126pt x 182.6825pt>
 File: ./images/ss14.1.png Graphic file (type png)
 <use ./images/ss14.1.png>
 Package pdftex.def Info: ./images/ss14.1.png  used on input line 7546.
@@ -8826,12 +8826,12 @@ Package pdftex.def Info: ./images/ss14.1.png  used on input line 7546.
 \openout4 = `main.pyg'.
 
  (./_minted-main/7776A198B37DFE3C83DA8F7444C16413DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss14.2.png, id=2583, 540.0175pt x 191.71625pt>
+<./images/ss14.2.png, id=2588, 540.0175pt x 191.71625pt>
 File: ./images/ss14.2.png Graphic file (type png)
 <use ./images/ss14.2.png>
 Package pdftex.def Info: ./images/ss14.2.png  used on input line 7567.
 (pdftex.def)             Requested size: 341.43306pt x 121.21774pt.
-<./images/ss14.3.png, id=2585, 276.03125pt x 101.37875pt>
+<./images/ss14.3.png, id=2590, 276.03125pt x 101.37875pt>
 File: ./images/ss14.3.png Graphic file (type png)
 <use ./images/ss14.3.png>
 Package pdftex.def Info: ./images/ss14.3.png  used on input line 7575.
@@ -8878,12 +8878,12 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 7598--7598
 \openout4 = `main.pyg'.
 
  (./_minted-main/9EA8983A72E34E68F3A5CE57447F60B8DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss14.4.png, id=2607, 1911.14pt x 983.675pt>
+<./images/ss14.4.png, id=2612, 1911.14pt x 983.675pt>
 File: ./images/ss14.4.png Graphic file (type png)
 <use ./images/ss14.4.png>
 Package pdftex.def Info: ./images/ss14.4.png  used on input line 7620.
 (pdftex.def)             Requested size: 398.33858pt x 205.01685pt.
-<./images/ss14.5.png, id=2609, 292.09125pt x 324.21124pt>
+<./images/ss14.5.png, id=2614, 292.09125pt x 324.21124pt>
 File: ./images/ss14.5.png Graphic file (type png)
 <use ./images/ss14.5.png>
 Package pdftex.def Info: ./images/ss14.5.png  used on input line 7628.
@@ -8934,7 +8934,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 7651--7651
 \openout3 = `main.pyg'.
 
  (./_minted-main/A1AA0A576F50577E5C2D1B700A0AFAA4DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [221 <./images/ss14.5.png>]
-<./images/ss14.6.png, id=2625, 1909.1325pt x 982.67125pt>
+<./images/ss14.6.png, id=2630, 1909.1325pt x 982.67125pt>
 File: ./images/ss14.6.png Graphic file (type png)
 <use ./images/ss14.6.png>
 Package pdftex.def Info: ./images/ss14.6.png  used on input line 7670.
@@ -8944,18 +8944,18 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 7693--7693
  [] [] [] [] [] [] 
  []
 
-<./images/ss15.1.png, id=2629, 1904.11375pt x 980.66376pt>
+<./images/ss15.1.png, id=2634, 1904.11375pt x 980.66376pt>
 File: ./images/ss15.1.png Graphic file (type png)
 <use ./images/ss15.1.png>
 Package pdftex.def Info: ./images/ss15.1.png  used on input line 7703.
 (pdftex.def)             Requested size: 398.33858pt x 205.15239pt.
 [222 <./images/ss14.6.png>]
-<./images/ss15.2.png, id=2639, 760.8425pt x 354.32375pt>
+<./images/ss15.2.png, id=2644, 760.8425pt x 354.32375pt>
 File: ./images/ss15.2.png Graphic file (type png)
 <use ./images/ss15.2.png>
 Package pdftex.def Info: ./images/ss15.2.png  used on input line 7711.
 (pdftex.def)             Requested size: 341.43306pt x 159.00627pt.
-<./images/ss15.3.png, id=2640, 623.32875pt x 428.60126pt>
+<./images/ss15.3.png, id=2645, 623.32875pt x 428.60126pt>
 File: ./images/ss15.3.png Graphic file (type png)
 <use ./images/ss15.3.png>
 Package pdftex.def Info: ./images/ss15.3.png  used on input line 7719.
@@ -8988,7 +8988,7 @@ Package pdftex.def Info: ./images/ss15.3.png  used on input line 7719.
 \openout4 = `main.pyg'.
 
  (./_minted-main/6711F799EB9198AFABA01C3218D1F7FDDCFB19FD050096AD3D98D480D02DA0ED.pygtex) [224 <./images/ss15.3.png>]
-<./images/ss15.4.png, id=2656, 1429.34pt x 319.1925pt>
+<./images/ss15.4.png, id=2661, 1429.34pt x 319.1925pt>
 File: ./images/ss15.4.png Graphic file (type png)
 <use ./images/ss15.4.png>
 Package pdftex.def Info: ./images/ss15.4.png  used on input line 7751.
@@ -9018,7 +9018,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 7772--7772
 \openout4 = `main.pyg'.
 
  (./_minted-main/5EBD7F7C387EBB31C14E3C701023AC97DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss15.5.png, id=2661, 651.43375pt x 49.18375pt>
+<./images/ss15.5.png, id=2666, 651.43375pt x 49.18375pt>
 File: ./images/ss15.5.png Graphic file (type png)
 <use ./images/ss15.5.png>
 Package pdftex.def Info: ./images/ss15.5.png  used on input line 7794.
@@ -9074,7 +9074,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 7856--7856
 \openout4 = `main.pyg'.
 
  (./_minted-main/09A4274EA24925D627622045E6ADF26CDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss15.6.png, id=2685, 627.34375pt x 380.42125pt>
+<./images/ss15.6.png, id=2690, 627.34375pt x 380.42125pt>
 File: ./images/ss15.6.png Graphic file (type png)
 <use ./images/ss15.6.png>
 Package pdftex.def Info: ./images/ss15.6.png  used on input line 7885.
@@ -9085,17 +9085,17 @@ Package pdftex.def Info: ./images/ss15.6.png  used on input line 7885.
 \openout4 = `main.pyg'.
 
  (./_minted-main/D265F27851D6B048E64576475674922FDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss15.7a.png, id=2686, 468.75125pt x 511.9125pt>
+<./images/ss15.7a.png, id=2691, 468.75125pt x 511.9125pt>
 File: ./images/ss15.7a.png Graphic file (type png)
 <use ./images/ss15.7a.png>
 Package pdftex.def Info: ./images/ss15.7a.png  used on input line 7895.
 (pdftex.def)             Requested size: 211.38832pt x 230.8506pt.
-<./images/ss15.7b.png, id=2687, 468.75125pt x 511.9125pt>
+<./images/ss15.7b.png, id=2692, 468.75125pt x 511.9125pt>
 File: ./images/ss15.7b.png Graphic file (type png)
 <use ./images/ss15.7b.png>
 Package pdftex.def Info: ./images/ss15.7b.png  used on input line 7900.
 (pdftex.def)             Requested size: 211.38832pt x 230.8506pt.
-<./images/ss15.7c.png, id=2688, 468.75125pt x 511.9125pt>
+<./images/ss15.7c.png, id=2693, 468.75125pt x 511.9125pt>
 File: ./images/ss15.7c.png Graphic file (type png)
 <use ./images/ss15.7c.png>
 Package pdftex.def Info: ./images/ss15.7c.png  used on input line 7906.
@@ -9180,12 +9180,12 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 7929--7929
 \openout3 = `main.pyg'.
 
  (./_minted-main/8D74F38520D0AFD898C0FB60BDE69D30DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss15.8a.png, id=2716, 593.21625pt x 511.9125pt>
+<./images/ss15.8a.png, id=2721, 593.21625pt x 511.9125pt>
 File: ./images/ss15.8a.png Graphic file (type png)
 <use ./images/ss15.8a.png>
 Package pdftex.def Info: ./images/ss15.8a.png  used on input line 7996.
 (pdftex.def)             Requested size: 211.38832pt x 182.41368pt.
-<./images/ss15.8b.png, id=2717, 593.21625pt x 511.9125pt>
+<./images/ss15.8b.png, id=2722, 593.21625pt x 511.9125pt>
 File: ./images/ss15.8b.png Graphic file (type png)
 <use ./images/ss15.8b.png>
 Package pdftex.def Info: ./images/ss15.8b.png  used on input line 8001.
@@ -9196,7 +9196,7 @@ Package pdftex.def Info: ./images/ss15.8b.png  used on input line 8001.
 \openout4 = `main.pyg'.
 
  (./_minted-main/43CEE7B83891859FB0D19209BACE8785DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss15.8c.png, id=2718, 593.21625pt x 511.9125pt>
+<./images/ss15.8c.png, id=2723, 593.21625pt x 511.9125pt>
 File: ./images/ss15.8c.png Graphic file (type png)
 <use ./images/ss15.8c.png>
 Package pdftex.def Info: ./images/ss15.8c.png  used on input line 8007.
@@ -9207,7 +9207,7 @@ Package pdftex.def Info: ./images/ss15.8c.png  used on input line 8007.
 \openout4 = `main.pyg'.
 
  (./_minted-main/286755FAD04869CA523320ACCE0DC6A4DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss15.8d.png, id=2719, 593.21625pt x 511.9125pt>
+<./images/ss15.8d.png, id=2724, 593.21625pt x 511.9125pt>
 File: ./images/ss15.8d.png Graphic file (type png)
 <use ./images/ss15.8d.png>
 Package pdftex.def Info: ./images/ss15.8d.png  used on input line 8012.
@@ -9218,12 +9218,12 @@ Package pdftex.def Info: ./images/ss15.8d.png  used on input line 8012.
 \openout4 = `main.pyg'.
 
  (./_minted-main/7576F3A00F6DE47B0C72C5BAF2D505B0DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss15.8e.png, id=2720, 593.21625pt x 511.9125pt>
+<./images/ss15.8e.png, id=2725, 593.21625pt x 511.9125pt>
 File: ./images/ss15.8e.png Graphic file (type png)
 <use ./images/ss15.8e.png>
 Package pdftex.def Info: ./images/ss15.8e.png  used on input line 8018.
 (pdftex.def)             Requested size: 211.38832pt x 182.41368pt.
-<./images/ss15.8f.png, id=2721, 593.21625pt x 511.9125pt>
+<./images/ss15.8f.png, id=2726, 593.21625pt x 511.9125pt>
 File: ./images/ss15.8f.png Graphic file (type png)
 <use ./images/ss15.8f.png>
 Package pdftex.def Info: ./images/ss15.8f.png  used on input line 8023.
@@ -9374,7 +9374,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8046--8046
 \openout4 = `main.pyg'.
 
  (./_minted-main/F443AF2CE3E741FFB66DBD51DEC399C1DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss15.9.png, id=2753, 652.4375pt x 68.255pt>
+<./images/ss15.9.png, id=2759, 652.4375pt x 68.255pt>
 File: ./images/ss15.9.png Graphic file (type png)
 <use ./images/ss15.9.png>
 Package pdftex.def Info: ./images/ss15.9.png  used on input line 8071.
@@ -9427,7 +9427,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8094--8094
 \openout4 = `main.pyg'.
 
  (./_minted-main/236041BD46FD597AEEB549A5C3CE89B0DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss15.10.png, id=2766, 1093.08376pt x 101.37875pt>
+<./images/ss15.10.png, id=2771, 1093.08376pt x 101.37875pt>
 File: ./images/ss15.10.png Graphic file (type png)
 <use ./images/ss15.10.png>
 Package pdftex.def Info: ./images/ss15.10.png  used on input line 8118.
@@ -9539,22 +9539,22 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8182--8182
 \openout3 = `main.pyg'.
 
  (./_minted-main/C1986992827ED033932E2310A33CF5A6DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss16.1a.png, id=2787, 601.24625pt x 429.605pt>
+<./images/ss16.1a.png, id=2792, 601.24625pt x 429.605pt>
 File: ./images/ss16.1a.png Graphic file (type png)
 <use ./images/ss16.1a.png>
 Package pdftex.def Info: ./images/ss16.1a.png  used on input line 8239.
 (pdftex.def)             Requested size: 211.38832pt x 151.03918pt.
-<./images/ss16.1b.png, id=2788, 601.24625pt x 429.605pt>
+<./images/ss16.1b.png, id=2793, 601.24625pt x 429.605pt>
 File: ./images/ss16.1b.png Graphic file (type png)
 <use ./images/ss16.1b.png>
 Package pdftex.def Info: ./images/ss16.1b.png  used on input line 8244.
 (pdftex.def)             Requested size: 211.38832pt x 151.03918pt.
-<./images/ss16.1c.png, id=2789, 601.24625pt x 429.605pt>
+<./images/ss16.1c.png, id=2794, 601.24625pt x 429.605pt>
 File: ./images/ss16.1c.png Graphic file (type png)
 <use ./images/ss16.1c.png>
 Package pdftex.def Info: ./images/ss16.1c.png  used on input line 8250.
 (pdftex.def)             Requested size: 211.38832pt x 151.03918pt.
-<./images/ss16.1d.png, id=2790, 601.24625pt x 429.605pt>
+<./images/ss16.1d.png, id=2795, 601.24625pt x 429.605pt>
 File: ./images/ss16.1d.png Graphic file (type png)
 <use ./images/ss16.1d.png>
 Package pdftex.def Info: ./images/ss16.1d.png  used on input line 8255.
@@ -9674,12 +9674,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 8369--8369
 \openout4 = `main.pyg'.
 
  (./_minted-main/901139ED9E1DC45DDEA93BCF67AAF313DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss17.1.png, id=2833, 1903.11pt x 977.6525pt>
+<./images/ss17.1.png, id=2838, 1903.11pt x 977.6525pt>
 File: ./images/ss17.1.png Graphic file (type png)
 <use ./images/ss17.1.png>
 Package pdftex.def Info: ./images/ss17.1.png  used on input line 8391.
 (pdftex.def)             Requested size: 398.33858pt x 204.62686pt.
-<./images/ss17.2.png, id=2835, 213.79875pt x 201.75375pt>
+<./images/ss17.2.png, id=2840, 213.79875pt x 201.75375pt>
 File: ./images/ss17.2.png Graphic file (type png)
 <use ./images/ss17.2.png>
 Package pdftex.def Info: ./images/ss17.2.png  used on input line 8399.
@@ -9719,12 +9719,12 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8422--8422
 \openout4 = `main.pyg'.
 
  (./_minted-main/15C5897F7E3CF57E1A24E5DE45DC5913DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss17.3a.png, id=2853, 533.995pt x 953.5625pt>
+<./images/ss17.3a.png, id=2858, 533.995pt x 953.5625pt>
 File: ./images/ss17.3a.png Graphic file (type png)
 <use ./images/ss17.3a.png>
 Package pdftex.def Info: ./images/ss17.3a.png  used on input line 8460.
 (pdftex.def)             Requested size: 211.38832pt x 377.47514pt.
-<./images/ss17.3b.png, id=2854, 366.36874pt x 589.20125pt>
+<./images/ss17.3b.png, id=2859, 366.36874pt x 589.20125pt>
 File: ./images/ss17.3b.png Graphic file (type png)
 <use ./images/ss17.3b.png>
 Package pdftex.def Info: ./images/ss17.3b.png  used on input line 8465.
@@ -9808,7 +9808,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8490--8490
 \openout4 = `main.pyg'.
 
  (./_minted-main/89EAF2D2E55F85917819CE300EB6FF5ADCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss17.4.png, id=2874, 587.19376pt x 279.0425pt>
+<./images/ss17.4.png, id=2879, 587.19376pt x 279.0425pt>
 File: ./images/ss17.4.png Graphic file (type png)
 <use ./images/ss17.4.png>
 Package pdftex.def Info: ./images/ss17.4.png  used on input line 8533.
@@ -9864,7 +9864,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8554--8554
 \openout3 = `main.pyg'.
 
  (./_minted-main/0F014533EC10F7CF161AD0E1171ED2A5DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [247]
-<./images/ss17.5.png, id=2899, 1507.6325pt x 707.64375pt>
+<./images/ss17.5.png, id=2905, 1507.6325pt x 707.64375pt>
 File: ./images/ss17.5.png Graphic file (type png)
 <use ./images/ss17.5.png>
 Package pdftex.def Info: ./images/ss17.5.png  used on input line 8602.
@@ -10086,7 +10086,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8761--8761
 \openout4 = `main.pyg'.
 
  (./_minted-main/EAB3B89C707D33C9DF455B324CBA191CDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss18.1.png, id=2948, 462.528pt x 346.896pt>
+<./images/ss18.1.png, id=2953, 462.528pt x 346.896pt>
 File: ./images/ss18.1.png Graphic file (type png)
 <use ./images/ss18.1.png>
 Package pdftex.def Info: ./images/ss18.1.png  used on input line 8784.
@@ -10132,7 +10132,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8807--8807
 \openout4 = `main.pyg'.
 
  (./_minted-main/5E3483981684FEC31BAC0037388AC43DDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss18.2.png, id=2959, 509.86485pt x 424.9476pt>
+<./images/ss18.2.png, id=2964, 509.86485pt x 424.9476pt>
 File: ./images/ss18.2.png Graphic file (type png)
 <use ./images/ss18.2.png>
 Package pdftex.def Info: ./images/ss18.2.png  used on input line 8822.
@@ -10164,7 +10164,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8845--8845
 \openout4 = `main.pyg'.
 
  (./_minted-main/9EA8983A72E34E68F3A5CE57447F60B8DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss18.3.png, id=2971, 1905.1175pt x 979.66pt>
+<./images/ss18.3.png, id=2976, 1905.1175pt x 979.66pt>
 File: ./images/ss18.3.png Graphic file (type png)
 <use ./images/ss18.3.png>
 Package pdftex.def Info: ./images/ss18.3.png  used on input line 8860.
@@ -10256,7 +10256,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8940--8940
 \openout4 = `main.pyg'.
 
  (./_minted-main/35FECDE0ACF3DBA2087A1BEFFB2CBFF6DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss19.1.png, id=2994, 375.4025pt x 195.73125pt>
+<./images/ss19.1.png, id=2999, 375.4025pt x 195.73125pt>
 File: ./images/ss19.1.png Graphic file (type png)
 <use ./images/ss19.1.png>
 Package pdftex.def Info: ./images/ss19.1.png  used on input line 8959.
@@ -10281,7 +10281,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 8982--8982
  [] [] [] [] [] [] 
  []
 
-<./images/ss19.2.png, id=3005, 1485.55pt x 359.3425pt>
+<./images/ss19.2.png, id=3010, 1485.55pt x 359.3425pt>
 File: ./images/ss19.2.png Graphic file (type png)
 <use ./images/ss19.2.png>
 Package pdftex.def Info: ./images/ss19.2.png  used on input line 8987.
@@ -10298,7 +10298,7 @@ Package pdftex.def Info: ./images/ss19.2.png  used on input line 8987.
 \openout4 = `main.pyg'.
 
  (./_minted-main/7C47EB1E6B090930DD7B809C8AF29769DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.1.png, id=3017, 1906.12125pt x 979.66pt>
+<./images/ss20.1.png, id=3022, 1906.12125pt x 979.66pt>
 File: ./images/ss20.1.png Graphic file (type png)
 <use ./images/ss20.1.png>
 Package pdftex.def Info: ./images/ss20.1.png  used on input line 9014.
@@ -10427,7 +10427,7 @@ Overfull \hbox (1.54037pt too wide) in paragraph at lines 9082--9083
 \openout4 = `main.pyg'.
 
  (./_minted-main/30E1FAC6249DFE3BFDBE085488ED9C05DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.2.png, id=3037, 1906.12125pt x 979.66pt>
+<./images/ss20.2.png, id=3042, 1906.12125pt x 979.66pt>
 File: ./images/ss20.2.png Graphic file (type png)
 <use ./images/ss20.2.png>
 Package pdftex.def Info: ./images/ss20.2.png  used on input line 9090.
@@ -10541,7 +10541,7 @@ Overfull \hbox (6.44984pt too wide) in paragraph at lines 9167--9168
 []\OT1/cmr/m/n/12 To up-date the ta-ble when we up-load a re-gion file, we can call the []\OT1/cmtt/m/n/12 def[] []updateRegionsTable[]
  []
 
-<./images/ss20.3.png, id=3054, 1511.6475pt x 325.215pt>
+<./images/ss20.3.png, id=3059, 1511.6475pt x 325.215pt>
 File: ./images/ss20.3.png Graphic file (type png)
 <use ./images/ss20.3.png>
 Package pdftex.def Info: ./images/ss20.3.png  used on input line 9171.
@@ -10626,7 +10626,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 9194--9194
 \openout4 = `main.pyg'.
 
  (./_minted-main/3E6301F6C1CF235692AAB61C050806CADCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.4.png, id=3071, 1491.5725pt x 117.43875pt>
+<./images/ss20.4.png, id=3076, 1491.5725pt x 117.43875pt>
 File: ./images/ss20.4.png Graphic file (type png)
 <use ./images/ss20.4.png>
 Package pdftex.def Info: ./images/ss20.4.png  used on input line 9224.
@@ -10673,7 +10673,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 9245--9245
 \openout4 = `main.pyg'.
 
  (./_minted-main/5C679E199B00E427C7770DAF203EC7D3DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.5.png, id=3082, 470.75874pt x 291.0875pt>
+<./images/ss20.5.png, id=3087, 470.75874pt x 291.0875pt>
 File: ./images/ss20.5.png Graphic file (type png)
 <use ./images/ss20.5.png>
 Package pdftex.def Info: ./images/ss20.5.png  used on input line 9262.
@@ -10719,7 +10719,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 9283--9283
 \openout4 = `main.pyg'.
 
  (./_minted-main/3AC0E8403AF6097C14E8083175483F67DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.6.png, id=3093, 479.7925pt x 323.2075pt>
+<./images/ss20.6.png, id=3098, 479.7925pt x 323.2075pt>
 File: ./images/ss20.6.png Graphic file (type png)
 <use ./images/ss20.6.png>
 Package pdftex.def Info: ./images/ss20.6.png  used on input line 9304.
@@ -10750,7 +10750,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 9325--9325
 \openout3 = `main.pyg'.
 
  (./_minted-main/C4945A59394D8D0278D46436ACA57279DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.7.png, id=3101, 1903.11pt x 979.66pt>
+<./images/ss20.7.png, id=3106, 1903.11pt x 979.66pt>
 File: ./images/ss20.7.png Graphic file (type png)
 <use ./images/ss20.7.png>
 Package pdftex.def Info: ./images/ss20.7.png  used on input line 9343.
@@ -10833,17 +10833,17 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 9364--9364
 \openout4 = `main.pyg'.
 
  (./_minted-main/DFDA4F3A3838B601B7FD1B3D43DC77B1DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.8a.png, id=3127, 513.92pt x 402.50375pt>
+<./images/ss20.8a.png, id=3132, 513.92pt x 402.50375pt>
 File: ./images/ss20.8a.png Graphic file (type png)
 <use ./images/ss20.8a.png>
 Package pdftex.def Info: ./images/ss20.8a.png  used on input line 9441.
 (pdftex.def)             Requested size: 211.38832pt x 165.56192pt.
-<./images/ss20.8b.png, id=3128, 513.92pt x 402.50375pt>
+<./images/ss20.8b.png, id=3133, 513.92pt x 402.50375pt>
 File: ./images/ss20.8b.png Graphic file (type png)
 <use ./images/ss20.8b.png>
 Package pdftex.def Info: ./images/ss20.8b.png  used on input line 9446.
 (pdftex.def)             Requested size: 211.38832pt x 165.56192pt.
-<./images/ss20.8c.png, id=3129, 513.92pt x 402.50375pt>
+<./images/ss20.8c.png, id=3134, 513.92pt x 402.50375pt>
 File: ./images/ss20.8c.png Graphic file (type png)
 <use ./images/ss20.8c.png>
 Package pdftex.def Info: ./images/ss20.8c.png  used on input line 9452.
@@ -10969,7 +10969,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 9475--9475
 \openout4 = `main.pyg'.
 
  (./_minted-main/08E9DE24AB150D083240557CEC091D53DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.9.png, id=3157, 366.36874pt x 281.05pt>
+<./images/ss20.9.png, id=3162, 366.36874pt x 281.05pt>
 File: ./images/ss20.9.png Graphic file (type png)
 <use ./images/ss20.9.png>
 Package pdftex.def Info: ./images/ss20.9.png  used on input line 9523.
@@ -11069,7 +11069,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 9591--9591
 \openout4 = `main.pyg'.
 
  (./_minted-main/5297243900FA9815B02A0298401943D2DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.10.png, id=3179, 484.81125pt x 109.40875pt>
+<./images/ss20.10.png, id=3184, 484.81125pt x 109.40875pt>
 File: ./images/ss20.10.png Graphic file (type png)
 <use ./images/ss20.10.png>
 Package pdftex.def Info: ./images/ss20.10.png  used on input line 9620.
@@ -11205,7 +11205,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 9698--9698
 \openout4 = `main.pyg'.
 
  (./_minted-main/43BE2F60A6DB7BF23ED742E2B13AB659DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.11.png, id=3208, 988.69376pt x 140.525pt>
+<./images/ss20.11.png, id=3213, 988.69376pt x 140.525pt>
 File: ./images/ss20.11.png Graphic file (type png)
 <use ./images/ss20.11.png>
 Package pdftex.def Info: ./images/ss20.11.png  used on input line 9747.
@@ -11239,7 +11239,7 @@ Overfull \hbox (11.68831pt too wide) in paragraph at lines 9773--9774
 \openout4 = `main.pyg'.
 
  (./_minted-main/08E9DE24AB150D083240557CEC091D53DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss20.12.png, id=3225, 988.69376pt x 449.68pt>
+<./images/ss20.12.png, id=3230, 988.69376pt x 449.68pt>
 File: ./images/ss20.12.png Graphic file (type png)
 <use ./images/ss20.12.png>
 Package pdftex.def Info: ./images/ss20.12.png  used on input line 9790.
@@ -11265,7 +11265,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 9813--9813
 \openout3 = `main.pyg'.
 
  (./_minted-main/37A3B67847E7F51391814E628D89FC13DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [280 <./images/ss20.12.png>]
-<./images/ss21.1.png, id=3237, 1903.11pt x 974.64125pt>
+<./images/ss21.1.png, id=3242, 1903.11pt x 974.64125pt>
 File: ./images/ss21.1.png Graphic file (type png)
 <use ./images/ss21.1.png>
 Package pdftex.def Info: ./images/ss21.1.png  used on input line 9837.
@@ -11550,7 +11550,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 9968--9968
 \openout4 = `main.pyg'.
 
  (./_minted-main/611630A50F2D779F1CC697841253908FDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss21.2.png, id=3280, 1464.47125pt x 129.48375pt>
+<./images/ss21.2.png, id=3285, 1464.47125pt x 129.48375pt>
 File: ./images/ss21.2.png Graphic file (type png)
 <use ./images/ss21.2.png>
 Package pdftex.def Info: ./images/ss21.2.png  used on input line 9997.
@@ -11660,12 +11660,12 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10018--10018
 \openout3 = `main.pyg'.
 
  (./_minted-main/CDA8A0DA83BD05251F716501EAB356D2DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [288]
-<./images/ss21.3.png, id=3303, 1464.47125pt x 389.455pt>
+<./images/ss21.3.png, id=3308, 1464.47125pt x 389.455pt>
 File: ./images/ss21.3.png Graphic file (type png)
 <use ./images/ss21.3.png>
 Package pdftex.def Info: ./images/ss21.3.png  used on input line 10089.
 (pdftex.def)             Requested size: 398.33858pt x 105.93272pt.
-<./images/ss21.4.png, id=3305, 1465.475pt x 387.4475pt>
+<./images/ss21.4.png, id=3310, 1465.475pt x 387.4475pt>
 File: ./images/ss21.4.png Graphic file (type png)
 <use ./images/ss21.4.png>
 Package pdftex.def Info: ./images/ss21.4.png  used on input line 10097.
@@ -11721,7 +11721,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10122--10122
 \openout4 = `main.pyg'.
 
  (./_minted-main/AD4C2825361B8BACE0440A022A12E23FDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss21.5.png, id=3324, 1086.0575pt x 538.01pt>
+<./images/ss21.5.png, id=3329, 1086.0575pt x 538.01pt>
 File: ./images/ss21.5.png Graphic file (type png)
 <use ./images/ss21.5.png>
 Package pdftex.def Info: ./images/ss21.5.png  used on input line 10153.
@@ -11731,7 +11731,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10174--10174
  [] [] [] [] [] [] 
  []
 
-<./images/ss22.1.png, id=3333, 373.395pt x 199.74625pt>
+<./images/ss22.1.png, id=3338, 373.395pt x 199.74625pt>
 File: ./images/ss22.1.png Graphic file (type png)
 <use ./images/ss22.1.png>
 Package pdftex.def Info: ./images/ss22.1.png  used on input line 10184.
@@ -11752,7 +11752,7 @@ Package pdftex.def Info: ./images/ss22.1.png  used on input line 10184.
 \openout4 = `main.pyg'.
 
  (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364EDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.2.png, id=3343, 372.39125pt x 199.74625pt>
+<./images/ss22.2.png, id=3348, 372.39125pt x 199.74625pt>
 File: ./images/ss22.2.png Graphic file (type png)
 <use ./images/ss22.2.png>
 Package pdftex.def Info: ./images/ss22.2.png  used on input line 10202.
@@ -11857,7 +11857,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10225--10225
 \openout4 = `main.pyg'.
 
  (./_minted-main/69939C1CC0A8C72D110AEC04F93D7B3BDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.3.png, id=3368, 593.21625pt x 413.545pt>
+<./images/ss22.3.png, id=3373, 593.21625pt x 413.545pt>
 File: ./images/ss22.3.png Graphic file (type png)
 <use ./images/ss22.3.png>
 Package pdftex.def Info: ./images/ss22.3.png  used on input line 10280.
@@ -11908,7 +11908,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10336--10336
  [] [] [] [] [] [] 
  []
 
-<./images/ss22.4.png, id=3384, 1463.4675pt x 248.93pt>
+<./images/ss22.4.png, id=3389, 1463.4675pt x 248.93pt>
 File: ./images/ss22.4.png Graphic file (type png)
 <use ./images/ss22.4.png>
 Package pdftex.def Info: ./images/ss22.4.png  used on input line 10344.
@@ -11953,7 +11953,7 @@ Package pdftex.def Info: ./images/ss22.4.png  used on input line 10344.
 \openout4 = `main.pyg'.
 
  (./_minted-main/5B2FDEF4D322F5648337DBEDD921B687DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.5.png, id=3396, 1456.44125pt x 236.885pt>
+<./images/ss22.5.png, id=3401, 1456.44125pt x 236.885pt>
 File: ./images/ss22.5.png Graphic file (type png)
 <use ./images/ss22.5.png>
 Package pdftex.def Info: ./images/ss22.5.png  used on input line 10371.
@@ -11999,12 +11999,12 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10394--10394
 \openout4 = `main.pyg'.
 
  (./_minted-main/C40C33E34B1E9655637991FC71F15F97DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.6a.png, id=3408, 453.695pt x 101.37875pt>
+<./images/ss22.6a.png, id=3413, 453.695pt x 101.37875pt>
 File: ./images/ss22.6a.png Graphic file (type png)
 <use ./images/ss22.6a.png>
 Package pdftex.def Info: ./images/ss22.6a.png  used on input line 10418.
 (pdftex.def)             Requested size: 338.2226pt x 75.57597pt.
-<./images/ss22.6b.png, id=3409, 453.695pt x 101.37875pt>
+<./images/ss22.6b.png, id=3414, 453.695pt x 101.37875pt>
 File: ./images/ss22.6b.png Graphic file (type png)
 <use ./images/ss22.6b.png>
 Package pdftex.def Info: ./images/ss22.6b.png  used on input line 10423.
@@ -12319,7 +12319,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10622--10622
 \openout3 = `main.pyg'.
 
  (./_minted-main/66596E59AB1E95BFFE74D48FC2EC9F8DDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.7.png, id=3468, 525.965pt x 65.24374pt>
+<./images/ss22.7.png, id=3473, 525.965pt x 65.24374pt>
 File: ./images/ss22.7.png Graphic file (type png)
 <use ./images/ss22.7.png>
 Package pdftex.def Info: ./images/ss22.7.png  used on input line 10656.
@@ -12333,7 +12333,7 @@ Package pdftex.def Info: ./images/ss22.7.png  used on input line 10656.
 \openout3 = `main.pyg'.
 
  (./_minted-main/F0E748071FB8B75737A831E09502F6B3DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [304 <./images/ss22.7.png>] [305]
-<./images/ss22.8.png, id=3484, 1907.125pt x 1040.88875pt>
+<./images/ss22.8.png, id=3489, 1907.125pt x 1040.88875pt>
 File: ./images/ss22.8.png Graphic file (type png)
 <use ./images/ss22.8.png>
 Package pdftex.def Info: ./images/ss22.8.png  used on input line 10696.
@@ -12344,7 +12344,7 @@ Package pdftex.def Info: ./images/ss22.8.png  used on input line 10696.
 \openout3 = `main.pyg'.
 
  (./_minted-main/CF2C37E85CA07CAD0D9AF177F2072741DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.9.png, id=3485, 1907.125pt x 1040.88875pt>
+<./images/ss22.9.png, id=3490, 1907.125pt x 1040.88875pt>
 File: ./images/ss22.9.png Graphic file (type png)
 <use ./images/ss22.9.png>
 Package pdftex.def Info: ./images/ss22.9.png  used on input line 10715.
@@ -12356,7 +12356,7 @@ Package pdftex.def Info: ./images/ss22.9.png  used on input line 10715.
 \openout3 = `main.pyg'.
 
  (./_minted-main/6B882EB4250C70D4B4C6BD382F44B3CFDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.10.png, id=3494, 1907.125pt x 1040.88875pt>
+<./images/ss22.10.png, id=3499, 1907.125pt x 1040.88875pt>
 File: ./images/ss22.10.png Graphic file (type png)
 <use ./images/ss22.10.png>
 Package pdftex.def Info: ./images/ss22.10.png  used on input line 10735.
@@ -12368,7 +12368,7 @@ Package pdftex.def Info: ./images/ss22.10.png  used on input line 10735.
 \openout3 = `main.pyg'.
 
  (./_minted-main/67DEDE3B385CE9ED7068757D3B41292CDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.11.png, id=3502, 1907.125pt x 1040.88875pt>
+<./images/ss22.11.png, id=3508, 1907.125pt x 1040.88875pt>
 File: ./images/ss22.11.png Graphic file (type png)
 <use ./images/ss22.11.png>
 Package pdftex.def Info: ./images/ss22.11.png  used on input line 10755.
@@ -12380,7 +12380,7 @@ Package pdftex.def Info: ./images/ss22.11.png  used on input line 10755.
 \openout3 = `main.pyg'.
 
  (./_minted-main/10B41BA22F35BF43F06DC99C523F1964DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.12.png, id=3511, 1907.125pt x 1040.88875pt>
+<./images/ss22.12.png, id=3516, 1907.125pt x 1040.88875pt>
 File: ./images/ss22.12.png Graphic file (type png)
 <use ./images/ss22.12.png>
 Package pdftex.def Info: ./images/ss22.12.png  used on input line 10776.
@@ -12401,12 +12401,12 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10797--10797
 \openout3 = `main.pyg'.
 
  (./_minted-main/6C09341009439CE53BB1E8303A5680A1DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [310 <./images/ss22.12.png>]
-<./images/ss22.13a.png, id=3539, 1907.125pt x 421.575pt>
+<./images/ss22.13a.png, id=3544, 1907.125pt x 421.575pt>
 File: ./images/ss22.13a.png Graphic file (type png)
 <use ./images/ss22.13a.png>
 Package pdftex.def Info: ./images/ss22.13a.png  used on input line 10833.
 (pdftex.def)             Requested size: 338.2226pt x 74.76093pt.
-<./images/ss22.13b.png, id=3540, 1907.125pt x 421.575pt>
+<./images/ss22.13b.png, id=3545, 1907.125pt x 421.575pt>
 File: ./images/ss22.13b.png Graphic file (type png)
 <use ./images/ss22.13b.png>
 Package pdftex.def Info: ./images/ss22.13b.png  used on input line 10838.
@@ -12450,17 +12450,17 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10863--10863
 \openout4 = `main.pyg'.
 
  (./_minted-main/5A890FCF8828E84C2F21C4CC69DC34FBDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.14a.png, id=3558, 785.93625pt x 104.39pt>
+<./images/ss22.14a.png, id=3563, 785.93625pt x 104.39pt>
 File: ./images/ss22.14a.png Graphic file (type png)
 <use ./images/ss22.14a.png>
 Package pdftex.def Info: ./images/ss22.14a.png  used on input line 10897.
 (pdftex.def)             Requested size: 338.2226pt x 44.92503pt.
-<./images/ss22.14b.png, id=3559, 748.7975pt x 253.94875pt>
+<./images/ss22.14b.png, id=3564, 748.7975pt x 253.94875pt>
 File: ./images/ss22.14b.png Graphic file (type png)
 <use ./images/ss22.14b.png>
 Package pdftex.def Info: ./images/ss22.14b.png  used on input line 10902.
 (pdftex.def)             Requested size: 338.2226pt x 114.706pt.
-<./images/ss22.14c.png, id=3560, 743.77875pt x 305.14pt>
+<./images/ss22.14c.png, id=3565, 743.77875pt x 305.14pt>
 File: ./images/ss22.14c.png Graphic file (type png)
 <use ./images/ss22.14c.png>
 Package pdftex.def Info: ./images/ss22.14c.png  used on input line 10907.
@@ -12502,7 +12502,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10930--10930
 \openout3 = `main.pyg'.
 
  (./_minted-main/D792DA75979F7E1779C18556A109F6BCDCFB19FD050096AD3D98D480D02DA0ED.pygtex) [314 <./images/ss22.14a.png> <./images/ss22.14b.png> <./images/ss22.14c.png>]
-<./images/ss22.15.png, id=3578, 746.79pt x 211.79124pt>
+<./images/ss22.15.png, id=3583, 746.79pt x 211.79124pt>
 File: ./images/ss22.15.png Graphic file (type png)
 <use ./images/ss22.15.png>
 Package pdftex.def Info: ./images/ss22.15.png  used on input line 10965.
@@ -12547,7 +12547,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 10988--10988
 \openout4 = `main.pyg'.
 
  (./_minted-main/889CAD928691830B1C01F9F25626F815DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
-<./images/ss22.16.png, id=3591, 1528.71124pt x 697.60625pt>
+<./images/ss22.16.png, id=3596, 1528.71124pt x 697.60625pt>
 File: ./images/ss22.16.png Graphic file (type png)
 <use ./images/ss22.16.png>
 Package pdftex.def Info: ./images/ss22.16.png  used on input line 11013.
@@ -12567,7 +12567,7 @@ Overfull \hbox (31.83623pt too wide) in alignment at lines 11036--11036
  [] [] [] [] [] [] 
  []
 
-<./images/ss22.17.png, id=3603, 1909.1325pt x 979.66pt>
+<./images/ss22.17.png, id=3608, 1909.1325pt x 979.66pt>
 File: ./images/ss22.17.png Graphic file (type png)
 <use ./images/ss22.17.png>
 Package pdftex.def Info: ./images/ss22.17.png  used on input line 11041.
@@ -13139,16 +13139,62 @@ Underfull \hbox (badness 10000) in paragraph at lines 11242--11242
 []|\OT1/cmr/m/n/12 Partial
  []
 
-[326] [327] [328]
+[326]
+File: ./images/map.jpg Graphic file (type jpg)
+<use ./images/map.jpg>
+Package pdftex.def Info: ./images/map.jpg  used on input line 11313.
+(pdftex.def)             Requested size: 1666.22095pt x 1120.18227pt.
+<./images/finalUIpredict.png, id=3673, 1907.125pt x 977.6525pt>
+File: ./images/finalUIpredict.png Graphic file (type png)
+<use ./images/finalUIpredict.png>
+Package pdftex.def Info: ./images/finalUIpredict.png  used on input line 11318.
+(pdftex.def)             Requested size: 385.20255pt x 197.46634pt.
+ [327] [328 <./images/finalUIpredict.png>]
+\openout4 = `main.pyg'.
+
+ (./_minted-main/0853210BD38F7843BAFD16EBB9ECB2E5DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
+\openout4 = `main.pyg'.
+
+ (./_minted-main/0D578F848F676236E6B212E72B91B866DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
+<./images/finalUIcompare.png, id=3687, 1907.125pt x 977.6525pt>
+File: ./images/finalUIcompare.png Graphic file (type png)
+<use ./images/finalUIcompare.png>
+Package pdftex.def Info: ./images/finalUIcompare.png  used on input line 11429.
+(pdftex.def)             Requested size: 385.20255pt x 197.46634pt.
+ [329]
+<./images/finalUIregions.png, id=3694, 1907.125pt x 977.6525pt>
+File: ./images/finalUIregions.png Graphic file (type png)
+<use ./images/finalUIregions.png>
+Package pdftex.def Info: ./images/finalUIregions.png  used on input line 11501.
+(pdftex.def)             Requested size: 385.20255pt x 197.46634pt.
+ [330 <./images/finalUIcompare.png>] [331 <./images/finalUIregions.png>]
+<./images/finalUIlogin.png, id=3711, 1907.125pt x 977.6525pt>
+File: ./images/finalUIlogin.png Graphic file (type png)
+<use ./images/finalUIlogin.png>
+Package pdftex.def Info: ./images/finalUIlogin.png  used on input line 11555.
+(pdftex.def)             Requested size: 385.20255pt x 197.46634pt.
+ [332]
+<./images/finalUIsignup.png, id=3718, 1907.125pt x 977.6525pt>
+File: ./images/finalUIsignup.png Graphic file (type png)
+<use ./images/finalUIsignup.png>
+Package pdftex.def Info: ./images/finalUIsignup.png  used on input line 11596.
+(pdftex.def)             Requested size: 385.20255pt x 197.46634pt.
+ [333 <./images/finalUIlogin.png>] [334 <./images/finalUIsignup.png>]
+<./images/finalUIhelp.png, id=3734, 1907.125pt x 977.6525pt>
+File: ./images/finalUIhelp.png Graphic file (type png)
+<use ./images/finalUIhelp.png>
+Package pdftex.def Info: ./images/finalUIhelp.png  used on input line 11653.
+(pdftex.def)             Requested size: 385.20255pt x 197.46634pt.
+ [335] [336 <./images/finalUIhelp.png>] [337]
 Appendix A.
-[329
+[338
 
 ]
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 11279.
+(hyperref)                be the same. Added a new anchor on input line 11693.
 
-(./main.lof [330
+(./main.lof [339
 
 
 ]
@@ -13181,7 +13227,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/31884D3EA70719F40E4AF8879D03BA83DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/F3762BD54174BEF706895AA1E2CFED1CDCFB19FD050096AD3D98D480D02DA0ED.pygtex) [331]
+ (./_minted-main/F3762BD54174BEF706895AA1E2CFED1CDCFB19FD050096AD3D98D480D02DA0ED.pygtex) [340]
 \openout4 = `main.pyg'.
 
  (./_minted-main/0853210BD38F7843BAFD16EBB9ECB2E5DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
@@ -13196,7 +13242,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/0D578F848F676236E6B212E72B91B866DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/A71FF3362CA872BFF6738887A8BD4CD1DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [332]
+ (./_minted-main/A71FF3362CA872BFF6738887A8BD4CD1DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [341]
 \openout4 = `main.pyg'.
 
  (./_minted-main/44F77989634A4D70D6737E6B0EFDF0BADCFB19FD050096AD3D98D480D02DA0ED.pygtex)
@@ -13205,11 +13251,11 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364EDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/69939C1CC0A8C72D110AEC04F93D7B3BDCFB19FD050096AD3D98D480D02DA0ED.pygtex) [333])
+ (./_minted-main/69939C1CC0A8C72D110AEC04F93D7B3BDCFB19FD050096AD3D98D480D02DA0ED.pygtex) [342])
 \tf@lof=\write10
 \openout10 = `main.lof'.
 
- [334] (./main.lol
+ [343] (./main.lol
 \openout4 = `main.pyg'.
 
  (./_minted-main/59182B729FA5D708AB44B6E23A2071A0DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
@@ -13227,13 +13273,13 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/EECC1ECFC7801C659F7B4E8D14F5C8CDDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/7C541B516C88817AFCDC0256050A94CADCFB19FD050096AD3D98D480D02DA0ED.pygtex) [335
+ (./_minted-main/7C541B516C88817AFCDC0256050A94CADCFB19FD050096AD3D98D480D02DA0ED.pygtex) [344
 
 
 ]
 \openout4 = `main.pyg'.
 
- (./_minted-main/0D578F848F676236E6B212E72B91B866DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [336]
+ (./_minted-main/0D578F848F676236E6B212E72B91B866DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [345]
 \openout4 = `main.pyg'.
 
  (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364EDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
@@ -13248,7 +13294,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/5B2FDEF4D322F5648337DBEDD921B687DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/B6B3F51996C7DA2D8ADCBB44BAA39750DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [337]
+ (./_minted-main/B6B3F51996C7DA2D8ADCBB44BAA39750DCFB19FD050096AD3D98D480D02DA0ED.pygtex) [346]
 \openout4 = `main.pyg'.
 
  (./_minted-main/44F77989634A4D70D6737E6B0EFDF0BADCFB19FD050096AD3D98D480D02DA0ED.pygtex)
@@ -13263,7 +13309,7 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
  (./_minted-main/E064BBD9DA341AE4FAE4D96FB5BAF56BDCFB19FD050096AD3D98D480D02DA0ED.pygtex)
 \openout4 = `main.pyg'.
 
- (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364EDCFB19FD050096AD3D98D480D02DA0ED.pygtex) [338]
+ (./_minted-main/D3C34A3ECDCB01D4941A745FB0B3364EDCFB19FD050096AD3D98D480D02DA0ED.pygtex) [347]
 \openout4 = `main.pyg'.
 
  (./_minted-main/05B9481A8C5635E6C6D47B7A217B5096DCFB19FD050096AD3D98D480D02DA0ED.pygtex)
@@ -13300,14 +13346,14 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
 \tf@lol=\write11
 \openout11 = `main.lol'.
 
- [339] (./main.lot [340
+ [348] (./main.lot [349
 
 
-] [341] [342] [343])
+] [350] [351] [352])
 \tf@lot=\write12
 \openout12 = `main.lot'.
 
- [344] (./main.bbl
+ [353] (./main.bbl
 Underfull \hbox (badness 7047) in paragraph at lines 14--17
 []\OT1/cmr/m/n/12 Human De-vel-op-ment Re-ports.  country-insights.  [][]$\OT1/cmtt/m/n/12 https : / / hdr . undp . org /
  []
@@ -13332,7 +13378,7 @@ Overfull \hbox (31.9616pt too wide) in paragraph at lines 54--57
 \OT1/cmtt/m/n/12 pymongo-[]ssl-[]certificate-[]verify-[]failed-[]certificate-[]verify-[]failed-[]unable-[]to-[]ge$[][]\OT1/cmr/m/n/12 ,
  []
 
-) [345
+) [354
 
 
 ] (./main.aux)
@@ -13341,23 +13387,23 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 83A04621FE60ED2F52F887D43F3F3061;23070.
+(rerunfilecheck)             Checksum: 24E50113DA126BC8F75326DA1BF05D9F;23406.
 runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 76647 strings out of 474116
- 2265692 string characters out of 5743681
- 2720426 words of memory out of 5000000
- 92795 multiletter control sequences out of 15000+600000
+ 76733 strings out of 474116
+ 2268123 string characters out of 5743681
+ 2722020 words of memory out of 5000000
+ 92857 multiletter control sequences out of 15000+600000
  582625 words of font info for 127 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  130i,23n,129p,2937b,2887s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (346 pages, 18091128 bytes).
+Output written on main.pdf (355 pages, 19658655 bytes).
 PDF statistics:
- 4873 PDF objects out of 5155 (max. 8388607)
- 3966 compressed objects within 40 object streams
- 1231 named destinations out of 1440 (max. 500000)
- 1662 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 4966 PDF objects out of 5155 (max. 8388607)
+ 4031 compressed objects within 41 object streams
+ 1251 named destinations out of 1440 (max. 500000)
+ 1700 words of extra memory for PDF output out of 10000 (max. 10000000)
 
