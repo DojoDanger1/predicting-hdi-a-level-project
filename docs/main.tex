@@ -32,6 +32,7 @@
 \usepackage{multicol}
 \usepackage[skins]{tcolorbox}
 \usepackage{subcaption}
+\usepackage{pifont}
 
 \usetikzlibrary{arrows.meta, shapes.geometric, angles, quotes, decorations.markings}
 \tdplotsetmaincoords{70}{80}
@@ -2360,7 +2361,7 @@ To determine if I have met this success criteria, I will be using the following 
 \end{center}
 
 \stepcounter{parts}
-\subsection{Part \theparts{} -- Collecting HDI Data}\label{sec:collectHDI}
+\subsection{Part \theparts{} -- Collecting HDI Data}\label{sec:collectHDI}\label{sec:hdiTrainingData}
 The first thing I need is a list of all subnational regions, with their corresponding true HDI. As stated before, I will download this from the Global Data Lab \cite{hdiData}.
 
 The full dataset contains lots of unnecessary data for my project, as this gives the HDI (and many other indicators) over time, whereas I just want the most recent HDI for each subnational region.
@@ -2548,7 +2549,7 @@ Executing this function, passing in \pil{'school'} for \pil{object_type} and a l
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{$T_{1}$ Testing Table (for Code Snippets \ref{cs:overpassRequest} \& \ref{cs:overpassQuery})}
+        \caption{$T_{1}$ Testing Table (for Code Snippets \ref{cs:overpassRequest} \& \ref{cs:overpassQuery})}\label{table:t1testing}
         \end{longtable}
     }
 }
@@ -2669,7 +2670,7 @@ For each of the following tests in $T_{2}$, the 2 points I selected to test were
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{$T_{2}$ Testing Table (for Code Snippet \ref{cs:dist2points})}
+        \caption{$T_{2}$ Testing Table (for Code Snippet \ref{cs:dist2points})}\label{table:t2testing}
         \end{longtable}
     }
 }
@@ -2712,7 +2713,7 @@ If there are instead more than (\pil{max_x_objects}) $x$-objects, then we must t
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{$T_{3}$ Testing Table (for Code Snippet \ref{cs:aofxyValidation})}
+        \caption{$T_{3}$ Testing Table (for Code Snippet \ref{cs:aofxyValidation})}\label{table:t3testing}
         \end{longtable}
     }
 }
@@ -3015,7 +3016,7 @@ Then, to calculate the interior angles, we subtract each angle from $\pi$, again
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{$T_{4}$ Testing Table (for Code Snippet \ref{cs:dofxArea})}
+        \caption{$T_{4}$ Testing Table (for Code Snippet \ref{cs:dofxArea})}\label{table:t4testing}
         \end{longtable}
     }
 }
@@ -4399,7 +4400,7 @@ In order to fully train the network, we must split the training examples into mi
 \end{center}
 
 \stepcounter{parts}
-\subsection{Part \theparts{} -- Testing the Neural Network}
+\subsection{Part \theparts{} -- Testing the Neural Network}\label{sec:testNetwork}
 
 The \pil{class MultilayerPerceptron} is now complete, and can be used to make predictions.
 
@@ -4769,7 +4770,7 @@ If the training didn't work, then the success rate should be around $10\%$, as i
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{$T_{5}$ Testing Table (for Code Snippet \ref{cs:improveTrainingParameters})}
+        \caption{$T_{5}$ Testing Table (for Code Snippet \ref{cs:improveTrainingParameters})}\label{table:t5testing}
         \end{longtable}
     }
 }
@@ -6030,7 +6031,7 @@ We then must call this function in the actual \pil{def makeSuggestions} function
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{$T_{7}$ Testing Table (for Code Snippets \ref{cs:meanOfCoordinates} \& \ref{cs:optimalPlaceForNewBuilding})}
+        \caption{$T_{7}$ Testing Table (for Code Snippets \ref{cs:meanOfCoordinates} \& \ref{cs:optimalPlaceForNewBuilding})}\label{table:t7testing}
         \end{longtable}
     }
 }
@@ -6417,6 +6418,8 @@ All 3 of the main tests in Milestone 3 passed. As a result of that, the followin
     }
 }
 \end{center}
+
+$S_{9}$ and $S_{11}$ have only been given partial \checkmark{}s, as I believe that the predictions and suggestions could be more accurate, if I spent more time training the network.
 
 I also have an initial user interface, which allows for the user to draw any region on a map, predict the HDI of it, and make suggestions on how to improve it, so overall, I believe this milestone has been a success.
 
@@ -7427,7 +7430,7 @@ In testing for function, I will be checking that each feature functions as inten
 }
 \end{center}
 
-Each final test matches with a success criterion, from $S_{8}$ to $S_{18}$. Note, this is not all of the success criteria, as $S_{1}$ to $S_{7}$ are to do with the backend, and $S_{19}$ to $S_{20}$ are to be determined during the evaluation.
+Each final test matches with a success criterion, from $S_{8}$ to $S_{18}$. Note, this is not all of the success criteria, as $S_{1}$ to $S_{7}$ are to do with the backend, and $S_{19}$ is to be determined during the evaluation.
 
 \subsubsection{Testing for Robustness}
 In testing for robustness, I will be checking that the program cannot break or crash at any point, no matter what the user does. The app should handle any invalid and erroneous inputs, and instead return a suitable message for the user to fix their error.
@@ -9962,7 +9965,7 @@ Finally, if there was in fact \pil{zeroOfEverything}, we can return a random cho
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{$T_{16}$ Testing Table (for Code Snippets \ref{cs:allObjectsInConsideration}, \ref{cs:iteratingOverFactors}, \ref{cs:calcShortestDistances} \& \ref{cs:returnOptimalPosition})}
+        \caption{$T_{16}$ Testing Table (for Code Snippets \ref{cs:allObjectsInConsideration}, \ref{cs:iteratingOverFactors}, \ref{cs:calcShortestDistances} \& \ref{cs:returnOptimalPosition})}\label{table:t16testing}
         \end{longtable}
     }
 }
@@ -11114,7 +11117,7 @@ Again, each test for function matches with a success criterion, and will be used
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{Testing for Function to Inform Evaluation}
+        \caption{Testing for Function to Inform Evaluation}\label{table:finalTestingFunction}
         \end{longtable}
     }
 }
@@ -11236,7 +11239,7 @@ As we can see from Figure \ref{fig:usabilityTests}, all usability tests passed, 
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
-        \caption{Testing for Usability to Inform Evaluation}
+        \caption{Testing for Usability to Inform Evaluation}\label{table:finalTestingUsability}
         \end{longtable}
     }
 }
@@ -11662,7 +11665,26 @@ The sketch of the help tab is not very detailed, as I had not written the conten
 
 \section{Success Criteria}
 \subsection{Cross Referencing with Test Data}
-\dots{}
+
+\begin{center}
+\csvloop{
+    file=data/successcriteria.csv,
+    no head,
+    column count=5,
+    column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
+    filter ifthen={\NOT\equal{\scID}{$S_{20}$}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{5cm} H|m{2cm}|m{6cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Met (\checkmark), Partially Met (Partial \checkmark) or Unmet (\ding{55}) Success Criteria}
+        \end{longtable}
+    }
+}
+\end{center}
 
 \subsection{Addressing Partially Met Success Criteria in Further Development}
 \dots{}

@@ -81,8 +81,8 @@ $t_{54}$,Prediction with lower \pil{max_x_objects} and \pil{max_y_objects} value
 $t_{55}$,Suggestions Table and button in the right place,--,--,At the bottom of the page\comma{} stacked on top of each other (ignoring the scroll bar bug),As Expected
 $t_{56}$,Iterating over Suggestions,A \pil{list} of object types,--,Iterate over each one\comma{} and update the progress bar,As Expected
 $T_{7.1}$,Optimal Place for New Building,Building for which there exists 1 Factor,Valid,Calculates mean position of the other building in that factor,As Expected
-$T_{7.1}$,Optimal Place for New Building,Building for which there exists more than 1 Factor,Valid,Calculates the mean position of the mean positions of the other buildings in those factors,As Expected
-$T_{7.1}$,Optimal Place for New Building,Building for which there exists 0 Factors,Invalid,Function is never ran with this option,As Expected
+$T_{7.2}$,Optimal Place for New Building,Building for which there exists more than 1 Factor,Valid,Calculates the mean position of the mean positions of the other buildings in those factors,As Expected
+$T_{7.3}$,Optimal Place for New Building,Building for which there exists 0 Factors,Invalid,Function is never ran with this option,As Expected
 $t_{57}$,Average Distance with New Building,Position of New Building,--,Always taken into accont\comma{} after random sampling,As Expected
 $t_{58}$,Densities with New Building,Position of New Building,--,Considered if we are on that density factor,As Expected
 $T_{8}$,Suggestions fed back into Neural Network,Suggested Building,--,Location is Calculated\comma{} Average Distances are Calculated\comma{} Densities are Calculated\comma{} HDI is Calculated,As Expected

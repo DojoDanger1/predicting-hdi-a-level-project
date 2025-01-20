@@ -444,6 +444,16 @@ INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/tikzfill/tikzlibraryfill.imag
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/tcolorbox/tcbskinsjigsaw.code.tex
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/caption/subcaption.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/caption/subcaption.sty
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/pifont.sty
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/pifont.sty
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/upzd.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/upzd.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/upzd.fd
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/upsy.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/upsy.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/upsy.fd
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
 INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
 INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
@@ -9608,6 +9618,7 @@ INPUT ./images/finalUIhelp.png
 INPUT ./images/finalUIhelp.png
 INPUT ./images/finalUIhelp.png
 INPUT ./images/finalUIhelp.png
+INPUT data/successcriteria.csv
 INPUT ./main.lof
 INPUT ./main.lof
 INPUT main.lof
@@ -9882,3 +9893,4 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msa
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb
