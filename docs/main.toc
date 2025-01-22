@@ -189,16 +189,20 @@
 \contentsline {subsubsection}{Help Tab}{336}{subsubsection*.265}%
 \contentsline {section}{\numberline {6.2}Success Criteria}{337}{section.6.2}%
 \contentsline {subsection}{\numberline {6.2.1}Cross Referencing with Test Data}{337}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Addressing Partially Met Success Criteria in Further Development}{339}{subsection.6.2.2}%
-\contentsline {section}{\numberline {6.3}Usability Features}{339}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Effective Usability Features}{339}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Addressing Poor Usability Features in Further Development}{339}{subsection.6.3.2}%
-\contentsline {section}{\numberline {6.4}Maintenance Issues}{339}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Limitations of the Solution}{339}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Conclusion}{339}{section.6.6}%
-\contentsline {chapter}{\numberline {A}Final Code}{340}{appendix.A}%
-\contentsline {chapter}{Index}{341}{section*.267}%
-\contentsline {section}{List of Figures}{341}{section*.268}%
-\contentsline {section}{List of Code Snippets}{346}{section*.270}%
-\contentsline {section}{List of Tables}{351}{section*.272}%
-\contentsline {chapter}{Bibliography}{356}{section*.274}%
+\contentsline {subsection}{\numberline {6.2.2}Reasoning Behind Outcome of Success Criteria}{339}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Addressing Partially Met Success Criteria in Further Development}{339}{subsection.6.2.3}%
+\contentsline {subsubsection}{Accurate Predictions ($S_{9}$)}{339}{subsubsection*.267}%
+\contentsline {subsubsection}{Accurate Suggestions ($S_{11}$)}{340}{subsubsection*.268}%
+\contentsline {subsubsection}{User Interface ($S_{19}$)}{340}{subsubsection*.269}%
+\contentsline {section}{\numberline {6.3}Usability Features}{340}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Effective Usability Features}{340}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Addressing Poor Usability Features in Further Development}{340}{subsection.6.3.2}%
+\contentsline {section}{\numberline {6.4}Maintenance Issues}{340}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Limitations of the Solution}{340}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Conclusion}{340}{section.6.6}%
+\contentsline {chapter}{\numberline {A}Final Code}{341}{appendix.A}%
+\contentsline {chapter}{Index}{342}{section*.270}%
+\contentsline {section}{List of Figures}{342}{section*.271}%
+\contentsline {section}{List of Code Snippets}{347}{section*.273}%
+\contentsline {section}{List of Tables}{352}{section*.275}%
+\contentsline {chapter}{Bibliography}{357}{section*.277}%

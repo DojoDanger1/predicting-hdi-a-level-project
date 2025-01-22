@@ -11686,14 +11686,36 @@ The sketch of the help tab is not very detailed, as I had not written the conten
 }
 \end{center}
 
+\subsection{Reasoning Behind Outcome of Success Criteria}
+The success criteria to do with the backend ($S_{1}$ to $S_{7}$ \& $S_{10}$) were not tested as part of final testing, and so the evidence was found during the development process. If these criteria were not met, no part of the app would function in the first place. Therefore, it was imperative that all 8 of these were fully met, which they were. This is because I implemented these things early on, before the user interface, so any problems that came up could be fixed immediately.
+
+$S_{19}$ is to do with the app's usability, and was determined from the reponses to the usability tests. While the majority of the tests came back as pass, there were a few that came back as only a partial pass, and so I can only give the interface \textit{as a whole} a partial pass.
+
+The other success criteria ($S_{8}$, $S_{9}$ \& $S_{11}$ to $S_{18}$) are to do with the various things the user can do within the app, and were tested as part of final testing for function. Each test corresponded to each of these success criteria, and if it got a pass, the criterion got a pass.
+
 \subsection{Addressing Partially Met Success Criteria in Further Development}
-\dots{}
+\subsubsection{Accurate Predictions ($S_{9}$)}
+In order to make better predictions, the simplest thing I could do is train the network for longer, by attempting different combinations of layer sizes, as well as adjusting the number of training epochs, the learning rate, and the mini batch size.
+
+Furthermore, I could attempt to get more training data, by using unofficial values for HDI for regions smaller than sub-national regions. This will increase the number of training examples from 2000 to much more, which will allow the network to pick up on more patterns, and learn from them.
+
+If none of the above work, a slightly more drastic approach may be to define some new factors, for the network to predict from. This will require slight adjustments all over the app, to accomodate the new factors (for example, the number of columns in the regions table may be different), and so this should only be done if there are no other options.
+
+\subsubsection{Accurate Suggestions ($S_{11}$)}
+Making better suggestions is harder, as you cannot guarantee what the network will predict. If we assume that the network \textit{generally} predicts a higher HDI for places with more infrastructure, we can always suggest building even more buildings (more than the 10 the user can do currently).
+
+We could also suggest building different buildings, which would come with the different factors mentioned previously.
+
+The suggestions themselves could also be more sophisticated, where instead of building just a hospital, we could instead suggest building a network of healthcare-related buildings.
+
+\subsubsection{User Interface ($S_{19}$)}
+In general, this success criterion can be fully met when users have no problems with the usability of the app. Addressing poor usability features in further development is in Section \ref{sec:poorUsability}. 
 
 \section{Usability Features}
 \subsection{Effective Usability Features}
 \dots{}
 
-\subsection{Addressing Poor Usability Features in Further Development}
+\subsection{Addressing Poor Usability Features in Further Development}\label{sec:poorUsability}
 \dots{}
 
 \section{Maintenance Issues}
