@@ -182,27 +182,29 @@
 \contentsline {subsection}{\numberline {6.1.2}Testing for Usability}{325}{subsection.6.1.2}%
 \contentsline {subsubsection}{Questions \& Responses}{325}{subsubsection*.254}%
 \contentsline {subsubsection}{Total Scores}{326}{subsubsection*.255}%
-\contentsline {subsection}{\numberline {6.1.3}Comparing Interface Sketches with the Final Results}{328}{subsection.6.1.3}%
-\contentsline {subsubsection}{Predict Tab}{328}{subsubsection*.257}%
-\contentsline {subsubsection}{Comapare \& Region Tabs}{330}{subsubsection*.259}%
-\contentsline {subsubsection}{Log In \& Sign Up Tabs}{333}{subsubsection*.262}%
-\contentsline {subsubsection}{Help Tab}{336}{subsubsection*.265}%
-\contentsline {section}{\numberline {6.2}Success Criteria}{337}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Cross Referencing with Test Data}{337}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Reasoning Behind Outcome of Success Criteria}{339}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}Addressing Partially Met Success Criteria in Further Development}{339}{subsection.6.2.3}%
-\contentsline {subsubsection}{Accurate Predictions ($S_{9}$)}{339}{subsubsection*.267}%
-\contentsline {subsubsection}{Accurate Suggestions ($S_{11}$)}{340}{subsubsection*.268}%
-\contentsline {subsubsection}{User Interface ($S_{19}$)}{340}{subsubsection*.269}%
-\contentsline {section}{\numberline {6.3}Usability Features}{340}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Effective Usability Features}{340}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Addressing Poor Usability Features in Further Development}{340}{subsection.6.3.2}%
-\contentsline {section}{\numberline {6.4}Maintenance Issues}{340}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Limitations of the Solution}{340}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Conclusion}{340}{section.6.6}%
-\contentsline {chapter}{\numberline {A}Final Code}{341}{appendix.A}%
-\contentsline {chapter}{Index}{342}{section*.270}%
-\contentsline {section}{List of Figures}{342}{section*.271}%
-\contentsline {section}{List of Code Snippets}{347}{section*.273}%
-\contentsline {section}{List of Tables}{352}{section*.275}%
-\contentsline {chapter}{Bibliography}{357}{section*.277}%
+\contentsline {section}{\numberline {6.2}Success Criteria}{328}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Cross Referencing with Test Data}{328}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Reasoning Behind Outcome of Success Criteria}{330}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Addressing Partially Met Success Criteria in Further Development}{330}{subsection.6.2.3}%
+\contentsline {subsubsection}{Accurate Predictions ($S_{9}$)}{330}{subsubsection*.257}%
+\contentsline {subsubsection}{Accurate Suggestions ($S_{11}$)}{330}{subsubsection*.258}%
+\contentsline {subsubsection}{User Interface ($S_{19}$)}{331}{subsubsection*.259}%
+\contentsline {section}{\numberline {6.3}Usability Features}{331}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Comparison to Sketches \& Effective Usability Features}{332}{subsection.6.3.1}%
+\contentsline {subsubsection}{Predict Tab}{332}{subsubsection*.260}%
+\contentsline {subsubsection}{Comapare \& Region Tabs}{334}{subsubsection*.262}%
+\contentsline {subsubsection}{Log In \& Sign Up Tabs}{337}{subsubsection*.265}%
+\contentsline {subsubsection}{Help Tab}{340}{subsubsection*.268}%
+\contentsline {subsection}{\numberline {6.3.2}Addressing Poor Usability Features in Further Development}{341}{subsection.6.3.2}%
+\contentsline {subsubsection}{The Upload Button}{341}{subsubsection*.270}%
+\contentsline {subsubsection}{Gradio Dataframes}{341}{subsubsection*.271}%
+\contentsline {subsubsection}{Editing \& Creating Regions in the Table}{341}{subsubsection*.272}%
+\contentsline {section}{\numberline {6.4}Maintenance Issues}{342}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Limitations of the Solution}{342}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Conclusion}{342}{section.6.6}%
+\contentsline {chapter}{\numberline {A}Final Code}{343}{appendix.A}%
+\contentsline {chapter}{Index}{344}{section*.273}%
+\contentsline {section}{List of Figures}{344}{section*.274}%
+\contentsline {section}{List of Code Snippets}{349}{section*.276}%
+\contentsline {section}{List of Tables}{354}{section*.278}%
+\contentsline {chapter}{Bibliography}{359}{section*.280}%

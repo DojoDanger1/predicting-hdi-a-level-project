@@ -6672,7 +6672,7 @@ When logging in to an existing account, the user will enter their username and p
 \end{center}
 
 \section{User Interface}\label{sec:ui2}
-\subsection{Interface Sketch -- A Tabbed Interface}
+\subsection{Interface Sketch -- A Tabbed Interface}\label{sec:ui2sketches}
 As seen before, when implemeting the GUI, Gradio offers different ways to arrange elements (For example, I have used \pil{gr.Row()}, \pil{gr.Column()} and \pil{gr.Group()}). Another one that we can make use of is \pil{gr.Tab()}, which will place all of its elements inside a tab. Other \pil{gr.Tab()} elements on the same level will appear next to each other, for the user to switch between.  
 
 \begin{figure}[H]
@@ -11249,7 +11249,58 @@ I believe $UT_{1}$ only partially passed (and nearly failed) due to the fact tha
 
 I believe $UT_{5}$ only partially passed because it may not have been obvious that you can type into the regions table and edit the values. The rules for what the cells can hold are also not made obvious to the user.
 
-\subsection{Comparing Interface Sketches with the Final Results}
+\section{Success Criteria}
+\subsection{Cross Referencing with Test Data}
+
+\begin{center}
+\csvloop{
+    file=data/successcriteria.csv,
+    no head,
+    column count=5,
+    column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
+    filter ifthen={\NOT\equal{\scID}{$S_{20}$}},
+    before reading={
+        \begin{longtable}{|m{1cm}|m{5cm} H|m{2cm}|m{6cm}|}
+        \hline
+    },
+    command=\csvlinetotablerow,
+    late after line=\\\hline,
+    after reading={
+        \caption{Met (\checkmark), Partially Met (Partial \checkmark) or Unmet (\ding{55}) Success Criteria}
+        \end{longtable}
+    }
+}
+\end{center}
+
+\subsection{Reasoning Behind Outcome of Success Criteria}
+The success criteria to do with the backend ($S_{1}$ to $S_{7}$ \& $S_{10}$) were not tested as part of final testing, and so the evidence was found during the development process. If these criteria were not met, no part of the app would function in the first place. Therefore, it was imperative that all 8 of these were fully met, which they were. This is because I implemented these things early on, before the user interface, so any problems that came up could be fixed immediately.
+
+$S_{19}$ is to do with the app's usability, and was determined from the reponses to the usability tests. While the majority of the tests came back as pass, there were a few that came back as only a partial pass, and so I can only give the interface \textit{as a whole} a partial pass.
+
+The other success criteria ($S_{8}$, $S_{9}$ \& $S_{11}$ to $S_{18}$) are to do with the various things the user can do within the app, and were tested as part of final testing for function. Each test corresponded to each of these success criteria, and if it got a pass, the criterion got a pass.
+
+\subsection{Addressing Partially Met Success Criteria in Further Development}
+\subsubsection{Accurate Predictions ($S_{9}$)}
+In order to make better predictions, the simplest thing I could do is train the network for longer, by attempting different combinations of layer sizes, as well as adjusting the number of training epochs, the learning rate, and the mini batch size.
+
+Furthermore, I could attempt to get more training data, by using unofficial values for HDI for regions smaller than sub-national regions. This will increase the number of training examples from 2000 to much more, which will allow the network to pick up on more patterns, and learn from them.
+
+If none of the above work, a slightly more drastic approach may be to define some new factors, for the network to predict from. This will require slight adjustments all over the app, to accomodate the new factors (for example, the number of columns in the regions table may be different), and so this should only be done if there are no other options.
+
+\subsubsection{Accurate Suggestions ($S_{11}$)}
+Making better suggestions is harder, as you cannot guarantee what the network will predict. If we assume that the network \textit{generally} predicts a higher HDI for places with more infrastructure, we can always suggest building even more buildings (more than the 10 the user can do currently).
+
+We could also suggest building different buildings, which would come with the different factors mentioned previously.
+
+The suggestions themselves could also be more sophisticated, where instead of building just a hospital, we could instead suggest building a network of healthcare-related buildings.
+
+\subsubsection{User Interface ($S_{19}$)}
+In general, this success criterion can be fully met when users have no problems with the usability of the app. Addressing poor usability features in further development is in Section \ref{sec:poorUsability}. 
+
+\section{Usability Features}
+In this section, I will first go through each of the interface sketches from the second design section (in Section \ref{sec:ui2sketches}), and compare them with the what the final interface looks like now. I will then go through each usability feature which has not worked out too well and describe how it can be improved in the future.
+
+\subsection{Comparison to Sketches \& Effective Usability Features}
 
 \subsubsection{Predict Tab}
 \begin{figure}[H]
@@ -11663,60 +11714,27 @@ Initially, the help tab was at the end, as shown in the interface sketch, but wh
 
 The sketch of the help tab is not very detailed, as I had not written the contents yet. The sketch includes lines of text, with some indented to represent (for example) ordered lists, as well as a large rectangle in place of an image. The final interface includes all of these elements, and so therefore I believe that this tab has been successful.
 
-\section{Success Criteria}
-\subsection{Cross Referencing with Test Data}
-
-\begin{center}
-\csvloop{
-    file=data/successcriteria.csv,
-    no head,
-    column count=5,
-    column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
-    filter ifthen={\NOT\equal{\scID}{$S_{20}$}},
-    before reading={
-        \begin{longtable}{|m{1cm}|m{5cm} H|m{2cm}|m{6cm}|}
-        \hline
-    },
-    command=\csvlinetotablerow,
-    late after line=\\\hline,
-    after reading={
-        \caption{Met (\checkmark), Partially Met (Partial \checkmark) or Unmet (\ding{55}) Success Criteria}
-        \end{longtable}
-    }
-}
-\end{center}
-
-\subsection{Reasoning Behind Outcome of Success Criteria}
-The success criteria to do with the backend ($S_{1}$ to $S_{7}$ \& $S_{10}$) were not tested as part of final testing, and so the evidence was found during the development process. If these criteria were not met, no part of the app would function in the first place. Therefore, it was imperative that all 8 of these were fully met, which they were. This is because I implemented these things early on, before the user interface, so any problems that came up could be fixed immediately.
-
-$S_{19}$ is to do with the app's usability, and was determined from the reponses to the usability tests. While the majority of the tests came back as pass, there were a few that came back as only a partial pass, and so I can only give the interface \textit{as a whole} a partial pass.
-
-The other success criteria ($S_{8}$, $S_{9}$ \& $S_{11}$ to $S_{18}$) are to do with the various things the user can do within the app, and were tested as part of final testing for function. Each test corresponded to each of these success criteria, and if it got a pass, the criterion got a pass.
-
-\subsection{Addressing Partially Met Success Criteria in Further Development}
-\subsubsection{Accurate Predictions ($S_{9}$)}
-In order to make better predictions, the simplest thing I could do is train the network for longer, by attempting different combinations of layer sizes, as well as adjusting the number of training epochs, the learning rate, and the mini batch size.
-
-Furthermore, I could attempt to get more training data, by using unofficial values for HDI for regions smaller than sub-national regions. This will increase the number of training examples from 2000 to much more, which will allow the network to pick up on more patterns, and learn from them.
-
-If none of the above work, a slightly more drastic approach may be to define some new factors, for the network to predict from. This will require slight adjustments all over the app, to accomodate the new factors (for example, the number of columns in the regions table may be different), and so this should only be done if there are no other options.
-
-\subsubsection{Accurate Suggestions ($S_{11}$)}
-Making better suggestions is harder, as you cannot guarantee what the network will predict. If we assume that the network \textit{generally} predicts a higher HDI for places with more infrastructure, we can always suggest building even more buildings (more than the 10 the user can do currently).
-
-We could also suggest building different buildings, which would come with the different factors mentioned previously.
-
-The suggestions themselves could also be more sophisticated, where instead of building just a hospital, we could instead suggest building a network of healthcare-related buildings.
-
-\subsubsection{User Interface ($S_{19}$)}
-In general, this success criterion can be fully met when users have no problems with the usability of the app. Addressing poor usability features in further development is in Section \ref{sec:poorUsability}. 
-
-\section{Usability Features}
-\subsection{Effective Usability Features}
-\dots{}
-
 \subsection{Addressing Poor Usability Features in Further Development}\label{sec:poorUsability}
-\dots{}
+\subsubsection{The Upload Button}
+This is the main usability feature which did not go as intended, and has decreased the usability of the app the most. In the design section, I described that I wanted the user to just be able to draw a region, and then press the predict button to predict the HDI of it, but unfortunately the process is more complicated, so much so that it requires 5 steps with a labelled diagram to complete it.
+
+The issue stems from the fact that we cannot access the bounding coordinates of the region the user draws on the map, without the user pressing the ``export'' button on the map.
+
+In order to fix this, I could attempt to make my own map, and not use a library. Currently, I am using a library called \pil{folium}, which allows for the creation of these maps.
+
+Moving away from \pil{folium} would also allow me to use a newer version of \pil{gradio}, as \pil{folium} is only compatible with \pil{gradio} up to a certain version (which I am using), which is not the newest version. Newer versions of \pil{gradio} may have more features (such as UI elements) and may contain bug fixes.
+
+\subsubsection{Gradio Dataframes}
+One bug in \pil{gradio} that causes the usability of the app to be less than expected is to do with the \pil{gr.Dataframe}. You may have noticed that the dataframes have a vertical and horizontal scroll wheel on the left and bottom, even when they are not needed. This stands out from the rest of the interface and may be distracting.
+
+Furthermore, when new rows are added to a dataframe (e.g. when the suggestions table is filled the number of rows goes from 1 to 8), this change is not automatically made. If the user wishes to see the new rows, they have to select the dataframe and scroll around. Scrolling will cause an update to happen, which will update the size of the dataframe, showing all new rows.
+
+To fix this, \pil{gradio} should be updated, which again requires the removal of \pil{folium}. Alternatively, I could attempt to make my own table, by using \pil{gr.Row}s and \pil{gr.Column}s, but this may not work as well as a dataframe with no bugs.
+
+\subsubsection{Editing \& Creating Regions in the Table}
+When asking the stakeholders on how usable they believed the app was, they said that creating new regions, or editing existing ones was also one of the least usable parts of the app.
+
+I believe that this is because the rules for how you could enter data were not clear, and so to fix this in further development, I could make it more clear, by specifying the data types allowed in each column.
 
 \section{Maintenance Issues}
 \dots{}
