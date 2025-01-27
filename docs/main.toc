@@ -200,11 +200,17 @@
 \contentsline {subsubsection}{Gradio Dataframes}{341}{subsubsection*.271}%
 \contentsline {subsubsection}{Editing \& Creating Regions in the Table}{341}{subsubsection*.272}%
 \contentsline {section}{\numberline {6.4}Maintenance Issues}{342}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Maintainability}{342}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Documentation}{342}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Code Style Guidelines}{342}{subsection.6.4.3}%
 \contentsline {section}{\numberline {6.5}Limitations of the Solution}{342}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Conclusion}{342}{section.6.6}%
-\contentsline {chapter}{\numberline {A}Final Code}{343}{appendix.A}%
-\contentsline {chapter}{Index}{344}{section*.273}%
-\contentsline {section}{List of Figures}{344}{section*.274}%
-\contentsline {section}{List of Code Snippets}{349}{section*.276}%
-\contentsline {section}{List of Tables}{354}{section*.278}%
-\contentsline {chapter}{Bibliography}{359}{section*.280}%
+\contentsline {subsection}{\numberline {6.5.1}Data Limitations}{342}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Usability Challenges}{343}{subsection.6.5.2}%
+\contentsline {subsection}{\numberline {6.5.3}Scalability \& Technical Constraints}{343}{subsection.6.5.3}%
+\contentsline {section}{\numberline {6.6}Conclusion}{343}{section.6.6}%
+\contentsline {chapter}{\numberline {A}Final Code}{344}{appendix.A}%
+\contentsline {chapter}{Index}{345}{section*.273}%
+\contentsline {section}{List of Figures}{345}{section*.274}%
+\contentsline {section}{List of Code Snippets}{350}{section*.276}%
+\contentsline {section}{List of Tables}{355}{section*.278}%
+\contentsline {chapter}{Bibliography}{360}{section*.280}%

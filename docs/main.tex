@@ -11737,10 +11737,38 @@ When asking the stakeholders on how usable they believed the app was, they said 
 I believe that this is because the rules for how you could enter data were not clear, and so to fix this in further development, I could make it more clear, by specifying the data types allowed in each column.
 
 \section{Maintenance Issues}
-\dots{}
+\subsection{Maintainability}
+Overall, I believe the code is fairly maintainable, as all variables are appropriately named, and there are many comments describing the code where nescessary. I have also made use of many sub-programs, to ensure a modular design, which further improves the maintainability.
+
+Furthermore, I belive the use of \pil{gradio} makes the code for the UI very maintainable, as its structuring makes it very intuitive to see how it will be structured when it is run. There is no need to consider parent and child elements, or containers, when you can specify if you want to place elements in a \pil{gr.Row} (for example).
+
+\subsection{Documentation}
+There is no explicit documentation for this project, and so I could write one to improve the maintainability. It wold specify what each function does, as well as the data types of the parameters and outputs, to ensure that future developers have no trouble understanding what a certain function does.
+
+There does exist documentation on how to use it (the help tab), but no documentation on how to develop it.
+
+\subsection{Code Style Guidelines}
+I also did not use any code style guidelines, when writing code. Some of my variable names are in camel case, where others are in snake case, with no real system to distinguish between which variable should be in which case.
+
+In order to make it more maintainable, I could specify an exact code style guideline, and change the case of many identifiers. For example, function names could be written in snake case and variable names could be written in camel case. 
 
 \section{Limitations of the Solution}
-\dots{}
+\subsection{Data Limitations}
+As described in the Analysis Section (Section \ref{sec:limitations}), there are a few limitations to do with the training data, the main one being the bias towards more developed countries, meaning that the network is often unaware of less developed countries. This, along with the fact that there may not have been enough training data, lead to the network not making completelty accurate predictions.
+
+I am also not taking into account the past HDIs of a given region, as OpenStreetMaps can only serve me the data as it is now, and not an arbitrary point in the past. As a result, the network hasn't explicitly learned about how HDI can change over time, and how that change happens. It only learned about why the HDI is what it is at the current moment.
+
+\subsection{Usability Challenges}
+As stated before, I believe that the usability of this app has been a partial success, and the main reason that it is not fully successful, is the fact that you have to export your region and then upload it. This prompted the creation of a user manual (the help tab), which includes step by step instructions and a labelled diagram on how to do this. This is unfortunate for the main function of the app, but is unfortunately nescessary.
+
+Other usability challenges include poor signposting for some features, as well as some unexpected behaviour to do with dataframes (as described in Section \ref{sec:poorUsability}).
+
+To overcome these limitations, the main thing that needs to be done is moving away from using the \pil{folium} library, as it is causing minor dependency conflicts, as well as the fact that the user must export and import their regions. I could not find any more suitable alternatives, so I would be forced to create my own map.
+
+\subsection{Scalability \& Technical Constraints}
+As this is built with \pil{gradio}, this means that once deployed, the app can be run on any computer with a web browser. As the vast majority of operating systems often come with a web browser, this means that anyone on any device can use the app, including those on mobile devices.
+
+There is also a queue system built into \pil{gradio}, where if there are many users trying to use the app at the same time, the processes are added to a queue, and so therefore are processed in a First In First Out (FIFO) order. This is suitable as users who pressed the button first should be the first to recieve a response.
 
 \section{Conclusion}
 \dots{}
