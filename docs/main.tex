@@ -33,6 +33,8 @@
 \usepackage[skins]{tcolorbox}
 \usepackage{subcaption}
 \usepackage{pifont}
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
 
 \usetikzlibrary{arrows.meta, shapes.geometric, angles, quotes, decorations.markings}
 \tdplotsetmaincoords{70}{80}
@@ -75,13 +77,24 @@
   \my@chapter}
 \makeatother
 
+\patchcmd{\chapter}{\thispagestyle{plain}}{\thispagestyle{fancy}}{}{}
+
 \newcommand{\pil}[1]{\protect\mintinline[breaklines, breakafter=_]{python}|#1|}
 
 \setminted{escapeinside=§§}
 
-\title{A-Level Computer Science Programming Project}
-\author{Luke Williams, Candidate 2276 \\ The Cherwell School, Centre 62309 \\ OCR Computer Science A-Level --- H446}
-\date{}
+\title{Predicting HDI with Multilayer Perceptrons}
+\author{Luke Williams, Candidate 2276 \\ The Cherwell School, Centre 62309 \\ OCR A-Level Computer Science NEA --- H446/03}
+\date{June 2025}
+
+\setlength{\headheight}{15.2pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\pagestyle{fancy}
+\fancyhead[L]{Luke Williams, Candidate 2276}
+\fancyhead[R]{The Cherwell School, Centre 62309}
+\fancyfoot[L]{NEA --- H446/03}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{June 2025}
 
 \begin{document}
 
@@ -532,7 +545,7 @@ All of the above (except for the Multilayer Perceptron) will be implemented and 
     \item \textbf{Secondary Storage} -- The pre-trained model must be stored in secondary storage so that it can be called upon at any time.
     \item (For me only) \textbf{Graphical Processing Unit} -- While no complex graphics need to be processed, a GPU would decrease the time taken for the model to be trained, as it would involve lots of the same type of calculation (matrix multiplication) to be carried out simultaneously.
 \end{itemize}
-I will be using a Mac Mini, M4 10-Core Chip to develop this app.
+I will be using a Mac Mini, M4 to develop this app.
 
 \subsection{Software Requirements}
 \begin{itemize}
@@ -11771,7 +11784,7 @@ As this is built with \pil{gradio}, this means that once deployed, the app can b
 There is also a queue system built into \pil{gradio}, where if there are many users trying to use the app at the same time, the processes are added to a queue, and so therefore are processed in a First In First Out (FIFO) order. This is suitable as users who pressed the button first should be the first to recieve a response.
 
 \section{Conclusion}
-\dots{}
+Overall, I believe that the development of this app has been a success, as I have done what I originally set out to do, which is predict the HDI of a region, given only its geographical factors. While there are some limitations, such as the predictions not being 100\% accurate, as well as some parts of the app which are not very usable, such as the export \& upload process, I believe that these hindrances are not very major, and can be fixed in a future update. Therefore, I think that this app is now in a position where it is ready to be deployed, for everyone to interact with.
 
 \appendix
 \chapter{Final Code}\label{sec:finalCode}

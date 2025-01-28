@@ -454,6 +454,8 @@ INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/upsy.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/upsy.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/upsy.fd
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
 INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
 INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
