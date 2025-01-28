@@ -49,6 +49,8 @@
 }
 \graphicspath{ {./images/} }
 
+\newenvironment{longlisting}{\captionsetup{type=listing}}{}
+
 \captionsetup[table]{skip=10pt}
 \newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{\hspace*{-\tabcolsep}}}
 
@@ -2374,7 +2376,7 @@ To determine if I have met this success criteria, I will be using the following 
 \end{center}
 
 \stepcounter{parts}
-\subsection{Part \theparts{} -- Collecting HDI Data}\label{sec:collectHDI}\label{sec:hdiTrainingData}
+\subsection{Part \theparts{} -- Collecting HDI Data}\label{sec:collectHDI}
 The first thing I need is a list of all subnational regions, with their corresponding true HDI. As stated before, I will download this from the Global Data Lab \cite{hdiData}.
 
 The full dataset contains lots of unnecessary data for my project, as this gives the HDI (and many other indicators) over time, whereas I just want the most recent HDI for each subnational region.
@@ -3124,7 +3126,7 @@ $D\left(x\right)$ is given by the number of $x$-objects per unit area, so we can
 \end{figure}
 
 \stepcounter{parts}
-\subsection{Part \theparts{} -- Iterating over each Subnational Region}
+\subsection{Part \theparts{} -- Iterating over each Subnational Region}\label{sec:iterateRegions}
 
 Now it is time to finally compile all of our training data. We first must be able to find all of the required factors for any given area.
 
@@ -8640,7 +8642,7 @@ To then create the list for the table, we can create a list of the factor names,
 \end{center}
 
 \stepcounter{parts}
-\subsection{Part \theparts{} -- Analysis of how much Each Factor affects the Others}
+\subsection{Part \theparts{} -- Analysis of how much Each Factor affects the Others}\label{sec:pmccCode}
 
 \begin{listing}[H]
 \pil{data_processing / pmcc.py}
@@ -11788,7 +11790,1430 @@ Overall, I believe that the development of this app has been a success, as I hav
 
 \appendix
 \chapter{Final Code}\label{sec:finalCode}
-\dots{}
+\section{Data Processing}
+This section will include all files in the \pil{data_processing} folder, which were mostly only run once to create the dataset in Section \ref{sec:iterateRegions}.
+
+\subsection{\pil{data_processing / calc_factors.py}}
+\begin{longlisting}
+(This code was only used when calculating the factors for the training data. There is a more up-to-date version which is used directly by the app in Section \ref{sec:updatedCalcFactors})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import numpy as np
+import random
+from get_osm_data import get_osm_data
+
+EARTH_RADIUS = 6371 # (in km)
+
+# converts angle in degrees to angle in radians
+def deg2rad(angle):
+    return (np.pi/180)*angle
+
+# finds the distance (in km) along the surface of the earth, between 2 coordinates
+def distBetween2Points(p1, p2):
+    La1 = deg2rad(p1[0])
+    Lo1 = deg2rad(p1[1])
+    La2 = deg2rad(p2[0])
+    Lo2 = deg2rad(p2[1])
+    return EARTH_RADIUS * np.arccos(np.sin(La1)*np.sin(La2) + np.cos(La1)*np.cos(La2)*np.cos(Lo1-Lo2))
+
+# finds the average distance between 2 types of objects, A(x,y)
+def averageDistance(x_objects, y_objects, max_x_objects=2000):
+    if len(x_objects) == 0 or len(y_objects) == 0: # the average distance is undefined
+        return None
+    if len(x_objects) > max_x_objects: # random sample
+        x_objects = random.sample(x_objects, max_x_objects)
+    # iterate over each x_object, and find the closest y_object
+    min_dists = []
+    for x_object in x_objects:
+        dist_to_ys = []
+        for y_object in y_objects:
+            dist_to_ys.append(distBetween2Points(x_object, y_object))
+        min_dists.append(min(dist_to_ys)) # the closest y_object
+    return np.mean(min_dists)
+
+# calculates the area (in km^2) of a given region bound by a set of latitude/longitude coordinates
+def calcArea(bounding_coords):
+    if bounding_coords[0] == bounding_coords[-1]: # if the first and last coordinates are the same, then delete the last one
+        bounding_coords.pop(-1)
+    # convert lat/lon pairs to 3d position vectors
+    bounding_vectors = []
+    for coord in bounding_coords:
+        La = deg2rad(coord[0])
+        Lo = deg2rad(coord[1])
+        bounding_vectors.append(np.matrix([
+            [np.cos(La)*np.cos(Lo)],
+            [np.cos(La)*np.sin(Lo)],
+            [np.sin(La)]
+        ]))
+    # iterate over each vertex and find its anticlockwise angle
+    anticlockwise_angles = []
+    for vertex_index, vertex in enumerate(bounding_vectors):
+        prev_vertex = bounding_vectors[vertex_index-1]
+        next_vertex = bounding_vectors[0 if vertex_index == len(bounding_vectors)-1 else vertex_index+1]
+        La = deg2rad(bounding_coords[vertex_index][0])
+        Lo = deg2rad(bounding_coords[vertex_index][1])
+        # define the rotation and translation matrices
+        rotation_matrix_z = np.matrix([
+            [np.cos(-Lo), -np.sin(-Lo), 0],
+            [np.sin(-Lo), np.cos(-Lo), 0],
+            [0, 0, 1]
+        ])
+        rotation_matrix_y = np.matrix([
+            [np.cos(La-np.pi/2), 0, np.sin(La-np.pi/2)],
+            [0, 1, 0],
+            [-np.sin(La-np.pi/2), 0, np.cos(La-np.pi/2)]
+        ])
+        translation_vector = np.matrix([
+            [0],
+            [0],
+            [-1]
+        ])
+        # rotate and translate the plane tangent to the vertex such that it is the xy-plane
+        prev_vertex = np.matmul(rotation_matrix_y, np.matmul(rotation_matrix_z, prev_vertex)) + translation_vector
+        vertex = np.matmul(rotation_matrix_y, np.matmul(rotation_matrix_z, vertex)) + translation_vector
+        next_vertex = np.matmul(rotation_matrix_y, np.matmul(rotation_matrix_z, next_vertex)) + translation_vector
+        # project onto the xy-plane
+        prev_vertex[2][0] = 0
+        next_vertex[2][0] = 0
+        # calculate anticlockwise angle between the vectors
+        prev_to_current = vertex - prev_vertex
+        current_to_next = next_vertex - vertex
+        anticlockwise_angle = np.arctan2((prev_to_current.item(1,0)*current_to_next.item(2,0) - prev_to_current.item(2,0)*current_to_next.item(1,0)) - (prev_to_current.item(2,0)*current_to_next.item(0,0) - prev_to_current.item(0,0)*current_to_next.item(2,0)) + (prev_to_current.item(0,0)*current_to_next.item(1,0) - prev_to_current.item(1,0)*current_to_next.item(0,0)), prev_to_current.item(0,0)*current_to_next.item(0,0) + prev_to_current.item(1,0)*current_to_next.item(1,0) + prev_to_current.item(2,0)*current_to_next.item(2,0))
+        anticlockwise_angles.append(anticlockwise_angle)
+    # find the interior angles from the anticlockwise angles
+    sum_anticlockwise_angles = round(sum(anticlockwise_angles), 5)
+    if sum_anticlockwise_angles == 0:
+        return None
+    if sum_anticlockwise_angles < 0:
+        anticlockwise_angles = [-1*angle for angle in anticlockwise_angles]
+    interior_angles = [np.pi-angle for angle in anticlockwise_angles]
+    # return the area
+    num_edges = len(bounding_coords)
+    return (EARTH_RADIUS ** 2) * (sum(interior_angles) - np.pi*(num_edges-2))
+
+# finds the density of a type of object, D(x)
+def density(x_objects, area):
+    return len(x_objects)/area
+
+# finds all the factors for a given region
+def getAllFactors(region):
+    # retrieve all relevant osm data
+    object_types = ['house', 'school', 'hospital', 'pharmacy', 'restaurant', 'place_of_worship', 'bank', 'slot_machines', 'fast_food', 'toilets', 'police', 'university', 'library', 'post_box', 'vending_machine', 'bench', 'tree']
+    all_objects = {}
+    for object_type in object_types:
+        print(f'getting {object_type} data...') # log message
+        all_objects[object_type] = get_osm_data(object_type, region)
+    # return a dictionary of all the factors
+    print('calculating area...') # log message
+    area = calcArea(region)
+    print('calculating factors...') # log message
+    return {
+        "A(House School)": averageDistance(all_objects['house'], all_objects['school']),
+        "A(House Hospital)": averageDistance(all_objects['house'], all_objects['hospital']),
+        "A(House Pharmacy)": averageDistance(all_objects['house'], all_objects['pharmacy']),
+        "A(House Restaurant)": averageDistance(all_objects['house'], all_objects['restaurant']),
+        "A(School Hospital)": averageDistance(all_objects['school'], all_objects['hospital']),
+        "A(Police Hospital)": averageDistance(all_objects['police'], all_objects['hospital']),
+        "A(House Place of Worship)": averageDistance(all_objects['house'], all_objects['place_of_worship']),
+        "A(Bank Slot Machine)": averageDistance(all_objects['bank'], all_objects['slot_machines']),
+        "A(Fast-Food Place Toilet)": averageDistance(all_objects['fast_food'], all_objects['toilets']),
+        "A(House Police)": averageDistance(all_objects['house'], all_objects['police']),
+        "A(University Library)": averageDistance(all_objects['university'], all_objects['library']),
+        "A(House Library)": averageDistance(all_objects['house'], all_objects['library']),
+        "D(School)": density(all_objects['school'], area),
+        "D(Hospital)": density(all_objects['hospital'], area),
+        "D(Pharmacy)": density(all_objects['pharmacy'], area),
+        "D(Police)": density(all_objects['police'], area),
+        "D(Library)": density(all_objects['library'], area),
+        "D(Toilet)": density(all_objects['toilets'], area),
+        "D(Restaurant)": density(all_objects['restaurant'], area),
+        "D(Place of Worship)": density(all_objects['place_of_worship'], area),
+        "D(Post Box)": density(all_objects['post_box'], area),
+        "D(Vending Machine)": density(all_objects['vending_machine'], area),
+        "D(Bench)": density(all_objects['bench'], area),
+        "D(Tree)": density(all_objects['tree'], area),
+    }
+\end{minted}
+\caption{Final Code for \pil{data_processing / calc_factors.py}}
+\end{longlisting}
+
+\subsection{\pil{data_processing / compile_data.py}}
+\begin{longlisting}
+(This code was only ran once, in Section \ref{sec:iterateRegions})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+from calc_factors import getAllFactors
+import json
+import csv
+
+print('reading files...') # log message
+# read json file
+with open('data/region_coords.json', 'r') as file:
+    regionData = json.load(file)
+
+# read csv file
+with open('data/hdi.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    hdiData = []
+    for record in reader:
+        hdiData.append(record)
+
+MOST_RECENT_REGION = 'AFGr108'
+field_names = ['country', 'region', 'code', 'hdi', 'A(House School)', 'A(House Hospital)', 'A(House Pharmacy)', 'A(House Restaurant)', 'A(School Hospital)', 'A(Police Hospital)', 'A(House Place of Worship)', 'A(Bank Slot Machine)', 'A(Fast-Food Place Toilet)', 'A(House Police)', 'A(University Library)', 'A(House Library)', 'D(School)', 'D(Hospital)', 'D(Pharmacy)', 'D(Police)', 'D(Library)', 'D(Toilet)', 'D(Restaurant)', 'D(Place of Worship)', 'D(Post Box)', 'D(Vending Machine)', 'D(Bench)', 'D(Tree)']
+SKIP_THE_FIRST = 0
+
+# iterate over each region
+for region_number, region in enumerate(regionData):
+    if not started: 
+        if region['properties']['gdlcode'] == MOST_RECENT_REGION:
+            started = True
+        continue
+    print(f'Processing {region["properties"]["gdlcode"]}...') # log message
+    # find the main bit of the region (if it has multiple)
+    shapes = region['geometry']['coordinates']
+    if region['geometry']['type'] == 'Polygon':
+        mainShape = shapes[0]
+    else:
+        lengths = [len(polygon[0]) for polygon in shapes]
+        mainShape = shapes[lengths.index(max(lengths))][0]
+    mainShape = [coordinate[::-1] for coordinate in mainShape]
+    # find all the factors
+    allFactors = getAllFactors(mainShape)
+    # match it with the hdi
+    matchingHDI = [record for record in hdiData if record['code'] == region['properties']['gdlcode']]
+    if len(matchingHDI) != 0:
+        newRecord = matchingHDI[0]
+        newRecord.update(allFactors)
+        print('writing to file...') # log message
+        with open('src/data/training_data.csv', 'a') as file:
+            writer = csv.DictWriter(file, fieldnames=field_names)
+            writer.writerow(newRecord)
+\end{minted}
+\caption{Final Code for \pil{data_processing / compile_data.py}}
+\end{longlisting}
+
+\subsection{\pil{data_processing / get_osm_data.py}}\label{sec:getOSMdataCode}
+\begin{longlisting}
+(This code is used by the main app, all other scripts in this folder were only ran once)
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import requests
+
+# makes a request to overpass turbo to get osm data
+def get_osm_data(object_type, bounding_coords):
+    overpass_url = 'http://overpass-api.de/api/interpreter'
+    key_type = ('building' if object_type == 'house' else 'natural' if object_type == 'tree' else 'gambling' if object_type == 'slot_machines' else 'amenity') # get the right key type
+    while len(bounding_coords) >= 100000:
+        print(f'truncating region with {len(bounding_coords)} vertices...') # log message
+        bounding_coords = [bounding_coord for n, bounding_coord in enumerate(bounding_coords) if n % 2 == 0]
+    bounding_coords = [(latitude, (longitude + 180) % 360 - 180) for latitude, longitude in bounding_coords]
+    region_poly = ' '.join([' '.join([str(latlong) for latlong in coord]) for coord in bounding_coords]) # converts list of tuples to correct format for overpass turbo
+    overpass_query = [
+        '[out:json];',
+        '(',
+        f'   nwr["{key_type}"="{object_type}"](poly:"{region_poly}");',
+        ');',
+        'out center;'
+    ]
+    overpass_query = '\n'.join(overpass_query) # concatenates list items into a multi-line string
+    
+    response = requests.post(overpass_url, data=overpass_query)
+    print(response) # log message, shows the HTTP response code
+    data = response.json()
+    
+    coords = []
+    for nwr in data['elements']:
+        if nwr['type'] == 'node':
+            coords.append((nwr['lat'], nwr['lon']))
+        else: # it is a way or relation
+            coords.append((nwr['center']['lat'], nwr['center']['lon']))
+    
+    return coords
+\end{minted}
+\caption{Final Code for \pil{data_processing / get_osm_data.py}}
+\end{longlisting}
+
+\subsection{\pil{data_processing / pmcc.py}}
+\begin{longlisting}
+(This code was only ran once, in Section \ref{sec:pmccCode})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import csv
+import numpy as np
+import seaborn
+
+# load the training data
+with open('data/training_data.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    trainingData = []
+    for record in reader:
+        trainingData.append(record)
+
+# iterate over every pair of factors
+factors = list(trainingData[0].keys())[3:]
+pmcc_grid = []
+for factor1 in factors:
+    pmcc_row = []
+    for factor2 in factors:
+        print(f'calculating pmcc of {factor1} and {factor2}...') # log message
+        x_values = [record[factor1] for record in trainingData]
+        y_values = [record[factor2] for record in trainingData]
+        # remove pairs with empty values, iterating over the lists in reverse as to not disturb the index numbers
+        for index in range(len(x_values)-1, -1, -1):
+            if x_values[index] == '' or y_values[index] == '':
+                x_values.pop(index)
+                y_values.pop(index)
+        # convert to float
+        x_values = [float(x) for x in x_values]
+        y_values = [float(y) for y in y_values]
+        # calculate pmcc and add it to grid
+        pmcc = sum([(x_values[index]-np.mean(x_values))*(y_values[index] -np.mean(y_values)) for index in range(len(x_values))])/np.sqrt( (sum([(x_values[index]-np.mean(x_values))**2 for index in range(len(x_values))]))*(sum([(y_values[index]-np.mean(y_values))**2 for index in range(len(x_values))])))
+        pmcc_row.append(pmcc)
+    pmcc_grid.append(pmcc_row)
+
+# generate the image
+heatmap = seaborn.heatmap(pmcc_grid, xticklabels=factors, yticklabels=factors, vmin=-1, vmax=1, center=0, cmap='Spectral')
+heatmap.get_figure().savefig('data/pmcc.png', bbox_inches='tight', dpi=600)
+\end{minted}
+\caption{Final Code for \pil{data_processing / pmcc.py}}
+\end{longlisting}
+
+\subsection{\pil{data_processing / process_hdi.py}}
+\begin{longlisting}
+(This code was only ran once, in Section \ref{sec:collectHDI})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import csv
+
+#retrieve data
+with open('data/subnationalHDI.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    newcsv = []
+    for record in reader:
+        if record['year'] == '2022': # the most recent year
+            newRecord = {
+                "country": record["country"],
+                "region": record["region"],
+                "code": record["GDLCODE"],
+                "hdi": record["shdi"]
+            } # only the most useful information
+            newcsv.append(newRecord)
+            print(newRecord)
+
+#write to new csv
+with open('data/hdi.csv', 'w') as file:
+    field_names = ['country', 'region', 'code', 'hdi']
+    writer = csv.DictWriter(file, fieldnames=field_names)
+    writer.writeheader()
+    for record in newcsv:
+        writer.writerow(record)
+\end{minted}
+\caption{Final Code for \pil{data_processing / process_hdi.py}}
+\end{longlisting}
+
+\subsection{\pil{data_processing / process_shapefile.py}}
+\begin{longlisting}
+(This code was only ran once, in Section \ref{sec:iterateRegions}, and has been adapted from this StackOverflow solution: \cite{stackOverflowConvertShapefile})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import shapefile
+import json
+
+# read records of shapefile
+reader = shapefile.Reader("data/shapefiles/GDL Shapefiles V6.3 large.shp")
+fields = reader.fields[1:]
+field_names = [field[0] for field in fields]
+data = []
+for shape_record in reader.shapeRecords():
+    print(shape_record.record) # log message
+    data.append({
+        "type": "Feature",
+        "geometry": shape_record.shape.__geo_interface__,
+        "properties": dict(zip(field_names, shape_record.record))
+    })
+
+# write data to file
+print('writing to file...') # log message
+with open("data/region_coords.json", "w") as file:
+    json.dump(data, file)
+print('done!') # log message
+\end{minted}
+\caption{Final Code for \pil{data_processing / process_shapefile.py}}
+\end{longlisting}
+
+\section{Training the Neural Network}
+This section will include all files in the \pil{network_training} folder, which were all only run a limited number of times to train and test the neural network, in Sections \ref{sec:testNetwork} \& \ref{sec:trainNetwork}. The actual code for the neural network can be found in Section \ref{sec:neuralNetworkCode}.
+
+For each set of files (\pil{digits} or \pil{hdi}), \pil{load_x_data.py} was ran first, then \pil{train_x.py}, and finally \pil{test_x.py}.
+
+\subsection{\pil{network_training / load_digits_data.py}}
+\begin{longlisting}
+(This code was only ran a limited number of times, in Section \ref{sec:testNetwork}, and has been adapted from Micheal Nielsen's code repository \cite{mnielsenGithub})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import pickle
+import gzip
+import numpy as np
+
+# loads the MNIST data set
+def load_data():
+    with gzip.open('data/mnist.pkl.gz', 'rb') as file:
+        unpickled = pickle._Unpickler(file)
+        unpickled.encoding = 'latin1'
+        training_data, validation_data, test_data = unpickled.load()
+    return (training_data, validation_data, test_data)
+
+# makes a vector for the output layer from the correct output label
+def convert_to_vector(correct_output):
+    output_layer = np.zeros((10, 1))
+    output_layer[correct_output] = 1
+    return output_layer
+
+training_data, _, test_data = load_data()
+# convert training data into the right format
+training_inputs = [np.reshape(input_data, (784, 1)) for input_data in training_data[0]]
+training_outputs = [convert_to_vector(output_data) for output_data in training_data[1]]
+training_data = [{
+    'input': training_inputs[example],
+    'output': training_outputs[example]
+} for example in range(len(training_inputs))]
+# convert testing data into the right format
+test_inputs = [np.reshape(input_data, (784, 1)) for input_data in test_data[0]]
+test_outputs = test_data[1]
+test_data = [{
+    'input': test_inputs[example],
+    'output': test_outputs[example]
+} for example in range(len(test_inputs))]
+
+# save data to a file
+with open(f'data/digits.pkl', 'wb') as file:
+    pickle.dump({'training': training_data, 'testing': test_data}, file)
+\end{minted}
+\caption{Final Code for \pil{network_training / load_digits_data.py}}
+\end{longlisting}
+
+\subsection{\pil{network_training / load_hdi_data.py}}
+\begin{longlisting}
+(This code was only ran a limited number of times, in Section \ref{sec:trainNetwork})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import pickle
+import gzip
+import numpy as np
+
+# loads the MNIST data set
+def load_data():
+    with gzip.open('data/mnist.pkl.gz', 'rb') as file:
+        unpickled = pickle._Unpickler(file)
+        unpickled.encoding = 'latin1'
+        training_data, validation_data, test_data = unpickled.load()
+    return (training_data, validation_data, test_data)
+
+# makes a vector for the output layer from the correct output label
+def convert_to_vector(correct_output):
+    output_layer = np.zeros((10, 1))
+    output_layer[correct_output] = 1
+    return output_layer
+
+training_data, _, test_data = load_data()
+# convert training data into the right format
+training_inputs = [np.reshape(input_data, (784, 1)) for input_data in training_data[0]]
+training_outputs = [convert_to_vector(output_data) for output_data in training_data[1]]
+training_data = [{
+    'input': training_inputs[example],
+    'output': training_outputs[example]
+} for example in range(len(training_inputs))]
+# convert testing data into the right format
+test_inputs = [np.reshape(input_data, (784, 1)) for input_data in test_data[0]]
+test_outputs = test_data[1]
+test_data = [{
+    'input': test_inputs[example],
+    'output': test_outputs[example]
+} for example in range(len(test_inputs))]
+
+# save data to a file
+with open(f'data/digits.pkl', 'wb') as file:
+    pickle.dump({'training': training_data, 'testing': test_data}, file)
+\end{minted}
+\caption{Final Code for \pil{network_training / load_hdi_data.py}}
+\end{longlisting}
+
+\subsection{\pil{network_training / test_digits.py}}
+\begin{longlisting}
+(This code was only ran a limited number of times, in Section \ref{sec:testNetwork})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import pickle
+
+# load the test data from the file
+with open('data/digits.pkl', 'rb') as file:
+    data = pickle.load(file)
+testing_data = data['testing']
+
+# import the class MultilayerPerceptron from the neural_network.py file
+import os
+import sys
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+from neural_network import MultilayerPerceptron
+
+# iterate over each of the testing examples and see how many it gets right
+network = MultilayerPerceptron([784, 16, 16, 10])
+network.load_model('models/digits.pkl')
+success = 0
+for total_so_far, example in enumerate(testing_data):
+    prediction = network.predict(example['input'])
+    list_of_probabilities = [prediction.item(x,0) for x in range(10)]
+    if list_of_probabilities.index(max(list_of_probabilities)) == example['output']:
+        success += 1
+    print(f'after {total_so_far+1} examples, the success rate is {(success/(total_so_far+1))*100}%')
+\end{minted}
+\caption{Final Code for \pil{network_training / test_digits.py}}
+\end{longlisting}
+
+\subsection{\pil{network_training / test_hdi.py}}
+\begin{longlisting}
+(This code was only ran a limited number of times, in Section \ref{sec:trainNetwork})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import pickle
+
+# load the test data from the file
+with open('data/hdi.pkl', 'rb') as file:
+    data = pickle.load(file)
+testing_data = data['testing']
+
+# import the class MultilayerPerceptron from the neural_network.py file
+import os
+import sys
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+from neural_network import MultilayerPerceptron
+
+# iterate over each of the testing examples and see how many it gets right
+network = MultilayerPerceptron([24, 18, 12, 6, 3, 1])
+network.load_model('models/hdi-temp.pkl')
+differences = []
+for num, example in enumerate(testing_data):
+    correctAnswer = example["output"].item(0,0)
+    prediction = round(network.predict(example['input']).item(0,0), 3)
+    difference = round(abs(correctAnswer-prediction), 3)
+    print(f'({num}) correct output: {correctAnswer}, prediction: {prediction}, difference: {difference}')
+    differences.append(difference)
+
+import numpy as np
+print(f'average difference: {np.mean(differences)}')
+\end{minted}
+\caption{Final Code for \pil{network_training / test_hdi.py}}
+\end{longlisting}
+
+\subsection{\pil{network_training / train_digits.py}}
+\begin{longlisting}
+(This code was only ran a limited number of times, in Section \ref{sec:testNetwork})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import pickle
+
+# load the training data from the file
+with open('data/digits.pkl', 'rb') as file:
+    data = pickle.load(file)
+training_data = data['training']
+
+# import the class MultilayerPerceptron from the neural_network.py file
+import os
+import sys
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+from neural_network import MultilayerPerceptron
+
+# train the network
+network = MultilayerPerceptron([784, 16, 16, 10])
+network.train(training_data, 10, 30, 3)
+network.save_model('digits')
+\end{minted}
+\caption{Final Code for \pil{network_training / train_digits.py}}
+\end{longlisting}
+
+\subsection{\pil{network_training / train_hdi.py}}
+\begin{longlisting}
+(This code was only ran a limited number of times, in Section \ref{sec:trainNetwork})
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import pickle
+
+# load the training data from the file
+with open('data/hdi.pkl', 'rb') as file:
+    data = pickle.load(file)
+training_data = data['training']
+
+# import the class MultilayerPerceptron from the neural_network.py file
+import os
+import sys
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+from neural_network import MultilayerPerceptron
+
+# train the network
+network = MultilayerPerceptron([24, 18, 12, 6, 3, 1])
+network.train(training_data, 5, 50, 0.2)
+network.save_model('hdi-temp')
+\end{minted}
+\caption{Final Code for \pil{network_training / train_hdi.py}}
+\end{longlisting}
+
+\section{The Main App}
+This section will include all other files in the source code directory. They are the files which are used by the app while it is running (as well as \pil{data_processing / get_osm_data.py} in Section \ref{sec:getOSMdataCode})
+
+\subsection{\pil{app.py}}
+\begin{longlisting}
+(Note, on line 33, the password to access the database has been replaced with \pil{'<db_password>'}.)
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import gradio as gr
+from gradio_folium import Folium
+import folium
+from folium.plugins import Draw
+import random
+import json
+from data_processing.get_osm_data import get_osm_data
+from calc_factors import averageDistance, calcArea, density, distBetween2Points
+import numpy as np
+from neural_network import MultilayerPerceptron
+import copy
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import certifi
+import bcrypt
+import csv
+
+# initialise neural network
+network = MultilayerPerceptron([24, 18, 12, 6, 3, 1])
+network.load_model('models/hdi.pkl')
+
+# define global vars
+currentRegion = []
+all_objects = {}
+allFactors = []
+currentHDI = -1
+allUserRegions = []
+loggedInUsername = ''
+averageDistanceFactors = [['house', 'school'], ['house', 'hospital'], ['house', 'pharmacy'], ['house', 'restaurant'], ['school', 'hospital'], ['police', 'hospital'], ['house', 'place_of_worship'], ['bank', 'slot_machines'], ['fast_food', 'toilets'], ['house', 'police'], ['university', 'library'], ['house', 'library']]
+densityFactors = ['school', 'hospital', 'pharmacy', 'police', 'library', 'toilets', 'restaurant', 'place_of_worship', 'post_box', 'vending_machine', 'bench', 'tree']
+
+# connect to mongoDB
+mongoURI = "mongodb+srv://lukerhodri:<db_password>@predictinghdi.3nkqe.mongodb .net/?retryWrites=true&w=majority&appName=predictingHDI"
+mongoClient = MongoClient(mongoURI, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+users = mongoClient['predictingHDI']['users']
+# send a ping to confirm a successful connection
+mongoClient.admin.command('ping')
+print("Pinged your deployment. You successfully connected to MongoDB!")
+
+# load the training data
+with open('data/training_data.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    trainingData = []
+    for record in reader:
+        trainingData.append(record)
+
+# code to process the user uploading their geojson file
+def uploadGeoJSON(filename, max_x_objects, max_y_objects, currentRegionName, progress=gr.Progress()):
+    global currentRegion
+    global all_objects
+    global allFactors
+    global allUserRegions
+    progress(0, desc='Starting...')
+    with open(filename, 'r') as file:
+        data = json.load(file)
+        currentRegion = [coordinate[::-1] for coordinate in data['features'][0]['geometry']['coordinates'][0]]
+    shortFilename = filename[filename.rindex("/")+1:]
+    if shortFilename[:shortFilename.rindex('.')] in [region['name'] for region in allUserRegions] or shortFilename[:shortFilename.rindex('.')] == '':
+        gr.Warning('There is already a region with this name! Please rename the file first.')
+        return 'There is already a region with this name! Please rename the file first.', updateRegionsTable(), updateRegionsDropdown(), currentRegionName
+    # retrieve all relevant osm data
+    object_types = ['house', 'school', 'hospital', 'pharmacy', 'restaurant', 'place_of_worship', 'bank', 'slot_machines', 'fast_food', 'toilets', 'police', 'university', 'library', 'post_box', 'vending_machine', 'bench', 'tree']
+    all_objects = {}
+    for num, object_type in enumerate(object_types):
+        progress(0.3*(num/len(object_types)), desc=f'Downloading {object_type} data...')
+        print(f'getting {object_type} data...') # log message
+        all_objects[object_type] = get_osm_data(object_type, currentRegion)
+    # calculate average distances
+    allFactors = []
+    for num, averageDistanceFactor in enumerate(averageDistanceFactors):
+        progress(0.3+0.6*(num/len(averageDistanceFactors)), desc=f'Calculating Average Distance between {averageDistanceFactor[0]} and {averageDistanceFactor[1]}...')
+        print(f'finding A({averageDistanceFactor[0]}, {averageDistanceFactor[1]})...') # log message
+        allFactors.append(averageDistance(all_objects[averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects))
+    # calculate area
+    progress(0.9, desc='Calculating Area...')
+    print('calculating area...') # log message
+    area = calcArea(currentRegion)
+    # calculate density factors
+    for num, densityFactor in enumerate(densityFactors):
+        progress(0.91+0.09*(num/len(densityFactors)), desc=f'Calculating {densityFactor} Density...')
+        print(f'finding D({densityFactor})') # log message
+        allFactors.append(density(all_objects[densityFactor], area))
+    allUserRegions.append({
+        'name': shortFilename[:shortFilename.rindex('.')],
+        'objects': all_objects,
+        'factors': allFactors
+    })
+    # save regions to account, if logged in
+    if loggedInUsername != '':
+        users.update_one({'username': loggedInUsername}, {'$set': {'regions': allUserRegions}})
+    gr.Info(f'Successfully Uploaded {shortFilename}', 5)
+    return f'Successfully Uploaded {shortFilename}', updateRegionsTable(), updateRegionsDropdown(), shortFilename[:shortFilename.rindex('.')]
+
+# predict the HDI of the given region
+def processPrediction():
+    global currentHDI
+    if allFactors == []:
+        gr.Warning('You have not uploaded a region!')
+        return 'You have not uploaded a region!', ''
+    # predict HDI
+    inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
+    prediction = round(network.predict(inputLayer).item(0,0), 3)
+    currentHDI = prediction
+    # find similar region
+    diff = 0
+    possible_choices = []
+    while len(possible_choices) == 0:
+        # search below & above (round to remove floating point errors)
+        possible_choices += [region for region in trainingData if region['hdi'] == str(round(prediction-diff, 3))]
+        possible_choices += [region for region in trainingData if region['hdi'] == str(round(prediction+diff, 3))]
+        # increment difference (round to remove floating point errors)
+        diff = round(diff + 0.001, 3)
+    # choose one of the options at random
+    chosenRegionRecord = random.choice(possible_choices)
+    similar_region = f'{chosenRegionRecord["region"]}, {chosenRegionRecord["country"]}'
+    gr.Info('Successfully Predicted HDI!', 5)
+    return prediction, similar_region
+
+# helper function to calculate mean of coordinates
+def calcMeanOfCoords(coords):
+    return [np.mean([coord[0] for coord in coords]), np.mean([coord[1] for coord in coords])]
+
+# calculate the optimal place for a new building to go when suggesting
+def calcOptimalPlaceFor(building, extraBuildings):
+    global all_objects
+    # construct all_objects_in_consideration
+    all_objects_in_consideration = {}
+    for key in all_objects.keys():
+        if key in extraBuildings.keys():
+            all_objects_in_consideration[key] = all_objects[key] + extraBuildings[key]
+        else:
+            all_objects_in_consideration[key] = all_objects[key]
+    # iterate over the factors
+    optimalPositions = []
+    zeroOfEverything = True
+    zeroOfThings = []
+    for averageDistanceFactor in averageDistanceFactors:
+        if averageDistanceFactor[1] == building:
+            # initialise variables
+            x_objects = all_objects_in_consideration[averageDistanceFactor[0]]
+            y_objects = all_objects_in_consideration[averageDistanceFactor[1]]
+            # update zero of everything flag
+            if len(x_objects) != 0:
+                zeroOfEverything = False
+                # calculate the shortest distance from each {averageDistanceFactor[0]} to {averageDistanceFactor[1]}
+                shortest_dists = []
+                for x_object in x_objects:
+                    dists = []
+                    if len(y_objects) != 0:
+                        for y_object in y_objects:
+                            dists.append(distBetween2Points(x_object, y_object))
+                    else:
+                        dists.append(10000)
+                    if min(dists) == 0:
+                        shortest_dists.append(0.00001)
+                    else:
+                        shortest_dists.append(min(dists))
+                # calculate the optimal position
+                list_of_numpy_arrays = [np.array(x_object) for x_object in x_objects]
+                optimalPosition = (sum([x_object/shortest_dists[index] for index, x_object in enumerate(list_of_numpy_arrays)], np.array([0,0])))/(sum([1/shortest_dist for shortest_dist in shortest_dists]))
+                optimalPositions.append(optimalPosition)
+            else:
+                zeroOfThings.append(averageDistanceFactor[0])
+    # return either something else to build, or the new position
+    if zeroOfEverything:
+        return random.choice(zeroOfThings)
+    return calcMeanOfCoords(optimalPositions)
+
+# make suggestions from a prediction
+def makeSuggestions(max_x_objects, max_y_objects, num_new_buildings, progress=gr.Progress()):
+    global all_objects
+    if currentHDI == -1:
+        gr.Warning('You have not yet predicted an HDI! Please predict one first.')
+        return [['You have not yet predicted an HDI!', None, None, None]]
+    if all_objects == {}:
+        gr.Warning('This region does not have any associated buildings! Please choose a different region')
+        return [['This region does not have any associated buildings!', 'Please choose a different region', None, None]]
+    suggestions = ['school', 'hospital', 'place_of_worship', 'police', 'restaurant', 'slot_machines', 'library', 'pharmacy']
+    returnTable = []
+    for num, suggestion in enumerate(suggestions):
+        extraBuildings = {suggestion: []}
+        progress(num/len(suggestions), desc=f'Suggesting building a {suggestion}...')
+        # find optimal place
+        positions = []
+        for buildingNum in range(num_new_buildings):
+            # check for other suggestion
+            if len(positions) > 0:
+                if type(positions[0]) == type(''):
+                    continue
+            # calc actual position
+            progress((num/len(suggestions))+(buildingNum*(1/8)*(1/( num_new_buildings+3))), desc=f'Suggesting building a {suggestion} (finding optimal position, {buildingNum+1}/{num_new_buildings})...')
+            position = calcOptimalPlaceFor(suggestion, extraBuildings)
+            positions.append(position)
+            extraBuildings[suggestion].append(position)
+        if type(positions[0]) != type(''):
+            # calculate average distances
+            progress((num/len(suggestions))+((num_new_buildings)*(1/8)*(1/( num_new_buildings+3))), desc=f'Suggesting building a {suggestion} (calculating new average distances)...')
+            allFactors = []
+            for averageDistanceFactor in averageDistanceFactors:
+                # ensure that we include the new building
+                if suggestion == averageDistanceFactor[0]:
+                    allFactors.append(averageDistance(all_objects[ averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects, must_include_x=positions))
+                elif suggestion == averageDistanceFactor[1]:
+                    allFactors.append(averageDistance(all_objects[ averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects, must_include_y=positions))
+                else:
+                    allFactors.append(averageDistance(all_objects[ averageDistanceFactor[0]], all_objects[averageDistanceFactor[1]], max_x_objects, max_y_objects))
+            # calculate density factors
+            progress((num/len(suggestions))+((num_new_buildings+1)*(1/8)*(1/( num_new_buildings+3))), desc=f'Suggesting building a {suggestion} (calculating new densities)...')
+            area = calcArea(currentRegion)
+            for densityFactor in densityFactors:
+                # ensure that we include the new building
+                if suggestion == densityFactor:
+                    allFactors.append(density(all_objects[densityFactor] + [position], area))
+                else:
+                    allFactors.append(density(all_objects[densityFactor], area))
+            # predict HDI
+            progress((num/len(suggestions))+((num_new_buildings+2)*(1/8)*(1/( num_new_buildings+3))), desc=f'Suggesting building a {suggestion} (predicting new HDI)...')
+            inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
+            prediction = round(network.predict(inputLayer).item(0,0), 3)
+            returnTable.append([suggestion, ', '.join([f'({round(position[0], 7)}°N, {round(position[1], 7)}°E)' for position in positions]), str(prediction), str(round(prediction-currentHDI, 3))])
+        else:
+            returnTable.append([suggestion, f'Build a new {positions[0]} first!', '--', '--'])
+    gr.Info('Successfully Made Suggestions!', 5)
+    return returnTable
+
+# place a pin on the map when user clicks the suggestion
+def selectSuggestionsTable(evt: gr.SelectData):
+    cellData = evt.value
+    newMap = copy.deepcopy(foliumMap)
+    if '°' in cellData: # it is a coordinate
+        splitByCommas = cellData.split(', ')
+        coordinates = []
+        for halfIndex in range(int(len(splitByCommas)/2)):
+            coordinates.append([float(splitByCommas[2*halfIndex][1:-2]), float(splitByCommas[2*halfIndex+1][:-3])])
+        for coordinate in coordinates:
+            folium.Marker(location=coordinate).add_to(newMap)
+        newMap.location=random.choice(coordinates)
+    return newMap
+
+# user selects an item from the dropdown menu to compare to
+def compareRegions(regionName):
+    # confirm the user has predicted
+    if allFactors == []:
+        gr.Warning('Please predict a region first!')
+        return [['Please predict a region first!', None, None]]
+    # undo the concatenation
+    split = regionName.split(', ')
+    country = split[-1]
+    region = ', '.join(split[:-1])
+    # find the region record & get lists of factors
+    regionRecord = [record for record in trainingData if record['country'] == country and record['region'] == region][0]
+    yourFactors = ['undefined' if factor == None else round(float(factor), 5) for factor in allFactors]
+    selectedFactors = ['undefined' if factor == '' else round(float(factor), 5) for factor in list(regionRecord.values())[4:]]
+    # construct the return list
+    factorNames = ['Average Distance from House to nearest School (km)','Average Distance from House to nearest Hospital (km)','Average Distance from House to nearest Pharmacy (km)','Average Distance from House to nearest Restaurant (km)','Average Distance from School to nearest Hospital (km)','Average Distance from Police Station to nearest Hospital (km)','Average Distance from House to nearest Place of Worship (km)','Average Distance from Bank to nearest Slot Machine (km)','Average Distance from Fast-Food Place to nearest Toilet (km)','Average Distance from House to nearest Police Station (km)','Average Distance from University to nearest Library (km)','Average Distance from House to nearest Library (km)','Number of Schools per km²','Number of Hospitals per km²','Number of Pharmcies per km²','Number of Police Stations per km²','Number of Libraries per km²','Number of Toilets per km²','Number of Restaurants per km²','Number of Places of Worship per km²','Number of Post Boxes per km²','Number of Vending Machines per km²','Number of Benches per km²','Number of Trees per km²']
+    returnList = [['HDI', currentHDI, regionRecord['hdi']]]
+    for num, factor in enumerate(factorNames):
+        returnList.append([factor, yourFactors[num], selectedFactors[num]])
+    return returnList
+
+# creates a 2d list to put in the regions table, from allUserRegions 
+def updateRegionsTable():
+    table = []
+    for region in allUserRegions:
+        table.append([region['name']] + region['factors'])
+    # if allUserRegions is empty, return an empty table
+    if table == []:
+        table.append([''*25])
+    return table
+
+# updates regions dropdown, from allUserRegions
+def updateRegionsDropdown():
+    names = [region['name'] for region in allUserRegions]
+    return gr.update(choices=names)
+
+# updates the allUserRegions list, when the regions table is updated
+def updateAllUserRegions(table, currentRegionName):
+    global allUserRegions
+    # store the index of the current region
+    if currentRegionName != None:
+        currentRegionIndex = [region['name'] for region in allUserRegions].index(currentRegionName)
+    # validate the input - names of regions
+    regionNames = [row[0] for row in table]
+    if '' in regionNames or len(set(regionNames)) != len(regionNames):
+        gr.Warning('Please ensure every region has a unique name!')
+        return 'Please ensure every region has a unique name!', updateRegionsDropdown(), currentRegionName
+    # validate the input - type check
+    for rowIndex, row in enumerate(table):
+        for cellIndex, cell in enumerate(row):
+            if cellIndex != 0 and (cellIndex > 12 or cell != ''):
+                try:
+                    table[rowIndex][cellIndex] = float(cell)
+                except ValueError:
+                    gr.Warning(f'Please Enter the Data Correctly! Found an error at cell (row {rowIndex}, col {cellIndex})')
+                    return f'Please Enter the Data Correctly! Found an error at cell (row {rowIndex}, col {cellIndex})', updateRegionsDropdown(), currentRegionName
+    # update the allUserRegions list
+    initialLength = len(allUserRegions)
+    for index, row in enumerate(table):
+        factors = [None if value == '' else value for value in row[1:]]
+        # if the user has changed the factors of an existing list, the associated objects should be removed
+        if index < initialLength:
+            if [float(factor) if factor != '' else None for factor in row[1:]] != allUserRegions[index]['factors']:
+                allUserRegions[index] = {'name': row[0], 'objects': {}, 'factors': factors}
+            else:
+                allUserRegions[index]['name'] = row[0]
+        # if the user has added a new region, it should have no associated objects
+        else:
+            allUserRegions.append({'name': row[0], 'objects': {}, 'factors': factors})
+    # save regions to account, if logged in
+    if loggedInUsername != '':
+        users.update_one({'username': loggedInUsername}, {'$set': {'regions': allUserRegions}})
+    # update the name of the selected region
+    if currentRegionName == None:
+        newRegionName = None
+    else:
+        newRegionName = allUserRegions[currentRegionIndex]['name']
+    gr.Info('Successfully Updated Regions', 5)
+    return 'Successfully Updated Regions', updateRegionsDropdown(), newRegionName
+
+# updates the current region, when the user switches it with the dropdown on the regions tab
+def updateCurrentRegion(dropdownValue):
+    global all_objects
+    global allFactors
+    global currentHDI
+    for region in allUserRegions:
+        if region['name'] == dropdownValue:
+            all_objects = region['objects']
+            allFactors = region['factors']
+            # predict HDI - to update it internally
+            inputLayer = np.matrix([[100 if factor == None else float(factor)/10 if index <= 11 else float(factor)] for index, factor in enumerate(allFactors)])
+            prediction = round(network.predict(inputLayer).item(0,0), 3)
+            currentHDI = prediction
+
+# validate sign up & add account to mongoDB
+def signUp(username, password, password2):
+    global loggedInUsername
+    # validate no empty fields
+    if username == '' or password == '' or password2 == '':
+        gr.Warning('A field has been left empty! Please fill in all fields.')
+        return 'Please fill in all fields!', updateRegionsTable(), updateRegionsDropdown()
+    # validate username - does not already exist
+    if users.count_documents({'username': username}) != 0:
+        gr.Warning('This username is already in use! Please choose another username.')
+        return 'This username is already in use! Please choose another username.', updateRegionsTable(), updateRegionsDropdown()
+    # validate password - double entry validation
+    if password != password2:
+        gr.Warning('The passwords do not match! Please ensure that you have entered the correct password.')
+        return 'The passwords do not match! Please ensure that you have entered the correct password.', updateRegionsTable(), updateRegionsDropdown()
+    # validate password - at least 8 characters long
+    if len(password) < 8:
+        gr.Warning('Your password must have at least 8 characters!')
+        return 'Your password must have at least 8 characters!', updateRegionsTable(), updateRegionsDropdown()
+    # validate password - at least 1 digit
+    digits = '0123456789'
+    hasDigit = False
+    for digit in digits:
+        if digit in password:
+            hasDigit = True
+    if not hasDigit:
+        gr.Warning('Your password must include at least 1 digit!')
+        return 'Your password must include at least 1 digit!', updateRegionsTable(), updateRegionsDropdown()
+    # validate password - at least 1 special character
+    specialChars = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+    hasSpecialChar = False
+    for specialChar in specialChars:
+        if specialChar in password:
+            hasSpecialChar = True
+    if not hasSpecialChar:
+        gr.Warning('Your password must include at least 1 special character!')
+        return f'Your password must include at least 1 special character! ({specialChars})', updateRegionsTable(), updateRegionsDropdown()
+    # salt & hash password
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+    # add to mongoDB
+    user = {
+        'username': username,
+        'hashedPassword': hashed_password,
+        'regions': allUserRegions
+    }
+    users.insert_one(user)
+    loggedInUsername = username
+    gr.Info('Successfully created & logged into an account', 5)
+    return f'Successfully created & logged into an account, with username: {username}!', updateRegionsTable(), updateRegionsDropdown()
+
+# validate & log in the user
+def logIn(username, password):
+    global loggedInUsername
+    global allUserRegions
+    # validate no empty fields
+    if username == '' or password == '':
+        gr.Warning('A field has been left empty! Please fill in all fields.')
+        return 'Please fill in all fields!', updateRegionsTable(), updateRegionsDropdown()
+    # check username exists
+    if users.count_documents({'username': username}) == 0:
+        gr.Warning('This username does not exist! Please ensure that you have entered the correct username.')
+        return 'This username does not exist! Please ensure that you have entered the correct username.', updateRegionsTable(), updateRegionsDropdown()
+    # check password
+    user = users.find_one({'username': username})
+    if not bcrypt.checkpw(password.encode('utf-8'), user['hashedPassword']): # the hashed passwords do not match
+        gr.Warning('Incorrect Password! Please try again.')
+        return 'Incorrect Password! Please try again.', updateRegionsTable(), updateRegionsDropdown()
+    # grant access to the account
+    loggedInUsername = username
+    allUserRegions = user['regions']
+    gr.Info(f'Successfully logged in as {username}!', 5)
+    return f'Successfully logged in as {username}!', updateRegionsTable(), updateRegionsDropdown()
+
+# define some starting locations
+locations = [[51.5360, -0.1196], [40.8093, -73.9678], [34.0069, -118.2304], [25.7617, -80.1918], [48.8488, 2.3470], [41.8840, 12.4790], [52.5078, 13.4003], [37.9964, 23.7293], [59.3265, 18.0680], [40.4172, -3.6867], [41.3940, 2.1606], [38.7253, -9.1403], [55.7476, 37.6209], [31.2230, 121.4860], [39.8958, 116.4000], [37.5467, 126.9901], [35.6777, 139.7685], [1.3294, 103.8081], [-33.8782, 151.1754], [30.0465, 31.2246], [6.5047, 3.3732], [-1.2873, 36.8198], [-33.9425, 18.5065],  [19.3916, -99.1279], [-23.5727, -46.6207], [36.1458, -115.1832], [38.8939, -77.0372], [49.2501, -123.1164], [43.6888, -79.4190]]
+
+# initialise the map for drawing on
+foliumMap = folium.Map(location=random.choice(locations))
+draw = Draw(
+    export=True,
+    filename='region.geojson',
+    position='topleft',
+    draw_options={
+        'polyline': False,
+        'circlemarker': False,
+        'polygon': {'allowIntersection': False},
+        'marker': False,
+        'circle': False,
+        'rectangle': False,
+    },
+    edit_options={'poly': {'allowIntersection': False}}
+)
+draw.add_to(foliumMap)
+
+# define markdown in help tab
+markdown = '''
+# \U0001F44B Welcome to Predicting HDI! \U0001F44B
+
+This app allows you to predict the HDI of any region you draw on the map. From there, you can make some suggestions on how to improve it.
+
+## Getting Started \U00002728
+
+Head over to the \U0001F52E Predict tab, and find your region on the map. Once you have found your region, you can predict the HDI by following these steps:
+
+1. Select the Draw Tool by Clicking the **Pentagon** \U00002B53 Icon in the Top Left.
+2. Draw your Region, by creating vertices. Make sure you close the region by clicking on your first vertex at the end.
+3. Press the **Export** button in the Top Right. This will download a file called `region.geojson` to your computer.
+4. Press the \U0001F4E4 **Upload the GeoJSON file** \U0001F4E4 button, below the map, and choose your `region.geojson`. You can scroll down to see a progress bar for this upload. Once the upload is complete, you will get a notification in the top right corner.
+5. Finally, press the orange \U0001F52E **Predict HDI** \U0001F52E button to predict the HDI of your region!
+
+![](file/data/helpTab1.png "Diagram visually showing the above steps")
+
+## More Detail on The \U0001F52E Predict Tab
+
+### Help! It's Taking Too Long! \U0001F553
+
+If you drew a very large region, it is likely that Uploading it took a **very long** time \U0001F553. This is because, to predict the HDI, we use data about the positions of buildings, such as houses, schools, hospitals and police stations. This data must be downloaded, so if you chose a region with a lot of these things, then it will take quite a while to download it all.
+
+To predict the HDI from these positions, we calculate different different factors, such as the average distance from a house to the nearest school, or nearest hospital, which can also take a while. To decrease the time this may take, you can change the values of the **Maximum x-buildings** \U0001F3E0 and **Maximum y-buildings** \U0001F3EB sliders.
+
+Changing **Maximum x-buildings** \U0001F3E0 will decrease the number of x-buildings we consider. For example, in the case of average distance from house to school, this slider corresponds to the number of houses we consider. Similarly, changing **Maximum y-buildings** \U0001F3EB corresponds to changing the number of schools we consider for each house (in this example). However, this will cause the calculated values for these factors to be less accurate, and therefore may cause the predicted HDI to be less accurate.
+
+### Help! It Just Crashed! \U0000274C
+
+If the progress bar suddenly turned into an **ERROR** when uploading a region, it is likely that you just timed out from the OverpassTurbo servers, which is what we are using to get the location of all these buildings. This is totally normal, and so if this happens, just try to upload it again.
+
+If the issue persists, it is likely something is wrong with your region, so try a different one
+
+### Suggestions \U0001F4A1
+
+Once you have predicted the HDI of a region, you can make some suggestions. Do this, by simply pressing the \U0001F914 **Make Suggestions** \U0001F914 button. The suggestions will be in the format: "Build (a number of) new buildings, in these locations". You can change this value, to anything between 1 and 10, by moving the slider, labelled **Number of New Buildings** \U0001F3D9.
+
+This may also take some time, As we must calculate the optimal position to place these new buildings, and the re-calculate the factors. Once it is finished, the Suggestions \U0001F4A1 Table will be populated with 8 different suggestions, on how to improve the HDI of your region. To view the locations of the suggestion on the map, simply select the cell that contains the coordinates. The map will update to have pins.
+
+![](file/data/helpTab2.png "Typical Output for the Suggestions Table")
+
+If your region is quite empty, you may have got some suggestions that did not return any locations, or a new HDI, but instead a prompt to build some other buildings first. This is because we did not have sufficient data to calculate where a new building should go, and so unfortunately, there is no real suggestion.
+
+### What Makes a Good Region? \U0001F914
+
+This brings me onto how to select a region, which will yield good results.
+
+- **Don't make your region too large.** Larger regions will take longer to download, and longer to calculate the factors of. You will therefore want to decrease the **Maximum x-buildings** \U0001F3E0 and **Maximum y-buildings** \U0001F3EB sliders, leading to a less accurate prediction. You will then also not get very good suggestions, as building 5 schools in a large metropolitan area isn't going to do anything.
+- **Ensure your region doesn't self-intersect.** Your region should be a simple 2D shape.
+- **Use Small Towns.** I believe this works best with small towns, as the suggestions will often increase the HDI by a more significant amount. Downloading the Region and Calculating the Factors also won't take too long.
+- **Don't Make Empty Regons.** Predicting the HDI of an empty field or the ocean is not going to yield any useful results.
+
+### Drawing Regions \U0001F58B
+
+If you make a mistake while drawing your region, you can press the "Delete last point" button, next to the Pentagon \U00002B53 icon. If you wish to delete your region, press the Bin \U0001F5D1 icon in the top left.
+
+You can zoom in and out of the map, by using the scroll wheel, or by using the + and - buttons in the top right.
+
+If you draw multiple regions before pressing Export, we will only consider the first one you drew. If you wish to predict the HDI of 2 disconnected regions, you can get around this by connecting them with a very thin line.
+
+## The \U0001F19A Compare Tab
+
+### Comparing your Region \U0001F4CA
+
+You can use the \U0001F19A Compare tab to compare your region to an existing sub-national region. Sub-national regions are 1 level below countries, so for example, the sub-national regions of the United States are the 50 states.
+
+To do this, simply select a region from the dropdown menu at the top of the screen. To search for a specific region, you can also type into this dropdown menu. When you select one, the table below will populate with the HDI of your region and the selected region, as well as each of the factors that contribute to it.
+
+![](file/data/helpTab3.png "Typical Output for the Comparison Table")
+
+\U0001F4C4 **Note:** You must predict the HDI of a region first, before you do this.
+
+### Correlation Heatmap \U0001F4C8
+
+At the bottom of this tab, you will also find a graph, showing the correlation between each factor, and HDI. You can use this to find out which factors contribute most towards the HDI, as well as which ones contribute towards each other.
+
+Each cell has a colour, which corresponds to a number between -1 and 1, as shown by the key on the right. A value of 1 means that the 2 factors are very positively correlated, a value of -1 means that the 2 factors are very negatively correlated, and a value of 0 means that the 2 factors are not correlated. All values in between are as you would expect (for example, a value of -0.3 would mean that the 2 factors are slightly negatively correlated).
+
+## The \U0001F30D Regions Tab
+
+In the \U0001F30D Regions tab, you can switch between different regions that you have predicted the HDI of. To do this, simply select one from the dropdown menu at the top of the screen.
+
+This tab also allows you to manually edit the factors of your regions, rename your regions, and add new ones. You can edit any cell in the table, so long as they follow these rules:
+
+- The values in the columns for A(... ...) must either be a number or empty
+- The values in the columns for D(...) must be a number
+- The values in the name column must be unique
+
+(A(x y) means "Average distance from x to nearest y", and D(x) means "Number of x per unit area")
+
+Once you have made your changes, you can press the \U0001F504 **Submit Table Changes** \U0001F504 button, to make your changes. If any of the rules above have not been met, the changes will not go through, and you will be told which cell is causing an error.
+
+\U00002757 **WARNING:** You will no longer be able to make suggestions from regions that you edit in the table. \U00002757 This is because the factors no longer reflect the positions of the buildings in the region, and so they are no longer accurate. We therefore cannot make any suggestions, as there are no buildings associated with the region.
+
+## Account Management \U0001F510
+
+You can also create an account, to save your regions.
+
+### Creating an Account \U0001F4DD
+
+To create an account, simply head to the \U0001F4DD Sign Up tab. Here, you get to choose a username and password. Your username must be unique, and your password must:
+
+- Be at least 8 characters long
+- Contain at least 1 digit
+- Contain at least 1 special character. The characters that count as special characters are: ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~
+
+When you create an account, you will automatically be logged in. Any changes you make while logged in will be saved to your account.
+
+### Logging Into an Account \U0001F513
+
+To log into your account, head to the \U0001F513 Log In tab, and enter your username and password.
+
+\U00002757 **WARNING:** Logging in will override the regions in the \U0001F30D Regions Tab, and replace them with the ones in the account you log into. \U00002757
+'''
+
+# structure of the UI
+with gr.Blocks() as app:
+    with gr.Tab(label='\U0001F64B Help'):
+        gr.Markdown(markdown)
+    with gr.Tab(label='\U0001F52E Predict'):
+        with gr.Row():
+            with gr.Column(scale=3):
+                map = Folium(value=foliumMap)
+                uploadButton = gr.UploadButton(label='\U0001F4E4 Upload the GeoJSON file \U0001F4E4', file_count='single')
+            with gr.Column(scale=1):
+                predictHDIbutton = gr.Button(value='\U0001F52E Predict HDI \U0001F52E', variant='primary')
+                with gr.Group():
+                    max_x_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum x-buildings \U0001F3E0', info='When calculating the average distance between 2 types of building, it will find the average of this many pairs. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
+                    max_y_objectsSlider = gr.Slider(minimum=10, maximum=5000, value=500, label='Maximum y-buildings \U0001F3EB', info='When calculating the average distance between 2 types of building, it will find the closest of the second type of building out of this many options. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.')
+                with gr.Group():
+                    HDIprediction = gr.Textbox(label='I believe that the HDI of this region is... \U00002728', value='', interactive=False)
+                    similarHDI = gr.Textbox(label='That\'s a similar HDI to... \U0001F30D', value='', interactive=False)
+        with gr.Row():
+            makeSuggestionsButton = gr.Button(value='\U0001F914 Make Suggestions \U0001F914')
+            newBuildingsSlider = gr.Slider(minimum=1, maximum=10, value=5, step=1, label='Number of New Buildings \U0001F3D9', interactive=True)
+        suggestionsTable = gr.Dataframe(label='Suggestions \U0001F4A1', headers=['New Building', 'Coordinates', 'New HDI', 'Change in HDI'], type='array', interactive=False)
+        log = gr.Textbox(label='Log Messages \U0001F4C4', value='', interactive=False)
+    with gr.Tab(label='\U0001F19A Compare'):
+        compareDropdown = gr.Dropdown(choices=[f'{region["region"]}, {region["country"]}' for region in trainingData], label='Select a Region \U0001F30D')
+        compareTable = gr.DataFrame(label='Comparison \U0001F4CA', headers=['Factor', 'Your Region', 'Selected Region'], type='array', interactive=False)
+        pmccImage = gr.Image('data/pmcc.png', label='Correlation between Factors \U0001F4C8', height=600, interactive=False)
+    with gr.Tab(label='\U0001F30D Regions'):
+        regionsDropdown = gr.Dropdown(choices=[], label='Current Region \U0001F30D', interactive=True)
+        regionsTable = gr.DataFrame(label='Your Regions \U0001F304', headers=(['Name'] + list(trainingData[0].keys())[4:]), type='array', col_count=(25,'fixed'), interactive=True)
+        submitEditsButton = gr.Button(value='\U0001F504 Submit Table Changes \U0001F504', variant='primary')
+        gr.Markdown('\U00002757 **WARNING:** You will no longer be able to make suggestions from regions that you edit here. \U00002757')
+        submitEditsResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
+    with gr.Tab(label='\U0001F513 Log In'):
+        with gr.Row():
+            with gr.Column():
+                logInUsername = gr.Textbox(label='Username \U0001F50F', placeholder='Enter your username...')
+                logInPassword = gr.Textbox(label='Password \U0001F511', placeholder='Enter your password...', type='password')
+            with gr.Column():
+                logInButton = gr.Button(value='\U0001F4F2 Log In \U0001F4F2', variant='primary')
+                gr.Markdown('\U00002757 **WARNING:** Logging in will override the regions in the \U0001F30D Regions Tab, and replace them with the ones in the account you log into. \U00002757')
+                logInResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
+    with gr.Tab(label='\U0001F4DD Sign Up'):
+        with gr.Row():
+            with gr.Column():
+                signUpUsername = gr.Textbox(label='Username \U0001F50F', placeholder='Enter your username...')
+                signUpPassword = gr.Textbox(label='Password \U0001F511', placeholder='Enter your password...', type='password')
+                signUpPassword2 = gr.Textbox(label='Re-Enter Password \U0001F510', placeholder='Re-Enter your password...', type='password')
+                gr.Markdown('''
+                Your password must:
+                - Be at least 8 characters
+                - Contain at least 1 digit
+                - Contain at least 1 special character
+                ''')
+            with gr.Column():
+                signUpButton = gr.Button(value='\U0001F680 Create an Account \U0001F680', variant='primary')
+                signUpResult = gr.Textbox(label='Result \U0001F4C4', interactive=False)
+    
+    # functionality
+    uploadButton.upload(uploadGeoJSON, inputs=[uploadButton, max_x_objectsSlider, max_y_objectsSlider, regionsDropdown], outputs=[log, regionsTable, regionsDropdown, regionsDropdown])
+    predictHDIbutton.click(processPrediction, inputs=[], outputs=[HDIprediction, similarHDI])
+    makeSuggestionsButton.click(makeSuggestions, inputs=[max_x_objectsSlider, max_y_objectsSlider, newBuildingsSlider], outputs=[suggestionsTable])
+    suggestionsTable.select(selectSuggestionsTable, inputs=[], outputs=[map])
+    compareDropdown.input(compareRegions, inputs=[compareDropdown], outputs=[compareTable])
+    regionsDropdown.change(updateCurrentRegion, inputs=[regionsDropdown], outputs=[])
+    submitEditsButton.click(updateAllUserRegions, inputs=[regionsTable, regionsDropdown], outputs=[submitEditsResult, regionsDropdown, regionsDropdown])
+    signUpButton.click(signUp, inputs=[signUpUsername, signUpPassword, signUpPassword2], outputs=[signUpResult, regionsTable, regionsDropdown])
+    logInButton.click(logIn, inputs=[logInUsername, logInPassword], outputs=[logInResult, regionsTable, regionsDropdown])
+
+# launch the UI
+app.launch(allowed_paths=["/"])
+\end{minted}
+\caption{Final Code for \pil{app.py}}
+\end{longlisting}
+
+\subsection{\pil{calc_factors.py}}\label{sec:updatedCalcFactors}
+\begin{longlisting}
+(This is the code for the up-to-date version of \pil{calc_factors.py}, which is used by the app)
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import numpy as np
+import random
+
+EARTH_RADIUS = 6371 # (in km)
+
+# converts angle in degrees to angle in radians
+def deg2rad(angle):
+    return (np.pi/180)*angle
+
+# finds the distance (in km) along the surface of the earth, between 2 coordinates
+def distBetween2Points(p1, p2):
+    La1 = deg2rad(p1[0])
+    Lo1 = deg2rad(p1[1])
+    La2 = deg2rad(p2[0])
+    Lo2 = deg2rad(p2[1])
+    return EARTH_RADIUS * np.arccos(np.sin(La1)*np.sin(La2) + np.cos(La1)*np.cos(La2)*np.cos(Lo1-Lo2))
+
+# finds the average distance between 2 types of objects, A(x,y)
+def averageDistance(x_objects, y_objects, max_x_objects=2000, max_y_objects=2000, must_include_x=None, must_include_y=None):
+    if len(x_objects) == 0 or len(y_objects) == 0: # the average distance is undefined
+        return None
+    if len(x_objects) > max_x_objects: # random sample
+        x_objects = random.sample(x_objects, max_x_objects)
+    if must_include_x != None: # include the new building when making suggestions
+        x_objects += must_include_x
+    # iterate over each x_object, and find the closest y_object
+    min_dists = []
+    for x_object in x_objects:
+        dist_to_ys = []
+        if len(y_objects) > max_y_objects:
+            y_objects_in_consideration = random.sample(y_objects, max_y_objects)
+        else:
+            y_objects_in_consideration = y_objects
+        if must_include_y != None: # include the new building when making suggestions
+            y_objects_in_consideration += must_include_y
+        for y_object in y_objects_in_consideration:
+            dist_to_ys.append(distBetween2Points(x_object, y_object))
+        min_dists.append(min(dist_to_ys)) # the closest y_object
+    return np.mean(min_dists)
+
+# calculates the area (in km^2) of a given region bound by a set of latitude/longitude coordinates
+def calcArea(bounding_coords):
+    if bounding_coords[0] == bounding_coords[-1]: # if the first and last coordinates are the same, then delete the last one
+        bounding_coords.pop(-1)
+    # convert lat/lon pairs to 3d position vectors
+    bounding_vectors = []
+    for coord in bounding_coords:
+        La = deg2rad(coord[0])
+        Lo = deg2rad(coord[1])
+        bounding_vectors.append(np.matrix([
+            [np.cos(La)*np.cos(Lo)],
+            [np.cos(La)*np.sin(Lo)],
+            [np.sin(La)]
+        ]))
+    # iterate over each vertex and find its anticlockwise angle
+    anticlockwise_angles = []
+    for vertex_index, vertex in enumerate(bounding_vectors):
+        prev_vertex = bounding_vectors[vertex_index-1]
+        next_vertex = bounding_vectors[0 if vertex_index == len(bounding_vectors)-1 else vertex_index+1]
+        La = deg2rad(bounding_coords[vertex_index][0])
+        Lo = deg2rad(bounding_coords[vertex_index][1])
+        # define the rotation and translation matrices
+        rotation_matrix_z = np.matrix([
+            [np.cos(-Lo), -np.sin(-Lo), 0],
+            [np.sin(-Lo), np.cos(-Lo), 0],
+            [0, 0, 1]
+        ])
+        rotation_matrix_y = np.matrix([
+            [np.cos(La-np.pi/2), 0, np.sin(La-np.pi/2)],
+            [0, 1, 0],
+            [-np.sin(La-np.pi/2), 0, np.cos(La-np.pi/2)]
+        ])
+        translation_vector = np.matrix([
+            [0],
+            [0],
+            [-1]
+        ])
+        # rotate and translate the plane tangent to the vertex such that it is the xy-plane
+        prev_vertex = np.matmul(rotation_matrix_y, np.matmul(rotation_matrix_z, prev_vertex)) + translation_vector
+        vertex = np.matmul(rotation_matrix_y, np.matmul(rotation_matrix_z, vertex)) + translation_vector
+        next_vertex = np.matmul(rotation_matrix_y, np.matmul(rotation_matrix_z, next_vertex)) + translation_vector
+        # project onto the xy-plane
+        prev_vertex[2][0] = 0
+        next_vertex[2][0] = 0
+        # calculate anticlockwise angle between the vectors
+        prev_to_current = vertex - prev_vertex
+        current_to_next = next_vertex - vertex
+        anticlockwise_angle = np.arctan2((prev_to_current.item(1,0)*current_to_next.item(2,0) - prev_to_current.item(2,0)*current_to_next.item(1,0)) - (prev_to_current.item(2,0)*current_to_next.item(0,0) - prev_to_current.item(0,0)*current_to_next.item(2,0)) + (prev_to_current.item(0,0)*current_to_next.item(1,0) - prev_to_current.item(1,0)*current_to_next.item(0,0)), prev_to_current.item(0,0)*current_to_next.item(0,0) + prev_to_current.item(1,0)*current_to_next.item(1,0) + prev_to_current.item(2,0)*current_to_next.item(2,0))
+        anticlockwise_angles.append(anticlockwise_angle)
+    # find the interior angles from the anticlockwise angles
+    sum_anticlockwise_angles = round(sum(anticlockwise_angles), 5)
+    if sum_anticlockwise_angles == 0:
+        return None
+    if sum_anticlockwise_angles < 0:
+        anticlockwise_angles = [-1*angle for angle in anticlockwise_angles]
+    interior_angles = [np.pi-angle for angle in anticlockwise_angles]
+    # return the area
+    num_edges = len(bounding_coords)
+    return (EARTH_RADIUS ** 2) * (sum(interior_angles) - np.pi*(num_edges-2))
+
+# finds the density of a type of object, D(x)
+def density(x_objects, area):
+    return len(x_objects)/area
+\end{minted}
+\caption{Final Code for \pil{calc_factors.py}}
+\end{longlisting}
+
+\subsection{\pil{neural_network.py}}\label{sec:neuralNetworkCode}
+\begin{longlisting}
+\begin{minted}[linenos,breaklines,firstnumber=1,fontsize=\small]{python}
+import numpy as np
+import copy
+import pickle
+import random
+
+class MultilayerPerceptron(object):
+    # constructor method
+    def __init__(self, layer_sizes):
+        # initialise layer sizes constant
+        self.layer_sizes = layer_sizes
+        self.L = len(layer_sizes)-1
+        # initialise matrices for the different quantities
+        self.activations = [np.matrix(np.zeros(shape=(layer_size,1))) for layer_size in layer_sizes]
+        self.weights = [np.matrix(np.random.randn(layer_sizes[index+1],layer_size)) for index, layer_size in enumerate(layer_sizes[:-1])]
+        self.biases = [np.matrix(np.random.randn(layer_size,1)) for layer_size in layer_sizes]
+        self.z = [np.matrix(np.zeros(shape=(layer_size,1))) for layer_size in layer_sizes]
+        self.errors = [np.matrix(np.zeros(shape=(layer_size,1))) for layer_size in layer_sizes]
+        # initialise lists for training states
+        self.training_activations = []
+        self.training_z = []
+        self.training_errors = []
+
+    # carry out the feedforward algorithm
+    def feedforward(self):
+        for layer in range(0, self.L):
+            self.z[layer+1] = np.matmul(self.weights[layer], self.activations[layer]) + self.biases[layer+1]
+            self.activations[layer+1] = sigmoid(self.z[layer+1])
+    
+    # carry out the backpropogation algorithm
+    def backpropogate(self, examples, learning_rate):
+        # reset the training lists
+        self.training_activations = []
+        self.training_z = []
+        self.training_errors = []
+        # iterate over each example
+        for example in examples:
+            # reset the activations, z-values and errors
+            self.activations = [np.matrix(np.zeros(shape=(layer_size,1))) for layer_size in self.layer_sizes]
+            self.z = [np.matrix(np.zeros(shape=(layer_size,1))) for layer_size in self.layer_sizes]
+            self.errors = [np.matrix(np.zeros(shape=(layer_size,1))) for layer_size in self.layer_sizes]
+            # make a feedforward pass
+            self.activations[0] = example['input']
+            self.feedforward()
+            # calculate the error in the output layer
+            self.errors[self.L] = np.multiply(
+                self.activations[self.L] - example['output'],
+                sigmoid_prime(self.z[self.L])
+            )
+            # backpropogate the error to previous layers
+            for layer in range(self.L, 1, -1):
+                self.errors[layer-1] = np.multiply(
+                    np.matmul(
+                        self.weights[layer-1].T,
+                        self.errors[layer]
+                    ),
+                    sigmoid_prime(self.z[layer-1])
+                )
+            # save the activations, z-values and errors
+            self.training_activations.append(copy.deepcopy(self.activations))
+            self.training_z.append(copy.deepcopy(self.z))
+            self.training_errors.append(copy.deepcopy(self.errors))
+        # use gradient descent to update the weights and biases
+        for layer in range(self.L, 0, -1):
+            self.weights[layer-1] -= (learning_rate/len(examples)) * sum(
+                [np.matmul(
+                    self.training_errors[example][layer],
+                    self.training_activations[example][layer-1].T
+                ) for example in range(len(examples))],
+                np.matrix(np.zeros(self.weights[layer-1].shape)) # (extra argument in sum function to add matrices instead of numbers)
+            )
+            self.biases[layer] -= (learning_rate/len(examples)) * sum(
+                [self.training_errors[example][layer] for example in range(len(examples))],
+                np.matrix(np.zeros(self.biases[layer].shape)) # (extra argument in sum function to add matrices instead of numbers)
+            )
+    
+    # run the feedforward algorithm on a set of input data and return the result
+    def predict(self, input_data):
+        self.activations[0] = input_data
+        self.feedforward()
+        return self.activations[self.L]
+    
+    # carry out stochastic gradient descent over a number of epochs to train a model
+    def train(self, examples, mini_batch_size, num_epochs, learning_rate):
+        for epoch in range(1, num_epochs+1):
+            print(f'training epoch {epoch}/{num_epochs}...') # log message
+            # randomly split into mini batches
+            random.shuffle(examples)
+            mini_batches = [examples[(batch_number * mini_batch_size):((batch_number+1) * mini_batch_size)] for batch_number in range(int(np.ceil(len(examples) / mini_batch_size)))]
+            # backpropogate for each mini batch
+            for num, mini_batch in enumerate(mini_batches):
+                print(f' mini batch {num}/{len(mini_batches)}...') # log message
+                self.backpropogate(mini_batch, learning_rate)
+    
+    # saves weights and biases to an external file in the models folder
+    def save_model(self, filename):
+        parameters = {
+            'weights': self.weights,
+            'biases': self.biases,
+            'layer_sizes': self.layer_sizes
+        }
+        with open(f'models/{filename}.pkl', 'wb') as file:
+            pickle.dump(parameters, file)
+    
+    # loads a model from a file path
+    def load_model(self, file_path):
+        with open(file_path, 'rb') as file:
+            parameters = pickle.load(file)
+        if self.layer_sizes != parameters['layer_sizes']:
+            raise Exception('layer sizes do not match!')
+        self.weights = parameters['weights']
+        self.biases = parameters['biases']
+
+# activation function
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
+
+# derivative of the activation function
+def sigmoid_prime(x):
+    return np.multiply(sigmoid(x), 1-sigmoid(x))
+\end{minted}
+\caption{Final Code for \pil{neural_network.py}}
+\end{longlisting}
 
 \cleardoublepage{}
 \phantomsection{}

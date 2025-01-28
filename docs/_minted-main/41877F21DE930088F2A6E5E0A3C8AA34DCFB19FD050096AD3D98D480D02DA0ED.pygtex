@@ -1,0 +1,121 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{import} \PYG{n+nn}{copy}
+\PYG{k+kn}{import} \PYG{n+nn}{pickle}
+\PYG{k+kn}{import} \PYG{n+nn}{random}
+
+\PYG{k}{class} \PYG{n+nc}{MultilayerPerceptron}\PYG{p}{(}\PYG{n+nb}{object}\PYG{p}{)}\PYG{p}{:}
+    \PYG{c+c1}{\PYGZsh{} constructor method}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{layer\PYGZus{}sizes}\PYG{p}{)}\PYG{p}{:}
+        \PYG{c+c1}{\PYGZsh{} initialise layer sizes constant}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layer\PYGZus{}sizes} \PYG{o}{=} \PYG{n}{layer\PYGZus{}sizes}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{L} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{layer\PYGZus{}sizes}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+        \PYG{c+c1}{\PYGZsh{} initialise matrices for the different quantities}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{shape}\PYG{o}{=}\PYG{p}{(}\PYG{n}{layer\PYGZus{}size}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)} \PYG{k}{for} \PYG{n}{layer\PYGZus{}size} \PYG{o+ow}{in} \PYG{n}{layer\PYGZus{}sizes}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{weights} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{n}{layer\PYGZus{}sizes}\PYG{p}{[}\PYG{n}{index}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{,}\PYG{n}{layer\PYGZus{}size}\PYG{p}{)}\PYG{p}{)} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{layer\PYGZus{}size} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{layer\PYGZus{}sizes}\PYG{p}{[}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{biases} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{n}{layer\PYGZus{}size}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{)} \PYG{k}{for} \PYG{n}{layer\PYGZus{}size} \PYG{o+ow}{in} \PYG{n}{layer\PYGZus{}sizes}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{z} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{shape}\PYG{o}{=}\PYG{p}{(}\PYG{n}{layer\PYGZus{}size}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)} \PYG{k}{for} \PYG{n}{layer\PYGZus{}size} \PYG{o+ow}{in} \PYG{n}{layer\PYGZus{}sizes}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{errors} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{shape}\PYG{o}{=}\PYG{p}{(}\PYG{n}{layer\PYGZus{}size}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)} \PYG{k}{for} \PYG{n}{layer\PYGZus{}size} \PYG{o+ow}{in} \PYG{n}{layer\PYGZus{}sizes}\PYG{p}{]}
+        \PYG{c+c1}{\PYGZsh{} initialise lists for training states}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}activations} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}z} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}errors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+
+    \PYG{c+c1}{\PYGZsh{} carry out the feedforward algorithm}
+    \PYG{k}{def} \PYG{n+nf}{feedforward}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{for} \PYG{n}{layer} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{L}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{z}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{weights}\PYG{p}{[}\PYG{n}{layer}\PYG{p}{]}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations}\PYG{p}{[}\PYG{n}{layer}\PYG{p}{]}\PYG{p}{)} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{biases}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{sigmoid}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{z}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} carry out the backpropogation algorithm}
+    \PYG{k}{def} \PYG{n+nf}{backpropogate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{examples}\PYG{p}{,} \PYG{n}{learning\PYGZus{}rate}\PYG{p}{)}\PYG{p}{:}
+        \PYG{c+c1}{\PYGZsh{} reset the training lists}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}activations} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}z} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}errors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{c+c1}{\PYGZsh{} iterate over each example}
+        \PYG{k}{for} \PYG{n}{example} \PYG{o+ow}{in} \PYG{n}{examples}\PYG{p}{:}
+            \PYG{c+c1}{\PYGZsh{} reset the activations, z\PYGZhy{}values and errors}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{shape}\PYG{o}{=}\PYG{p}{(}\PYG{n}{layer\PYGZus{}size}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)} \PYG{k}{for} \PYG{n}{layer\PYGZus{}size} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layer\PYGZus{}sizes}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{z} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{shape}\PYG{o}{=}\PYG{p}{(}\PYG{n}{layer\PYGZus{}size}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)} \PYG{k}{for} \PYG{n}{layer\PYGZus{}size} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layer\PYGZus{}sizes}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{errors} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{shape}\PYG{o}{=}\PYG{p}{(}\PYG{n}{layer\PYGZus{}size}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)} \PYG{k}{for} \PYG{n}{layer\PYGZus{}size} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layer\PYGZus{}sizes}\PYG{p}{]}
+            \PYG{c+c1}{\PYGZsh{} make a feedforward pass}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{n}{example}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{input}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{feedforward}\PYG{p}{(}\PYG{p}{)}
+            \PYG{c+c1}{\PYGZsh{} calculate the error in the output layer}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{errors}\PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{L}\PYG{p}{]} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations}\PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{L}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n}{example}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{output}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,}
+                \PYG{n}{sigmoid\PYGZus{}prime}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{z}\PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{L}\PYG{p}{]}\PYG{p}{)}
+            \PYG{p}{)}
+            \PYG{c+c1}{\PYGZsh{} backpropogate the error to previous layers}
+            \PYG{k}{for} \PYG{n}{layer} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{L}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{:}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{errors}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}
+                    \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}
+                        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{weights}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{T}\PYG{p}{,}
+                        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{errors}\PYG{p}{[}\PYG{n}{layer}\PYG{p}{]}
+                    \PYG{p}{)}\PYG{p}{,}
+                    \PYG{n}{sigmoid\PYGZus{}prime}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{z}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}
+                \PYG{p}{)}
+            \PYG{c+c1}{\PYGZsh{} save the activations, z\PYGZhy{}values and errors}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}activations}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{copy}\PYG{o}{.}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations}\PYG{p}{)}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}z}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{copy}\PYG{o}{.}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{z}\PYG{p}{)}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}errors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{copy}\PYG{o}{.}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{errors}\PYG{p}{)}\PYG{p}{)}
+        \PYG{c+c1}{\PYGZsh{} use gradient descent to update the weights and biases}
+        \PYG{k}{for} \PYG{n}{layer} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{L}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{weights}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{\PYGZhy{}}\PYG{o}{=} \PYG{p}{(}\PYG{n}{learning\PYGZus{}rate}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{examples}\PYG{p}{)}\PYG{p}{)} \PYG{o}{*} \PYG{n+nb}{sum}\PYG{p}{(}
+                \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}
+                    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}errors}\PYG{p}{[}\PYG{n}{example}\PYG{p}{]}\PYG{p}{[}\PYG{n}{layer}\PYG{p}{]}\PYG{p}{,}
+                    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}activations}\PYG{p}{[}\PYG{n}{example}\PYG{p}{]}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{T}
+                \PYG{p}{)} \PYG{k}{for} \PYG{n}{example} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{examples}\PYG{p}{)}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+                \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{weights}\PYG{p}{[}\PYG{n}{layer}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{)}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} (extra argument in sum function to add matrices instead of numbers)}
+            \PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{biases}\PYG{p}{[}\PYG{n}{layer}\PYG{p}{]} \PYG{o}{\PYGZhy{}}\PYG{o}{=} \PYG{p}{(}\PYG{n}{learning\PYGZus{}rate}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{examples}\PYG{p}{)}\PYG{p}{)} \PYG{o}{*} \PYG{n+nb}{sum}\PYG{p}{(}
+                \PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{training\PYGZus{}errors}\PYG{p}{[}\PYG{n}{example}\PYG{p}{]}\PYG{p}{[}\PYG{n}{layer}\PYG{p}{]} \PYG{k}{for} \PYG{n}{example} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{examples}\PYG{p}{)}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+                \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{biases}\PYG{p}{[}\PYG{n}{layer}\PYG{p}{]}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{)}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} (extra argument in sum function to add matrices instead of numbers)}
+            \PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} run the feedforward algorithm on a set of input data and return the result}
+    \PYG{k}{def} \PYG{n+nf}{predict}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{input\PYGZus{}data}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{n}{input\PYGZus{}data}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{feedforward}\PYG{p}{(}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{activations}\PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{L}\PYG{p}{]}
+
+    \PYG{c+c1}{\PYGZsh{} carry out stochastic gradient descent over a number of epochs to train a model}
+    \PYG{k}{def} \PYG{n+nf}{train}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{examples}\PYG{p}{,} \PYG{n}{mini\PYGZus{}batch\PYGZus{}size}\PYG{p}{,} \PYG{n}{num\PYGZus{}epochs}\PYG{p}{,} \PYG{n}{learning\PYGZus{}rate}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{for} \PYG{n}{epoch} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{num\PYGZus{}epochs}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{training epoch }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{epoch}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{/}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{num\PYGZus{}epochs}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+            \PYG{c+c1}{\PYGZsh{} randomly split into mini batches}
+            \PYG{n}{random}\PYG{o}{.}\PYG{n}{shuffle}\PYG{p}{(}\PYG{n}{examples}\PYG{p}{)}
+            \PYG{n}{mini\PYGZus{}batches} \PYG{o}{=} \PYG{p}{[}\PYG{n}{examples}\PYG{p}{[}\PYG{p}{(}\PYG{n}{batch\PYGZus{}number} \PYG{o}{*} \PYG{n}{mini\PYGZus{}batch\PYGZus{}size}\PYG{p}{)}\PYG{p}{:}\PYG{p}{(}\PYG{p}{(}\PYG{n}{batch\PYGZus{}number}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{mini\PYGZus{}batch\PYGZus{}size}\PYG{p}{)}\PYG{p}{]} \PYG{k}{for} \PYG{n}{batch\PYGZus{}number} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ceil}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{examples}\PYG{p}{)} \PYG{o}{/} \PYG{n}{mini\PYGZus{}batch\PYGZus{}size}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{]}
+            \PYG{c+c1}{\PYGZsh{} backpropogate for each mini batch}
+            \PYG{k}{for} \PYG{n}{num}\PYG{p}{,} \PYG{n}{mini\PYGZus{}batch} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{mini\PYGZus{}batches}\PYG{p}{)}\PYG{p}{:}
+                \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ mini batch }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{num}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{/}\PYG{l+s+si}{\PYGZob{}}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{mini\PYGZus{}batches}\PYG{p}{)}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{backpropogate}\PYG{p}{(}\PYG{n}{mini\PYGZus{}batch}\PYG{p}{,} \PYG{n}{learning\PYGZus{}rate}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} saves weights and biases to an external file in the models folder}
+    \PYG{k}{def} \PYG{n+nf}{save\PYGZus{}model}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{filename}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{parameters} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+            \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{weights}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{weights}\PYG{p}{,}
+            \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{biases}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{biases}\PYG{p}{,}
+            \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{layer\PYGZus{}sizes}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layer\PYGZus{}sizes}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{models/}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{filename}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{.pkl}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{wb}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{file}\PYG{p}{:}
+            \PYG{n}{pickle}\PYG{o}{.}\PYG{n}{dump}\PYG{p}{(}\PYG{n}{parameters}\PYG{p}{,} \PYG{n}{file}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} loads a model from a file path}
+    \PYG{k}{def} \PYG{n+nf}{load\PYGZus{}model}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{file\PYGZus{}path}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{n}{file\PYGZus{}path}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{rb}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{file}\PYG{p}{:}
+            \PYG{n}{parameters} \PYG{o}{=} \PYG{n}{pickle}\PYG{o}{.}\PYG{n}{load}\PYG{p}{(}\PYG{n}{file}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{layer\PYGZus{}sizes} \PYG{o}{!=} \PYG{n}{parameters}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{layer\PYGZus{}sizes}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{:}
+            \PYG{k}{raise} \PYG{n+ne}{Exception}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{layer sizes do not match!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{weights} \PYG{o}{=} \PYG{n}{parameters}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{weights}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{biases} \PYG{o}{=} \PYG{n}{parameters}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{biases}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} activation function}
+\PYG{k}{def} \PYG{n+nf}{sigmoid}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{l+m+mi}{1}\PYG{o}{/}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{+}\PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{x}\PYG{p}{)}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} derivative of the activation function}
+\PYG{k}{def} \PYG{n+nf}{sigmoid\PYGZus{}prime}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{sigmoid}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{sigmoid}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}

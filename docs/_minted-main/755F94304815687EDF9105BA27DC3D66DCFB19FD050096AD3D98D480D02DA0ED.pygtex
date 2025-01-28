@@ -1,0 +1,616 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k+kn}{import} \PYG{n+nn}{gradio} \PYG{k}{as} \PYG{n+nn}{gr}
+\PYG{k+kn}{from} \PYG{n+nn}{gradio\PYGZus{}folium} \PYG{k+kn}{import} \PYG{n}{Folium}
+\PYG{k+kn}{import} \PYG{n+nn}{folium}
+\PYG{k+kn}{from} \PYG{n+nn}{folium}\PYG{n+nn}{.}\PYG{n+nn}{plugins} \PYG{k+kn}{import} \PYG{n}{Draw}
+\PYG{k+kn}{import} \PYG{n+nn}{random}
+\PYG{k+kn}{import} \PYG{n+nn}{json}
+\PYG{k+kn}{from} \PYG{n+nn}{data\PYGZus{}processing}\PYG{n+nn}{.}\PYG{n+nn}{get\PYGZus{}osm\PYGZus{}data} \PYG{k+kn}{import} \PYG{n}{get\PYGZus{}osm\PYGZus{}data}
+\PYG{k+kn}{from} \PYG{n+nn}{calc\PYGZus{}factors} \PYG{k+kn}{import} \PYG{n}{averageDistance}\PYG{p}{,} \PYG{n}{calcArea}\PYG{p}{,} \PYG{n}{density}\PYG{p}{,} \PYG{n}{distBetween2Points}
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{from} \PYG{n+nn}{neural\PYGZus{}network} \PYG{k+kn}{import} \PYG{n}{MultilayerPerceptron}
+\PYG{k+kn}{import} \PYG{n+nn}{copy}
+\PYG{k+kn}{from} \PYG{n+nn}{pymongo}\PYG{n+nn}{.}\PYG{n+nn}{mongo\PYGZus{}client} \PYG{k+kn}{import} \PYG{n}{MongoClient}
+\PYG{k+kn}{from} \PYG{n+nn}{pymongo}\PYG{n+nn}{.}\PYG{n+nn}{server\PYGZus{}api} \PYG{k+kn}{import} \PYG{n}{ServerApi}
+\PYG{k+kn}{import} \PYG{n+nn}{certifi}
+\PYG{k+kn}{import} \PYG{n+nn}{bcrypt}
+\PYG{k+kn}{import} \PYG{n+nn}{csv}
+
+\PYG{c+c1}{\PYGZsh{} initialise neural network}
+\PYG{n}{network} \PYG{o}{=} \PYG{n}{MultilayerPerceptron}\PYG{p}{(}\PYG{p}{[}\PYG{l+m+mi}{24}\PYG{p}{,} \PYG{l+m+mi}{18}\PYG{p}{,} \PYG{l+m+mi}{12}\PYG{p}{,} \PYG{l+m+mi}{6}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}
+\PYG{n}{network}\PYG{o}{.}\PYG{n}{load\PYGZus{}model}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{models/hdi.pkl}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} define global vars}
+\PYG{n}{currentRegion} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+\PYG{n}{all\PYGZus{}objects} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}
+\PYG{n}{allFactors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+\PYG{n}{currentHDI} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+\PYG{n}{allUserRegions} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+\PYG{n}{loggedInUsername} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}
+\PYG{n}{averageDistanceFactors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{house}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{school}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{house}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hospital}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{house}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{pharmacy}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{house}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{restaurant}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{school}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hospital}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{police}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hospital}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{house}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{place\PYGZus{}of\PYGZus{}worship}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{bank}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{slot\PYGZus{}machines}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{fast\PYGZus{}food}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{toilets}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{house}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{police}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{university}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{library}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{house}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{library}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{]}
+\PYG{n}{densityFactors} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{school}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hospital}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{pharmacy}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{police}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{library}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{toilets}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{restaurant}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{place\PYGZus{}of\PYGZus{}worship}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{post\PYGZus{}box}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{vending\PYGZus{}machine}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{bench}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{tree}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} connect to mongoDB}
+\PYG{n}{mongoURI} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{mongodb+srv://lukerhodri:\PYGZlt{}db\PYGZus{}password\PYGZgt{}@predictinghdi.3nkqe.mongodb .net/?retryWrites=true\PYGZam{}w=majority\PYGZam{}appName=predictingHDI}\PYG{l+s+s2}{\PYGZdq{}}
+\PYG{n}{mongoClient} \PYG{o}{=} \PYG{n}{MongoClient}\PYG{p}{(}\PYG{n}{mongoURI}\PYG{p}{,} \PYG{n}{server\PYGZus{}api}\PYG{o}{=}\PYG{n}{ServerApi}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{1}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{,} \PYG{n}{tlsCAFile}\PYG{o}{=}\PYG{n}{certifi}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{users} \PYG{o}{=} \PYG{n}{mongoClient}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{predictingHDI}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{users}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+\PYG{c+c1}{\PYGZsh{} send a ping to confirm a successful connection}
+\PYG{n}{mongoClient}\PYG{o}{.}\PYG{n}{admin}\PYG{o}{.}\PYG{n}{command}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ping}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Pinged your deployment. You successfully connected to MongoDB!}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} load the training data}
+\PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{data/training\PYGZus{}data.csv}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{r}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{file}\PYG{p}{:}
+    \PYG{n}{reader} \PYG{o}{=} \PYG{n}{csv}\PYG{o}{.}\PYG{n}{DictReader}\PYG{p}{(}\PYG{n}{file}\PYG{p}{)}
+    \PYG{n}{trainingData} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{record} \PYG{o+ow}{in} \PYG{n}{reader}\PYG{p}{:}
+        \PYG{n}{trainingData}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{record}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} code to process the user uploading their geojson file}
+\PYG{k}{def} \PYG{n+nf}{uploadGeoJSON}\PYG{p}{(}\PYG{n}{filename}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{currentRegionName}\PYG{p}{,} \PYG{n}{progress}\PYG{o}{=}\PYG{n}{gr}\PYG{o}{.}\PYG{n}{Progress}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{currentRegion}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{k}{global} \PYG{n}{allFactors}
+    \PYG{k}{global} \PYG{n}{allUserRegions}
+    \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Starting...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{n}{filename}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{r}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{file}\PYG{p}{:}
+        \PYG{n}{data} \PYG{o}{=} \PYG{n}{json}\PYG{o}{.}\PYG{n}{load}\PYG{p}{(}\PYG{n}{file}\PYG{p}{)}
+        \PYG{n}{currentRegion} \PYG{o}{=} \PYG{p}{[}\PYG{n}{coordinate}\PYG{p}{[}\PYG{p}{:}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{k}{for} \PYG{n}{coordinate} \PYG{o+ow}{in} \PYG{n}{data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{features}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{geometry}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{coordinates}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{]}
+    \PYG{n}{shortFilename} \PYG{o}{=} \PYG{n}{filename}\PYG{p}{[}\PYG{n}{filename}\PYG{o}{.}\PYG{n}{rindex}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{/}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{p}{]}
+    \PYG{k}{if} \PYG{n}{shortFilename}\PYG{p}{[}\PYG{p}{:}\PYG{n}{shortFilename}\PYG{o}{.}\PYG{n}{rindex}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{]} \PYG{o+ow}{in} \PYG{p}{[}\PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{allUserRegions}\PYG{p}{]} \PYG{o+ow}{or} \PYG{n}{shortFilename}\PYG{p}{[}\PYG{p}{:}\PYG{n}{shortFilename}\PYG{o}{.}\PYG{n}{rindex}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{There is already a region with this name! Please rename the file first.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{There is already a region with this name! Please rename the file first.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{currentRegionName}
+    \PYG{c+c1}{\PYGZsh{} retrieve all relevant osm data}
+    \PYG{n}{object\PYGZus{}types} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{house}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{school}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hospital}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{pharmacy}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{restaurant}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{place\PYGZus{}of\PYGZus{}worship}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{bank}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{slot\PYGZus{}machines}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{fast\PYGZus{}food}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{toilets}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{police}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{university}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{library}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{post\PYGZus{}box}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{vending\PYGZus{}machine}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{bench}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{tree}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{all\PYGZus{}objects} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}
+    \PYG{k}{for} \PYG{n}{num}\PYG{p}{,} \PYG{n}{object\PYGZus{}type} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{object\PYGZus{}types}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mf}{0.3}\PYG{o}{*}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{object\PYGZus{}types}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Downloading }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{object\PYGZus{}type}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ data...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{getting }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{object\PYGZus{}type}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ data...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+        \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{object\PYGZus{}type}\PYG{p}{]} \PYG{o}{=} \PYG{n}{get\PYGZus{}osm\PYGZus{}data}\PYG{p}{(}\PYG{n}{object\PYGZus{}type}\PYG{p}{,} \PYG{n}{currentRegion}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} calculate average distances}
+    \PYG{n}{allFactors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{num}\PYG{p}{,} \PYG{n}{averageDistanceFactor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{averageDistanceFactors}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mf}{0.3}\PYG{o}{+}\PYG{l+m+mf}{0.6}\PYG{o}{*}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{averageDistanceFactors}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Calculating Average Distance between }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ and }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{finding A(}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{, }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+        \PYG{n}{allFactors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{)}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} calculate area}
+    \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mf}{0.9}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Calculating Area...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{calculating area...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+    \PYG{n}{area} \PYG{o}{=} \PYG{n}{calcArea}\PYG{p}{(}\PYG{n}{currentRegion}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} calculate density factors}
+    \PYG{k}{for} \PYG{n}{num}\PYG{p}{,} \PYG{n}{densityFactor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{densityFactors}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{progress}\PYG{p}{(}\PYG{l+m+mf}{0.91}\PYG{o}{+}\PYG{l+m+mf}{0.09}\PYG{o}{*}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{densityFactors}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Calculating }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{densityFactor}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ Density...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{finding D(}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{densityFactor}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+        \PYG{n}{allFactors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{density}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{densityFactor}\PYG{p}{]}\PYG{p}{,} \PYG{n}{area}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{allUserRegions}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{\PYGZob{}}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{shortFilename}\PYG{p}{[}\PYG{p}{:}\PYG{n}{shortFilename}\PYG{o}{.}\PYG{n}{rindex}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{objects}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{all\PYGZus{}objects}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{factors}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{allFactors}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} save regions to account, if logged in}
+    \PYG{k}{if} \PYG{n}{loggedInUsername} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{users}\PYG{o}{.}\PYG{n}{update\PYGZus{}one}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{username}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{loggedInUsername}\PYG{p}{\PYGZcb{}}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZdl{}set}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{regions}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{allUserRegions}\PYG{p}{\PYGZcb{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+    \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Info}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully Uploaded }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{shortFilename}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}
+    \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully Uploaded }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{shortFilename}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{shortFilename}\PYG{p}{[}\PYG{p}{:}\PYG{n}{shortFilename}\PYG{o}{.}\PYG{n}{rindex}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} predict the HDI of the given region}
+\PYG{k}{def} \PYG{n+nf}{processPrediction}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{currentHDI}
+    \PYG{k}{if} \PYG{n}{allFactors} \PYG{o}{==} \PYG{p}{[}\PYG{p}{]}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{You have not uploaded a region!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{You have not uploaded a region!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}
+    \PYG{c+c1}{\PYGZsh{} predict HDI}
+    \PYG{n}{inputLayer} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{l+m+mi}{100} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{==} \PYG{k+kc}{None} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{10} \PYG{k}{if} \PYG{n}{index} \PYG{o}{\PYGZlt{}}\PYG{o}{=} \PYG{l+m+mi}{11} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{p}{]} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{allFactors}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{prediction} \PYG{o}{=} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{network}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{inputLayer}\PYG{p}{)}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)}
+    \PYG{n}{currentHDI} \PYG{o}{=} \PYG{n}{prediction}
+    \PYG{c+c1}{\PYGZsh{} find similar region}
+    \PYG{n}{diff} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{n}{possible\PYGZus{}choices} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{while} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{possible\PYGZus{}choices}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{c+c1}{\PYGZsh{} search below \PYGZam{} above (round to remove floating point errors)}
+        \PYG{n}{possible\PYGZus{}choices} \PYG{o}{+}\PYG{o}{=} \PYG{p}{[}\PYG{n}{region} \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{trainingData} \PYG{k}{if} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hdi}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{prediction}\PYG{o}{\PYGZhy{}}\PYG{n}{diff}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{)}\PYG{p}{]}
+        \PYG{n}{possible\PYGZus{}choices} \PYG{o}{+}\PYG{o}{=} \PYG{p}{[}\PYG{n}{region} \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{trainingData} \PYG{k}{if} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hdi}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{prediction}\PYG{o}{+}\PYG{n}{diff}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{)}\PYG{p}{]}
+        \PYG{c+c1}{\PYGZsh{} increment difference (round to remove floating point errors)}
+        \PYG{n}{diff} \PYG{o}{=} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{diff} \PYG{o}{+} \PYG{l+m+mf}{0.001}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} choose one of the options at random}
+    \PYG{n}{chosenRegionRecord} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{(}\PYG{n}{possible\PYGZus{}choices}\PYG{p}{)}
+    \PYG{n}{similar\PYGZus{}region} \PYG{o}{=} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{chosenRegionRecord}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{region}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{, }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{chosenRegionRecord}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{country}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}
+    \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Info}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully Predicted HDI!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{prediction}\PYG{p}{,} \PYG{n}{similar\PYGZus{}region}
+
+\PYG{c+c1}{\PYGZsh{} helper function to calculate mean of coordinates}
+\PYG{k}{def} \PYG{n+nf}{calcMeanOfCoords}\PYG{p}{(}\PYG{n}{coords}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{p}{[}\PYG{n}{coord}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{k}{for} \PYG{n}{coord} \PYG{o+ow}{in} \PYG{n}{coords}\PYG{p}{]}\PYG{p}{)}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{p}{[}\PYG{n}{coord}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{k}{for} \PYG{n}{coord} \PYG{o+ow}{in} \PYG{n}{coords}\PYG{p}{]}\PYG{p}{)}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} calculate the optimal place for a new building to go when suggesting}
+\PYG{k}{def} \PYG{n+nf}{calcOptimalPlaceFor}\PYG{p}{(}\PYG{n}{building}\PYG{p}{,} \PYG{n}{extraBuildings}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{c+c1}{\PYGZsh{} construct all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}
+    \PYG{n}{all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}
+    \PYG{k}{for} \PYG{n}{key} \PYG{o+ow}{in} \PYG{n}{all\PYGZus{}objects}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{key} \PYG{o+ow}{in} \PYG{n}{extraBuildings}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]} \PYG{o}{=} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]} \PYG{o}{+} \PYG{n}{extraBuildings}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]} \PYG{o}{=} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]}
+    \PYG{c+c1}{\PYGZsh{} iterate over the factors}
+    \PYG{n}{optimalPositions} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{n}{zeroOfEverything} \PYG{o}{=} \PYG{k+kc}{True}
+    \PYG{n}{zeroOfThings} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{averageDistanceFactor} \PYG{o+ow}{in} \PYG{n}{averageDistanceFactors}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{n}{building}\PYG{p}{:}
+            \PYG{c+c1}{\PYGZsh{} initialise variables}
+            \PYG{n}{x\PYGZus{}objects} \PYG{o}{=} \PYG{n}{all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{]}
+            \PYG{n}{y\PYGZus{}objects} \PYG{o}{=} \PYG{n}{all\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{]}
+            \PYG{c+c1}{\PYGZsh{} update zero of everything flag}
+            \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{)} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{n}{zeroOfEverything} \PYG{o}{=} \PYG{k+kc}{False}
+                \PYG{c+c1}{\PYGZsh{} calculate the shortest distance from each \PYGZob{}averageDistanceFactor[0]\PYGZcb{} to \PYGZob{}averageDistanceFactor[1]\PYGZcb{}}
+                \PYG{n}{shortest\PYGZus{}dists} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+                \PYG{k}{for} \PYG{n}{x\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{x\PYGZus{}objects}\PYG{p}{:}
+                    \PYG{n}{dists} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+                    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{y\PYGZus{}objects}\PYG{p}{)} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{:}
+                        \PYG{k}{for} \PYG{n}{y\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{y\PYGZus{}objects}\PYG{p}{:}
+                            \PYG{n}{dists}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{distBetween2Points}\PYG{p}{(}\PYG{n}{x\PYGZus{}object}\PYG{p}{,} \PYG{n}{y\PYGZus{}object}\PYG{p}{)}\PYG{p}{)}
+                    \PYG{k}{else}\PYG{p}{:}
+                        \PYG{n}{dists}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{10000}\PYG{p}{)}
+                    \PYG{k}{if} \PYG{n+nb}{min}\PYG{p}{(}\PYG{n}{dists}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+                        \PYG{n}{shortest\PYGZus{}dists}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mf}{0.00001}\PYG{p}{)}
+                    \PYG{k}{else}\PYG{p}{:}
+                        \PYG{n}{shortest\PYGZus{}dists}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{min}\PYG{p}{(}\PYG{n}{dists}\PYG{p}{)}\PYG{p}{)}
+                \PYG{c+c1}{\PYGZsh{} calculate the optimal position}
+                \PYG{n}{list\PYGZus{}of\PYGZus{}numpy\PYGZus{}arrays} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{x\PYGZus{}object}\PYG{p}{)} \PYG{k}{for} \PYG{n}{x\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{x\PYGZus{}objects}\PYG{p}{]}
+                \PYG{n}{optimalPosition} \PYG{o}{=} \PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{p}{[}\PYG{n}{x\PYGZus{}object}\PYG{o}{/}\PYG{n}{shortest\PYGZus{}dists}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{x\PYGZus{}object} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{list\PYGZus{}of\PYGZus{}numpy\PYGZus{}arrays}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{n}{shortest\PYGZus{}dist} \PYG{k}{for} \PYG{n}{shortest\PYGZus{}dist} \PYG{o+ow}{in} \PYG{n}{shortest\PYGZus{}dists}\PYG{p}{]}\PYG{p}{)}\PYG{p}{)}
+                \PYG{n}{optimalPositions}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{optimalPosition}\PYG{p}{)}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{zeroOfThings}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} return either something else to build, or the new position}
+    \PYG{k}{if} \PYG{n}{zeroOfEverything}\PYG{p}{:}
+        \PYG{k}{return} \PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{(}\PYG{n}{zeroOfThings}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{calcMeanOfCoords}\PYG{p}{(}\PYG{n}{optimalPositions}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} make suggestions from a prediction}
+\PYG{k}{def} \PYG{n+nf}{makeSuggestions}\PYG{p}{(}\PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{p}{,} \PYG{n}{progress}\PYG{o}{=}\PYG{n}{gr}\PYG{o}{.}\PYG{n}{Progress}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{k}{if} \PYG{n}{currentHDI} \PYG{o}{==} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{You have not yet predicted an HDI! Please predict one first.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{p}{[}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{You have not yet predicted an HDI!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{]}\PYG{p}{]}
+    \PYG{k}{if} \PYG{n}{all\PYGZus{}objects} \PYG{o}{==} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{This region does not have any associated buildings! Please choose a different region}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{p}{[}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{This region does not have any associated buildings!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please choose a different region}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{]}\PYG{p}{]}
+    \PYG{n}{suggestions} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{school}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hospital}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{place\PYGZus{}of\PYGZus{}worship}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{police}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{restaurant}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{slot\PYGZus{}machines}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{library}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{pharmacy}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{returnTable} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{num}\PYG{p}{,} \PYG{n}{suggestion} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{extraBuildings} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{n}{suggestion}\PYG{p}{:} \PYG{p}{[}\PYG{p}{]}\PYG{p}{\PYGZcb{}}
+        \PYG{n}{progress}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Suggesting building a }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{suggestion}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{c+c1}{\PYGZsh{} find optimal place}
+        \PYG{n}{positions} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{k}{for} \PYG{n}{buildingNum} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{p}{)}\PYG{p}{:}
+            \PYG{c+c1}{\PYGZsh{} check for other suggestion}
+            \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{positions}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{k}{if} \PYG{n+nb}{type}\PYG{p}{(}\PYG{n}{positions}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)} \PYG{o}{==} \PYG{n+nb}{type}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+                    \PYG{k}{continue}
+            \PYG{c+c1}{\PYGZsh{} calc actual position}
+            \PYG{n}{progress}\PYG{p}{(}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{)}\PYG{p}{)}\PYG{o}{+}\PYG{p}{(}\PYG{n}{buildingNum}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{l+m+mi}{8}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{p}{(} \PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{o}{+}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Suggesting building a }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{suggestion}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ (finding optimal position, }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{buildingNum}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{/}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+            \PYG{n}{position} \PYG{o}{=} \PYG{n}{calcOptimalPlaceFor}\PYG{p}{(}\PYG{n}{suggestion}\PYG{p}{,} \PYG{n}{extraBuildings}\PYG{p}{)}
+            \PYG{n}{positions}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{position}\PYG{p}{)}
+            \PYG{n}{extraBuildings}\PYG{p}{[}\PYG{n}{suggestion}\PYG{p}{]}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{position}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n+nb}{type}\PYG{p}{(}\PYG{n}{positions}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)} \PYG{o}{!=} \PYG{n+nb}{type}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+            \PYG{c+c1}{\PYGZsh{} calculate average distances}
+            \PYG{n}{progress}\PYG{p}{(}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{)}\PYG{p}{)}\PYG{o}{+}\PYG{p}{(}\PYG{p}{(}\PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{l+m+mi}{8}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{p}{(} \PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{o}{+}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Suggesting building a }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{suggestion}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ (calculating new average distances)...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+            \PYG{n}{allFactors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+            \PYG{k}{for} \PYG{n}{averageDistanceFactor} \PYG{o+ow}{in} \PYG{n}{averageDistanceFactors}\PYG{p}{:}
+                \PYG{c+c1}{\PYGZsh{} ensure that we include the new building}
+                \PYG{k}{if} \PYG{n}{suggestion} \PYG{o}{==} \PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{:}
+                    \PYG{n}{allFactors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[} \PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{must\PYGZus{}include\PYGZus{}x}\PYG{o}{=}\PYG{n}{positions}\PYG{p}{)}\PYG{p}{)}
+                \PYG{k}{elif} \PYG{n}{suggestion} \PYG{o}{==} \PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{:}
+                    \PYG{n}{allFactors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[} \PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{must\PYGZus{}include\PYGZus{}y}\PYG{o}{=}\PYG{n}{positions}\PYG{p}{)}\PYG{p}{)}
+                \PYG{k}{else}\PYG{p}{:}
+                    \PYG{n}{allFactors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{averageDistance}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[} \PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,} \PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{averageDistanceFactor}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{)}\PYG{p}{)}
+            \PYG{c+c1}{\PYGZsh{} calculate density factors}
+            \PYG{n}{progress}\PYG{p}{(}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{)}\PYG{p}{)}\PYG{o}{+}\PYG{p}{(}\PYG{p}{(}\PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{l+m+mi}{8}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{p}{(} \PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{o}{+}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Suggesting building a }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{suggestion}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ (calculating new densities)...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+            \PYG{n}{area} \PYG{o}{=} \PYG{n}{calcArea}\PYG{p}{(}\PYG{n}{currentRegion}\PYG{p}{)}
+            \PYG{k}{for} \PYG{n}{densityFactor} \PYG{o+ow}{in} \PYG{n}{densityFactors}\PYG{p}{:}
+                \PYG{c+c1}{\PYGZsh{} ensure that we include the new building}
+                \PYG{k}{if} \PYG{n}{suggestion} \PYG{o}{==} \PYG{n}{densityFactor}\PYG{p}{:}
+                    \PYG{n}{allFactors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{density}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{densityFactor}\PYG{p}{]} \PYG{o}{+} \PYG{p}{[}\PYG{n}{position}\PYG{p}{]}\PYG{p}{,} \PYG{n}{area}\PYG{p}{)}\PYG{p}{)}
+                \PYG{k}{else}\PYG{p}{:}
+                    \PYG{n}{allFactors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{density}\PYG{p}{(}\PYG{n}{all\PYGZus{}objects}\PYG{p}{[}\PYG{n}{densityFactor}\PYG{p}{]}\PYG{p}{,} \PYG{n}{area}\PYG{p}{)}\PYG{p}{)}
+            \PYG{c+c1}{\PYGZsh{} predict HDI}
+            \PYG{n}{progress}\PYG{p}{(}\PYG{p}{(}\PYG{n}{num}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{suggestions}\PYG{p}{)}\PYG{p}{)}\PYG{o}{+}\PYG{p}{(}\PYG{p}{(}\PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{o}{+}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{l+m+mi}{8}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{p}{(} \PYG{n}{num\PYGZus{}new\PYGZus{}buildings}\PYG{o}{+}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Suggesting building a }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{suggestion}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ (predicting new HDI)...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+            \PYG{n}{inputLayer} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{l+m+mi}{100} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{==} \PYG{k+kc}{None} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{10} \PYG{k}{if} \PYG{n}{index} \PYG{o}{\PYGZlt{}}\PYG{o}{=} \PYG{l+m+mi}{11} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{p}{]} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{allFactors}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+            \PYG{n}{prediction} \PYG{o}{=} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{network}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{inputLayer}\PYG{p}{)}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)}
+            \PYG{n}{returnTable}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{[}\PYG{n}{suggestion}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{, }\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{p}{[}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{(}\PYG{l+s+si}{\PYGZob{}}\PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{position}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{7}\PYG{p}{)}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{°N, }\PYG{l+s+si}{\PYGZob{}}\PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{position}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{7}\PYG{p}{)}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{°E)}\PYG{l+s+s1}{\PYGZsq{}} \PYG{k}{for} \PYG{n}{position} \PYG{o+ow}{in} \PYG{n}{positions}\PYG{p}{]}\PYG{p}{)}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{prediction}\PYG{p}{)}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{prediction}\PYG{o}{\PYGZhy{}}\PYG{n}{currentHDI}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{returnTable}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{[}\PYG{n}{suggestion}\PYG{p}{,} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Build a new }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{positions}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ first!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZhy{}\PYGZhy{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZhy{}\PYGZhy{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Info}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully Made Suggestions!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{returnTable}
+
+\PYG{c+c1}{\PYGZsh{} place a pin on the map when user clicks the suggestion}
+\PYG{k}{def} \PYG{n+nf}{selectSuggestionsTable}\PYG{p}{(}\PYG{n}{evt}\PYG{p}{:} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{SelectData}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{cellData} \PYG{o}{=} \PYG{n}{evt}\PYG{o}{.}\PYG{n}{value}
+    \PYG{n}{newMap} \PYG{o}{=} \PYG{n}{copy}\PYG{o}{.}\PYG{n}{deepcopy}\PYG{p}{(}\PYG{n}{foliumMap}\PYG{p}{)}
+    \PYG{k}{if} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{°}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{in} \PYG{n}{cellData}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} it is a coordinate}
+        \PYG{n}{splitByCommas} \PYG{o}{=} \PYG{n}{cellData}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{, }\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{coordinates} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{k}{for} \PYG{n}{halfIndex} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{splitByCommas}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{coordinates}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{splitByCommas}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{n}{halfIndex}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{)}\PYG{p}{,} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{splitByCommas}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{n}{halfIndex}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{[}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{3}\PYG{p}{]}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+        \PYG{k}{for} \PYG{n}{coordinate} \PYG{o+ow}{in} \PYG{n}{coordinates}\PYG{p}{:}
+            \PYG{n}{folium}\PYG{o}{.}\PYG{n}{Marker}\PYG{p}{(}\PYG{n}{location}\PYG{o}{=}\PYG{n}{coordinate}\PYG{p}{)}\PYG{o}{.}\PYG{n}{add\PYGZus{}to}\PYG{p}{(}\PYG{n}{newMap}\PYG{p}{)}
+        \PYG{n}{newMap}\PYG{o}{.}\PYG{n}{location}\PYG{o}{=}\PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{(}\PYG{n}{coordinates}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{newMap}
+
+\PYG{c+c1}{\PYGZsh{} user selects an item from the dropdown menu to compare to}
+\PYG{k}{def} \PYG{n+nf}{compareRegions}\PYG{p}{(}\PYG{n}{regionName}\PYG{p}{)}\PYG{p}{:}
+    \PYG{c+c1}{\PYGZsh{} confirm the user has predicted}
+    \PYG{k}{if} \PYG{n}{allFactors} \PYG{o}{==} \PYG{p}{[}\PYG{p}{]}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please predict a region first!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{p}{[}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please predict a region first!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{]}\PYG{p}{]}
+    \PYG{c+c1}{\PYGZsh{} undo the concatenation}
+    \PYG{n}{split} \PYG{o}{=} \PYG{n}{regionName}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{, }\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{country} \PYG{o}{=} \PYG{n}{split}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}
+    \PYG{n}{region} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{, }\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{split}\PYG{p}{[}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} find the region record \PYGZam{} get lists of factors}
+    \PYG{n}{regionRecord} \PYG{o}{=} \PYG{p}{[}\PYG{n}{record} \PYG{k}{for} \PYG{n}{record} \PYG{o+ow}{in} \PYG{n}{trainingData} \PYG{k}{if} \PYG{n}{record}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{country}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{country} \PYG{o+ow}{and} \PYG{n}{record}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{region}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{region}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+    \PYG{n}{yourFactors} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{undefined}\PYG{l+s+s1}{\PYGZsq{}} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{==} \PYG{k+kc}{None} \PYG{k}{else} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)} \PYG{k}{for} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n}{allFactors}\PYG{p}{]}
+    \PYG{n}{selectedFactors} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{undefined}\PYG{l+s+s1}{\PYGZsq{}} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{k}{else} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)} \PYG{k}{for} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{regionRecord}\PYG{o}{.}\PYG{n}{values}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{:}\PYG{p}{]}\PYG{p}{]}
+    \PYG{c+c1}{\PYGZsh{} construct the return list}
+    \PYG{n}{factorNames} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from House to nearest School (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from House to nearest Hospital (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from House to nearest Pharmacy (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from House to nearest Restaurant (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from School to nearest Hospital (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from Police Station to nearest Hospital (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from House to nearest Place of Worship (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from Bank to nearest Slot Machine (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from Fast\PYGZhy{}Food Place to nearest Toilet (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from House to nearest Police Station (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from University to nearest Library (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Average Distance from House to nearest Library (km)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Schools per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Hospitals per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Pharmcies per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Police Stations per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Libraries per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Toilets per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Restaurants per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Places of Worship per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Post Boxes per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Vending Machines per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Benches per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of Trees per km²}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{returnList} \PYG{o}{=} \PYG{p}{[}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{HDI}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{currentHDI}\PYG{p}{,} \PYG{n}{regionRecord}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hdi}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{]}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{num}\PYG{p}{,} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{factorNames}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{returnList}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{[}\PYG{n}{factor}\PYG{p}{,} \PYG{n}{yourFactors}\PYG{p}{[}\PYG{n}{num}\PYG{p}{]}\PYG{p}{,} \PYG{n}{selectedFactors}\PYG{p}{[}\PYG{n}{num}\PYG{p}{]}\PYG{p}{]}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{returnList}
+
+\PYG{c+c1}{\PYGZsh{} creates a 2d list to put in the regions table, from allUserRegions}
+\PYG{k}{def} \PYG{n+nf}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{table} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{allUserRegions}\PYG{p}{:}
+        \PYG{n}{table}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{[}\PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{]} \PYG{o}{+} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{factors}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} if allUserRegions is empty, return an empty table}
+    \PYG{k}{if} \PYG{n}{table} \PYG{o}{==} \PYG{p}{[}\PYG{p}{]}\PYG{p}{:}
+        \PYG{n}{table}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{*}\PYG{l+m+mi}{25}\PYG{p}{]}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{table}
+
+\PYG{c+c1}{\PYGZsh{} updates regions dropdown, from allUserRegions}
+\PYG{k}{def} \PYG{n+nf}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{names} \PYG{o}{=} \PYG{p}{[}\PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{allUserRegions}\PYG{p}{]}
+    \PYG{k}{return} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(}\PYG{n}{choices}\PYG{o}{=}\PYG{n}{names}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} updates the allUserRegions list, when the regions table is updated}
+\PYG{k}{def} \PYG{n+nf}{updateAllUserRegions}\PYG{p}{(}\PYG{n}{table}\PYG{p}{,} \PYG{n}{currentRegionName}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{allUserRegions}
+    \PYG{c+c1}{\PYGZsh{} store the index of the current region}
+    \PYG{k}{if} \PYG{n}{currentRegionName} \PYG{o}{!=} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n}{currentRegionIndex} \PYG{o}{=} \PYG{p}{[}\PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{allUserRegions}\PYG{p}{]}\PYG{o}{.}\PYG{n}{index}\PYG{p}{(}\PYG{n}{currentRegionName}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} validate the input \PYGZhy{} names of regions}
+    \PYG{n}{regionNames} \PYG{o}{=} \PYG{p}{[}\PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{k}{for} \PYG{n}{row} \PYG{o+ow}{in} \PYG{n}{table}\PYG{p}{]}
+    \PYG{k}{if} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{in} \PYG{n}{regionNames} \PYG{o+ow}{or} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{regionNames}\PYG{p}{)}\PYG{p}{)} \PYG{o}{!=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{regionNames}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please ensure every region has a unique name!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please ensure every region has a unique name!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{currentRegionName}
+    \PYG{c+c1}{\PYGZsh{} validate the input \PYGZhy{} type check}
+    \PYG{k}{for} \PYG{n}{rowIndex}\PYG{p}{,} \PYG{n}{row} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{table}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{for} \PYG{n}{cellIndex}\PYG{p}{,} \PYG{n}{cell} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{row}\PYG{p}{)}\PYG{p}{:}
+            \PYG{k}{if} \PYG{n}{cellIndex} \PYG{o}{!=} \PYG{l+m+mi}{0} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n}{cellIndex} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{12} \PYG{o+ow}{or} \PYG{n}{cell} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+                \PYG{k}{try}\PYG{p}{:}
+                    \PYG{n}{table}\PYG{p}{[}\PYG{n}{rowIndex}\PYG{p}{]}\PYG{p}{[}\PYG{n}{cellIndex}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{cell}\PYG{p}{)}
+                \PYG{k}{except} \PYG{n+ne}{ValueError}\PYG{p}{:}
+                    \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please Enter the Data Correctly! Found an error at cell (row }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{rowIndex}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{, col }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{cellIndex}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                    \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please Enter the Data Correctly! Found an error at cell (row }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{rowIndex}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{, col }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{cellIndex}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{currentRegionName}
+    \PYG{c+c1}{\PYGZsh{} update the allUserRegions list}
+    \PYG{n}{initialLength} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{allUserRegions}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{row} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{table}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{factors} \PYG{o}{=} \PYG{p}{[}\PYG{k+kc}{None} \PYG{k}{if} \PYG{n}{value} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{k}{else} \PYG{n}{value} \PYG{k}{for} \PYG{n}{value} \PYG{o+ow}{in} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{p}{]}\PYG{p}{]}
+        \PYG{c+c1}{\PYGZsh{} if the user has changed the factors of an existing list, the associated objects should be removed}
+        \PYG{k}{if} \PYG{n}{index} \PYG{o}{\PYGZlt{}} \PYG{n}{initialLength}\PYG{p}{:}
+            \PYG{k}{if} \PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{k}{else} \PYG{k+kc}{None} \PYG{k}{for} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{p}{]}\PYG{p}{]} \PYG{o}{!=} \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{factors}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{:}
+                \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{objects}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{factors}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{factors}\PYG{p}{\PYGZcb{}}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+        \PYG{c+c1}{\PYGZsh{} if the user has added a new region, it should have no associated objects}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{allUserRegions}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{objects}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{factors}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{factors}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} save regions to account, if logged in}
+    \PYG{k}{if} \PYG{n}{loggedInUsername} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{users}\PYG{o}{.}\PYG{n}{update\PYGZus{}one}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{username}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{loggedInUsername}\PYG{p}{\PYGZcb{}}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZdl{}set}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{regions}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{allUserRegions}\PYG{p}{\PYGZcb{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} update the name of the selected region}
+    \PYG{k}{if} \PYG{n}{currentRegionName} \PYG{o}{==} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n}{newRegionName} \PYG{o}{=} \PYG{k+kc}{None}
+    \PYG{k}{else}\PYG{p}{:}
+        \PYG{n}{newRegionName} \PYG{o}{=} \PYG{n}{allUserRegions}\PYG{p}{[}\PYG{n}{currentRegionIndex}\PYG{p}{]}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Info}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully Updated Regions}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}
+    \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully Updated Regions}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{newRegionName}
+
+\PYG{c+c1}{\PYGZsh{} updates the current region, when the user switches it with the dropdown on the regions tab}
+\PYG{k}{def} \PYG{n+nf}{updateCurrentRegion}\PYG{p}{(}\PYG{n}{dropdownValue}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{all\PYGZus{}objects}
+    \PYG{k}{global} \PYG{n}{allFactors}
+    \PYG{k}{global} \PYG{n}{currentHDI}
+    \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{allUserRegions}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{dropdownValue}\PYG{p}{:}
+            \PYG{n}{all\PYGZus{}objects} \PYG{o}{=} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{objects}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+            \PYG{n}{allFactors} \PYG{o}{=} \PYG{n}{region}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{factors}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+            \PYG{c+c1}{\PYGZsh{} predict HDI \PYGZhy{} to update it internally}
+            \PYG{n}{inputLayer} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{l+m+mi}{100} \PYG{k}{if} \PYG{n}{factor} \PYG{o}{==} \PYG{k+kc}{None} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{10} \PYG{k}{if} \PYG{n}{index} \PYG{o}{\PYGZlt{}}\PYG{o}{=} \PYG{l+m+mi}{11} \PYG{k}{else} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{factor}\PYG{p}{)}\PYG{p}{]} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,} \PYG{n}{factor} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{allFactors}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+            \PYG{n}{prediction} \PYG{o}{=} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{network}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{inputLayer}\PYG{p}{)}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)}
+            \PYG{n}{currentHDI} \PYG{o}{=} \PYG{n}{prediction}
+
+\PYG{c+c1}{\PYGZsh{} validate sign up \PYGZam{} add account to mongoDB}
+\PYG{k}{def} \PYG{n+nf}{signUp}\PYG{p}{(}\PYG{n}{username}\PYG{p}{,} \PYG{n}{password}\PYG{p}{,} \PYG{n}{password2}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{loggedInUsername}
+    \PYG{c+c1}{\PYGZsh{} validate no empty fields}
+    \PYG{k}{if} \PYG{n}{username} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{or} \PYG{n}{password} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{or} \PYG{n}{password2} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{A field has been left empty! Please fill in all fields.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please fill in all fields!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} validate username \PYGZhy{} does not already exist}
+    \PYG{k}{if} \PYG{n}{users}\PYG{o}{.}\PYG{n}{count\PYGZus{}documents}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{username}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{username}\PYG{p}{\PYGZcb{}}\PYG{p}{)} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{This username is already in use! Please choose another username.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{This username is already in use! Please choose another username.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} validate password \PYGZhy{} double entry validation}
+    \PYG{k}{if} \PYG{n}{password} \PYG{o}{!=} \PYG{n}{password2}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{The passwords do not match! Please ensure that you have entered the correct password.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{The passwords do not match! Please ensure that you have entered the correct password.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} validate password \PYGZhy{} at least 8 characters long}
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{password}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{8}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Your password must have at least 8 characters!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Your password must have at least 8 characters!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} validate password \PYGZhy{} at least 1 digit}
+    \PYG{n}{digits} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{0123456789}\PYG{l+s+s1}{\PYGZsq{}}
+    \PYG{n}{hasDigit} \PYG{o}{=} \PYG{k+kc}{False}
+    \PYG{k}{for} \PYG{n}{digit} \PYG{o+ow}{in} \PYG{n}{digits}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{digit} \PYG{o+ow}{in} \PYG{n}{password}\PYG{p}{:}
+            \PYG{n}{hasDigit} \PYG{o}{=} \PYG{k+kc}{True}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{hasDigit}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Your password must include at least 1 digit!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Your password must include at least 1 digit!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} validate password \PYGZhy{} at least 1 special character}
+    \PYG{n}{specialChars} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{!}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{\PYGZsh{}\PYGZdl{}}\PYG{l+s+s1}{\PYGZpc{}}\PYG{l+s+s1}{\PYGZam{}}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{()*+,\PYGZhy{}./:;\PYGZlt{}=\PYGZgt{}?@[}\PYG{l+s+se}{\PYGZbs{}\PYGZbs{}}\PYG{l+s+s1}{]\PYGZca{}\PYGZus{}`}\PYG{l+s+s1}{\PYGZob{}}\PYG{l+s+s1}{|\PYGZcb{}\PYGZti{}}\PYG{l+s+s1}{\PYGZsq{}}
+    \PYG{n}{hasSpecialChar} \PYG{o}{=} \PYG{k+kc}{False}
+    \PYG{k}{for} \PYG{n}{specialChar} \PYG{o+ow}{in} \PYG{n}{specialChars}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{specialChar} \PYG{o+ow}{in} \PYG{n}{password}\PYG{p}{:}
+            \PYG{n}{hasSpecialChar} \PYG{o}{=} \PYG{k+kc}{True}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{hasSpecialChar}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Your password must include at least 1 special character!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Your password must include at least 1 special character! (}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{specialChars}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} salt \PYGZam{} hash password}
+    \PYG{n}{salt} \PYG{o}{=} \PYG{n}{bcrypt}\PYG{o}{.}\PYG{n}{gensalt}\PYG{p}{(}\PYG{p}{)}
+    \PYG{n}{hashed\PYGZus{}password} \PYG{o}{=} \PYG{n}{bcrypt}\PYG{o}{.}\PYG{n}{hashpw}\PYG{p}{(}\PYG{n}{password}\PYG{o}{.}\PYG{n}{encode}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{utf\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{,} \PYG{n}{salt}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} add to mongoDB}
+    \PYG{n}{user} \PYG{o}{=} \PYG{p}{\PYGZob{}}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{username}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{username}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hashedPassword}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{hashed\PYGZus{}password}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{regions}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{allUserRegions}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{users}\PYG{o}{.}\PYG{n}{insert\PYGZus{}one}\PYG{p}{(}\PYG{n}{user}\PYG{p}{)}
+    \PYG{n}{loggedInUsername} \PYG{o}{=} \PYG{n}{username}
+    \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Info}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully created \PYGZam{} logged into an account}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}
+    \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully created \PYGZam{} logged into an account, with username: }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{username}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} validate \PYGZam{} log in the user}
+\PYG{k}{def} \PYG{n+nf}{logIn}\PYG{p}{(}\PYG{n}{username}\PYG{p}{,} \PYG{n}{password}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{global} \PYG{n}{loggedInUsername}
+    \PYG{k}{global} \PYG{n}{allUserRegions}
+    \PYG{c+c1}{\PYGZsh{} validate no empty fields}
+    \PYG{k}{if} \PYG{n}{username} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{or} \PYG{n}{password} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{A field has been left empty! Please fill in all fields.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Please fill in all fields!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} check username exists}
+    \PYG{k}{if} \PYG{n}{users}\PYG{o}{.}\PYG{n}{count\PYGZus{}documents}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{username}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{username}\PYG{p}{\PYGZcb{}}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{This username does not exist! Please ensure that you have entered the correct username.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{This username does not exist! Please ensure that you have entered the correct username.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} check password}
+    \PYG{n}{user} \PYG{o}{=} \PYG{n}{users}\PYG{o}{.}\PYG{n}{find\PYGZus{}one}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{username}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{username}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{bcrypt}\PYG{o}{.}\PYG{n}{checkpw}\PYG{p}{(}\PYG{n}{password}\PYG{o}{.}\PYG{n}{encode}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{utf\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{,} \PYG{n}{user}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{hashedPassword}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{)}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} the hashed passwords do not match}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Warning}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Incorrect Password! Please try again.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Incorrect Password! Please try again.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} grant access to the account}
+    \PYG{n}{loggedInUsername} \PYG{o}{=} \PYG{n}{username}
+    \PYG{n}{allUserRegions} \PYG{o}{=} \PYG{n}{user}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{regions}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Info}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully logged in as }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{username}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}
+    \PYG{k}{return} \PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Successfully logged in as }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{username}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{!}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{updateRegionsTable}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{updateRegionsDropdown}\PYG{p}{(}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} define some starting locations}
+\PYG{n}{locations} \PYG{o}{=} \PYG{p}{[}\PYG{p}{[}\PYG{l+m+mf}{51.5360}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.1196}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{40.8093}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{73.9678}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{34.0069}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{118.2304}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{25.7617}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{80.1918}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{48.8488}\PYG{p}{,} \PYG{l+m+mf}{2.3470}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{41.8840}\PYG{p}{,} \PYG{l+m+mf}{12.4790}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{52.5078}\PYG{p}{,} \PYG{l+m+mf}{13.4003}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{37.9964}\PYG{p}{,} \PYG{l+m+mf}{23.7293}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{59.3265}\PYG{p}{,} \PYG{l+m+mf}{18.0680}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{40.4172}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{3.6867}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{41.3940}\PYG{p}{,} \PYG{l+m+mf}{2.1606}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{38.7253}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{9.1403}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{55.7476}\PYG{p}{,} \PYG{l+m+mf}{37.6209}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{31.2230}\PYG{p}{,} \PYG{l+m+mf}{121.4860}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{39.8958}\PYG{p}{,} \PYG{l+m+mf}{116.4000}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{37.5467}\PYG{p}{,} \PYG{l+m+mf}{126.9901}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{35.6777}\PYG{p}{,} \PYG{l+m+mf}{139.7685}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{1.3294}\PYG{p}{,} \PYG{l+m+mf}{103.8081}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{33.8782}\PYG{p}{,} \PYG{l+m+mf}{151.1754}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{30.0465}\PYG{p}{,} \PYG{l+m+mf}{31.2246}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{6.5047}\PYG{p}{,} \PYG{l+m+mf}{3.3732}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{1.2873}\PYG{p}{,} \PYG{l+m+mf}{36.8198}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{33.9425}\PYG{p}{,} \PYG{l+m+mf}{18.5065}\PYG{p}{]}\PYG{p}{,}  \PYG{p}{[}\PYG{l+m+mf}{19.3916}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{99.1279}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{23.5727}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{46.6207}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{36.1458}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{115.1832}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{38.8939}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{77.0372}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{49.2501}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{123.1164}\PYG{p}{]}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mf}{43.6888}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{79.4190}\PYG{p}{]}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} initialise the map for drawing on}
+\PYG{n}{foliumMap} \PYG{o}{=} \PYG{n}{folium}\PYG{o}{.}\PYG{n}{Map}\PYG{p}{(}\PYG{n}{location}\PYG{o}{=}\PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{(}\PYG{n}{locations}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{draw} \PYG{o}{=} \PYG{n}{Draw}\PYG{p}{(}
+    \PYG{n}{export}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,}
+    \PYG{n}{filename}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{region.geojson}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}
+    \PYG{n}{position}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{topleft}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}
+    \PYG{n}{draw\PYGZus{}options}\PYG{o}{=}\PYG{p}{\PYGZob{}}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{polyline}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{circlemarker}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{polygon}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{allowIntersection}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{marker}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{circle}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{,}
+        \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{rectangle}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{,}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{,}
+    \PYG{n}{edit\PYGZus{}options}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{poly}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{allowIntersection}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{k+kc}{False}\PYG{p}{\PYGZcb{}}\PYG{p}{\PYGZcb{}}
+\PYG{p}{)}
+\PYG{n}{draw}\PYG{o}{.}\PYG{n}{add\PYGZus{}to}\PYG{p}{(}\PYG{n}{foliumMap}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} define markdown in help tab}
+\PYG{n}{markdown} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+\PYG{l+s+s1}{\PYGZsh{} }\PYG{l+s+se}{\PYGZbs{}U0001F44B}\PYG{l+s+s1}{ Welcome to Predicting HDI! }\PYG{l+s+se}{\PYGZbs{}U0001F44B}
+
+\PYG{l+s+s1}{This app allows you to predict the HDI of any region you draw on the map. From there, you can make some suggestions on how to improve it.}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{} Getting Started }\PYG{l+s+se}{\PYGZbs{}U00002728}
+
+\PYG{l+s+s1}{Head over to the }\PYG{l+s+se}{\PYGZbs{}U0001F52E}\PYG{l+s+s1}{ Predict tab, and find your region on the map. Once you have found your region, you can predict the HDI by following these steps:}
+
+\PYG{l+s+s1}{1. Select the Draw Tool by Clicking the **Pentagon** }\PYG{l+s+se}{\PYGZbs{}U00002B53}\PYG{l+s+s1}{ Icon in the Top Left.}
+\PYG{l+s+s1}{2. Draw your Region, by creating vertices. Make sure you close the region by clicking on your first vertex at the end.}
+\PYG{l+s+s1}{3. Press the **Export** button in the Top Right. This will download a file called `region.geojson` to your computer.}
+\PYG{l+s+s1}{4. Press the }\PYG{l+s+se}{\PYGZbs{}U0001F4E4}\PYG{l+s+s1}{ **Upload the GeoJSON file** }\PYG{l+s+se}{\PYGZbs{}U0001F4E4}\PYG{l+s+s1}{ button, below the map, and choose your `region.geojson`. You can scroll down to see a progress bar for this upload. Once the upload is complete, you will get a notification in the top right corner.}
+\PYG{l+s+s1}{5. Finally, press the orange }\PYG{l+s+se}{\PYGZbs{}U0001F52E}\PYG{l+s+s1}{ **Predict HDI** }\PYG{l+s+se}{\PYGZbs{}U0001F52E}\PYG{l+s+s1}{ button to predict the HDI of your region!}
+
+\PYG{l+s+s1}{![](file/data/helpTab1.png }\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Diagram visually showing the above steps}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{)}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{} More Detail on The }\PYG{l+s+se}{\PYGZbs{}U0001F52E}\PYG{l+s+s1}{ Predict Tab}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Help! It}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{s Taking Too Long! }\PYG{l+s+se}{\PYGZbs{}U0001F553}
+
+\PYG{l+s+s1}{If you drew a very large region, it is likely that Uploading it took a **very long** time }\PYG{l+s+se}{\PYGZbs{}U0001F553}\PYG{l+s+s1}{. This is because, to predict the HDI, we use data about the positions of buildings, such as houses, schools, hospitals and police stations. This data must be downloaded, so if you chose a region with a lot of these things, then it will take quite a while to download it all.}
+
+\PYG{l+s+s1}{To predict the HDI from these positions, we calculate different different factors, such as the average distance from a house to the nearest school, or nearest hospital, which can also take a while. To decrease the time this may take, you can change the values of the **Maximum x\PYGZhy{}buildings** }\PYG{l+s+se}{\PYGZbs{}U0001F3E0}\PYG{l+s+s1}{ and **Maximum y\PYGZhy{}buildings** }\PYG{l+s+se}{\PYGZbs{}U0001F3EB}\PYG{l+s+s1}{ sliders.}
+
+\PYG{l+s+s1}{Changing **Maximum x\PYGZhy{}buildings** }\PYG{l+s+se}{\PYGZbs{}U0001F3E0}\PYG{l+s+s1}{ will decrease the number of x\PYGZhy{}buildings we consider. For example, in the case of average distance from house to school, this slider corresponds to the number of houses we consider. Similarly, changing **Maximum y\PYGZhy{}buildings** }\PYG{l+s+se}{\PYGZbs{}U0001F3EB}\PYG{l+s+s1}{ corresponds to changing the number of schools we consider for each house (in this example). However, this will cause the calculated values for these factors to be less accurate, and therefore may cause the predicted HDI to be less accurate.}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Help! It Just Crashed! }\PYG{l+s+se}{\PYGZbs{}U0000274C}
+
+\PYG{l+s+s1}{If the progress bar suddenly turned into an **ERROR** when uploading a region, it is likely that you just timed out from the OverpassTurbo servers, which is what we are using to get the location of all these buildings. This is totally normal, and so if this happens, just try to upload it again.}
+
+\PYG{l+s+s1}{If the issue persists, it is likely something is wrong with your region, so try a different one}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Suggestions }\PYG{l+s+se}{\PYGZbs{}U0001F4A1}
+
+\PYG{l+s+s1}{Once you have predicted the HDI of a region, you can make some suggestions. Do this, by simply pressing the }\PYG{l+s+se}{\PYGZbs{}U0001F914}\PYG{l+s+s1}{ **Make Suggestions** }\PYG{l+s+se}{\PYGZbs{}U0001F914}\PYG{l+s+s1}{ button. The suggestions will be in the format: }\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Build (a number of) new buildings, in these locations}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{. You can change this value, to anything between 1 and 10, by moving the slider, labelled **Number of New Buildings** }\PYG{l+s+se}{\PYGZbs{}U0001F3D9}\PYG{l+s+s1}{.}
+
+\PYG{l+s+s1}{This may also take some time, As we must calculate the optimal position to place these new buildings, and the re\PYGZhy{}calculate the factors. Once it is finished, the Suggestions }\PYG{l+s+se}{\PYGZbs{}U0001F4A1}\PYG{l+s+s1}{ Table will be populated with 8 different suggestions, on how to improve the HDI of your region. To view the locations of the suggestion on the map, simply select the cell that contains the coordinates. The map will update to have pins.}
+
+\PYG{l+s+s1}{![](file/data/helpTab2.png }\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Typical Output for the Suggestions Table}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{)}
+
+\PYG{l+s+s1}{If your region is quite empty, you may have got some suggestions that did not return any locations, or a new HDI, but instead a prompt to build some other buildings first. This is because we did not have sufficient data to calculate where a new building should go, and so unfortunately, there is no real suggestion.}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{}\PYGZsh{} What Makes a Good Region? }\PYG{l+s+se}{\PYGZbs{}U0001F914}
+
+\PYG{l+s+s1}{This brings me onto how to select a region, which will yield good results.}
+
+\PYG{l+s+s1}{\PYGZhy{} **Don}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{t make your region too large.** Larger regions will take longer to download, and longer to calculate the factors of. You will therefore want to decrease the **Maximum x\PYGZhy{}buildings** }\PYG{l+s+se}{\PYGZbs{}U0001F3E0}\PYG{l+s+s1}{ and **Maximum y\PYGZhy{}buildings** }\PYG{l+s+se}{\PYGZbs{}U0001F3EB}\PYG{l+s+s1}{ sliders, leading to a less accurate prediction. You will then also not get very good suggestions, as building 5 schools in a large metropolitan area isn}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{t going to do anything.}
+\PYG{l+s+s1}{\PYGZhy{} **Ensure your region doesn}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{t self\PYGZhy{}intersect.** Your region should be a simple 2D shape.}
+\PYG{l+s+s1}{\PYGZhy{} **Use Small Towns.** I believe this works best with small towns, as the suggestions will often increase the HDI by a more significant amount. Downloading the Region and Calculating the Factors also won}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{t take too long.}
+\PYG{l+s+s1}{\PYGZhy{} **Don}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{t Make Empty Regons.** Predicting the HDI of an empty field or the ocean is not going to yield any useful results.}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Drawing Regions }\PYG{l+s+se}{\PYGZbs{}U0001F58B}
+
+\PYG{l+s+s1}{If you make a mistake while drawing your region, you can press the }\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Delete last point}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ button, next to the Pentagon }\PYG{l+s+se}{\PYGZbs{}U00002B53}\PYG{l+s+s1}{ icon. If you wish to delete your region, press the Bin }\PYG{l+s+se}{\PYGZbs{}U0001F5D1}\PYG{l+s+s1}{ icon in the top left.}
+
+\PYG{l+s+s1}{You can zoom in and out of the map, by using the scroll wheel, or by using the + and \PYGZhy{} buttons in the top right.}
+
+\PYG{l+s+s1}{If you draw multiple regions before pressing Export, we will only consider the first one you drew. If you wish to predict the HDI of 2 disconnected regions, you can get around this by connecting them with a very thin line.}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{} The }\PYG{l+s+se}{\PYGZbs{}U0001F19A}\PYG{l+s+s1}{ Compare Tab}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Comparing your Region }\PYG{l+s+se}{\PYGZbs{}U0001F4CA}
+
+\PYG{l+s+s1}{You can use the }\PYG{l+s+se}{\PYGZbs{}U0001F19A}\PYG{l+s+s1}{ Compare tab to compare your region to an existing sub\PYGZhy{}national region. Sub\PYGZhy{}national regions are 1 level below countries, so for example, the sub\PYGZhy{}national regions of the United States are the 50 states.}
+
+\PYG{l+s+s1}{To do this, simply select a region from the dropdown menu at the top of the screen. To search for a specific region, you can also type into this dropdown menu. When you select one, the table below will populate with the HDI of your region and the selected region, as well as each of the factors that contribute to it.}
+
+\PYG{l+s+s1}{![](file/data/helpTab3.png }\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Typical Output for the Comparison Table}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{)}
+
+\PYG{l+s+se}{\PYGZbs{}U0001F4C4}\PYG{l+s+s1}{ **Note:** You must predict the HDI of a region first, before you do this.}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Correlation Heatmap }\PYG{l+s+se}{\PYGZbs{}U0001F4C8}
+
+\PYG{l+s+s1}{At the bottom of this tab, you will also find a graph, showing the correlation between each factor, and HDI. You can use this to find out which factors contribute most towards the HDI, as well as which ones contribute towards each other.}
+
+\PYG{l+s+s1}{Each cell has a colour, which corresponds to a number between \PYGZhy{}1 and 1, as shown by the key on the right. A value of 1 means that the 2 factors are very positively correlated, a value of \PYGZhy{}1 means that the 2 factors are very negatively correlated, and a value of 0 means that the 2 factors are not correlated. All values in between are as you would expect (for example, a value of \PYGZhy{}0.3 would mean that the 2 factors are slightly negatively correlated).}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{} The }\PYG{l+s+se}{\PYGZbs{}U0001F30D}\PYG{l+s+s1}{ Regions Tab}
+
+\PYG{l+s+s1}{In the }\PYG{l+s+se}{\PYGZbs{}U0001F30D}\PYG{l+s+s1}{ Regions tab, you can switch between different regions that you have predicted the HDI of. To do this, simply select one from the dropdown menu at the top of the screen.}
+
+\PYG{l+s+s1}{This tab also allows you to manually edit the factors of your regions, rename your regions, and add new ones. You can edit any cell in the table, so long as they follow these rules:}
+
+\PYG{l+s+s1}{\PYGZhy{} The values in the columns for A(... ...) must either be a number or empty}
+\PYG{l+s+s1}{\PYGZhy{} The values in the columns for D(...) must be a number}
+\PYG{l+s+s1}{\PYGZhy{} The values in the name column must be unique}
+
+\PYG{l+s+s1}{(A(x y) means }\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Average distance from x to nearest y}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{, and D(x) means }\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{Number of x per unit area}\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{)}
+
+\PYG{l+s+s1}{Once you have made your changes, you can press the }\PYG{l+s+se}{\PYGZbs{}U0001F504}\PYG{l+s+s1}{ **Submit Table Changes** }\PYG{l+s+se}{\PYGZbs{}U0001F504}\PYG{l+s+s1}{ button, to make your changes. If any of the rules above have not been met, the changes will not go through, and you will be told which cell is causing an error.}
+
+\PYG{l+s+se}{\PYGZbs{}U00002757}\PYG{l+s+s1}{ **WARNING:** You will no longer be able to make suggestions from regions that you edit in the table. }\PYG{l+s+se}{\PYGZbs{}U00002757}\PYG{l+s+s1}{ This is because the factors no longer reflect the positions of the buildings in the region, and so they are no longer accurate. We therefore cannot make any suggestions, as there are no buildings associated with the region.}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{} Account Management }\PYG{l+s+se}{\PYGZbs{}U0001F510}
+
+\PYG{l+s+s1}{You can also create an account, to save your regions.}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Creating an Account }\PYG{l+s+se}{\PYGZbs{}U0001F4DD}
+
+\PYG{l+s+s1}{To create an account, simply head to the }\PYG{l+s+se}{\PYGZbs{}U0001F4DD}\PYG{l+s+s1}{ Sign Up tab. Here, you get to choose a username and password. Your username must be unique, and your password must:}
+
+\PYG{l+s+s1}{\PYGZhy{} Be at least 8 characters long}
+\PYG{l+s+s1}{\PYGZhy{} Contain at least 1 digit}
+\PYG{l+s+s1}{\PYGZhy{} Contain at least 1 special character. The characters that count as special characters are: ! }\PYG{l+s+s1}{\PYGZdq{}}\PYG{l+s+s1}{ \PYGZsh{} \PYGZdl{} }\PYG{l+s+s1}{\PYGZpc{}}\PYG{l+s+s1}{ \PYGZam{} }\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{ ( ) * + , \PYGZhy{} . / : ; \PYGZlt{} = \PYGZgt{} ? @ [ }\PYG{l+s+se}{\PYGZbs{}\PYGZbs{}}\PYG{l+s+s1}{ ] \PYGZca{} \PYGZus{} ` }\PYG{l+s+s1}{\PYGZob{}}\PYG{l+s+s1}{ | \PYGZcb{} \PYGZti{}}
+
+\PYG{l+s+s1}{When you create an account, you will automatically be logged in. Any changes you make while logged in will be saved to your account.}
+
+\PYG{l+s+s1}{\PYGZsh{}\PYGZsh{}\PYGZsh{} Logging Into an Account }\PYG{l+s+se}{\PYGZbs{}U0001F513}
+
+\PYG{l+s+s1}{To log into your account, head to the }\PYG{l+s+se}{\PYGZbs{}U0001F513}\PYG{l+s+s1}{ Log In tab, and enter your username and password.}
+
+\PYG{l+s+se}{\PYGZbs{}U00002757}\PYG{l+s+s1}{ **WARNING:** Logging in will override the regions in the }\PYG{l+s+se}{\PYGZbs{}U0001F30D}\PYG{l+s+s1}{ Regions Tab, and replace them with the ones in the account you log into. }\PYG{l+s+se}{\PYGZbs{}U00002757}
+\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+\PYG{c+c1}{\PYGZsh{} structure of the UI}
+\PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Blocks}\PYG{p}{(}\PYG{p}{)} \PYG{k}{as} \PYG{n}{app}\PYG{p}{:}
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F64B}\PYG{l+s+s1}{ Help}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Markdown}\PYG{p}{(}\PYG{n}{markdown}\PYG{p}{)}
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F52E}\PYG{l+s+s1}{ Predict}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Row}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+            \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Column}\PYG{p}{(}\PYG{n}{scale}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{:}
+                \PYG{n+nb}{map} \PYG{o}{=} \PYG{n}{Folium}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{n}{foliumMap}\PYG{p}{)}
+                \PYG{n}{uploadButton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{UploadButton}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F4E4}\PYG{l+s+s1}{ Upload the GeoJSON file }\PYG{l+s+se}{\PYGZbs{}U0001F4E4}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{file\PYGZus{}count}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{single}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+            \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Column}\PYG{p}{(}\PYG{n}{scale}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{:}
+                \PYG{n}{predictHDIbutton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Button}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F52E}\PYG{l+s+s1}{ Predict HDI }\PYG{l+s+se}{\PYGZbs{}U0001F52E}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{variant}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{primary}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Group}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+                    \PYG{n}{max\PYGZus{}x\PYGZus{}objectsSlider} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Slider}\PYG{p}{(}\PYG{n}{minimum}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{n}{maximum}\PYG{o}{=}\PYG{l+m+mi}{5000}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{l+m+mi}{500}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Maximum x\PYGZhy{}buildings }\PYG{l+s+se}{\PYGZbs{}U0001F3E0}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{info}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{When calculating the average distance between 2 types of building, it will find the average of this many pairs. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                    \PYG{n}{max\PYGZus{}y\PYGZus{}objectsSlider} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Slider}\PYG{p}{(}\PYG{n}{minimum}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{n}{maximum}\PYG{o}{=}\PYG{l+m+mi}{5000}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{l+m+mi}{500}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Maximum y\PYGZhy{}buildings }\PYG{l+s+se}{\PYGZbs{}U0001F3EB}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{info}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{When calculating the average distance between 2 types of building, it will find the closest of the second type of building out of this many options. Increasing this value may make the prediction take much longer, but may make the prediction more acurate.}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Group}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+                    \PYG{n}{HDIprediction} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{I believe that the HDI of this region is... }\PYG{l+s+se}{\PYGZbs{}U00002728}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+                    \PYG{n}{similarHDI} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{That}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{s a similar HDI to... }\PYG{l+s+se}{\PYGZbs{}U0001F30D}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+        \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Row}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{makeSuggestionsButton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Button}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F914}\PYG{l+s+s1}{ Make Suggestions }\PYG{l+s+se}{\PYGZbs{}U0001F914}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+            \PYG{n}{newBuildingsSlider} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Slider}\PYG{p}{(}\PYG{n}{minimum}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{maximum}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{step}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Number of New Buildings }\PYG{l+s+se}{\PYGZbs{}U0001F3D9}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+        \PYG{n}{suggestionsTable} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Dataframe}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Suggestions }\PYG{l+s+se}{\PYGZbs{}U0001F4A1}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{headers}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{New Building}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Coordinates}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{New HDI}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Change in HDI}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{array}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+        \PYG{n}{log} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Log Messages }\PYG{l+s+se}{\PYGZbs{}U0001F4C4}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F19A}\PYG{l+s+s1}{ Compare}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{compareDropdown} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Dropdown}\PYG{p}{(}\PYG{n}{choices}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{region}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{region}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{, }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{region}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{country}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{k}{for} \PYG{n}{region} \PYG{o+ow}{in} \PYG{n}{trainingData}\PYG{p}{]}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Select a Region }\PYG{l+s+se}{\PYGZbs{}U0001F30D}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{compareTable} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Comparison }\PYG{l+s+se}{\PYGZbs{}U0001F4CA}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{headers}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Factor}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Your Region}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Selected Region}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}\PYG{p}{,} \PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{array}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+        \PYG{n}{pmccImage} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Image}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{data/pmcc.png}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Correlation between Factors }\PYG{l+s+se}{\PYGZbs{}U0001F4C8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{height}\PYG{o}{=}\PYG{l+m+mi}{600}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F30D}\PYG{l+s+s1}{ Regions}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{regionsDropdown} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Dropdown}\PYG{p}{(}\PYG{n}{choices}\PYG{o}{=}\PYG{p}{[}\PYG{p}{]}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Current Region }\PYG{l+s+se}{\PYGZbs{}U0001F30D}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+        \PYG{n}{regionsTable} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{DataFrame}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Your Regions }\PYG{l+s+se}{\PYGZbs{}U0001F304}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{headers}\PYG{o}{=}\PYG{p}{(}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Name}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]} \PYG{o}{+} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{trainingData}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{:}\PYG{p}{]}\PYG{p}{)}\PYG{p}{,} \PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{array}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{col\PYGZus{}count}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{25}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{fixed}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+        \PYG{n}{submitEditsButton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Button}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F504}\PYG{l+s+s1}{ Submit Table Changes }\PYG{l+s+se}{\PYGZbs{}U0001F504}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{variant}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{primary}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Markdown}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U00002757}\PYG{l+s+s1}{ **WARNING:** You will no longer be able to make suggestions from regions that you edit here. }\PYG{l+s+se}{\PYGZbs{}U00002757}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{submitEditsResult} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Result }\PYG{l+s+se}{\PYGZbs{}U0001F4C4}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F513}\PYG{l+s+s1}{ Log In}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Row}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+            \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Column}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+                \PYG{n}{logInUsername} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Username }\PYG{l+s+se}{\PYGZbs{}U0001F50F}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{placeholder}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Enter your username...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                \PYG{n}{logInPassword} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Password }\PYG{l+s+se}{\PYGZbs{}U0001F511}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{placeholder}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Enter your password...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{password}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+            \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Column}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+                \PYG{n}{logInButton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Button}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F4F2}\PYG{l+s+s1}{ Log In }\PYG{l+s+se}{\PYGZbs{}U0001F4F2}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{variant}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{primary}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Markdown}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U00002757}\PYG{l+s+s1}{ **WARNING:** Logging in will override the regions in the }\PYG{l+s+se}{\PYGZbs{}U0001F30D}\PYG{l+s+s1}{ Regions Tab, and replace them with the ones in the account you log into. }\PYG{l+s+se}{\PYGZbs{}U00002757}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                \PYG{n}{logInResult} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Result }\PYG{l+s+se}{\PYGZbs{}U0001F4C4}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+    \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Tab}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F4DD}\PYG{l+s+s1}{ Sign Up}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Row}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+            \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Column}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+                \PYG{n}{signUpUsername} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Username }\PYG{l+s+se}{\PYGZbs{}U0001F50F}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{placeholder}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Enter your username...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                \PYG{n}{signUpPassword} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Password }\PYG{l+s+se}{\PYGZbs{}U0001F511}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{placeholder}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Enter your password...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{password}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                \PYG{n}{signUpPassword2} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Re\PYGZhy{}Enter Password }\PYG{l+s+se}{\PYGZbs{}U0001F510}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{placeholder}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Re\PYGZhy{}Enter your password...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{password}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Markdown}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+\PYG{l+s+s1}{                Your password must:}
+\PYG{l+s+s1}{                \PYGZhy{} Be at least 8 characters}
+\PYG{l+s+s1}{                \PYGZhy{} Contain at least 1 digit}
+\PYG{l+s+s1}{                \PYGZhy{} Contain at least 1 special character}
+\PYG{l+s+s1}{                }\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}\PYG{p}{)}
+            \PYG{k}{with} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Column}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+                \PYG{n}{signUpButton} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Button}\PYG{p}{(}\PYG{n}{value}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}U0001F680}\PYG{l+s+s1}{ Create an Account }\PYG{l+s+se}{\PYGZbs{}U0001F680}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{variant}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{primary}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+                \PYG{n}{signUpResult} \PYG{o}{=} \PYG{n}{gr}\PYG{o}{.}\PYG{n}{Textbox}\PYG{p}{(}\PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Result }\PYG{l+s+se}{\PYGZbs{}U0001F4C4}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{interactive}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} functionality}
+    \PYG{n}{uploadButton}\PYG{o}{.}\PYG{n}{upload}\PYG{p}{(}\PYG{n}{uploadGeoJSON}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{uploadButton}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objectsSlider}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objectsSlider}\PYG{p}{,} \PYG{n}{regionsDropdown}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{log}\PYG{p}{,} \PYG{n}{regionsTable}\PYG{p}{,} \PYG{n}{regionsDropdown}\PYG{p}{,} \PYG{n}{regionsDropdown}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{predictHDIbutton}\PYG{o}{.}\PYG{n}{click}\PYG{p}{(}\PYG{n}{processPrediction}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{HDIprediction}\PYG{p}{,} \PYG{n}{similarHDI}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{makeSuggestionsButton}\PYG{o}{.}\PYG{n}{click}\PYG{p}{(}\PYG{n}{makeSuggestions}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{max\PYGZus{}x\PYGZus{}objectsSlider}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objectsSlider}\PYG{p}{,} \PYG{n}{newBuildingsSlider}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{suggestionsTable}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{suggestionsTable}\PYG{o}{.}\PYG{n}{select}\PYG{p}{(}\PYG{n}{selectSuggestionsTable}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n+nb}{map}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{compareDropdown}\PYG{o}{.}\PYG{n}{input}\PYG{p}{(}\PYG{n}{compareRegions}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{compareDropdown}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{compareTable}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{regionsDropdown}\PYG{o}{.}\PYG{n}{change}\PYG{p}{(}\PYG{n}{updateCurrentRegion}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{regionsDropdown}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{submitEditsButton}\PYG{o}{.}\PYG{n}{click}\PYG{p}{(}\PYG{n}{updateAllUserRegions}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{regionsTable}\PYG{p}{,} \PYG{n}{regionsDropdown}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{submitEditsResult}\PYG{p}{,} \PYG{n}{regionsDropdown}\PYG{p}{,} \PYG{n}{regionsDropdown}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{signUpButton}\PYG{o}{.}\PYG{n}{click}\PYG{p}{(}\PYG{n}{signUp}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{signUpUsername}\PYG{p}{,} \PYG{n}{signUpPassword}\PYG{p}{,} \PYG{n}{signUpPassword2}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{signUpResult}\PYG{p}{,} \PYG{n}{regionsTable}\PYG{p}{,} \PYG{n}{regionsDropdown}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{logInButton}\PYG{o}{.}\PYG{n}{click}\PYG{p}{(}\PYG{n}{logIn}\PYG{p}{,} \PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{logInUsername}\PYG{p}{,} \PYG{n}{logInPassword}\PYG{p}{]}\PYG{p}{,} \PYG{n}{outputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{logInResult}\PYG{p}{,} \PYG{n}{regionsTable}\PYG{p}{,} \PYG{n}{regionsDropdown}\PYG{p}{]}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} launch the UI}
+\PYG{n}{app}\PYG{o}{.}\PYG{n}{launch}\PYG{p}{(}\PYG{n}{allowed\PYGZus{}paths}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{/}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+\end{Verbatim}

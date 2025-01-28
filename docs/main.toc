@@ -209,8 +209,26 @@
 \contentsline {subsection}{\numberline {6.5.3}Scalability \& Technical Constraints}{343}{subsection.6.5.3}%
 \contentsline {section}{\numberline {6.6}Conclusion}{343}{section.6.6}%
 \contentsline {chapter}{\numberline {A}Final Code}{344}{appendix.A}%
-\contentsline {chapter}{Index}{345}{section*.273}%
-\contentsline {section}{List of Figures}{345}{section*.274}%
-\contentsline {section}{List of Code Snippets}{350}{section*.276}%
-\contentsline {section}{List of Tables}{355}{section*.278}%
-\contentsline {chapter}{Bibliography}{360}{section*.280}%
+\contentsline {section}{\numberline {A.1}Data Processing}{344}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}\mintinline [breaklines, breakafter=_]{python}|data_processing / calc_factors.py|}{344}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}\mintinline [breaklines, breakafter=_]{python}|data_processing / compile_data.py|}{348}{subsection.A.1.2}%
+\contentsline {subsection}{\numberline {A.1.3}\mintinline [breaklines, breakafter=_]{python}|data_processing / get_osm_data.py|}{349}{subsection.A.1.3}%
+\contentsline {subsection}{\numberline {A.1.4}\mintinline [breaklines, breakafter=_]{python}|data_processing / pmcc.py|}{350}{subsection.A.1.4}%
+\contentsline {subsection}{\numberline {A.1.5}\mintinline [breaklines, breakafter=_]{python}|data_processing / process_hdi.py|}{351}{subsection.A.1.5}%
+\contentsline {subsection}{\numberline {A.1.6}\mintinline [breaklines, breakafter=_]{python}|data_processing / process_shapefile.py|}{352}{subsection.A.1.6}%
+\contentsline {section}{\numberline {A.2}Training the Neural Network}{352}{section.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}\mintinline [breaklines, breakafter=_]{python}|network_training / load_digits_data.py|}{352}{subsection.A.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}\mintinline [breaklines, breakafter=_]{python}|network_training / load_hdi_data.py|}{353}{subsection.A.2.2}%
+\contentsline {subsection}{\numberline {A.2.3}\mintinline [breaklines, breakafter=_]{python}|network_training / test_digits.py|}{354}{subsection.A.2.3}%
+\contentsline {subsection}{\numberline {A.2.4}\mintinline [breaklines, breakafter=_]{python}|network_training / test_hdi.py|}{355}{subsection.A.2.4}%
+\contentsline {subsection}{\numberline {A.2.5}\mintinline [breaklines, breakafter=_]{python}|network_training / train_digits.py|}{356}{subsection.A.2.5}%
+\contentsline {subsection}{\numberline {A.2.6}\mintinline [breaklines, breakafter=_]{python}|network_training / train_hdi.py|}{356}{subsection.A.2.6}%
+\contentsline {section}{\numberline {A.3}The Main App}{357}{section.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}\mintinline [breaklines, breakafter=_]{python}|app.py|}{357}{subsection.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}\mintinline [breaklines, breakafter=_]{python}|calc_factors.py|}{376}{subsection.A.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}\mintinline [breaklines, breakafter=_]{python}|neural_network.py|}{379}{subsection.A.3.3}%
+\contentsline {chapter}{Index}{383}{section*.288}%
+\contentsline {section}{List of Figures}{383}{section*.289}%
+\contentsline {section}{List of Code Snippets}{388}{section*.291}%
+\contentsline {section}{List of Tables}{393}{section*.293}%
+\contentsline {chapter}{Bibliography}{398}{section*.295}%

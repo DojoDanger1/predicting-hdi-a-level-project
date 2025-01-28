@@ -1,0 +1,38 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k+kn}{import} \PYG{n+nn}{csv}
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{import} \PYG{n+nn}{seaborn}
+
+\PYG{c+c1}{\PYGZsh{} load the training data}
+\PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{data/training\PYGZus{}data.csv}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{r}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{file}\PYG{p}{:}
+    \PYG{n}{reader} \PYG{o}{=} \PYG{n}{csv}\PYG{o}{.}\PYG{n}{DictReader}\PYG{p}{(}\PYG{n}{file}\PYG{p}{)}
+    \PYG{n}{trainingData} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{record} \PYG{o+ow}{in} \PYG{n}{reader}\PYG{p}{:}
+        \PYG{n}{trainingData}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{record}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} iterate over every pair of factors}
+\PYG{n}{factors} \PYG{o}{=} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{trainingData}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{:}\PYG{p}{]}
+\PYG{n}{pmcc\PYGZus{}grid} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+\PYG{k}{for} \PYG{n}{factor1} \PYG{o+ow}{in} \PYG{n}{factors}\PYG{p}{:}
+    \PYG{n}{pmcc\PYGZus{}row} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{factor2} \PYG{o+ow}{in} \PYG{n}{factors}\PYG{p}{:}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{calculating pmcc of }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{factor1}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{ and }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{factor2}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{...}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} log message}
+        \PYG{n}{x\PYGZus{}values} \PYG{o}{=} \PYG{p}{[}\PYG{n}{record}\PYG{p}{[}\PYG{n}{factor1}\PYG{p}{]} \PYG{k}{for} \PYG{n}{record} \PYG{o+ow}{in} \PYG{n}{trainingData}\PYG{p}{]}
+        \PYG{n}{y\PYGZus{}values} \PYG{o}{=} \PYG{p}{[}\PYG{n}{record}\PYG{p}{[}\PYG{n}{factor2}\PYG{p}{]} \PYG{k}{for} \PYG{n}{record} \PYG{o+ow}{in} \PYG{n}{trainingData}\PYG{p}{]}
+        \PYG{c+c1}{\PYGZsh{} remove pairs with empty values, iterating over the lists in reverse as to not disturb the index numbers}
+        \PYG{k}{for} \PYG{n}{index} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}values}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{:}
+            \PYG{k}{if} \PYG{n}{x\PYGZus{}values}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{or} \PYG{n}{y\PYGZus{}values}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+                \PYG{n}{x\PYGZus{}values}\PYG{o}{.}\PYG{n}{pop}\PYG{p}{(}\PYG{n}{index}\PYG{p}{)}
+                \PYG{n}{y\PYGZus{}values}\PYG{o}{.}\PYG{n}{pop}\PYG{p}{(}\PYG{n}{index}\PYG{p}{)}
+        \PYG{c+c1}{\PYGZsh{} convert to float}
+        \PYG{n}{x\PYGZus{}values} \PYG{o}{=} \PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)} \PYG{k}{for} \PYG{n}{x} \PYG{o+ow}{in} \PYG{n}{x\PYGZus{}values}\PYG{p}{]}
+        \PYG{n}{y\PYGZus{}values} \PYG{o}{=} \PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{y}\PYG{p}{)} \PYG{k}{for} \PYG{n}{y} \PYG{o+ow}{in} \PYG{n}{y\PYGZus{}values}\PYG{p}{]}
+        \PYG{c+c1}{\PYGZsh{} calculate pmcc and add it to grid}
+        \PYG{n}{pmcc} \PYG{o}{=} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{p}{[}\PYG{p}{(}\PYG{n}{x\PYGZus{}values}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{x\PYGZus{}values}\PYG{p}{)}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{n}{y\PYGZus{}values}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{y\PYGZus{}values}\PYG{p}{)}\PYG{p}{)} \PYG{k}{for} \PYG{n}{index} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}values}\PYG{p}{)}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}\PYG{o}{/}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(} \PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{p}{[}\PYG{p}{(}\PYG{n}{x\PYGZus{}values}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{x\PYGZus{}values}\PYG{p}{)}\PYG{p}{)}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2} \PYG{k}{for} \PYG{n}{index} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}values}\PYG{p}{)}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{p}{[}\PYG{p}{(}\PYG{n}{y\PYGZus{}values}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{y\PYGZus{}values}\PYG{p}{)}\PYG{p}{)}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2} \PYG{k}{for} \PYG{n}{index} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}values}\PYG{p}{)}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n}{pmcc\PYGZus{}row}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{pmcc}\PYG{p}{)}
+    \PYG{n}{pmcc\PYGZus{}grid}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{pmcc\PYGZus{}row}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} generate the image}
+\PYG{n}{heatmap} \PYG{o}{=} \PYG{n}{seaborn}\PYG{o}{.}\PYG{n}{heatmap}\PYG{p}{(}\PYG{n}{pmcc\PYGZus{}grid}\PYG{p}{,} \PYG{n}{xticklabels}\PYG{o}{=}\PYG{n}{factors}\PYG{p}{,} \PYG{n}{yticklabels}\PYG{o}{=}\PYG{n}{factors}\PYG{p}{,} \PYG{n}{vmin}\PYG{o}{=}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{vmax}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{center}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{cmap}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Spectral}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{heatmap}\PYG{o}{.}\PYG{n}{get\PYGZus{}figure}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{savefig}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{data/pmcc.png}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{bbox\PYGZus{}inches}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{tight}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{dpi}\PYG{o}{=}\PYG{l+m+mi}{600}\PYG{p}{)}
+\end{Verbatim}

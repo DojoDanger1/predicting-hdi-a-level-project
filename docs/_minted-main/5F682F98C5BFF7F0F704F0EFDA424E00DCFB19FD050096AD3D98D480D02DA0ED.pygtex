@@ -1,0 +1,105 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{import} \PYG{n+nn}{random}
+
+\PYG{n}{EARTH\PYGZus{}RADIUS} \PYG{o}{=} \PYG{l+m+mi}{6371} \PYG{c+c1}{\PYGZsh{} (in km)}
+
+\PYG{c+c1}{\PYGZsh{} converts angle in degrees to angle in radians}
+\PYG{k}{def} \PYG{n+nf}{deg2rad}\PYG{p}{(}\PYG{n}{angle}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{o}{/}\PYG{l+m+mi}{180}\PYG{p}{)}\PYG{o}{*}\PYG{n}{angle}
+
+\PYG{c+c1}{\PYGZsh{} finds the distance (in km) along the surface of the earth, between 2 coordinates}
+\PYG{k}{def} \PYG{n+nf}{distBetween2Points}\PYG{p}{(}\PYG{n}{p1}\PYG{p}{,} \PYG{n}{p2}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{La1} \PYG{o}{=} \PYG{n}{deg2rad}\PYG{p}{(}\PYG{n}{p1}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{Lo1} \PYG{o}{=} \PYG{n}{deg2rad}\PYG{p}{(}\PYG{n}{p1}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{La2} \PYG{o}{=} \PYG{n}{deg2rad}\PYG{p}{(}\PYG{n}{p2}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{Lo2} \PYG{o}{=} \PYG{n}{deg2rad}\PYG{p}{(}\PYG{n}{p2}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{EARTH\PYGZus{}RADIUS} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{arccos}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{La1}\PYG{p}{)}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{La2}\PYG{p}{)} \PYG{o}{+} \PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{La1}\PYG{p}{)}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{La2}\PYG{p}{)}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{Lo1}\PYG{o}{\PYGZhy{}}\PYG{n}{Lo2}\PYG{p}{)}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} finds the average distance between 2 types of objects, A(x,y)}
+\PYG{k}{def} \PYG{n+nf}{averageDistance}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{o}{=}\PYG{l+m+mi}{2000}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{o}{=}\PYG{l+m+mi}{2000}\PYG{p}{,} \PYG{n}{must\PYGZus{}include\PYGZus{}x}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{,} \PYG{n}{must\PYGZus{}include\PYGZus{}y}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0} \PYG{o+ow}{or} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{y\PYGZus{}objects}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} the average distance is undefined}
+        \PYG{k}{return} \PYG{k+kc}{None}
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} random sample}
+        \PYG{n}{x\PYGZus{}objects} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{sample}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}x\PYGZus{}objects}\PYG{p}{)}
+    \PYG{k}{if} \PYG{n}{must\PYGZus{}include\PYGZus{}x} \PYG{o}{!=} \PYG{k+kc}{None}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} include the new building when making suggestions}
+        \PYG{n}{x\PYGZus{}objects} \PYG{o}{+}\PYG{o}{=} \PYG{n}{must\PYGZus{}include\PYGZus{}x}
+    \PYG{c+c1}{\PYGZsh{} iterate over each x\PYGZus{}object, and find the closest y\PYGZus{}object}
+    \PYG{n}{min\PYGZus{}dists} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{x\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{x\PYGZus{}objects}\PYG{p}{:}
+        \PYG{n}{dist\PYGZus{}to\PYGZus{}ys} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{y\PYGZus{}objects}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{:}
+            \PYG{n}{y\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{sample}\PYG{p}{(}\PYG{n}{y\PYGZus{}objects}\PYG{p}{,} \PYG{n}{max\PYGZus{}y\PYGZus{}objects}\PYG{p}{)}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{y\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration} \PYG{o}{=} \PYG{n}{y\PYGZus{}objects}
+        \PYG{k}{if} \PYG{n}{must\PYGZus{}include\PYGZus{}y} \PYG{o}{!=} \PYG{k+kc}{None}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} include the new building when making suggestions}
+            \PYG{n}{y\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration} \PYG{o}{+}\PYG{o}{=} \PYG{n}{must\PYGZus{}include\PYGZus{}y}
+        \PYG{k}{for} \PYG{n}{y\PYGZus{}object} \PYG{o+ow}{in} \PYG{n}{y\PYGZus{}objects\PYGZus{}in\PYGZus{}consideration}\PYG{p}{:}
+            \PYG{n}{dist\PYGZus{}to\PYGZus{}ys}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{distBetween2Points}\PYG{p}{(}\PYG{n}{x\PYGZus{}object}\PYG{p}{,} \PYG{n}{y\PYGZus{}object}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n}{min\PYGZus{}dists}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{min}\PYG{p}{(}\PYG{n}{dist\PYGZus{}to\PYGZus{}ys}\PYG{p}{)}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} the closest y\PYGZus{}object}
+    \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{min\PYGZus{}dists}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} calculates the area (in km\PYGZca{}2) of a given region bound by a set of latitude/longitude coordinates}
+\PYG{k}{def} \PYG{n+nf}{calcArea}\PYG{p}{(}\PYG{n}{bounding\PYGZus{}coords}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{if} \PYG{n}{bounding\PYGZus{}coords}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{==} \PYG{n}{bounding\PYGZus{}coords}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{} if the first and last coordinates are the same, then delete the last one}
+        \PYG{n}{bounding\PYGZus{}coords}\PYG{o}{.}\PYG{n}{pop}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} convert lat/lon pairs to 3d position vectors}
+    \PYG{n}{bounding\PYGZus{}vectors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{coord} \PYG{o+ow}{in} \PYG{n}{bounding\PYGZus{}coords}\PYG{p}{:}
+        \PYG{n}{La} \PYG{o}{=} \PYG{n}{deg2rad}\PYG{p}{(}\PYG{n}{coord}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}
+        \PYG{n}{Lo} \PYG{o}{=} \PYG{n}{deg2rad}\PYG{p}{(}\PYG{n}{coord}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}
+        \PYG{n}{bounding\PYGZus{}vectors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{p}{[}
+            \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{La}\PYG{p}{)}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{Lo}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+            \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{La}\PYG{p}{)}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{Lo}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+            \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{La}\PYG{p}{)}\PYG{p}{]}
+        \PYG{p}{]}\PYG{p}{)}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} iterate over each vertex and find its anticlockwise angle}
+    \PYG{n}{anticlockwise\PYGZus{}angles} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{vertex\PYGZus{}index}\PYG{p}{,} \PYG{n}{vertex} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{bounding\PYGZus{}vectors}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{prev\PYGZus{}vertex} \PYG{o}{=} \PYG{n}{bounding\PYGZus{}vectors}\PYG{p}{[}\PYG{n}{vertex\PYGZus{}index}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}
+        \PYG{n}{next\PYGZus{}vertex} \PYG{o}{=} \PYG{n}{bounding\PYGZus{}vectors}\PYG{p}{[}\PYG{l+m+mi}{0} \PYG{k}{if} \PYG{n}{vertex\PYGZus{}index} \PYG{o}{==} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{bounding\PYGZus{}vectors}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{k}{else} \PYG{n}{vertex\PYGZus{}index}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{]}
+        \PYG{n}{La} \PYG{o}{=} \PYG{n}{deg2rad}\PYG{p}{(}\PYG{n}{bounding\PYGZus{}coords}\PYG{p}{[}\PYG{n}{vertex\PYGZus{}index}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}
+        \PYG{n}{Lo} \PYG{o}{=} \PYG{n}{deg2rad}\PYG{p}{(}\PYG{n}{bounding\PYGZus{}coords}\PYG{p}{[}\PYG{n}{vertex\PYGZus{}index}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}
+        \PYG{c+c1}{\PYGZsh{} define the rotation and translation matrices}
+        \PYG{n}{rotation\PYGZus{}matrix\PYGZus{}z} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{p}{[}
+            \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{Lo}\PYG{p}{)}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{Lo}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,}
+            \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{Lo}\PYG{p}{)}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{Lo}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,}
+            \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]}
+        \PYG{p}{]}\PYG{p}{)}
+        \PYG{n}{rotation\PYGZus{}matrix\PYGZus{}y} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{p}{[}
+            \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{La}\PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{La}\PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+            \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,}
+            \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sin}\PYG{p}{(}\PYG{n}{La}\PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{cos}\PYG{p}{(}\PYG{n}{La}\PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{]}
+        \PYG{p}{]}\PYG{p}{)}
+        \PYG{n}{translation\PYGZus{}vector} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matrix}\PYG{p}{(}\PYG{p}{[}
+            \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,}
+            \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,}
+            \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}
+        \PYG{p}{]}\PYG{p}{)}
+        \PYG{c+c1}{\PYGZsh{} rotate and translate the plane tangent to the vertex such that it is the xy\PYGZhy{}plane}
+        \PYG{n}{prev\PYGZus{}vertex} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}y}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}z}\PYG{p}{,} \PYG{n}{prev\PYGZus{}vertex}\PYG{p}{)}\PYG{p}{)} \PYG{o}{+} \PYG{n}{translation\PYGZus{}vector}
+        \PYG{n}{vertex} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}y}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}z}\PYG{p}{,} \PYG{n}{vertex}\PYG{p}{)}\PYG{p}{)} \PYG{o}{+} \PYG{n}{translation\PYGZus{}vector}
+        \PYG{n}{next\PYGZus{}vertex} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}y}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{matmul}\PYG{p}{(}\PYG{n}{rotation\PYGZus{}matrix\PYGZus{}z}\PYG{p}{,} \PYG{n}{next\PYGZus{}vertex}\PYG{p}{)}\PYG{p}{)} \PYG{o}{+} \PYG{n}{translation\PYGZus{}vector}
+        \PYG{c+c1}{\PYGZsh{} project onto the xy\PYGZhy{}plane}
+        \PYG{n}{prev\PYGZus{}vertex}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{n}{next\PYGZus{}vertex}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{c+c1}{\PYGZsh{} calculate anticlockwise angle between the vectors}
+        \PYG{n}{prev\PYGZus{}to\PYGZus{}current} \PYG{o}{=} \PYG{n}{vertex} \PYG{o}{\PYGZhy{}} \PYG{n}{prev\PYGZus{}vertex}
+        \PYG{n}{current\PYGZus{}to\PYGZus{}next} \PYG{o}{=} \PYG{n}{next\PYGZus{}vertex} \PYG{o}{\PYGZhy{}} \PYG{n}{vertex}
+        \PYG{n}{anticlockwise\PYGZus{}angle} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{arctan2}\PYG{p}{(}\PYG{p}{(}\PYG{n}{prev\PYGZus{}to\PYGZus{}current}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{o}{*}\PYG{n}{current\PYGZus{}to\PYGZus{}next}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{prev\PYGZus{}to\PYGZus{}current}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{o}{*}\PYG{n}{current\PYGZus{}to\PYGZus{}next}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n}{prev\PYGZus{}to\PYGZus{}current}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{o}{*}\PYG{n}{current\PYGZus{}to\PYGZus{}next}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{prev\PYGZus{}to\PYGZus{}current}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{o}{*}\PYG{n}{current\PYGZus{}to\PYGZus{}next}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{)} \PYG{o}{+} \PYG{p}{(}\PYG{n}{prev\PYGZus{}to\PYGZus{}current}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{o}{*}\PYG{n}{current\PYGZus{}to\PYGZus{}next}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{prev\PYGZus{}to\PYGZus{}current}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{o}{*}\PYG{n}{current\PYGZus{}to\PYGZus{}next}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{prev\PYGZus{}to\PYGZus{}current}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{o}{*}\PYG{n}{current\PYGZus{}to\PYGZus{}next}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{o}{+} \PYG{n}{prev\PYGZus{}to\PYGZus{}current}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{o}{*}\PYG{n}{current\PYGZus{}to\PYGZus{}next}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)} \PYG{o}{+} \PYG{n}{prev\PYGZus{}to\PYGZus{}current}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{o}{*}\PYG{n}{current\PYGZus{}to\PYGZus{}next}\PYG{o}{.}\PYG{n}{item}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n}{anticlockwise\PYGZus{}angles}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{anticlockwise\PYGZus{}angle}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{} find the interior angles from the anticlockwise angles}
+    \PYG{n}{sum\PYGZus{}anticlockwise\PYGZus{}angles} \PYG{o}{=} \PYG{n+nb}{round}\PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{anticlockwise\PYGZus{}angles}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}
+    \PYG{k}{if} \PYG{n}{sum\PYGZus{}anticlockwise\PYGZus{}angles} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{k}{return} \PYG{k+kc}{None}
+    \PYG{k}{if} \PYG{n}{sum\PYGZus{}anticlockwise\PYGZus{}angles} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{n}{anticlockwise\PYGZus{}angles} \PYG{o}{=} \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{*}\PYG{n}{angle} \PYG{k}{for} \PYG{n}{angle} \PYG{o+ow}{in} \PYG{n}{anticlockwise\PYGZus{}angles}\PYG{p}{]}
+    \PYG{n}{interior\PYGZus{}angles} \PYG{o}{=} \PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{o}{\PYGZhy{}}\PYG{n}{angle} \PYG{k}{for} \PYG{n}{angle} \PYG{o+ow}{in} \PYG{n}{anticlockwise\PYGZus{}angles}\PYG{p}{]}
+    \PYG{c+c1}{\PYGZsh{} return the area}
+    \PYG{n}{num\PYGZus{}edges} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{bounding\PYGZus{}coords}\PYG{p}{)}
+    \PYG{k}{return} \PYG{p}{(}\PYG{n}{EARTH\PYGZus{}RADIUS} \PYG{o}{*}\PYG{o}{*} \PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{*} \PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{interior\PYGZus{}angles}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{o}{*}\PYG{p}{(}\PYG{n}{num\PYGZus{}edges}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} finds the density of a type of object, D(x)}
+\PYG{k}{def} \PYG{n+nf}{density}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{,} \PYG{n}{area}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x\PYGZus{}objects}\PYG{p}{)}\PYG{o}{/}\PYG{n}{area}
+\end{Verbatim}

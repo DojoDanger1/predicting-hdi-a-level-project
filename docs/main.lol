@@ -196,3 +196,18 @@
 \contentsline {listing}{\numberline {5.95}{\ignorespaces Allowing for Images in Markdown}}{316}{listing.5.95}%
 \addvspace {10pt}
 \addvspace {10pt}
+\contentsline {listing}{\numberline {A.1}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|data_processing / calc_factors.py|}}{348}{listing.caption.273}%
+\contentsline {listing}{\numberline {A.2}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|data_processing / compile_data.py|}}{349}{listing.caption.274}%
+\contentsline {listing}{\numberline {A.3}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|data_processing / get_osm_data.py|}}{350}{listing.caption.275}%
+\contentsline {listing}{\numberline {A.4}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|data_processing / pmcc.py|}}{351}{listing.caption.276}%
+\contentsline {listing}{\numberline {A.5}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|data_processing / process_hdi.py|}}{352}{listing.caption.277}%
+\contentsline {listing}{\numberline {A.6}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|data_processing / process_shapefile.py|}}{352}{listing.caption.278}%
+\contentsline {listing}{\numberline {A.7}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|network_training / load_digits_data.py|}}{353}{listing.caption.279}%
+\contentsline {listing}{\numberline {A.8}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|network_training / load_hdi_data.py|}}{354}{listing.caption.280}%
+\contentsline {listing}{\numberline {A.9}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|network_training / test_digits.py|}}{355}{listing.caption.281}%
+\contentsline {listing}{\numberline {A.10}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|network_training / test_hdi.py|}}{356}{listing.caption.282}%
+\contentsline {listing}{\numberline {A.11}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|network_training / train_digits.py|}}{356}{listing.caption.283}%
+\contentsline {listing}{\numberline {A.12}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|network_training / train_hdi.py|}}{357}{listing.caption.284}%
+\contentsline {listing}{\numberline {A.13}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|app.py|}}{376}{listing.caption.285}%
+\contentsline {listing}{\numberline {A.14}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|calc_factors.py|}}{379}{listing.caption.286}%
+\contentsline {listing}{\numberline {A.15}{\ignorespaces Final Code for \mintinline [breaklines, breakafter=_]{python}|neural_network.py|}}{382}{listing.caption.287}%
