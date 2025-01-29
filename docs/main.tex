@@ -85,7 +85,7 @@
 
 \setminted{escapeinside=§§}
 
-\title{A-Level Computer Science Programming Project}
+\title{Predicting HDI with Multilayer Perceptrons}
 \author{Luke Williams, Candidate 2276 \\ The Cherwell School, Centre 62309 \\ OCR A-Level Computer Science NEA --- H446/03}
 \date{June 2025}
 
@@ -1217,7 +1217,7 @@ Now that we have all the interior angles, all we need to do is plug them into th
 \centering
 \begin{tikzpicture}[node distance=2cm]
     \node (start) [fStartStop] {Start};
-    \node (instuff) [fInputOutput, below of=start] {Input a set of $x$-objects, and the bounding coordinates of the region};
+    \node (instuff) [fInputOutput, below of=start, yshift=0.3cm] {Input a set of $x$-objects, and the bounding coordinates of the region};
     \node (convert2vectors) [fProcess, below of=instuff, text width=8cm] {Convert each of the bounding coordinates to position vectors using equation \ref{eq:convert2vectors}};
     \node (vertex1) [fProcess, below of=convert2vectors, yshift=0.5cm] {$\text{currentVertex}=1$};
     \node (transform) [fProcess, below of=vertex1, text width=8cm] {Transform the currentVertex, and the 2 vertices either side using equations \ref{eq:transformCoordsStart} to \ref{eq:transformCoordsEnd} and calculate the anticlockwise angle using equation \ref{eq:calcClockwiseAngle}};
@@ -3635,6 +3635,7 @@ After doing this, I found that it was easier to specify the most recent region, 
 \pil{data_processing / compile_data.py}
 \begin{minted}[linenos,breaklines,frame=single,firstnumber=17]{python}
 MOST_RECENT_REGION = 'AFGr108'
+started = False
 \end{minted}
 \pil{data_processing / compile_data.py}
 \begin{minted}[linenos,breaklines,frame=single,firstnumber=23]{python}
@@ -4076,14 +4077,17 @@ To load the model, we can do the same thing but in reverse. First, open the file
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{28}$}\OR\equal{\mtestID}{$t_{29}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippets \ref{cs:savingModels} \& \ref{cs:loadingModels}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -4174,14 +4178,17 @@ If we then want to more formally make a prediction, we must first get the input 
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{31}$}\OR\equal{\mtestID}{$t_{32}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippets \ref{cs:feedforwardAlgo} \& \ref{cs:predictionWrapper}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -4910,14 +4917,17 @@ Except, this time we must have 24 neurons in the input layer (for each of the 24
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{42}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:trainHDI}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -5022,14 +5032,17 @@ Each of the average distance factors often take values in between 1 and 10, but 
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{44}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:divFactorsBy10}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -5941,14 +5954,17 @@ Figure \ref{fig:ss13.1} shows the user interface with these new additions. Unfor
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{55}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:suggestionsTable}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -6040,14 +6056,17 @@ We then must call this function in the actual \pil{def makeSuggestions} function
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$T_{7.1}$}\OR\equal{\mtestID}{$T_{7.2}$}\OR\equal{\mtestID}{$T_{7.3}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{$T_{7}$ Testing Table (for Code Snippets \ref{cs:meanOfCoordinates} \& \ref{cs:optimalPlaceForNewBuilding})}\label{table:t7testing}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -6391,7 +6410,6 @@ We call this function, when the \pil{suggestionsTable} is \pil{select}ed, and we
 \end{center}
 
 \subsection{Review}
-
 \begin{center}
 \csvloop{
     file=data/testdata.csv,
@@ -6400,14 +6418,17 @@ We call this function, when the \pil{suggestionsTable} is \pil{select}ed, and we
     column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
     filter ifthen={\equal{\testID}{$T_{6}$}\OR\equal{\testID}{$T_{7}$}\OR\equal{\testID}{$T_{8}$}\OR\equal{\testID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{8cm}|H|m{2cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{8cm}|H|m{2cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Passed Testing Data for Milestone 3}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -7407,14 +7428,17 @@ I will still be testing code in small increments as I am developing, to ensure t
     column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
     filter ifthen={\equal{\testID}{$T_{13}$}\OR\equal{\testID}{$T_{14}$}\OR\equal{\testID}{$T_{15}$}\OR\equal{\testID}{$T_{16}$}\OR\equal{\testID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Data for Milestone 5}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -8328,14 +8352,17 @@ All 4 of the main tests in Milestone 4 passed. As a result of that, the followin
     column names={1=\scID, 2=\scCriterion, 3=\scJustification, 4=\scSuccess, 5=\scEvaluation},
     filter ifthen={\equal{\scID}{$S_{12}$}\OR\equal{\scID}{$S_{13}$}\OR\equal{\scID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{5cm}|m{6cm}|m{2cm}|H}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{5cm}|m{6cm}|m{2cm}|H}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Achieved Success Criteria for Milestone 4}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -8375,14 +8402,17 @@ To determine if I have met this success criteria, I will be using the following 
     column names={1=\testID, 2=\testName, 3=\testInputs, 4=\testOutputs, 5=\testSuccess},
     filter ifthen={\equal{\testID}{$T_{13}$}\OR\equal{\testID}{$T_{14}$}\OR\equal{\testID}{$T_{15}$}\OR\equal{\testID}{$T_{16}$}\OR\equal{\testID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{5cm}|m{5cm}|H}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Data for Milestone 5}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -9041,14 +9071,17 @@ However, I now believe that it is better for the user to select which region the
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{82}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:regionsTab}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -9251,14 +9284,17 @@ We must therefore also call \pil{def updateRegionsDropdown} when we return in th
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{85}$}\AND\equal{\mtestRealOutputs}{Dropdown is no longer interactive\comma{} gradio assumes it's an output}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:updateRegionsDropdown}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -9289,14 +9325,17 @@ We can fix this by just setting \pil{interactive=True} in the regions dropdown c
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{85}$}\AND\equal{\mtestRealOutputs}{As Expected}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:interactiveDropdown}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -9597,14 +9636,17 @@ This function should be run every time the value of the regions dropdown changes
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{89}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:updateCurrentRegion}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -9864,14 +9906,17 @@ Here, I have added a row, which contains the button to make suggestions, as well
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{94}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:numNewBuildings}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -10024,14 +10069,17 @@ This time, we must pass \pil{num_new_buildings} in, which will be an integer spe
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{95}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:newMakeSuggestions}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -10309,14 +10357,17 @@ Figure \ref{fig:ss22.3} shows the corrected output for the \pil{def logIn} funct
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{100}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippets \ref{cs:fixForSignUp} \& \ref{cs:fixForLogIn}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -10454,14 +10505,17 @@ Figure \ref{fig:popupExamples} shows how the popups look. You may have also noti
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{103}$}\OR\equal{\mtestID}{$t_{104}$}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:infoPopups1}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -10994,14 +11048,17 @@ Figure \ref{fig:ss22.15} shows the current output for the help tab. Everything s
     column names={1=\mtestID, 2=\mtestName, 3=\mtestInputs, 4=\mtestType, 5=\mtestExpectedOutputs, 6=\mtestRealOutputs},
     filter ifthen={\equal{\mtestID}{$t_{109}$}\AND\equal{\mtestRealOutputs}{No Images}\OR\equal{\mtestID}{\textbf{No.}}},
     before reading={
-        \begin{longtable}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
+        \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{1cm}|m{3cm}|m{3cm}|m{2cm}|m{3cm}|m{3cm}|}
         \hline
     },
     command=\csvlinetotablerow,
     late after line=\\\hline,
     after reading={
+        \end{tabular}
         \caption{Testing Table for Code Snippet \ref{cs:helpTab}}
-        \end{longtable}
+        \end{table}
     }
 }
 \end{center}
@@ -11957,8 +12014,8 @@ with open('data/hdi.csv', 'r') as file:
         hdiData.append(record)
 
 MOST_RECENT_REGION = 'AFGr108'
+started = False
 field_names = ['country', 'region', 'code', 'hdi', 'A(House School)', 'A(House Hospital)', 'A(House Pharmacy)', 'A(House Restaurant)', 'A(School Hospital)', 'A(Police Hospital)', 'A(House Place of Worship)', 'A(Bank Slot Machine)', 'A(Fast-Food Place Toilet)', 'A(House Police)', 'A(University Library)', 'A(House Library)', 'D(School)', 'D(Hospital)', 'D(Pharmacy)', 'D(Police)', 'D(Library)', 'D(Toilet)', 'D(Restaurant)', 'D(Place of Worship)', 'D(Post Box)', 'D(Vending Machine)', 'D(Bench)', 'D(Tree)']
-SKIP_THE_FIRST = 0
 
 # iterate over each region
 for region_number, region in enumerate(regionData):

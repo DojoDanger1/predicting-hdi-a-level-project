@@ -109,126 +109,126 @@
 \contentsline {subsection}{\numberline {3.3.2}Part 11{} -- Drawing on the Map}{149}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}Part 12{} -- Predicting the HDI}{156}{subsection.3.3.3}%
 \contentsline {subsection}{\numberline {3.3.4}Part 13{} -- Suggesting Improvements}{171}{subsection.3.3.4}%
-\contentsline {subsection}{\numberline {3.3.5}Review}{182}{subsection.3.3.5}%
+\contentsline {subsection}{\numberline {3.3.5}Review}{183}{subsection.3.3.5}%
 \contentsline {section}{\numberline {3.4}Feedback from Stakeholders}{184}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Design of the 2\relax \textsuperscript {nd} Prototype}{185}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Structure Diagram}{185}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Authentication System}{186}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Storing Data \& Encryption}{186}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Account Management}{187}{subsection.4.2.2}%
-\contentsline {subsubsection}{Creating an Account}{187}{subsubsection*.150}%
-\contentsline {subsubsection}{Logging in}{188}{subsubsection*.152}%
-\contentsline {subsection}{\numberline {4.2.3}List of Key Variables}{190}{subsection.4.2.3}%
-\contentsline {subsubsection}{Variables in Creating an Account}{190}{subsubsection*.154}%
-\contentsline {subsubsection}{Variables in Logging In}{190}{subsubsection*.155}%
-\contentsline {subsubsection}{Other Variables}{191}{subsubsection*.156}%
-\contentsline {section}{\numberline {4.3}User Interface}{191}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Interface Sketch -- A Tabbed Interface}{191}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Input Validation}{197}{subsection.4.3.2}%
-\contentsline {subsubsection}{Authentication System}{197}{subsubsection*.163}%
-\contentsline {subsubsection}{Manually Entering Regions}{198}{subsubsection*.164}%
-\contentsline {subsubsection}{Comparing Regions}{198}{subsubsection*.165}%
-\contentsline {subsection}{\numberline {4.3.3}Usabilty Features}{198}{subsection.4.3.3}%
-\contentsline {subsubsection}{Comparison Page}{198}{subsubsection*.166}%
-\contentsline {subsubsection}{Regions Page}{199}{subsubsection*.167}%
-\contentsline {subsubsection}{Log In \& Sign Up Pages}{199}{subsubsection*.168}%
-\contentsline {subsubsection}{Help Page}{199}{subsubsection*.169}%
-\contentsline {subsubsection}{Other Usability Features}{199}{subsubsection*.170}%
-\contentsline {subsection}{\numberline {4.3.4}Analysis of how much Each Factor affects the Others}{200}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}Comparison to Similar Regions}{201}{subsection.4.3.5}%
-\contentsline {subsection}{\numberline {4.3.6}Improved Algorithm for Suggestions}{202}{subsection.4.3.6}%
-\contentsline {subsection}{\numberline {4.3.7}List of Key Variables}{205}{subsection.4.3.7}%
-\contentsline {subsubsection}{Variables in Calculating PMCC}{205}{subsubsection*.175}%
-\contentsline {subsubsection}{Variables in Finding Similar Regions}{205}{subsubsection*.176}%
-\contentsline {subsubsection}{Variables in Finding an Optimal Place for a New Building}{206}{subsubsection*.177}%
-\contentsline {subsubsection}{Other Variables}{207}{subsubsection*.178}%
-\contentsline {section}{\numberline {4.4}Data}{207}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Storing Data in the MongoDB}{207}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Testing Data for Development}{207}{subsection.4.4.2}%
-\contentsline {subsubsection}{Milestone 4 -- Authentication System}{207}{subsubsection*.179}%
-\contentsline {subsubsection}{Milestone 5 -- Final User Interface}{208}{subsubsection*.180}%
-\contentsline {subsection}{\numberline {4.4.3}Testing Data for Post-Development}{209}{subsection.4.4.3}%
-\contentsline {subsubsection}{Testing for Function}{209}{subsubsection*.181}%
-\contentsline {subsubsection}{Testing for Robustness}{211}{subsubsection*.182}%
-\contentsline {subsubsection}{Testing for Usability}{214}{subsubsection*.183}%
-\contentsline {chapter}{\numberline {5}Developing the Coded Solution of the 2\relax \textsuperscript {nd} Prototype}{216}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Milestone 4 -- Authentication System}{216}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Success Criteria}{216}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Part 14{} -- Authentication Frontend}{217}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Part 15{} -- Sign Up Backend}{223}{subsection.5.1.3}%
-\contentsline {subsection}{\numberline {5.1.4}Part 16{} -- Log In Backend}{235}{subsection.5.1.4}%
-\contentsline {subsection}{\numberline {5.1.5}Review}{238}{subsection.5.1.5}%
-\contentsline {section}{\numberline {5.2}Milestone 5 -- Final User Interface}{239}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Success Criteria}{239}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Part 17{} -- Comparing a Region to Training Data}{240}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Part 18{} -- Analysis of how much Each Factor affects the Others}{249}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Part 19{} -- Finding Similar Regions}{256}{subsection.5.2.4}%
-\contentsline {subsection}{\numberline {5.2.5}Part 20{} -- Saving Regions}{258}{subsection.5.2.5}%
-\contentsline {subsection}{\numberline {5.2.6}Part 21{} -- Improved Suggestions}{281}{subsection.5.2.6}%
-\contentsline {subsection}{\numberline {5.2.7}Part 22{} -- Finishing Touches}{291}{subsection.5.2.7}%
-\contentsline {subsubsection}{Bug Fix -- Not Returning Sufficient Items}{291}{subsubsection*.228}%
-\contentsline {subsubsection}{Bug Fix -- New Account Doesn't Have Current Regions}{296}{subsubsection*.232}%
-\contentsline {subsubsection}{Bug Fix -- Switching Between Regions Doesn't Work with Comparing}{296}{subsubsection*.233}%
-\contentsline {subsubsection}{Info Popups}{298}{subsubsection*.236}%
-\contentsline {subsubsection}{Emojification}{304}{subsubsection*.238}%
-\contentsline {subsubsection}{Other Interface Changes}{310}{subsubsection*.245}%
-\contentsline {subsubsection}{The Help Tab}{314}{subsubsection*.248}%
-\contentsline {subsection}{\numberline {5.2.8}Review}{317}{subsection.5.2.8}%
-\contentsline {chapter}{\numberline {6}Evaluation}{320}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Testing to Inform Evaluation}{320}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Testing for Function \& Robustness}{320}{subsection.6.1.1}%
-\contentsline {subsubsection}{Testing for Function}{320}{subsubsection*.252}%
-\contentsline {subsubsection}{Testing for Robustness}{322}{subsubsection*.253}%
-\contentsline {subsection}{\numberline {6.1.2}Testing for Usability}{325}{subsection.6.1.2}%
-\contentsline {subsubsection}{Questions \& Responses}{325}{subsubsection*.254}%
-\contentsline {subsubsection}{Total Scores}{326}{subsubsection*.255}%
-\contentsline {section}{\numberline {6.2}Success Criteria}{328}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Cross Referencing with Test Data}{328}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Reasoning Behind Outcome of Success Criteria}{330}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}Addressing Partially Met Success Criteria in Further Development}{330}{subsection.6.2.3}%
-\contentsline {subsubsection}{Accurate Predictions ($S_{9}$)}{330}{subsubsection*.257}%
-\contentsline {subsubsection}{Accurate Suggestions ($S_{11}$)}{330}{subsubsection*.258}%
-\contentsline {subsubsection}{User Interface ($S_{19}$)}{331}{subsubsection*.259}%
-\contentsline {section}{\numberline {6.3}Usability Features}{331}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Comparison to Sketches \& Effective Usability Features}{332}{subsection.6.3.1}%
-\contentsline {subsubsection}{Predict Tab}{332}{subsubsection*.260}%
-\contentsline {subsubsection}{Comapare \& Region Tabs}{334}{subsubsection*.262}%
-\contentsline {subsubsection}{Log In \& Sign Up Tabs}{337}{subsubsection*.265}%
-\contentsline {subsubsection}{Help Tab}{340}{subsubsection*.268}%
-\contentsline {subsection}{\numberline {6.3.2}Addressing Poor Usability Features in Further Development}{341}{subsection.6.3.2}%
-\contentsline {subsubsection}{The Upload Button}{341}{subsubsection*.270}%
-\contentsline {subsubsection}{Gradio Dataframes}{341}{subsubsection*.271}%
-\contentsline {subsubsection}{Editing \& Creating Regions in the Table}{341}{subsubsection*.272}%
-\contentsline {section}{\numberline {6.4}Maintenance Issues}{342}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Maintainability}{342}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Documentation}{342}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Code Style Guidelines}{342}{subsection.6.4.3}%
-\contentsline {section}{\numberline {6.5}Limitations of the Solution}{342}{section.6.5}%
-\contentsline {subsection}{\numberline {6.5.1}Data Limitations}{342}{subsection.6.5.1}%
-\contentsline {subsection}{\numberline {6.5.2}Usability Challenges}{343}{subsection.6.5.2}%
-\contentsline {subsection}{\numberline {6.5.3}Scalability \& Technical Constraints}{343}{subsection.6.5.3}%
-\contentsline {section}{\numberline {6.6}Conclusion}{343}{section.6.6}%
-\contentsline {chapter}{\numberline {A}Final Code}{344}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Data Processing}{344}{section.A.1}%
-\contentsline {subsection}{\numberline {A.1.1}\mintinline [breaklines, breakafter=_]{python}|data_processing / calc_factors.py|}{344}{subsection.A.1.1}%
-\contentsline {subsection}{\numberline {A.1.2}\mintinline [breaklines, breakafter=_]{python}|data_processing / compile_data.py|}{348}{subsection.A.1.2}%
-\contentsline {subsection}{\numberline {A.1.3}\mintinline [breaklines, breakafter=_]{python}|data_processing / get_osm_data.py|}{349}{subsection.A.1.3}%
-\contentsline {subsection}{\numberline {A.1.4}\mintinline [breaklines, breakafter=_]{python}|data_processing / pmcc.py|}{350}{subsection.A.1.4}%
-\contentsline {subsection}{\numberline {A.1.5}\mintinline [breaklines, breakafter=_]{python}|data_processing / process_hdi.py|}{351}{subsection.A.1.5}%
-\contentsline {subsection}{\numberline {A.1.6}\mintinline [breaklines, breakafter=_]{python}|data_processing / process_shapefile.py|}{352}{subsection.A.1.6}%
-\contentsline {section}{\numberline {A.2}Training the Neural Network}{352}{section.A.2}%
-\contentsline {subsection}{\numberline {A.2.1}\mintinline [breaklines, breakafter=_]{python}|network_training / load_digits_data.py|}{352}{subsection.A.2.1}%
-\contentsline {subsection}{\numberline {A.2.2}\mintinline [breaklines, breakafter=_]{python}|network_training / load_hdi_data.py|}{353}{subsection.A.2.2}%
-\contentsline {subsection}{\numberline {A.2.3}\mintinline [breaklines, breakafter=_]{python}|network_training / test_digits.py|}{354}{subsection.A.2.3}%
-\contentsline {subsection}{\numberline {A.2.4}\mintinline [breaklines, breakafter=_]{python}|network_training / test_hdi.py|}{355}{subsection.A.2.4}%
-\contentsline {subsection}{\numberline {A.2.5}\mintinline [breaklines, breakafter=_]{python}|network_training / train_digits.py|}{356}{subsection.A.2.5}%
-\contentsline {subsection}{\numberline {A.2.6}\mintinline [breaklines, breakafter=_]{python}|network_training / train_hdi.py|}{356}{subsection.A.2.6}%
-\contentsline {section}{\numberline {A.3}The Main App}{357}{section.A.3}%
-\contentsline {subsection}{\numberline {A.3.1}\mintinline [breaklines, breakafter=_]{python}|app.py|}{357}{subsection.A.3.1}%
-\contentsline {subsection}{\numberline {A.3.2}\mintinline [breaklines, breakafter=_]{python}|calc_factors.py|}{376}{subsection.A.3.2}%
-\contentsline {subsection}{\numberline {A.3.3}\mintinline [breaklines, breakafter=_]{python}|neural_network.py|}{379}{subsection.A.3.3}%
-\contentsline {chapter}{Index}{383}{section*.288}%
-\contentsline {section}{List of Figures}{383}{section*.289}%
-\contentsline {section}{List of Code Snippets}{388}{section*.291}%
-\contentsline {section}{List of Tables}{393}{section*.293}%
-\contentsline {chapter}{Bibliography}{398}{section*.295}%
+\contentsline {chapter}{\numberline {4}Design of the 2\relax \textsuperscript {nd} Prototype}{186}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Structure Diagram}{186}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Authentication System}{187}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Storing Data \& Encryption}{187}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Account Management}{188}{subsection.4.2.2}%
+\contentsline {subsubsection}{Creating an Account}{188}{subsubsection*.157}%
+\contentsline {subsubsection}{Logging in}{189}{subsubsection*.159}%
+\contentsline {subsection}{\numberline {4.2.3}List of Key Variables}{191}{subsection.4.2.3}%
+\contentsline {subsubsection}{Variables in Creating an Account}{191}{subsubsection*.161}%
+\contentsline {subsubsection}{Variables in Logging In}{191}{subsubsection*.162}%
+\contentsline {subsubsection}{Other Variables}{192}{subsubsection*.163}%
+\contentsline {section}{\numberline {4.3}User Interface}{192}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Interface Sketch -- A Tabbed Interface}{192}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Input Validation}{198}{subsection.4.3.2}%
+\contentsline {subsubsection}{Authentication System}{198}{subsubsection*.170}%
+\contentsline {subsubsection}{Manually Entering Regions}{199}{subsubsection*.171}%
+\contentsline {subsubsection}{Comparing Regions}{199}{subsubsection*.172}%
+\contentsline {subsection}{\numberline {4.3.3}Usabilty Features}{199}{subsection.4.3.3}%
+\contentsline {subsubsection}{Comparison Page}{199}{subsubsection*.173}%
+\contentsline {subsubsection}{Regions Page}{200}{subsubsection*.174}%
+\contentsline {subsubsection}{Log In \& Sign Up Pages}{200}{subsubsection*.175}%
+\contentsline {subsubsection}{Help Page}{200}{subsubsection*.176}%
+\contentsline {subsubsection}{Other Usability Features}{200}{subsubsection*.177}%
+\contentsline {subsection}{\numberline {4.3.4}Analysis of how much Each Factor affects the Others}{201}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Comparison to Similar Regions}{202}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Improved Algorithm for Suggestions}{203}{subsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.3.7}List of Key Variables}{206}{subsection.4.3.7}%
+\contentsline {subsubsection}{Variables in Calculating PMCC}{206}{subsubsection*.182}%
+\contentsline {subsubsection}{Variables in Finding Similar Regions}{206}{subsubsection*.183}%
+\contentsline {subsubsection}{Variables in Finding an Optimal Place for a New Building}{207}{subsubsection*.184}%
+\contentsline {subsubsection}{Other Variables}{208}{subsubsection*.185}%
+\contentsline {section}{\numberline {4.4}Data}{208}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Storing Data in the MongoDB}{208}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Testing Data for Development}{208}{subsection.4.4.2}%
+\contentsline {subsubsection}{Milestone 4 -- Authentication System}{208}{subsubsection*.186}%
+\contentsline {subsubsection}{Milestone 5 -- Final User Interface}{210}{subsubsection*.187}%
+\contentsline {subsection}{\numberline {4.4.3}Testing Data for Post-Development}{210}{subsection.4.4.3}%
+\contentsline {subsubsection}{Testing for Function}{210}{subsubsection*.189}%
+\contentsline {subsubsection}{Testing for Robustness}{212}{subsubsection*.190}%
+\contentsline {subsubsection}{Testing for Usability}{215}{subsubsection*.191}%
+\contentsline {chapter}{\numberline {5}Developing the Coded Solution of the 2\relax \textsuperscript {nd} Prototype}{217}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Milestone 4 -- Authentication System}{217}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Success Criteria}{217}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Part 14{} -- Authentication Frontend}{218}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Part 15{} -- Sign Up Backend}{224}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}Part 16{} -- Log In Backend}{236}{subsection.5.1.4}%
+\contentsline {subsection}{\numberline {5.1.5}Review}{239}{subsection.5.1.5}%
+\contentsline {section}{\numberline {5.2}Milestone 5 -- Final User Interface}{240}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Success Criteria}{240}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Part 17{} -- Comparing a Region to Training Data}{241}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Part 18{} -- Analysis of how much Each Factor affects the Others}{250}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Part 19{} -- Finding Similar Regions}{257}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Part 20{} -- Saving Regions}{259}{subsection.5.2.5}%
+\contentsline {subsection}{\numberline {5.2.6}Part 21{} -- Improved Suggestions}{282}{subsection.5.2.6}%
+\contentsline {subsection}{\numberline {5.2.7}Part 22{} -- Finishing Touches}{292}{subsection.5.2.7}%
+\contentsline {subsubsection}{Bug Fix -- Not Returning Sufficient Items}{292}{subsubsection*.244}%
+\contentsline {subsubsection}{Bug Fix -- New Account Doesn't Have Current Regions}{297}{subsubsection*.249}%
+\contentsline {subsubsection}{Bug Fix -- Switching Between Regions Doesn't Work with Comparing}{297}{subsubsection*.250}%
+\contentsline {subsubsection}{Info Popups}{299}{subsubsection*.253}%
+\contentsline {subsubsection}{Emojification}{305}{subsubsection*.256}%
+\contentsline {subsubsection}{Other Interface Changes}{311}{subsubsection*.263}%
+\contentsline {subsubsection}{The Help Tab}{315}{subsubsection*.266}%
+\contentsline {subsection}{\numberline {5.2.8}Review}{319}{subsection.5.2.8}%
+\contentsline {chapter}{\numberline {6}Evaluation}{321}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Testing to Inform Evaluation}{321}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Testing for Function \& Robustness}{321}{subsection.6.1.1}%
+\contentsline {subsubsection}{Testing for Function}{321}{subsubsection*.271}%
+\contentsline {subsubsection}{Testing for Robustness}{323}{subsubsection*.272}%
+\contentsline {subsection}{\numberline {6.1.2}Testing for Usability}{326}{subsection.6.1.2}%
+\contentsline {subsubsection}{Questions \& Responses}{326}{subsubsection*.273}%
+\contentsline {subsubsection}{Total Scores}{327}{subsubsection*.274}%
+\contentsline {section}{\numberline {6.2}Success Criteria}{329}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Cross Referencing with Test Data}{329}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Reasoning Behind Outcome of Success Criteria}{331}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Addressing Partially Met Success Criteria in Further Development}{331}{subsection.6.2.3}%
+\contentsline {subsubsection}{Accurate Predictions ($S_{9}$)}{331}{subsubsection*.276}%
+\contentsline {subsubsection}{Accurate Suggestions ($S_{11}$)}{331}{subsubsection*.277}%
+\contentsline {subsubsection}{User Interface ($S_{19}$)}{332}{subsubsection*.278}%
+\contentsline {section}{\numberline {6.3}Usability Features}{332}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Comparison to Sketches \& Effective Usability Features}{333}{subsection.6.3.1}%
+\contentsline {subsubsection}{Predict Tab}{333}{subsubsection*.279}%
+\contentsline {subsubsection}{Comapare \& Region Tabs}{335}{subsubsection*.281}%
+\contentsline {subsubsection}{Log In \& Sign Up Tabs}{338}{subsubsection*.284}%
+\contentsline {subsubsection}{Help Tab}{341}{subsubsection*.287}%
+\contentsline {subsection}{\numberline {6.3.2}Addressing Poor Usability Features in Further Development}{342}{subsection.6.3.2}%
+\contentsline {subsubsection}{The Upload Button}{342}{subsubsection*.289}%
+\contentsline {subsubsection}{Gradio Dataframes}{342}{subsubsection*.290}%
+\contentsline {subsubsection}{Editing \& Creating Regions in the Table}{342}{subsubsection*.291}%
+\contentsline {section}{\numberline {6.4}Maintenance Issues}{343}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Maintainability}{343}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Documentation}{343}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Code Style Guidelines}{343}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}Limitations of the Solution}{343}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Data Limitations}{343}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Usability Challenges}{344}{subsection.6.5.2}%
+\contentsline {subsection}{\numberline {6.5.3}Scalability \& Technical Constraints}{344}{subsection.6.5.3}%
+\contentsline {section}{\numberline {6.6}Conclusion}{344}{section.6.6}%
+\contentsline {chapter}{\numberline {A}Final Code}{345}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Data Processing}{345}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}\mintinline [breaklines, breakafter=_]{python}|data_processing / calc_factors.py|}{345}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}\mintinline [breaklines, breakafter=_]{python}|data_processing / compile_data.py|}{349}{subsection.A.1.2}%
+\contentsline {subsection}{\numberline {A.1.3}\mintinline [breaklines, breakafter=_]{python}|data_processing / get_osm_data.py|}{350}{subsection.A.1.3}%
+\contentsline {subsection}{\numberline {A.1.4}\mintinline [breaklines, breakafter=_]{python}|data_processing / pmcc.py|}{351}{subsection.A.1.4}%
+\contentsline {subsection}{\numberline {A.1.5}\mintinline [breaklines, breakafter=_]{python}|data_processing / process_hdi.py|}{352}{subsection.A.1.5}%
+\contentsline {subsection}{\numberline {A.1.6}\mintinline [breaklines, breakafter=_]{python}|data_processing / process_shapefile.py|}{353}{subsection.A.1.6}%
+\contentsline {section}{\numberline {A.2}Training the Neural Network}{353}{section.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}\mintinline [breaklines, breakafter=_]{python}|network_training / load_digits_data.py|}{353}{subsection.A.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}\mintinline [breaklines, breakafter=_]{python}|network_training / load_hdi_data.py|}{354}{subsection.A.2.2}%
+\contentsline {subsection}{\numberline {A.2.3}\mintinline [breaklines, breakafter=_]{python}|network_training / test_digits.py|}{355}{subsection.A.2.3}%
+\contentsline {subsection}{\numberline {A.2.4}\mintinline [breaklines, breakafter=_]{python}|network_training / test_hdi.py|}{356}{subsection.A.2.4}%
+\contentsline {subsection}{\numberline {A.2.5}\mintinline [breaklines, breakafter=_]{python}|network_training / train_digits.py|}{357}{subsection.A.2.5}%
+\contentsline {subsection}{\numberline {A.2.6}\mintinline [breaklines, breakafter=_]{python}|network_training / train_hdi.py|}{357}{subsection.A.2.6}%
+\contentsline {section}{\numberline {A.3}The Main App}{358}{section.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}\mintinline [breaklines, breakafter=_]{python}|app.py|}{358}{subsection.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}\mintinline [breaklines, breakafter=_]{python}|calc_factors.py|}{377}{subsection.A.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}\mintinline [breaklines, breakafter=_]{python}|neural_network.py|}{380}{subsection.A.3.3}%
+\contentsline {chapter}{Index}{384}{section*.307}%
+\contentsline {section}{List of Figures}{384}{section*.308}%
+\contentsline {section}{List of Code Snippets}{389}{section*.310}%
+\contentsline {section}{List of Tables}{394}{section*.312}%
+\contentsline {chapter}{Bibliography}{399}{section*.314}%
